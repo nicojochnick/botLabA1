@@ -1,13 +1,10 @@
-import ChatBot from 'react-native-chatbot';
-
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from 'react-native-elements'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {introduction} from '../botA1/steps'
+import {Steps} from './steps';
+import ChatBot from 'react-native-chatbot';
 
-
-class BotA1FrontEnd extends Component {
+class BotA1Component extends Component {
     render() {
         return (
             <ChatBot
@@ -25,14 +22,12 @@ class BotA1FrontEnd extends Component {
                 hiderHeader = {false}
                 optionBubbleColor = "#47C68C"
                 optionFontColor={ "white"}
-                steps={introduction}
+                steps={this.props.steps}
             />
-
-
         );
     }
 }
 
-BotA1FrontEnd.propTypes = {};
+BotA1Component.propTypes = {};
 
-export default BotA1FrontEnd;
+export default BotA1Component;

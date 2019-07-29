@@ -1,43 +1,88 @@
 
+export const Steps =  {
 
-export const introduction = [
-    {
-        id: '1',
-        message: 'What is your name?',
-        trigger: '2',
-    },
-    {
-        id: '2',
-        user: true,
-        trigger: '3',
-    },
-    {
-        id: '3',
-        message: 'Hi {previousValue}, nice to meet you!',
-        trigger: '4'
-    },
-    {
-        id: '4',
-        message: 'do you have a minute to get to know each other a little better?',
-        trigger: '5'
+    introduction: [
+        {
+            id: '1',
+            message: 'What is your name?',
+            trigger: '2',
+        },
+        {
+            id: '2',
+            user: true,
+            trigger: '3',
+        },
+        {
+            id: '3',
+            message: 'Hi {previousValue}, nice to meet you!',
+            trigger: '4'
+        },
+        {
+            id: '4',
+            message: 'do you have a minute to get to know each other a little better?',
+            trigger: '5'
 
-    },
-    {   id: '5',
-        options: [
-            { value: true, label: 'Sure',  },
-            { value: false, label: 'maybe, later',},
-        ],
+        },
+        {
+            id: '5',
+            options: [
+                {value: true, label: 'Sure',},
+                {value: false, label: 'maybe, later',},
+            ],
 
-    }
-];
+        }
+    ],
 
-export const makeaGoal = [
-    {
-        id: '1',
-        message: 'What would you like to title your goal?',
-        trigger: '2',
-    },
+    makeaGoal: [
+        {
+            id: '1',
+            message: 'What would you like to title your goal?',
+            trigger: 'title',
+        },
+        {
+            id: "title",
+            user: true,
+            trigger: "2"
+        },
+        {
+            id: '2',
+            message: " {previousValue}, I like it!",
+            trigger: '3'
+        },
+        {
+            id: '3',
+            message: 'how would you like to track your progress?',
+            trigger: 'tracking'
+        },
+        {
+            id: 'tracking',
+            options: [
+                {value: 'option1', label: 'Time (ex: 30 minutes)',},
+                {value: 'option2', label: 'Habit-Based (ex: completed',},
+            ],
+        }
 
 
 
-];
+    ],
+
+    missyou: [
+        {
+            id: '1',
+            message: 'Who do you miss',
+            trigger: 'title',
+        },
+        {
+            id: "title",
+            user: true,
+            trigger: "2"
+        },
+        {
+            id: '2',
+            message: " I'm sure {previousValue} misses you too"
+        }
+
+
+    ],
+
+};

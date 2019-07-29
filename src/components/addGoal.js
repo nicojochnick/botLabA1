@@ -7,6 +7,8 @@ import {connect} from "react-redux";
 import moment from "moment";
 
 
+//NOTE: You need to split this component => the form and adding goal functionality should be separate!!!!!!
+
 class AddGoal extends Component {
     constructor(props) {
         super(props);
@@ -93,6 +95,9 @@ class AddGoal extends Component {
         this.forceUpdate();
         this.state.newGoal.days = [];
     }
+
+
+
 
     render() {
         return (
