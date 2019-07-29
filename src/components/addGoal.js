@@ -101,8 +101,8 @@ class AddGoal extends Component {
 
     render() {
         return (
-            <View style = {styles.input}>
-            <ScrollView style = {[{marginTop: 10}, styles.input]}>
+
+            <ScrollView style = {{}}>
                 <Input style = {styles.input}
                        placeholder='Name'
                        shake={true}
@@ -183,7 +183,6 @@ class AddGoal extends Component {
                     onPress={ () => this.Save(this.state.newGoal)}
                 />
             </ScrollView>
-            </View>
         );
     }
 }

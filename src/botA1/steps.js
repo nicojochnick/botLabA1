@@ -1,4 +1,8 @@
 
+
+import AddGoal from '../components/addGoal';
+import React from 'react';
+import BotFunctions from './botFunctions';
 export const Steps =  {
 
     introduction: [
@@ -47,7 +51,15 @@ export const Steps =  {
         {
             id: '2',
             message: " {previousValue}, I like it!",
+            trigger: 'saveName'
+        },
+        {
+            id: 'saveName',
+            component: <BotFunctions/>,
+            asMessage: true,
             trigger: '3'
+
+
         },
         {
             id: '3',
@@ -58,13 +70,31 @@ export const Steps =  {
             id: 'tracking',
             options: [
                 {value: 'option1', label: 'Time (ex: 30 minutes)',},
-                {value: 'option2', label: 'Habit-Based (ex: completed',},
+                {value: 'option2', label: 'Daily Completion'},
             ],
         }
 
 
 
     ],
+
+    makeGoalSimple: [
+        {
+            id: '1',
+            message: 'To Create a goal just fill the form below and hit save',
+            trigger: 'createGoal',
+        },
+        {
+            id: 'createGoal',
+            component: <AddGoal/>
+        }
+
+
+
+    ],
+
+
+
 
     missyou: [
         {
