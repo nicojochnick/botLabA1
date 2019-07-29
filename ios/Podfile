@@ -4,6 +4,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 target 'botLabA1' do
   # Pods for botLabA1
   pod 'React', :path => '../node_modules/react-native/'
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
   pod 'React-ART', :path => '../node_modules/react-native/Libraries/ART'
   pod 'React-Core', :path => '../node_modules/react-native/React'
   pod 'React-DevSupport', :path => '../node_modules/react-native/React'
@@ -28,6 +29,10 @@ target 'botLabA1' do
   pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
   target 'botLabA1Tests' do
     inherit! :search_paths
