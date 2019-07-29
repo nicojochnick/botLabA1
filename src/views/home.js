@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {View, Text, ScrollView} from 'react-native'
 import {Card, Button} from 'react-native-elements'
-import BotA1 from '../components/botA1';
+import BotA1FrontEnd from '../components/botA1FrontEnd';
 import GoalBoard from '../components/goalBoard';
 import AddGoal from '../components/addGoal';
 import LinearGradient from 'react-native-linear-gradient';
@@ -26,7 +26,7 @@ class Home extends Component {
                             />
                     </View>
                     <View style = {{flex: 0.7}}>
-                            <BotA1/>
+                            <BotA1FrontEnd/>
                     </View>
                 </View>
                 </LinearGradient>

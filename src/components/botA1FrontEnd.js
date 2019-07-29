@@ -4,9 +4,10 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'react-native-elements'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {introduction} from '../botA1/steps'
 
 
-class BotA1 extends Component {
+class BotA1FrontEnd extends Component {
     render() {
         return (
             <ChatBot
@@ -22,23 +23,9 @@ class BotA1 extends Component {
                 bubbleStyle={{fontColor: "grey"}}
                 botFontColor= "black"
                 hiderHeader = {false}
-                steps={[
-                    {
-                        id: '1',
-                        message: 'What is your name?',
-                        trigger: '2',
-                    },
-                    {
-                        id: '2',
-                        user: true,
-                        trigger: '3',
-                    },
-                    {
-                        id: '3',
-                        message: 'Hi {previousValue}, nice to meet you!',
-                        end: true,
-                    },
-                ]}
+                optionBubbleColor = "#47C68C"
+                optionFontColor={ "white"}
+                steps={introduction}
             />
 
 
@@ -46,6 +33,6 @@ class BotA1 extends Component {
     }
 }
 
-BotA1.propTypes = {};
+BotA1FrontEnd.propTypes = {};
 
-export default BotA1;
+export default BotA1FrontEnd;
