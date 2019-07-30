@@ -6,20 +6,17 @@ import ChatBot from 'react-native-chatbot';
 import moment from '../components/addGoal';
 
 class BotA1Component extends Component {
-    constructor(props) {
-        super(props);
-    }
 
 
     //Note: to create a goal with just user input, use a callback function which takes value data from steps and dispatches an action to the store.
 
 
     render() {
-        console.log(this.props.steps.title);
+        console.log(this.props.steps);
 
         return (
-
             <ChatBot
+                handleEnd={this.props.handleEnd}
                 headerTitle="Speech Recognition"
                 recognitionEnable={true}
                 botBubbleColor = 'white'

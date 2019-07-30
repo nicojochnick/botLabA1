@@ -31,6 +31,7 @@ class BotFunctions extends Component {
         const title  = steps.title.value.toLocaleString();
         console.log(title);
         this.state.newGoal["name"] = title;
+        this.state.newGoal['id'] = moment().format();
         console.log(this.state.newGoal);
         this.Save()
     }
@@ -41,9 +42,16 @@ class BotFunctions extends Component {
     addID(){
         this.state.newGoal['id'] = moment().format();
     }
+    reset = () => {
+        this.setState(this.baseState);
+    };
 
     Save(){
+        this.reset();
         this.props.dispatch(addGoal(this.state.newGoal));
+        this.forceUpdate();
+
+
     }
 
     render() {

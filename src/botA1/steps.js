@@ -3,7 +3,7 @@
 import AddGoal from '../components/addGoal';
 import React from 'react';
 import BotFunctions from './botFunctions';
-export const Steps =  {
+export const Steps = {
 
     introduction: [
         {
@@ -50,7 +50,7 @@ export const Steps =  {
         },
         {
             id: '2',
-            message: " {previousValue}, I like it!",
+            message: " {previousValue}- I like it!",
             trigger: 'saveName'
         },
         {
@@ -69,11 +69,15 @@ export const Steps =  {
         {
             id: 'tracking',
             options: [
-                {value: 'option1', label: 'Time (ex: 30 minutes)',},
-                {value: 'option2', label: 'Daily Completion'},
+                {value: 'option1', label: 'Time (ex: 30 minutes)', trigger: "4"},
+                {value: 'option2', label: 'Daily Completion', trigger: "4"},
             ],
+        },
+        {
+            id: '4',
+            message: "great",
+            end: true,
         }
-
 
 
     ],
@@ -87,32 +91,31 @@ export const Steps =  {
         {
             id: 'createGoal',
             component: <AddGoal/>
-        }
+        }],
 
 
-
-    ],
-
-
-
-
-    missyou: [
+    test: [
         {
             id: '1',
-            message: 'Who do you miss',
-            trigger: 'title',
-        },
+            message: "done",
+            end: true
+        },],
+
+    test2: [
         {
-            id: "title",
-            user: true,
+            id: '1',
+            message: "change",
             trigger: "2"
         },
         {
             id: '2',
-            message: " I'm sure {previousValue} misses you too"
+            message: "okay",
         }
 
+    ]
 
-    ],
 
 };
+
+
+
