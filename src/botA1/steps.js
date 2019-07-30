@@ -37,6 +37,45 @@ export const Steps = {
         }
     ],
 
+    mainMenu: [
+        {
+            id: "1",
+            message: 'how can I help?',
+            trigger: "menuItems"
+        },
+
+        {
+            id: "menuItems",
+            options: [
+                {value: 'StartStudySession', label: 'Start a Study Session', trigger: "startSesh"},
+                {value: 'AddaClass', label: 'Add a Class', trigger: "AddClass"},
+                {value: 'GetMotivated', label: 'Give me Motivation', trigger: "Motivate"},
+                {value: 'GetMotivated', label: 'Give me a Study Tip', trigger: "StudyTip"},
+            ],
+
+
+        },
+        {
+            id: "startSesh",
+            message: "For what class are you studying for?"
+        },
+        {
+            id: "AddClass",
+            message: "What is the name of the class"
+        },
+        {
+            id: "Motivate",
+            message: "Meme Time Baby"
+        },
+        {
+            id: "StudyTip",
+            message: "Simple: Start by Turning off your phone"
+        },
+
+
+    ],
+
+
     makeaGoal: [
         {
             id: '1',

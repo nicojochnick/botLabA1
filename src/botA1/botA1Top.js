@@ -4,13 +4,12 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'react-native-elements'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {addGoal} from "../redux/actions";
+import {storeRenderCount} from "../redux/actions";
 import {Steps} from './steps'
 import {View} from 'react-native'
 import {Input} from 'react-native-elements'
 import BotA1Component from './botA1Component';
 import {connect} from 'react-redux';
-import mapStateToProps from 'react-redux/es/connect/mapStateToProps';
 
 let tick = 0;
 class BotA1Top extends Component {
@@ -21,7 +20,7 @@ class BotA1Top extends Component {
         this.handleEnd = this.handleEnd.bind(this);
         this.state = {
             data: {},
-            currentStep: Steps.test2,
+            currentStep: this.getStep(),
             steps: null
         }
 
@@ -43,7 +42,13 @@ class BotA1Top extends Component {
         this.setState( { data: data})
     }
 
-    getCurrentStep(){
+    getStep(){
+        if (this.props.count === 0) {
+            this.props.dispatch(storeRenderCount());
+            return Steps.introduction
+
+        }
+        else return Steps.mainMenu
 
     }
 
@@ -61,6 +66,11 @@ class BotA1Top extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    count: state.bot.count
+
+});
+
 BotA1Top.propTypes = {};
-export default connect()(BotA1Top)
+export default connect(mapStateToProps)(BotA1Top)
 
