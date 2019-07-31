@@ -21,8 +21,7 @@ class BotA1Component extends Component {
                 recognitionEnable={true}
                 botBubbleColor = 'white'
                 contentStyle={{backgroundColor: 'rgba(52, 52, 52, 0.0)'}}
-                style={{backgroundColor: 'rgba(52, 52, 52, 0.0)'
-                }}
+                style={{backgroundColor: 'rgba(52, 52, 52, 0.0)'}}
                 inputStyle={{backgroundColor: "white"}}
                 submitButtonStyle={{backgroundColor: "white",}}
                 submitButtonContent= {<Ionicons name = {'md-send'} color = "#6161F7" size = {24}/>}
@@ -30,7 +29,7 @@ class BotA1Component extends Component {
                 botFontColor= "black"
                 hiderHeader = {false}
                 optionBubbleColor = "#47C68C"
-                optionFontColor={ "white"}
+                optionFontColor={"white"}
                 steps={this.props.steps}
                 hideBotAvatar={false}
                 hideUserAvatar={true}

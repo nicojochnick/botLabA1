@@ -4,10 +4,10 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {View, Text} from 'react-native'
 import moment from "moment";
-import {addGoal} from '../redux/actions';
+import {addGoal} from '../../redux/actions';
 import {connect} from 'react-redux';
 
-class BotFunctions extends Component {
+class AddGoalBot extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -61,10 +61,10 @@ class BotFunctions extends Component {
     }
 }
 
-BotFunctions.propTypes = {};
+AddGoalBot.propTypes = {};
 
 
-export default connect()(BotFunctions)
+export default connect()(AddGoalBot)
 
 
 

@@ -11,6 +11,8 @@ export const SUBTRACT_TIME = 'SUBTRACT_TIME';
 export const TOGGLE_CHECK = 'TOGGLE CHECK';
 export const UPDATE_DATE = 'UPDATE_DATE';
 export const STORE_RENDER = 'STORE_RENDER';
+export const CHANGE_NAME = 'CHANGE_NAME';
+
 
 /* action creators */
 export function addGoal(goal){
@@ -52,4 +54,8 @@ export function toggleCheck(index){
 
 export function storeRenderCount(count){
     return {type: STORE_RENDER, payload: count}
+}
+
+export function changeName(name){
+    return {type: CHANGE_NAME, payload: name}
 }

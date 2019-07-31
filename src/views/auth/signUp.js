@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
-import firebase from 'react-native-firebase'
-
+import auth from '@react-native-firebase/auth';
+import { firebase } from '@react-native-firebase/auth';
 
 
 export default class SignUp extends React.Component {

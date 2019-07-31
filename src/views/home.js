@@ -7,23 +7,24 @@ import GoalBoard from '../components/goalBoard';
 import AddGoal from '../components/addGoal';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Identity from '../components/identity';
 
 
 class Home extends Component {
     render() {
         return (
             <ScrollView>
-                <LinearGradient style={{flex: 1}} colors={['#3676FF', '#6161F7']}>
-                <View style = {{height: 500}}>
-                    <View style = {{flex: 0.3, flexDirection: "row", justifyContent: "space-between",}}>
-                            <Text style = {{ marginTop: 45,marginBottom: 0, fontSize: 45, color: "white", fontWeight: "bold"}}> BotA1 </Text>
-                            <Ionicons style = {{margin: 30, padding: 15}}
+                <LinearGradient style={{flex: 0.8}} colors={['#3676FF', '#6161F7']}>
+                <View style = {{height: 400}}>
+                    <View style = {{flex: 0.3, flexDirection: "row", justifyContent: "space-between", margin: 10,alignItems: "center"}}>
+                        <Identity/>
+                        <Ionicons style = {{marginRight: 10,}}
                                       name = {'ios-add'}
                                       color = "white"
                                       disabledStyle = {{color:"grey"}}
                                       size = {60}
                                       onPress = {() => this.props.navigation.navigate('Add')}
-                            />
+                        />
                     </View>
                     <View style = {{flex: 0.7}}>
                             <BotA1Top/>

@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
-import {createAppContainer, createStackNavigator} from 'react-navigation';
+import {createAppContainer, createStackNavigator, createSwitchNavigator} from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from '../views/home';
 import CreateView from '../views/createView'
+import Login from '../views/auth/login';
+import SignUp from '../views/auth/signUp';
+import Loading from '../views/loading';
 
 class TopStack extends Component {
     static navigationOptions = {
@@ -12,10 +15,15 @@ class TopStack extends Component {
     }
 }
 
+const AuthStack = createStackNavigator({
+    Login: Login,
+    SignUp: SignUp
+},{
+    initialRouteName: "SignUp"
+});
 
 
-
-const AppNavigator = createStackNavigator(
+const AppStack = createStackNavigator(
     { Home: Home, Add: CreateView
     }, { defaultNavigationOptions: ({ navigation }) => ({
             headerTransparent: true,
@@ -36,5 +44,13 @@ const AppNavigator = createStackNavigator(
     }
 );
 
-const AppContainer =  createAppContainer(AppNavigator);
+const AppContainer =  createAppContainer(createSwitchNavigator(
+    {
+        AuthLoading: Loading,
+        App: AppStack,
+        Auth: AuthStack,
+    }, {
+        initialRouteName: "AuthLoading"
+    }
+));
 export default AppContainer;

@@ -2,7 +2,8 @@
 
 import AddGoal from '../components/addGoal';
 import React from 'react';
-import BotFunctions from './botFunctions';
+import BotFunctions from './functions/addGoalBot';
+import EditName from './functions/editName';
 export const Steps = {
 
     introduction: [
@@ -23,21 +24,51 @@ export const Steps = {
         },
         {
             id: '4',
-            message: 'do you have a minute to get to know each other a little better?',
+            message: "I'm your avatar, what would you like to call me?",
+            trigger: 'name'
+
+        },
+        {
+            id: 'name',
+            user: true,
             trigger: '5'
 
         },
         {
-            id: '5',
-            options: [
-                {value: true, label: 'Sure',},
-                {value: false, label: 'maybe, later',},
-            ],
+            id: "5",
+            component: <EditName/>,
+            asMessage: true,
+            trigger: '6'
+        },
+        {
+            id: '6',
+            message: "now give me a face, you can upload any picture",
+            end: true
+        }
+    ],
+
+    newOne: [
+        {
+            id: '1',
+            message: "Hi Builders! I'm an A.I that helps people achieve their goals faster"
 
         }
     ],
 
-    new: [
+
+    washingtonBuilders:  [
+        {
+            id: '1',
+            message: "'Hi Washington Builders!",
+            trigger: '2'
+        },
+        {
+            id: '1',
+            message: "I'm an A.I. that helps people achieve their goals faster"
+        },
+    ],
+
+    newIntro: [
         {
             id: '1',
             message: 'What is your name?',

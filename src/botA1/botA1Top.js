@@ -48,7 +48,7 @@ class BotA1Top extends Component {
             return Steps.introduction
 
         }
-        else return Steps.new
+        else return Steps.introduction
 
     }
 
