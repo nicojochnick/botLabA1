@@ -12,9 +12,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 class Home extends Component {
     render() {
         return (
-            <View style = {{flex: 1}}>
+            <ScrollView>
                 <LinearGradient style={{flex: 1}} colors={['#3676FF', '#6161F7']}>
-                <View style = {{flex:1}}>
+                <View style = {{height: 500}}>
                     <View style = {{flex: 0.3, flexDirection: "row", justifyContent: "space-between",}}>
                             <Text style = {{ marginTop: 45,marginBottom: 0, fontSize: 45, color: "white", fontWeight: "bold"}}> BotA1 </Text>
                             <Ionicons style = {{margin: 30, padding: 15}}
@@ -33,7 +33,7 @@ class Home extends Component {
                 <ScrollView style ={{flex: 1}}>
                     <GoalBoard/>
                 </ScrollView>
-            </View>
+            </ScrollView>
         );
     }
 }

@@ -32,6 +32,8 @@ class BotA1Component extends Component {
                 optionBubbleColor = "#47C68C"
                 optionFontColor={ "white"}
                 steps={this.props.steps}
+                hideBotAvatar={false}
+                hideUserAvatar={true}
             />
         );
     }

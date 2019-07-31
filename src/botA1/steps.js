@@ -37,6 +37,33 @@ export const Steps = {
         }
     ],
 
+    new: [
+        {
+            id: '1',
+            message: 'What is your name?',
+            trigger: '2',
+        },
+        {
+            id: '2',
+            user: true,
+            trigger: '3',
+        },
+        {
+            id: '3',
+            user: true,
+            trigger: '4'
+        },
+        {
+            id: '4',
+            message: "{previousValue} - few thanks, I like it.",
+            trigger: '5'
+        },
+        {
+            id: "5",
+            message: "I also need a face, you can give me any face you want, just upload it below!"
+        }
+    ],
+
     mainMenu: [
         {
             id: "1",
@@ -71,10 +98,7 @@ export const Steps = {
             id: "StudyTip",
             message: "Simple: Start by Turning off your phone"
         },
-
-
     ],
-
 
     makeaGoal: [
         {
@@ -117,8 +141,6 @@ export const Steps = {
             message: "great",
             end: true,
         }
-
-
     ],
 
     makeGoalSimple: [
