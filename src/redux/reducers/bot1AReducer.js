@@ -5,7 +5,8 @@ const initialState = {
     count: 0,
     byId: [],
     byHash: {},
-    name: "default"
+    name: "",
+    profileImage: "",
 };
 
 
@@ -17,9 +18,14 @@ const bot = (state = initialState, action) => {
         case 'CHANGE_NAME':
             return update(state, {name: {$set: action.payload}});
 
+        case 'ADD_PROFILE_IMAGE':
+            return update(state, {profileImage: {$set: action.payload}});
+
         default:
             return state;
         }
+
+
 
 };
 

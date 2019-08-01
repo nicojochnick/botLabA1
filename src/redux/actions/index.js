@@ -12,9 +12,14 @@ export const TOGGLE_CHECK = 'TOGGLE CHECK';
 export const UPDATE_DATE = 'UPDATE_DATE';
 export const STORE_RENDER = 'STORE_RENDER';
 export const CHANGE_NAME = 'CHANGE_NAME';
+export const ADD_PROFILE_IMAGE = 'ADD_PROFILE_IMAGE';
 
 
 /* action creators */
+export function addProfileImage(image) {
+    return {type: ADD_PROFILE_IMAGE, payload: image}
+
+}
 export function addGoal(goal){
     return { type: 'ADD_GOAL', payload:{goal}}
 }

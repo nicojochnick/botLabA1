@@ -8,6 +8,7 @@ import AddGoal from '../components/addGoal';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Identity from '../components/identity';
+import EditProfileImageBot from '../botA1/functions/editProfileImageBot';
 
 
 class Home extends Component {

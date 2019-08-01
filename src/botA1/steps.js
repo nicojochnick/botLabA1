@@ -4,16 +4,17 @@ import AddGoal from '../components/addGoal';
 import React from 'react';
 import BotFunctions from './functions/addGoalBot';
 import EditName from './functions/editName';
+import EditProfileImageBot from './functions/editProfileImageBot';
 export const Steps = {
 
     introduction: [
         {
             id: '1',
             message: 'What is your name?',
-            trigger: '2',
+            trigger: 'name',
         },
         {
-            id: '2',
+            id: 'name',
             user: true,
             trigger: '3',
         },
@@ -21,30 +22,27 @@ export const Steps = {
             id: '3',
             message: 'Hi {previousValue}, nice to meet you!',
             trigger: '4'
+
         },
+
         {
             id: '4',
-            message: "I'm your avatar, what would you like to call me?",
-            trigger: 'name'
-
-        },
-        {
-            id: 'name',
-            user: true,
-            trigger: '5'
-
-        },
-        {
-            id: "5",
             component: <EditName/>,
             asMessage: true,
-            trigger: '6'
+            trigger: '5'
+        },
+
+        {
+            id: '5',
+            message: "Let's add a photo to complete your profile",
+            trigger: "upload"
         },
         {
-            id: '6',
-            message: "now give me a face, you can upload any picture",
-            end: true
+            id: "upload",
+            component: <EditProfileImageBot/>,
+            asMessage: true
         }
+
     ],
 
     newOne: [
@@ -105,28 +103,67 @@ export const Steps = {
         {
             id: "menuItems",
             options: [
-                {value: 'StartStudySession', label: 'Start a Study Session', trigger: "startSesh"},
-                {value: 'AddaClass', label: 'Add a Class', trigger: "AddClass"},
-                {value: 'GetMotivated', label: 'Give me Motivation', trigger: "Motivate"},
-                {value: 'GetMotivated', label: 'Give me a Study Tip', trigger: "StudyTip"},
+                {value: 'StartStudySession', label: 'Create a Goal', trigger: "createaGoal"},
+                {value: 'searchGoals', label: 'Find a Goal', trigger: "findaGoal"},
+                {value: 'Tip', label: 'Tip', trigger: "Tip"},
+                {value: 'GetMotivated', label: 'Motivation', trigger: "Motivation"},
             ],
 
 
         },
+
         {
-            id: "startSesh",
-            message: "For what class are you studying for?"
+            id: 'createaGoal',
+            message: 'What would you like to title your goal?',
+            trigger: 'title',
         },
         {
-            id: "AddClass",
+            id: "title",
+            user: true,
+            trigger: "7"
+        },
+        {
+            id: '7',
+            message: " {previousValue}- I like it!",
+            trigger: 'saveName'
+        },
+        {
+            id: 'saveName',
+            component: <BotFunctions/>,
+            asMessage: true,
+            trigger: '8'
+
+
+        },
+        {
+            id: '8',
+            message: 'how would you like to track your progress?',
+            trigger: 'tracking'
+        },
+        {
+            id: 'tracking',
+            options: [
+                {value: 'option1', label: 'Time (ex: 30 minutes)', trigger: "9"},
+                {value: 'option2', label: 'Daily Completion', trigger: "9"},
+            ],
+
+        },
+        {
+            id: '9',
+            message: "great, your goal is all setup!",
+            end: true,
+        },
+
+        {
+            id: "findaGoal",
             message: "What is the name of the class"
         },
         {
-            id: "Motivate",
+            id: "Motivation",
             message: "Meme Time Baby"
         },
         {
-            id: "StudyTip",
+            id: "Tip",
             message: "Simple: Start by Turning off your phone"
         },
     ],
@@ -169,7 +206,7 @@ export const Steps = {
         },
         {
             id: '4',
-            message: "great",
+            message: "great, your goal is all setup!",
             end: true,
         }
     ],

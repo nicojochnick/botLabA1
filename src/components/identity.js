@@ -7,17 +7,16 @@ import {connect} from "react-redux";
 
 class Identity extends Component {
     render() {
-        console.log(this.props.botName);
+        console.log(this.props.botID.profileImage.uri);
 
         return (
             <View style = {{flexDirection: "row", justifyContent: "flex-start", alignItems: "center"}}>
                 <Avatar
                     rounded
                     size= "large"
-                    source={{
-                    }}
+                    source = {{uri:this.props.botID.profileImage.uri }}
                 />
-            <Text style = {{color: "white", fontSize: 20, alignContent: "center", fontWeight: "500"}}> {this.props.botName} </Text>
+            <Text style = {{color: "white", fontSize: 20, alignContent: "center", fontWeight: "bold"}}> {this.props.botID.name} </Text>
             </View>
         );
     }
@@ -26,7 +25,7 @@ class Identity extends Component {
 Identity.propTypes = {};
 
 const mapStateToProps = (state) => ({
-    botName: state.bot.name,
+    botID: state.bot
 });
 
 
