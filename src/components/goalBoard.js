@@ -1,6 +1,6 @@
 import {FlatList} from "react-native";
 import {styles} from "./theme";
-import GoalRow from './goal'
+import GoalRow from './goal/goal'
 import React from 'react';
 import {connect} from "react-redux";
 

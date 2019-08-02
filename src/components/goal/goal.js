@@ -1,9 +1,9 @@
 import {Text, View} from "react-native";
 import React from 'react';
-import {styles} from './theme'
+import {styles} from '../theme'
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {addDate, addTime, deleteGoal, subtractTime, updateDate} from "../redux/actions";
+import {addDate, addTime, deleteGoal, subtractTime, updateDate} from "../../redux/actions";
 import {connect} from "react-redux";
 import {AreaChart, Grid} from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
@@ -97,10 +97,8 @@ class Goal extends React.Component {
             </View>
 
                 <View>
-                    <Text style = {styles.dayText}> {this.props.data.slice(-1)[0]} minutes</Text>
+                    <Text style = {styles.dayText}> {this.props.data.slice(-1)[0]} minutes to go</Text>
                 </View>
-
-
                 <View>
                 <AreaChart
                     style={{ height: 100 }}

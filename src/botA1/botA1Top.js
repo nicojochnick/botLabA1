@@ -43,7 +43,7 @@ class BotA1Top extends Component {
     }
 
     getStep(){
-        if (this.props.count === 0) {
+        if (this.props.count < 2) {
             this.props.dispatch(storeRenderCount());
             return Steps.introduction
 

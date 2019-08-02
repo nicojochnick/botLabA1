@@ -19,7 +19,9 @@ class AddGoalBot extends Component {
                 done: false,
                 points: 0,
                 date:  moment().format('dddd, MMMM Do'),
-                id:  0
+                id:  0,
+                view: 1,
+                tracking: 1,
             },
         };
     }

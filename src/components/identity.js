@@ -13,10 +13,11 @@ class Identity extends Component {
             <View style = {{flexDirection: "row", justifyContent: "flex-start", alignItems: "center"}}>
                 <Avatar
                     rounded
+                    containerStyle = {{marginLeft: 10, borderWidth: 2, borderColor: "white"}}
                     size= "large"
                     source = {{uri:this.props.botID.profileImage.uri }}
                 />
-            <Text style = {{color: "white", fontSize: 20, alignContent: "center", fontWeight: "bold"}}> {this.props.botID.name} </Text>
+            <Text style = {{color: "white", fontSize: 25, alignContent: "center", fontWeight: "bold", margin: 10}}> {this.props.botID.name} </Text>
             </View>
         );
     }

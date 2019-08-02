@@ -22,11 +22,12 @@ const goals = (state = initialState, action) => {
                     ...state.byHash,
                     [action.payload.goal.id]: {
                         days: action.payload.goal.days,
+                        view: action.payload.goal.view,
                         points: action.payload.goal.points,
-                        priority: action.payload.goal.priority,
                         data: action.payload.goal.data,
                         done: false,
                         id: action.payload.goal.id,
+                        tracking: action.payload.goal.tracking,
                         name: action.payload.goal.name,
                         date: action.payload.goal.date,
                     }

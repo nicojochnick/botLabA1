@@ -27,7 +27,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = createStore(persistedReducer);
 const persists = persistStore(store);
 
-//Uncomment to reset state
+//Uncomment to reset 
 //(async () => { await persists.purge(); })();
 
 store.subscribe(() => {

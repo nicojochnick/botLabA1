@@ -15,9 +15,9 @@ class Home extends Component {
     render() {
         return (
             <ScrollView>
-                <LinearGradient style={{flex: 0.8}} colors={['#3676FF', '#6161F7']}>
+                <LinearGradient style={{flex: 0.8}} colors={['#3676FF','#5530EC', '#6930EC', '#7730EC']}>
                 <View style = {{height: 400}}>
-                    <View style = {{flex: 0.3, flexDirection: "row", justifyContent: "space-between", margin: 10,alignItems: "center"}}>
+                    <View style = {{flex: 0.3, flexDirection: "row", justifyContent: "space-between", marginTop: 20,alignItems: "center"}}>
                         <Identity/>
                         <Ionicons style = {{marginRight: 10,}}
                                       name = {'ios-add'}
