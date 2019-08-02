@@ -27,12 +27,12 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = createStore(persistedReducer);
 const persists = persistStore(store);
 
-//Uncomment to reset 
+//Uncomment to reset
 //(async () => { await persists.purge(); })();
 
 store.subscribe(() => {
   saveState({
-    goals: store.getState()
+    steps: store.getState()
   });
 });
 

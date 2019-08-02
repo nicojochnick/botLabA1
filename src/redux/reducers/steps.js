@@ -1,4 +1,4 @@
-import { ADD_GOAL, SUBTRACT_TIME, TOGGLE_GOAL,} from '../actions'
+import { ADD_STEP, SUBTRACT_TIME, TOGGLE_STEP,} from '../actions'
 import update from 'immutability-helper';
 import moment from "moment";
 
@@ -13,26 +13,33 @@ const goalsSelector = (Obj) => {
         .map((Key) => Obj[Key]);
 };
 
-const goals = (state = initialState, action) => {
+const steps = (state = initialState, action) => {
     switch (action.type) {
-        case 'ADD_GOAL':
+        case 'ADD_STEP':
             return { ...state,
-                byId: [action.payload.goal.id],
+                byId: [action.payload.step.id],
                 byHash: {
                     ...state.byHash,
-                    [action.payload.goal.id]: {
-                        days: action.payload.goal.days,
-                        view: action.payload.goal.view,
-                        points: action.payload.goal.points,
-                        data: action.payload.goal.data,
-                        done: false,
-                        id: action.payload.goal.id,
-                        tracking: action.payload.goal.tracking,
-                        name: action.payload.goal.name,
-                        date: action.payload.goal.date,
+                    [action.payload.step.id]: {
+                        name: action.payload.step.name,
+                        data: action.payload.step.data,
+                        root: action.payload.step.root,
+                        open: action.payload.step.open,
+                        done: action.payload.step.done,
+                        id: action.payload.step.id,
+                        steps: action.payload.step.id,
+                        date: action.payload.step.date
                     }
                 }
             };
+
+
+        case 'TOGGLE_OPEN':
+            return update(state, {
+                byHash: {
+                    [action.payload]: {
+                        open: {$apply: function (x){return !x;}}}}
+                });
         case 'ADD_DATE':
             return update(state, {
                 byHash: {
@@ -54,14 +61,14 @@ const goals = (state = initialState, action) => {
             };
 
 
-        case 'TOGGLE_GOAL':
+        case 'TOGGLE_STEP':
             return state.map(goal =>
                 (goal.id === action.id)
                     ? {...goal, completed: !goal.completed}
                     : goal
             );
 
-        case 'DELETE_GOAL':
+        case 'DELETE_STEP':
             const newState = {
                 ...state
             };
@@ -76,9 +83,8 @@ const goals = (state = initialState, action) => {
                 viewCheckbox: !viewCheckbox
             };
 
+
         case 'ADD_TIME':
-            console.log(action.payload.data);
-            //Action contains two vars => id of goal, and time to be added.
            return update(state, {
                 byHash: {
                     [action.payload.index]: {
@@ -91,8 +97,6 @@ const goals = (state = initialState, action) => {
             });
 
         case 'SUBTRACT_TIME':
-            console.log(action.payload.data);
-            //Action contains two vars => id of goal, and time to be added.
             return update(state, {
                 byHash: {
                     [action.payload.index]: {
@@ -110,4 +114,4 @@ const goals = (state = initialState, action) => {
     }
 };
 
-export default goals;
+export default steps;

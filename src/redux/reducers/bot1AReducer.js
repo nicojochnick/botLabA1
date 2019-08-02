@@ -25,8 +25,6 @@ const bot = (state = initialState, action) => {
             return state;
         }
 
-
-
 };
 
 export default bot

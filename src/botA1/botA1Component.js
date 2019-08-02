@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {Steps} from './steps';
+import {StepsBot} from './stepsBot';
 import ChatBot from 'react-native-chatbot';
-import moment from '../components/addGoal';
+import moment from '../components/addStep';
 
 class BotA1Component extends Component {
 

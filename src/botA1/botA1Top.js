@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Icon } from 'react-native-elements'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {storeRenderCount} from "../redux/actions";
-import {Steps} from './steps'
+import {StepsBot} from './stepsBot'
 import {View} from 'react-native'
 import {Input} from 'react-native-elements'
 import BotA1Component from './botA1Component';
@@ -29,7 +29,7 @@ class BotA1Top extends Component {
 
 
     handleEnd({ steps, values }) {
-        this.setState({currentStep: Steps.test});
+        this.setState({currentStep: StepsBot.test});
         console.log(this.state.currentStep)
 
     }
@@ -45,10 +45,10 @@ class BotA1Top extends Component {
     getStep(){
         if (this.props.count < 2) {
             this.props.dispatch(storeRenderCount());
-            return Steps.introduction
+            return StepsBot.introduction
 
         }
-        else return Steps.mainMenu
+        else return StepsBot.mainMenu
 
     }
 

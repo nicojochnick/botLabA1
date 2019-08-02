@@ -3,14 +3,13 @@ import React from 'react';
 import {styles} from '../theme'
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {addDate, addTime, deleteGoal, subtractTime, updateDate} from "../../redux/actions";
+import {addDate, addTime, deleteStep, subtractTime, updateDate} from "../../redux/actions";
 import {connect} from "react-redux";
 import {AreaChart, Grid} from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
 import moment from "moment";
 
-class Goal extends React.Component {
-
+class StepLegacy extends React.Component {
 
     checkDate() {
         const curDate = moment().format('dddd, MMMM Do');
@@ -28,8 +27,7 @@ class Goal extends React.Component {
     }
 
     handleDelete(){
-        console.log(this.props.id);
-        this.props.dispatch(deleteGoal(this.props.id))
+        this.props.dispatch(deleteStep(this.props.id))
     }
     printOut(days){
         if (days){
@@ -58,7 +56,6 @@ class Goal extends React.Component {
             <View style = {styles.goals}>
                 <View style = {styles.topGoals}>
                     <Text style = {styles.goalText}> {this.props.name} </Text>
-                    <Text style = {styles.dayText}> {this.props.days.toString()}</Text>
                     <Button
                         icon = {
                             <Icon
@@ -83,38 +80,36 @@ class Goal extends React.Component {
                     />
 
                     <Button
-                icon = {
-                    <Icon
-                        style = {styles.cardIcon}
-                        name= 'times'
-                        color = 'grey'
+                        icon = {
+                            <Icon
+                                style = {styles.cardIcon}
+                                name= 'times'
+                                color = 'grey'
+                            />
+                        }
+                        title={ ""}
+                        type="clear"
+                        onPress = {() => this.handleDelete()}
                     />
-                }
-                title={ ""}
-                type="clear"
-                onPress = {() => this.handleDelete()}
-            />
-            </View>
+                </View>
 
                 <View>
                     <Text style = {styles.dayText}> {this.props.data.slice(-1)[0]} minutes to go</Text>
                 </View>
                 <View>
-                <AreaChart
-                    style={{ height: 100 }}
-                    data={ this.props.data }
-                    contentInset={{ top: 20, bottom: 5, left: 20, right: 20}}
-                    curve={ shape.curveNatural }
-                    svg={{ fill: '#6161F7' }}
-                >
-                    <Grid/>
-                </AreaChart>
+                    <AreaChart
+                        style={{ height: 100 }}
+                        data={ this.props.data }
+                        contentInset={{ top: 20, bottom: 5, left: 20, right: 20}}
+                        curve={ shape.curveNatural }
+                        svg={{ fill: '#6161F7' }}
+                    >
+                        <Grid/>
+                    </AreaChart>
                 </View>
             </View>
         );
     }
 }
 
-export default connect()(Goal)
-
-
+export default connect()(StepLegacy)

@@ -1,11 +1,11 @@
 
 
-import AddGoal from '../components/addGoal';
+import AddGoal from '../components/addStep';
 import React from 'react';
-import BotFunctions from './functions/addGoalBot';
+import BotFunctions from './functions/addStepBot';
 import EditName from './functions/editName';
 import EditProfileImageBot from './functions/editProfileImageBot';
-export const Steps = {
+export const StepsBot = {
 
     introduction: [
         {

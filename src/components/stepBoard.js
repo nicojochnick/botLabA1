@@ -1,6 +1,6 @@
 import {FlatList} from "react-native";
 import {styles} from "./theme";
-import GoalRow from './goal/goal'
+import Step from './step/step';
 import React from 'react';
 import {connect} from "react-redux";
 
@@ -8,20 +8,22 @@ const goalsSelector = (Obj) => {
     return Object.keys(Obj)
         .map((Key) => Obj[Key]);
 };
-export class GoalBoard extends React.Component{
+export class StepBoard extends React.Component{
     render() {
         return (
             < FlatList style = {styles.bottomContainer}
-                data = {this.props.goals}
+                data = {this.props.steps}
                 renderItem={({item}) => (
-                    <GoalRow
+                    <Step
                         points = {item.points}
                         name = {item.name}
                         id = {item.id}
-                        days = {item.days}
                         data = {item.data}
-                        priority = {item.priority}
+                        root = {item.root}
+                        open = {item.open}
+                        steps = {item.steps}
                         date = {item.date}
+                        done = {item.done}
                     />
                 )}
             />
@@ -32,7 +34,7 @@ export class GoalBoard extends React.Component{
 
 }
 const mapStateToProps = (state /*, ownProps*/) => ({
-    goals: goalsSelector(state.goals.byHash)});
+    steps: goalsSelector(state.steps.byHash)});
 
-export default connect(mapStateToProps)(GoalBoard);
+export default connect(mapStateToProps)(StepBoard);
 

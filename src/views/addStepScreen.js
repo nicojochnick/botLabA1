@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {View} from 'react-native'
-import AddGoal from '../components/addGoal';
+import AddGoal from '../components/addStep';
 
-class CreateView extends Component {
+class AddStepScreen extends Component {
     render() {
         return (
             <View style = {{marginTop: 100}}>
@@ -14,6 +14,6 @@ class CreateView extends Component {
     }
 }
 
-CreateView.propTypes = {};
+AddStepScreen.propTypes = {};
 
-export default CreateView;
+export default AddStepScreen;

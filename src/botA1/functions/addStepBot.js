@@ -4,24 +4,22 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {View, Text} from 'react-native'
 import moment from "moment";
-import {addGoal} from '../../redux/actions';
+import { addStep} from '../../redux/actions';
 import {connect} from 'react-redux';
 
-class AddGoalBot extends Component {
+class AddStepBot extends Component {
     constructor(props) {
         super(props);
         this.state = {
             newGoal : {
                 name: "",
-                days: [],
                 data: [0],
-                priority: 3,
                 done: false,
-                points: 0,
                 date:  moment().format('dddd, MMMM Do'),
                 id:  0,
-                view: 1,
-                tracking: 1,
+                open: false,
+                root: false,
+                steps: []
             },
         };
     }
@@ -50,7 +48,7 @@ class AddGoalBot extends Component {
 
     Save(){
         this.reset();
-        this.props.dispatch(addGoal(this.state.newGoal));
+        this.props.dispatch(addStep(this.state.newGoal));
         this.forceUpdate();
 
 
@@ -63,10 +61,10 @@ class AddGoalBot extends Component {
     }
 }
 
-AddGoalBot.propTypes = {};
+AddStepBot.propTypes = {};
 
 
-export default connect()(AddGoalBot)
+export default connect()(AddStepBot)
 
 
 

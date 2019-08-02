@@ -1,8 +1,8 @@
 
 /*Add Action Types */
 
-export const ADD_GOAL = 'ADD GOAL';
-export const DELETE_GOAL = 'DELETE GOAL';
+export const ADD_STEP = 'ADD STEP';
+export const DELETE_STEP = 'DELETE STEP';
 export const TOGGLE_GOAL = 'TOGGLE GOAL';
 export const CHECK_DATE = 'CHECK_DATE';
 export const ADD_DATE = 'ADD_DATE';
@@ -13,6 +13,7 @@ export const UPDATE_DATE = 'UPDATE_DATE';
 export const STORE_RENDER = 'STORE_RENDER';
 export const CHANGE_NAME = 'CHANGE_NAME';
 export const ADD_PROFILE_IMAGE = 'ADD_PROFILE_IMAGE';
+export const TOGGLE_OPEN = 'TOGGLE_OPEN';
 
 
 /* action creators */
@@ -20,8 +21,8 @@ export function addProfileImage(image) {
     return {type: ADD_PROFILE_IMAGE, payload: image}
 
 }
-export function addGoal(goal){
-    return { type: 'ADD_GOAL', payload:{goal}}
+export function addStep(step){
+    return { type: 'ADD_STEP', payload:{step}}
 }
 
 export function checkDate(currdate) {
@@ -48,12 +49,17 @@ export function updateDate(index,date){
     return {type: 'UPDATE_DATE', payload: {index, date}}
 }
 
-export function deleteGoal(index){
-    return {type: 'DELETE_GOAL', payload: index}
+export function deleteStep(index){
+    return {type: 'DELETE_STEP', payload: index}
 }
 
 export function toggleCheck(index){
     return {type: TOGGLE_CHECK, payload: index}
+}
+
+
+export function toggleOpen(index){
+    return {type: 'TOGGLE_OPEN', payload: index }
 }
 
 

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
-import goals from './goals.js'
+import steps from './steps.js'
 import bot from './bot1AReducer.js'
 
 
-const appReducer = combineReducers({goals:goals, bot:bot});
+const appReducer = combineReducers({steps:steps, bot:bot});
 
 const rootReducer = (state, action) => {
     if (action.type === 'USER_LOGOUT') {

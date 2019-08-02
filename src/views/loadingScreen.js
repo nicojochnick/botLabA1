@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native'
 import { firebase } from '@react-native-firebase/auth';
 
-export default class Loading extends React.Component {
+export default class LoadingScreen extends React.Component {
 
     componentDidMount() {
         firebase.auth().onAuthStateChanged(user => {

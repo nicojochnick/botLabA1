@@ -1,15 +1,12 @@
-import React, {Component} from 'react';
-import {styles} from "./theme";
-import {CheckBox, Input, Text} from "react-native-elements";
-import {Button, ScrollView, View} from "react-native";
-import {addGoal} from "../redux/actions";
-import {connect} from "react-redux";
-import moment from "moment";
+import moment from '../components/addStep';
+import {addStep} from '../redux/actions';
+import {Button, ScrollView, View} from 'react-native';
+import {CheckBox, Input, Text} from 'react-native-elements';
+import {styles} from '../components/theme';
+import {connect} from 'react-redux';
+import React from 'react';
 
-
-//NOTE: You need to split this component => the form and adding goal functionality should be separate!!!!!!
-
-class AddGoal extends Component {
+class AddStepLegacy extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,7 +19,8 @@ class AddGoal extends Component {
                 done: false,
                 points: 0,
                 date:  moment().format('dddd, MMMM Do'),
-                id:  0
+                id:  0,
+                steps: " "
             },
 
             check1: false,
@@ -91,7 +89,7 @@ class AddGoal extends Component {
     Save(goal){
         this.resetForm();
         this.addID();
-        this.props.dispatch(addGoal(goal));
+        this.props.dispatch(addStep(goal));
         this.forceUpdate();
         this.state.newGoal.days = [];
     }
@@ -136,46 +134,46 @@ class AddGoal extends Component {
                 <Text style = {{marginTop: 20}}> Days</Text>
                 <View style = {{flexDirection: "row",}}>
 
-                <CheckBox
-                    title='Sun'
-                    checked={this.state.check1}
-                    onIconPress={ () => this.addDay('S', 1)}
-                />
-                <CheckBox
-                    title='Mon'
-                    checked={this.state.check2}
-                    onIconPress={ () => this.addDay('M', 2)}
-                />
-                <CheckBox
-                    title='Tue'
-                    checked={this.state.check3}
-                    onIconPress={() => this.addDay('T',3)}
-                />
+                    <CheckBox
+                        title='Sun'
+                        checked={this.state.check1}
+                        onIconPress={ () => this.addDay('S', 1)}
+                    />
+                    <CheckBox
+                        title='Mon'
+                        checked={this.state.check2}
+                        onIconPress={ () => this.addDay('M', 2)}
+                    />
+                    <CheckBox
+                        title='Tue'
+                        checked={this.state.check3}
+                        onIconPress={() => this.addDay('T',3)}
+                    />
                 </View>
                 <View style = {{flexDirection: "row",}}>
-                <CheckBox
-                    title='Wed'
-                    checked={this.state.check4}
-                    onIconPress={() => this.addDay('W',4)}
-                />
-                <CheckBox
-                    title='Thu'
-                    checked={this.state.check5}
-                    onIconPress={ () => this.addDay('T',5)}
-                />
-                <CheckBox
-                    title='Fri'
-                    checked={this.state.check6}
-                    onIconPress={ () => this.addDay('F',6)}
-                />
+                    <CheckBox
+                        title='Wed'
+                        checked={this.state.check4}
+                        onIconPress={() => this.addDay('W',4)}
+                    />
+                    <CheckBox
+                        title='Thu'
+                        checked={this.state.check5}
+                        onIconPress={ () => this.addDay('T',5)}
+                    />
+                    <CheckBox
+                        title='Fri'
+                        checked={this.state.check6}
+                        onIconPress={ () => this.addDay('F',6)}
+                    />
                 </View>
                 <View style = {{flexDirection: "row", alignItems: "flex-end"}}>
 
-                <CheckBox
-                    title='Sat'
-                    checked={this.state.check7}
-                    onIconPress={ () => this.addDay('S',7)}
-                />
+                    <CheckBox
+                        title='Sat'
+                        checked={this.state.check7}
+                        onIconPress={ () => this.addDay('S',7)}
+                    />
                 </View>
                 <Button
                     // TODO Clear props when pressed
@@ -192,4 +190,4 @@ const mapStateToProps = (state /*, ownProps*/) => ({
 });
 
 
-export default connect(mapStateToProps)(AddGoal)
+export default connect(mapStateToProps)(AddStep)

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {changeName} from '../../redux/actions';
 
 import PropTypes from 'prop-types';
-import moment from './addGoalBot';
+import moment from './addStepBot';
 
 
 class EditName extends Component {
