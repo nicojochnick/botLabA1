@@ -27,7 +27,7 @@ const steps = (state = initialState, action) => {
                         open: action.payload.step.open,
                         done: action.payload.step.done,
                         id: action.payload.step.id,
-                        steps: action.payload.step.id,
+                        steps: action.payload.step.steps,
                         date: action.payload.step.date
                     }
                 }

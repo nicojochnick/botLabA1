@@ -19,13 +19,11 @@ class AddStepBot extends Component {
                 id:  0,
                 open: false,
                 root: false,
-                steps: []
+                steps: false,
             },
         };
     }
-
     //State is not being updated properly AT ALL
-
     componentDidMount() {
         const { steps } = this.props;
         const title  = steps.title.value.toLocaleString();

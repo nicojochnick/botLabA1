@@ -1,6 +1,6 @@
 
 
-import AddGoal from '../components/addStep';
+import AddGoal from '../components/addStep/addStepComponent';
 import React from 'react';
 import BotFunctions from './functions/addStepBot';
 import EditName from './functions/editName';

@@ -16,7 +16,6 @@ class Step extends React.Component {
         if (this.props.date[0] !== curDate) {
             this.props.dispatch(updateDate(this.props.id,curDate));
             this.props.dispatch(addDate(this.props.id))
-
         }
     }
 
@@ -58,6 +57,7 @@ class Step extends React.Component {
     render() {
         console.log(this.props);
         this.checkDate();
+        console.log(this.props.steps);
         return (
             <View style = {styles.goals}>
                 <View style = {styles.topGoals}>
@@ -76,9 +76,27 @@ class Step extends React.Component {
             />
                 </View>
 
-                { (this.props.open)
-                    ? <Text> OPEN SESEME</Text>
-                    : null
+                {(this.props.open)
+                    ? (this.props.steps)
+                        ? < FlatList style={styles.bottomContainer}
+                                     data={this.props.steps}
+                                     renderItem={({item}) => (
+                                         <Step
+                                             points={item.points}
+                                             name={item.name}
+                                             id={item.id}
+                                             data={item.data}
+                                             root={item.root}
+                                             open={item.open}
+                                             steps={item.steps}
+                                             date={item.date}
+                                             done={item.done}
+                                         />
+                                     )}
+                                     />
+                        : <Text> No sub-steps </Text>
+
+                    : <Text> OPEN </Text>
                 }
             </View>
         );
