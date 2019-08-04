@@ -34,6 +34,17 @@ const steps = (state = initialState, action) => {
             };
 
 
+        case 'CHANGE_STEP_NAME':
+            return update( state, {
+                byHash: {
+                    [action.payload.id]: {
+                        name: {$set: action.payload.text}
+                    }
+                }
+            } );
+
+
+
         case 'TOGGLE_OPEN':
             return update(state, {
                 byHash: {

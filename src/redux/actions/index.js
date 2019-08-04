@@ -14,6 +14,7 @@ export const STORE_RENDER = 'STORE_RENDER';
 export const CHANGE_NAME = 'CHANGE_NAME';
 export const ADD_PROFILE_IMAGE = 'ADD_PROFILE_IMAGE';
 export const TOGGLE_OPEN = 'TOGGLE_OPEN';
+export const CHANGE_STEP_NAME = 'CHANGE_STEP_NAME';
 
 
 /* action creators */
@@ -31,6 +32,10 @@ export function checkDate(currdate) {
 
 export function toggleGoal(id){
     return {type: 'TOGGLE_GOAL', id}
+}
+
+export function changeStepName(id, text){
+    return {type: "CHANGE_STEP_NAME", payload: {text, id}}
 }
 
 export function addTime(index, data, length){

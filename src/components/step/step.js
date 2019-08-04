@@ -1,9 +1,9 @@
-import {FlatList, Text, View} from 'react-native';
+import {FlatList, Text, View, TextInput} from 'react-native';
 import React from 'react';
 import {styles} from '../theme'
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {addDate, addTime, deleteStep, subtractTime, toggleOpen, updateDate} from '../../redux/actions';
+import {addDate, addTime, changeStepName, deleteStep, subtractTime, toggleOpen, updateDate} from '../../redux/actions';
 import {connect} from "react-redux";
 import {AreaChart, Grid} from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
@@ -54,14 +54,23 @@ class Step extends React.Component {
         this.props.dispatch(subtractTime(this.props.id, data, length))
     }
 
+    changeStepName(text){
+        this.props.dispatch(changeStepName(text, this.props.id));
+    }
+
     render() {
         console.log(this.props);
         this.checkDate();
         console.log(this.props.steps);
+        const name = this.props.name;
         return (
             <View style = {styles.goals}>
                 <View style = {styles.topGoals}>
-                    <Text style = {styles.goalText}> {this.props.name} </Text>
+                    <TextInput
+                        style = {styles.goalText}
+                        onEndEditing = {(text) => this.changeStepName(text)}
+                        value={name}
+                    />
                     <Button
                 icon = {
                     <Icon
