@@ -17,6 +17,7 @@ export const ADD_PROFILE_IMAGE = 'ADD_PROFILE_IMAGE';
 export const TOGGLE_OPEN = 'TOGGLE_OPEN';
 export const CHANGE_STEP_NAME = 'CHANGE_STEP_NAME';
 export const CHANGE_STEP_INFO = 'CHANGE_STEP_INFO';
+export const TOGGLE_DONE = 'TOGGLE_DONE';
 
 
 /* action creators */
@@ -75,6 +76,12 @@ export function toggleCheck(index){
 
 export function toggleOpen(index){
     return {type: 'TOGGLE_OPEN', payload: index }
+}
+
+
+export function toggleDone(id){
+    return {type: 'TOGGLE_DONE', payload: id}
+
 }
 
 

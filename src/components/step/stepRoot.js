@@ -31,6 +31,9 @@ export class StepRoot extends React.Component{
         this.changeStepInfo = this.changeStepInfo.bind(this);
         this.handleSwitch = this.handleSwitch.bind(this);
         this.handleAddStep = this.handleAddStep.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
+
         this.state = {
 
         };
@@ -51,8 +54,8 @@ export class StepRoot extends React.Component{
         this.props.dispatch(addDate(this.props.id))
     }
 
-    handleDelete(){
-        this.props.dispatch(deleteStep(this.props.id))
+    handleDelete(id){
+        this.props.dispatch(deleteStep(id))
     }
     printOut(days){
         if (days){
@@ -106,6 +109,10 @@ export class StepRoot extends React.Component{
         this.props.dispatch(addChildStep(parentID, [genericStep.id]))
     }
 
+    handleCheck(id) {
+
+    }
+
 
     render() {
         const roots = this.props.storeSteps.filter(function(item) {
@@ -122,6 +129,7 @@ export class StepRoot extends React.Component{
                         changeStepInfo = {this.changeStepInfo}
                         handleSwitch = {this.handleSwitch}
                         handleAddStep = {this.handleAddStep}
+                        handleDelete = {this.handleDelete}
                         name = {item.name}
                         info = {item.info}
                         id = {item.id}

@@ -1,7 +1,7 @@
 import {Text, View, TextInput, FlatList} from 'react-native';
 import React from 'react';
 import {styles} from '../theme'
-import {Button} from 'react-native-elements';
+import {Button,CheckBox} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {AreaChart, Grid} from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
@@ -28,7 +28,7 @@ const childrenSelector = (steps, ids) => steps.filter(step => checkForID(step, i
 
 
 
-class Step extends React.Component {
+export default class Step extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -46,7 +46,7 @@ class Step extends React.Component {
         // console.log(this.props.allSteps);
         // console.log(childrenSelector(this.props.allSteps, this.props.steps));
         return (
-            <View>
+            <View style = {{backgroundColor: "white"}}>
                 <View style = {styles.goals}>
                 <View style = {styles.topGoals}>
                     <TextInput
@@ -55,23 +55,40 @@ class Step extends React.Component {
                         onChangeText= {(name) => this.props.changeStepName(name,this.props.id)}
                         value = {this.props.name}
                    />
-                    <Button
-                        icon = {
-                            <Icon
-                                style = {styles.cardIcon}
-                                name= 'eye'
-                                color = '#3676FF'
-                            />
-                        }
-                        title={ ""}
-                        type="clear"
-                        onPress = {() => this.props.handleSwitch(this.props.id)}
-                    />
+                   <View style = {{flexDirection: "row"}}>
+                        <Button
+                            icon = {
+                                <Icon
+                                    name= 'times'
+                                    color = 'grey'
+                                />
+                            }
+                            title={ ""}
+                            type="clear"
+                            onPress = {() => this.props.handleDelete(this.props.id)}
+                        />
+                        <Button
+                            icon = {
+                                <Icon
+                                    name= 'eye'
+                                    color = '#3676FF'
+                                />
+                            }
+                            containerStyle = {{marginRight: -10}}
+                            title={ ""}
+                            type="clear"
+                            onPress = {() => this.props.handleSwitch(this.props.id)}
+                        />
+                        <CheckBox
+                            containerStyle = {{margin: -7, marginRight: -10}}
+                            checked={this.props.done}
+                            onPress={() => this.props.handleCheck}
+                        />
+                   </View>
                 </View>
                 {(this.props.open)
                     ? (this.props.steps.length > 0 && this.props.storeSteps !== undefined)
                         ? <View>
-                            <Text> Children below </Text>
                             < FlatList style = {styles.bottomContainer}
                                      data = {childrenSelector(this.props.storeSteps, this.props.steps)}
                                      renderItem={({item}) => (
@@ -80,7 +97,9 @@ class Step extends React.Component {
                                              changeStepInfo = {this.props.changeStepInfo}
                                              handleSwitch = {this.props.handleSwitch}
                                              handleAddStep = {this.props.handleAddStep}
+                                             handleDelete = {this.props.handleDelete}
                                              storeSteps = {this.props.storeSteps}
+                                             handleCheck = {this.props.handleCheck}
                                              name = {item.name}
                                              info = {item.info}
                                              id = {item.id}
@@ -102,36 +121,26 @@ class Step extends React.Component {
                         value = {this.props.info}/>
                 }
                     {(this.state.addStepInnerToggle)
-                        ? <Button
-                                type="clear"
-                                title = "add step..."
-                                titleStyle = {{color: "grey", fontSize: 15}}
-                                buttonStyle = {{justifyContent: "flex-start", margin: 0}}
-                                containerStyle = {{marginLeft: -5, marginBottom: -5}}
-                                onPress = {() => this.props.handleAddStep(this.props.id)}
-                            />
+                        ? <View>
+                            <Button
+                                    type="clear"
+                                    title = "add step..."
+                                    titleStyle = {{color: "grey", fontSize: 15}}
+                                    buttonStyle = {{justifyContent: "flex-start", margin: 0}}
+                                    containerStyle = {{marginLeft: -5, marginBottom: -5}}
+                                    onPress = {() => this.props.handleAddStep(this.props.id)}
+                                />
+                        </View>
                         : null
 
                     }
 
                 </View>
-                <Button
-                    type="clear"
-                    title = "add step..."
-                    titleStyle = {{color: "grey", fontSize: 15, justifyContent: "flex-start"}}
-                    buttonStyle = {{justifyContent: "flex-start", margin: 0}}
-                    containerStyle = {{margin: 0}}
-                />
             </View>
         );
     }
 }
 
-const mapStateToProps = (state /*, ownProps*/) => ({
-    allSteps: goalsSelector(state.steps.byHash)
-});
-
-export default connect(mapStateToProps)(Step);
 
 
 

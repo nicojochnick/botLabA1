@@ -52,18 +52,12 @@ export const styles = StyleSheet.create({
         shadowOffset: {width: 0, height: 2},
         shadowOpacity: 5,
         borderRadius: 6,
-        margin: 10,
-        marginBottom: 4,
+        margin: 8,
         padding: 8,
     },
     topGoals: {
         flexDirection: 'row',
         justifyContent: 'space-between'
-    },
-
-    cardIcon: {
-        alignItems: 'flex-end'
-
     },
 
     goalText: {
