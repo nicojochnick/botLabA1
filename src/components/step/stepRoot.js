@@ -108,7 +108,7 @@ export class StepRoot extends React.Component{
 
 
     render() {
-        const roots = this.props.steps.filter(function(item) {
+        const roots = this.props.storeSteps.filter(function(item) {
             return item.root === true;
         });
         console.log(this.props.steps);
@@ -131,6 +131,7 @@ export class StepRoot extends React.Component{
                         steps = {item.steps}
                         date = {item.date}
                         done = {item.done}
+                        storeSteps = {this.props.storeSteps}
                     />
                 )}
             />
@@ -141,7 +142,7 @@ export class StepRoot extends React.Component{
 
 }
 const mapStateToProps = (state /*, ownProps*/) => ({
-    steps: goalsSelector(state.steps.byHash)});
+    storeSteps: goalsSelector(state.steps.byHash)});
 
 export default connect(mapStateToProps)(StepRoot);
 

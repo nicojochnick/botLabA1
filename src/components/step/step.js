@@ -69,17 +69,18 @@ class Step extends React.Component {
                     />
                 </View>
                 {(this.props.open)
-                    ? (this.props.steps.length > 0 && this.props.allSteps !== undefined)
+                    ? (this.props.steps.length > 0 && this.props.storeSteps !== undefined)
                         ? <View>
                             <Text> Children below </Text>
                             < FlatList style = {styles.bottomContainer}
-                                     data = {childrenSelector(this.props.allSteps, this.props.steps)}
+                                     data = {childrenSelector(this.props.storeSteps, this.props.steps)}
                                      renderItem={({item}) => (
                                          <Step
                                              changeStepName = {this.props.changeStepName}
                                              changeStepInfo = {this.props.changeStepInfo}
                                              handleSwitch = {this.props.handleSwitch}
                                              handleAddStep = {this.props.handleAddStep}
+                                             storeSteps = {this.props.storeSteps}
                                              name = {item.name}
                                              info = {item.info}
                                              id = {item.id}
