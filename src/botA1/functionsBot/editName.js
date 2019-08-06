@@ -9,7 +9,6 @@ import moment from './addStepBot';
 
 class EditName extends Component {
 
-
     componentDidMount() {
         const { steps } = this.props;
         const name  = steps.name.value.toLocaleString();

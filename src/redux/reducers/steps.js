@@ -28,22 +28,34 @@ const steps = (state = initialState, action) => {
                         done: action.payload.step.done,
                         id: action.payload.step.id,
                         steps: action.payload.step.steps,
-                        date: action.payload.step.date
+                        date: action.payload.step.date,
+                        info: action.payload.step.info,
                     }
                 }
             };
 
+        case 'ADD_CHILD_STEP':
+        return update(state, {
+            byHash: {
+                [action.payload.parentID]: {
+                    steps: {$push: action.payload.childID}
+                }
+            }
+        });
 
         case 'CHANGE_STEP_NAME':
-            return update( state, {
+            return update(state, {
                 byHash: {
                     [action.payload.id]: {
-                        name: {$set: action.payload.text}
-                    }
-                }
-            } );
+                        name: {$set: action.payload.text}}}
+            });
 
-
+        case 'CHANGE_STEP_INFO':
+            return update(state, {
+                byHash: {
+                    [action.payload.id]: {
+                        info: {$set: action.payload.text}}}
+            });
 
         case 'TOGGLE_OPEN':
             return update(state, {

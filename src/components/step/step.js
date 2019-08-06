@@ -1,117 +1,138 @@
-import {FlatList, Text, View, TextInput} from 'react-native';
+import {Text, View, TextInput, FlatList} from 'react-native';
 import React from 'react';
 import {styles} from '../theme'
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {addDate, addTime, changeStepName, deleteStep, subtractTime, toggleOpen, updateDate} from '../../redux/actions';
-import {connect} from "react-redux";
 import {AreaChart, Grid} from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
-import moment from "moment";
+import AddStepComponent from '../addStep/addStepComponent';
+import {connect} from 'react-redux';
+import {StepRoot} from './stepRoot';
+
+const goalsSelector = (Obj) => {
+    return Object.keys(Obj)
+        .map((Key) => Obj[Key]);
+};
+
+
+function checkForID(step, ids) {
+    for (i = 0; i < ids.length; i++) {
+            if (ids[i] === step.id) {
+                return true
+            }
+    }
+    return false;
+}
+
+const childrenSelector = (steps, ids) => steps.filter(step => checkForID(step, ids));
+
+
 
 class Step extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            addStepInnerToggle: true,
+            addStepOutToggle: true
 
-    checkDate() {
-        const curDate = moment().format('dddd, MMMM Do');
-        if (this.props.date[0] !== curDate) {
-            this.props.dispatch(updateDate(this.props.id,curDate));
-            this.props.dispatch(addDate(this.props.id))
+
         }
     }
 
-    testFunction() {
-        const curDate = moment().format('dddd, MMMM Do');
-        this.props.dispatch(updateDate(this.props.id,curDate));
-        this.props.dispatch(addDate(this.props.id))
-    }
-
-    handleDelete(){
-        this.props.dispatch(deleteStep(this.props.id))
-    }
-    printOut(days){
-        if (days){
-            return days.toString;
-        }
-        return " no days"
-    }
-
-    handleSwitch(){
-        //change switch binary
-        this.props.dispatch(toggleOpen(this.props.id))
-    }
-
-    addTime(){
-        //NOTE: You have to dispatch this action with TIME and ID.]
-        const length = this.props.data.length;
-        const data = this.props.data.slice(-1)[0] + 15;
-
-        this.props.dispatch(addTime(this.props.id, data, length))
-    }
-
-    subtractTime(){
-        const length = this.props.data.length;
-        const data = this.props.data.slice(-1)[0] - 15;
-        this.props.dispatch(subtractTime(this.props.id, data, length))
-    }
-
-    changeStepName(text){
-        this.props.dispatch(changeStepName(text, this.props.id));
-    }
 
     render() {
-        console.log(this.props);
-        this.checkDate();
-        console.log(this.props.steps);
-        const name = this.props.name;
+        // console.log(this.props.steps);
+        // const name = this.props.name;
+        // console.log(this.props.allSteps);
+        // console.log(childrenSelector(this.props.allSteps, this.props.steps));
         return (
-            <View style = {styles.goals}>
+            <View>
+                <View style = {styles.goals}>
                 <View style = {styles.topGoals}>
                     <TextInput
                         style = {styles.goalText}
-                        onEndEditing = {(text) => this.changeStepName(text)}
-                        value={name}
-                    />
+                        ref= {(el) => { this.name= el; }}
+                        onChangeText= {(name) => this.props.changeStepName(name,this.props.id)}
+                        value = {this.props.name}
+                   />
                     <Button
-                icon = {
-                    <Icon
-                        style = {styles.cardIcon}
-                        name= 'eye'
-                        color = '#3676FF'
+                        icon = {
+                            <Icon
+                                style = {styles.cardIcon}
+                                name= 'eye'
+                                color = '#3676FF'
+                            />
+                        }
+                        title={ ""}
+                        type="clear"
+                        onPress = {() => this.props.handleSwitch(this.props.id)}
                     />
-                }
-                title={ ""}
-                type="clear"
-                onPress = {() => this.handleSwitch()}
-            />
                 </View>
-
                 {(this.props.open)
-                    ? (this.props.steps)
-                        ? < FlatList style={styles.bottomContainer}
-                                     data={this.props.steps}
+                    ? (this.props.steps.length > 0 && this.props.allSteps !== undefined)
+                        ? <View>
+                            <Text> Children below </Text>
+                            < FlatList style = {styles.bottomContainer}
+                                     data = {childrenSelector(this.props.allSteps, this.props.steps)}
                                      renderItem={({item}) => (
                                          <Step
-                                             points={item.points}
-                                             name={item.name}
-                                             id={item.id}
-                                             data={item.data}
-                                             root={item.root}
-                                             open={item.open}
-                                             steps={item.steps}
-                                             date={item.date}
-                                             done={item.done}
+                                             changeStepName = {this.props.changeStepName}
+                                             changeStepInfo = {this.props.changeStepInfo}
+                                             handleSwitch = {this.props.handleSwitch}
+                                             handleAddStep = {this.props.handleAddStep}
+                                             name = {item.name}
+                                             info = {item.info}
+                                             id = {item.id}
+                                             data = {item.data}
+                                             root = {item.root}
+                                             open = {item.open}
+                                             steps = {item.steps}
+                                             date = {item.date}
+                                             done = {item.done}
                                          />
                                      )}
-                                     />
-                        : <Text> No sub-steps </Text>
+                            />
+                        </View>
+                        : null
 
-                    : <Text> OPEN </Text>
+                    : <TextInput
+                        ref= {(el) => { this.name= el; }}
+                        onChangeText= {(name) => this.props.changeStepInfo(name,this.props.id)}
+                        value = {this.props.info}/>
                 }
+                    {(this.state.addStepInnerToggle)
+                        ? <Button
+                                type="clear"
+                                title = "add step..."
+                                titleStyle = {{color: "grey", fontSize: 15}}
+                                buttonStyle = {{justifyContent: "flex-start", margin: 0}}
+                                containerStyle = {{marginLeft: -5, marginBottom: -5}}
+                                onPress = {() => this.props.handleAddStep(this.props.id)}
+                            />
+                        : null
+
+                    }
+
+                </View>
+                <Button
+                    type="clear"
+                    title = "add step..."
+                    titleStyle = {{color: "grey", fontSize: 15, justifyContent: "flex-start"}}
+                    buttonStyle = {{justifyContent: "flex-start", margin: 0}}
+                    containerStyle = {{margin: 0}}
+                />
             </View>
         );
     }
 }
 
-export default connect()(Step)
+const mapStateToProps = (state /*, ownProps*/) => ({
+    allSteps: goalsSelector(state.steps.byHash)
+});
+
+export default connect(mapStateToProps)(Step);
+
+
+
 
 

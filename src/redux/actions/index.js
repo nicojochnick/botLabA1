@@ -2,6 +2,7 @@
 /*Add Action Types */
 
 export const ADD_STEP = 'ADD STEP';
+export const ADD_CHILD_STEP = 'ADD CHILD STEP';
 export const DELETE_STEP = 'DELETE STEP';
 export const TOGGLE_GOAL = 'TOGGLE GOAL';
 export const CHECK_DATE = 'CHECK_DATE';
@@ -15,6 +16,7 @@ export const CHANGE_NAME = 'CHANGE_NAME';
 export const ADD_PROFILE_IMAGE = 'ADD_PROFILE_IMAGE';
 export const TOGGLE_OPEN = 'TOGGLE_OPEN';
 export const CHANGE_STEP_NAME = 'CHANGE_STEP_NAME';
+export const CHANGE_STEP_INFO = 'CHANGE_STEP_INFO';
 
 
 /* action creators */
@@ -26,6 +28,10 @@ export function addStep(step){
     return { type: 'ADD_STEP', payload:{step}}
 }
 
+export function addChildStep(parentID, childID) {
+    return { type: 'ADD_CHILD_STEP', payload: {parentID, childID}}
+}
+
 export function checkDate(currdate) {
     return { type: 'CHECK_DATE', payload: currdate}
 }
@@ -34,8 +40,12 @@ export function toggleGoal(id){
     return {type: 'TOGGLE_GOAL', id}
 }
 
-export function changeStepName(id, text){
+export function changeStepName(text, id){
     return {type: "CHANGE_STEP_NAME", payload: {text, id}}
+}
+
+export function changeStepInfo(text, id){
+    return {type: "CHANGE_STEP_INFO", payload: {text, id}}
 }
 
 export function addTime(index, data, length){

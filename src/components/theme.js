@@ -53,7 +53,8 @@ export const styles = StyleSheet.create({
         shadowOpacity: 5,
         borderRadius: 6,
         margin: 10,
-        padding: 10,
+        marginBottom: 4,
+        padding: 8,
     },
     topGoals: {
         flexDirection: 'row',

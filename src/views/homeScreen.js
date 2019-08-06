@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {View, Text, ScrollView} from 'react-native'
 import {Card, Button} from 'react-native-elements'
 import BotA1Top from '../botA1/botA1Top';
-import StepBoard from '../components/stepBoard';
+import StepBoard from '../components/step/stepRoot';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Identity from '../components/identity';

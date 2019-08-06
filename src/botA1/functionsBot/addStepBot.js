@@ -18,8 +18,9 @@ class AddStepBot extends Component {
                 date:  moment().format('dddd, MMMM Do'),
                 id:  0,
                 open: false,
-                root: false,
-                steps: false,
+                root: true,
+                steps: [],
+                info: "add a description"
             },
         };
     }
@@ -27,10 +28,8 @@ class AddStepBot extends Component {
     componentDidMount() {
         const { steps } = this.props;
         const title  = steps.title.value.toLocaleString();
-        console.log(title);
         this.state.newGoal["name"] = title;
         this.state.newGoal['id'] = moment().format();
-        console.log(this.state.newGoal);
         this.Save()
     }
 

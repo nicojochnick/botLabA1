@@ -2,9 +2,9 @@
 
 import AddGoal from '../components/addStep/addStepComponent';
 import React from 'react';
-import BotFunctions from './functions/addStepBot';
-import EditName from './functions/editName';
-import EditProfileImageBot from './functions/editProfileImageBot';
+import BotFunctions from './functionsBot/addStepBot';
+import EditName from './functionsBot/editName';
+import EditProfileImageBot from './functionsBot/editProfileImageBot';
 export const StepsBot = {
 
     introduction: [
