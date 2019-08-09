@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'react-native-elements'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {storeRenderCount} from "../redux/actions";
+import {storeRenderCount} from "../../redux/actions";
 import {StepsBot} from './stepsBot'
 import {View} from 'react-native'
 import {Input} from 'react-native-elements'

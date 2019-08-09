@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text} from 'react-native'
 import {connect} from 'react-redux';
-import {changeName} from '../../redux/actions';
+import {changeName} from '../../../redux/actions';
 
 import PropTypes from 'prop-types';
 import moment from './addStepBot';

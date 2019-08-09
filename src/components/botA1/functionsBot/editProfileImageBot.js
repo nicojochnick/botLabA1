@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Text} from 'react-native'
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {addProfileImage} from '../../redux/actions';
+import {addProfileImage} from '../../../redux/actions';
 
 
 

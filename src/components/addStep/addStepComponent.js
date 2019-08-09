@@ -32,10 +32,7 @@ class AddStepComponent extends Component {
     handleAddStep() {
 
     }
-
-
     //TODO: Use a real ID creator here in production version.
-
     resetForm = () => {
         this.setState(this.baseState);
     };

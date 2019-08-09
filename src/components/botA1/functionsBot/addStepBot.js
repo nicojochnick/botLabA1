@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {View, Text} from 'react-native'
 import moment from "moment";
-import { addStep} from '../../redux/actions';
+import { addStep} from '../../../redux/actions';
 import {connect} from 'react-redux';
 
 class AddStepBot extends Component {

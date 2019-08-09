@@ -63,6 +63,15 @@ const steps = (state = initialState, action) => {
                     [action.payload]: {
                         open: {$apply: function (x){return !x;}}}}
                 });
+
+
+        case 'TOGGLE_DONE':
+            return update(state, {
+            byHash: {
+                [action.payload]: {
+                    done: {$apply: function (x){return !x;}}}}
+        });
+
         case 'ADD_DATE':
             return update(state, {
                 byHash: {
@@ -99,12 +108,6 @@ const steps = (state = initialState, action) => {
             console.log(action.payload);
             delete newState.byHash[action.payload];
             return newState;
-
-        case 'TOGGLE_CHECK':
-            return {
-                ...state,
-                viewCheckbox: !viewCheckbox
-            };
 
 
         case 'ADD_TIME':

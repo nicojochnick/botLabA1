@@ -8,6 +8,7 @@ import * as shape from 'd3-shape'
 import AddStepComponent from '../addStep/addStepComponent';
 import {connect} from 'react-redux';
 import {StepRoot} from './stepRoot';
+import StepHeader from './stepHeader';
 
 const goalsSelector = (Obj) => {
     return Object.keys(Obj)
@@ -41,12 +42,8 @@ export default class Step extends React.Component {
 
 
     render() {
-        // console.log(this.props.steps);
-        // const name = this.props.name;
-        // console.log(this.props.allSteps);
-        // console.log(childrenSelector(this.props.allSteps, this.props.steps));
         return (
-            <View style = {{backgroundColor: "white"}}>
+            <View style = {{}}>
                 <View style = {styles.goals}>
                 <View style = {styles.topGoals}>
                     <TextInput
@@ -54,7 +51,9 @@ export default class Step extends React.Component {
                         ref= {(el) => { this.name= el; }}
                         onChangeText= {(name) => this.props.changeStepName(name,this.props.id)}
                         value = {this.props.name}
+                        multiline = {true}
                    />
+
                    <View style = {{flexDirection: "row"}}>
                         <Button
                             icon = {
@@ -82,13 +81,30 @@ export default class Step extends React.Component {
                         <CheckBox
                             containerStyle = {{margin: -7, marginRight: -10}}
                             checked={this.props.done}
-                            onPress={() => this.props.handleCheck}
+                            onPress={() => this.props.handleCheck(this.props.id, this.props.steps, this.props.storeSteps)}
+                            checkedColor='#3676FF'
+
                         />
                    </View>
                 </View>
                 {(this.props.open)
-                    ? (this.props.steps.length > 0 && this.props.storeSteps !== undefined)
+                    ? (true)
                         ? <View>
+                            <TextInput
+                                ref= {(el) => { this.name= el; }}
+                                onChangeText= {(name) => this.props.changeStepInfo(name,this.props.id)}
+                                value = {this.props.info}
+                                multiline = {true}
+
+                            />
+                            <Button
+                                type="clear"
+                                title = "add step..."
+                                titleStyle = {{color: "grey", fontSize: 15}}
+                                buttonStyle = {{justifyContent: "flex-start", margin: 0}}
+                                containerStyle = {{marginLeft: -5, marginBottom: -5}}
+                                onPress = {() => this.props.handleAddStep(this.props.id)}
+                            />
                             < FlatList style = {styles.bottomContainer}
                                      data = {childrenSelector(this.props.storeSteps, this.props.steps)}
                                      renderItem={({item}) => (
@@ -100,6 +116,7 @@ export default class Step extends React.Component {
                                              handleDelete = {this.props.handleDelete}
                                              storeSteps = {this.props.storeSteps}
                                              handleCheck = {this.props.handleCheck}
+                                             checkCheck = {this.props.checkCheck}
                                              name = {item.name}
                                              info = {item.info}
                                              id = {item.id}
@@ -115,21 +132,10 @@ export default class Step extends React.Component {
                         </View>
                         : null
 
-                    : <TextInput
-                        ref= {(el) => { this.name= el; }}
-                        onChangeText= {(name) => this.props.changeStepInfo(name,this.props.id)}
-                        value = {this.props.info}/>
+                    : null
                 }
                     {(this.state.addStepInnerToggle)
                         ? <View>
-                            <Button
-                                    type="clear"
-                                    title = "add step..."
-                                    titleStyle = {{color: "grey", fontSize: 15}}
-                                    buttonStyle = {{justifyContent: "flex-start", margin: 0}}
-                                    containerStyle = {{marginLeft: -5, marginBottom: -5}}
-                                    onPress = {() => this.props.handleAddStep(this.props.id)}
-                                />
                         </View>
                         : null
 

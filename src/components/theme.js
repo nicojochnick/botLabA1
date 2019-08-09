@@ -96,7 +96,6 @@ export const styles = StyleSheet.create({
     bottomContainer: {
         borderColor: "black",
         borderWidth: 0,
-        backgroundColor: '#f9f9f9',
         flex: 1,
         alignContent: "center"
     },

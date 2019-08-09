@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {StepsBot} from './stepsBot';
 import ChatBot from 'react-native-chatbot';
-import moment from '../components/addStep/addStepComponent';
+import moment from '../addStep/addStepComponent';
 
 class BotA1Component extends Component {
 

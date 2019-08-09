@@ -1,6 +1,6 @@
 
 
-import AddGoal from '../components/addStep/addStepComponent';
+import AddGoal from '../addStep/addStepComponent';
 import React from 'react';
 import BotFunctions from './functionsBot/addStepBot';
 import EditName from './functionsBot/editName';
@@ -45,26 +45,6 @@ export const StepsBot = {
 
     ],
 
-    newOne: [
-        {
-            id: '1',
-            message: "Hi Builders! I'm an A.I that helps people achieve their goals faster"
-
-        }
-    ],
-
-
-    washingtonBuilders:  [
-        {
-            id: '1',
-            message: "'Hi Washington Builders!",
-            trigger: '2'
-        },
-        {
-            id: '1',
-            message: "I'm an A.I. that helps people achieve their goals faster"
-        },
-    ],
 
     newIntro: [
         {
@@ -132,27 +112,20 @@ export const StepsBot = {
             component: <BotFunctions/>,
             asMessage: true,
             trigger: '8'
-
-
         },
         {
-            id: '8',
-            message: 'how would you like to track your progress?',
-            trigger: 'tracking'
-        },
-        {
-            id: 'tracking',
-            options: [
-                {value: 'option1', label: 'Time (ex: 30 minutes)', trigger: "9"},
-                {value: 'option2', label: 'Daily Completion', trigger: "9"},
-            ],
 
+            id: '8'
         },
-        {
-            id: '9',
-            message: "great, your goal is all setup!",
-            end: true,
-        },
+
+
+
+
+
+
+
+
+
 
         {
             id: "findaGoal",
@@ -211,6 +184,10 @@ export const StepsBot = {
         }
     ],
 
+
+
+
+
     makeGoalSimple: [
         {
             id: '1',
@@ -221,27 +198,6 @@ export const StepsBot = {
             id: 'createGoal',
             component: <AddGoal/>
         }],
-
-
-    test: [
-        {
-            id: '1',
-            message: "done",
-            end: true
-        },],
-
-    test2: [
-        {
-            id: '1',
-            message: "change",
-            trigger: "2"
-        },
-        {
-            id: '2',
-            message: "okay",
-        }
-
-    ]
 
 
 };

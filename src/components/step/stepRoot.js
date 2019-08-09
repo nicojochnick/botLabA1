@@ -12,7 +12,7 @@ import {
     subtractTime,
     addStep,
     toggleOpen,
-    updateDate, addChildStep,
+    updateDate, addChildStep, toggleDone,
 } from '../../redux/actions';
 import moment from "moment";
 
@@ -23,9 +23,21 @@ const goalsSelector = (Obj) => {
 };
 
 
-export class StepRoot extends React.Component{
+function checkForID(step, ids) {
+    for (i = 0; i < ids.length; i++) {
+        if (ids[i] === step.id) {
+            return true
+        }
+    }
+    return false;
+}
 
-    constructor(props){
+const childrenSelector = (steps, ids) => steps.filter(step => checkForID(step, ids));
+
+
+export class StepRoot extends React.Component {
+
+    constructor(props) {
         super(props);
         this.changeStepName = this.changeStepName.bind(this);
         this.changeStepInfo = this.changeStepInfo.bind(this);
@@ -33,43 +45,44 @@ export class StepRoot extends React.Component{
         this.handleAddStep = this.handleAddStep.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
+        this.checkCheck = this.checkCheck.bind(this);
 
-        this.state = {
 
-        };
+        this.state = {};
 
     }
 
     checkDate() {
         const curDate = moment().format('dddd, MMMM Do');
         if (this.props.date[0] !== curDate) {
-            this.props.dispatch(updateDate(this.props.id,curDate));
+            this.props.dispatch(updateDate(this.props.id, curDate));
             this.props.dispatch(addDate(this.props.id))
         }
     }
 
     testFunction() {
         const curDate = moment().format('dddd, MMMM Do');
-        this.props.dispatch(updateDate(this.props.id,curDate));
+        this.props.dispatch(updateDate(this.props.id, curDate));
         this.props.dispatch(addDate(this.props.id))
     }
 
-    handleDelete(id){
+    handleDelete(id) {
         this.props.dispatch(deleteStep(id))
     }
-    printOut(days){
-        if (days){
+
+    printOut(days) {
+        if (days) {
             return days.toString;
         }
         return " no days"
     }
 
-    handleSwitch(id){
+    handleSwitch(id) {
         //change switch binary
         this.props.dispatch(toggleOpen(id))
     }
 
-    addTime(){
+    addTime() {
         //NOTE: You have to dispatch this action with TIME and ID.]
         const length = this.props.data.length;
         const data = this.props.data.slice(-1)[0] + 15;
@@ -77,28 +90,28 @@ export class StepRoot extends React.Component{
         this.props.dispatch(addTime(this.props.id, data, length))
     }
 
-    subtractTime(){
+    subtractTime() {
         const length = this.props.data.length;
         const data = this.props.data.slice(-1)[0] - 15;
         this.props.dispatch(subtractTime(this.props.id, data, length))
     }
 
-    changeStepName(text, id){
+    changeStepName(text, id) {
         this.props.dispatch(changeStepName(text, id));
     }
 
-    changeStepInfo(text, id){
+    changeStepInfo(text, id) {
         console.log(text);
         this.props.dispatch(changeStepInfo(text, id));
     }
 
-    handleAddStep(parentID){
+    handleAddStep(parentID) {
         const genericStep = {
             name: "add a title",
             data: [0],
             done: false,
-            date:  moment().format('dddd, MMMM Do'),
-            id:  moment().format(),
+            date: moment().format('dddd, MMMM Do'),
+            id: moment().format(),
             open: false,
             root: false,
             steps: [],
@@ -109,9 +122,25 @@ export class StepRoot extends React.Component{
         this.props.dispatch(addChildStep(parentID, [genericStep.id]))
     }
 
-    handleCheck(id) {
+    handleCheck(id, childrenID, allSteps) {
+        this.props.dispatch(toggleDone(id));
+    }
+
+    checkCheck(id, childrenID, allSteps) {
+        if (childrenID === undefined || childrenID.length < 1) {
+            return false
+        } else {
+        const children = childrenSelector(childrenID, allSteps);
+        for (i = 0; i < children.length - 1; i++) {
+            if (children[i].done === false) {
+                return false;
+            }
+        }
+        //this needs to be the parentID!
+        this.props.dispatch(toggleDone(id))
 
     }
+}
 
 
     render() {
@@ -130,6 +159,8 @@ export class StepRoot extends React.Component{
                         handleSwitch = {this.handleSwitch}
                         handleAddStep = {this.handleAddStep}
                         handleDelete = {this.handleDelete}
+                        handleCheck = {this.handleCheck}
+                        checkCheck = {this.checkCheck}
                         name = {item.name}
                         info = {item.info}
                         id = {item.id}
