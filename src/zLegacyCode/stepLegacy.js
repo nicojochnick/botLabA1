@@ -79,18 +79,6 @@ class StepLegacy extends React.Component {
                         type='clear'
                     />
 
-                    <Button
-                        icon = {
-                            <Icon
-                                style = {styles.cardIcon}
-                                name= 'times'
-                                color = 'grey'
-                            />
-                        }
-                        title={ ""}
-                        type="clear"
-                        onPress = {() => this.handleDelete()}
-                    />
                 </View>
 
                 <View>

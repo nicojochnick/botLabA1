@@ -5,7 +5,7 @@ const initialState = {
     count: 0,
     byId: [],
     byHash: {},
-    name: "",
+    name: "Add a Name",
     profileImage: "",
 };
 

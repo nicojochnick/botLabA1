@@ -16,6 +16,9 @@ import {
 } from '../../redux/actions';
 import moment from "moment";
 
+///*** This should be like a displayer of steps component that takes the specific filter as a prop ***.
+
+
 
 const goalsSelector = (Obj) => {
     return Object.keys(Obj)
@@ -144,14 +147,13 @@ export class StepRoot extends React.Component {
 
 
     render() {
-        const roots = this.props.storeSteps.filter(function(item) {
-            return item.root === true;
-        });
-        console.log(this.props.steps);
+        console.log(this.props.storeSteps);
+        const filteredSteps = this.props.storeSteps.filter((item) => item.tribeID === this.props.tribeID);
+        console.log(filteredSteps);
 
         return (
             < FlatList style = {styles.bottomContainer}
-                data = {roots}
+                data = {filteredSteps}
                 renderItem={({item}) => (
                     <Step
                         changeStepName = {this.changeStepName}

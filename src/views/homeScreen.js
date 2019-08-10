@@ -7,31 +7,25 @@ import StepRoot from '../components/step/stepRoot';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Identity from '../components/user/identity';
+import AddTribe from '../components/tribe/addTribe';
+import TribeComponent from '../components/tribe/tribe';
+import TribeRoot from '../components/tribe/tribeRoot';
 
 class HomeScreen extends Component {
     render() {
         return (
             <ScrollView>
                     <View style = {{flex: 1, flexDirection: "row",paddingTop: 30, paddingBottom: 10,alignItems: "center", backgroundColor: '#CFCFCF'}}>
-                        <Identity/>
-                        <Button
-                            icon = {<Ionicons style = {{marginRight: 10,}}
-                                      name = {'ios-add'}
-                                      color = "white"
-                                      disabledStyle = {{color:"grey"}}
-                                      size = {60}
-                                      onPress = {() => this.props.navigation.navigate('Add')}/> }
-                            type = "clear"
-                            onPress = {() => this.props.navigation.navigate('Add')}
-
-                        />
+                        <Identity size = {"large"}/>
+                        <AddTribe/>
                     </View>
-                        <StepRoot/>
+                        <TribeRoot/>
             </ScrollView>
         );
     }
 }
 
 HomeScreen.propTypes = {};
+
 
 export default HomeScreen;

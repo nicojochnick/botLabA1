@@ -4,7 +4,7 @@ import {View, TextInput} from 'react-native'
 import { Avatar } from 'react-native-elements';
 import {connect} from "react-redux";
 import ImagePicker from 'react-native-image-picker';
-import {addProfileImage, changeName} from '../../redux/actions';
+import {addProfileImage, changeName, changeStepName} from '../../redux/actions';
 import {styles} from '../theme';
 
 
@@ -39,28 +39,31 @@ class Identity extends Component {
                 // });
                 this.props.dispatch(addProfileImage(source))
             }
-        });
+        })
     }
+
+    changeName(text) {
+        this.props.dispatch(changeName(text));
+    }
+
     render() {
-        console.log(this.props.botID.profileImage.uri);
+        console.log(this.props.botID);
 
         return (
-            <View style = {{flexDirection: "row", justifyContent: "flex-start", alignItems: "center"}}>
+            <View style = {{flexDirection: "row", alignContent: "center", paddingTop: 10}}>
                 <Avatar
                     rounded = {true}
                     containerStyle = {{marginLeft: 10, borderWidth: 2, borderColor: "white"}}
-                    size= "large"
+                    size= {this.props.size}
                     source = {{uri:this.props.botID.profileImage.uri }}
                     onPress = {() => this.openImage(this.options)}
                 />
                 <TextInput
                     style = {styles.goalText}
-                    ref= {(el) => { this.name= el; }}
-                    onChangeText= {(name) => this.props.dispatch(changeName(name))}
+                    onChangeText = {(name) => this.changeName(name)}
                     value = {this.props.botID.name}
-                    selectionColor = "white"
-                    multiline = {true}
-                />
+                    selectionColor = "blue"/>
+
             </View>
         );
     }

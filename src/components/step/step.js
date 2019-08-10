@@ -52,7 +52,7 @@ export default class Step extends React.Component {
                         onChangeText= {(name) => this.props.changeStepName(name,this.props.id)}
                         value = {this.props.name}
                         multiline = {true}
-                   />
+                    />
 
                    <View style = {{flexDirection: "row"}}>
                         <Button
@@ -96,38 +96,6 @@ export default class Step extends React.Component {
                                 value = {this.props.info}
                                 multiline = {true}
 
-                            />
-                            <Button
-                                type="clear"
-                                title = "add step..."
-                                titleStyle = {{color: "grey", fontSize: 15}}
-                                buttonStyle = {{justifyContent: "flex-start", margin: 0}}
-                                containerStyle = {{marginLeft: -5, marginBottom: -5}}
-                                onPress = {() => this.props.handleAddStep(this.props.id)}
-                            />
-                            < FlatList style = {styles.bottomContainer}
-                                     data = {childrenSelector(this.props.storeSteps, this.props.steps)}
-                                     renderItem={({item}) => (
-                                         <Step
-                                             changeStepName = {this.props.changeStepName}
-                                             changeStepInfo = {this.props.changeStepInfo}
-                                             handleSwitch = {this.props.handleSwitch}
-                                             handleAddStep = {this.props.handleAddStep}
-                                             handleDelete = {this.props.handleDelete}
-                                             storeSteps = {this.props.storeSteps}
-                                             handleCheck = {this.props.handleCheck}
-                                             checkCheck = {this.props.checkCheck}
-                                             name = {item.name}
-                                             info = {item.info}
-                                             id = {item.id}
-                                             data = {item.data}
-                                             root = {item.root}
-                                             open = {item.open}
-                                             steps = {item.steps}
-                                             date = {item.date}
-                                             done = {item.done}
-                                         />
-                                     )}
                             />
                         </View>
                         : null

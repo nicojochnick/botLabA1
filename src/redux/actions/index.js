@@ -20,6 +20,11 @@ export const CHANGE_STEP_INFO = 'CHANGE_STEP_INFO';
 export const TOGGLE_DONE = 'TOGGLE_DONE';
 
 
+export const ADD_TRIBE = 'ADD_TRIBE';
+
+
+export const ADD_BOX = 'ADD_BOX';
+
 /* action creators */
 export function addProfileImage(image) {
     return {type: ADD_PROFILE_IMAGE, payload: image}
@@ -92,3 +97,21 @@ export function storeRenderCount(count){
 export function changeName(name){
     return {type: CHANGE_NAME, payload: name}
 }
+
+
+///TRIBE ACTION CREATORS //
+
+export function addTribe(tribe){
+    return { type: 'ADD_TRIBE', payload:{tribe}}
+}
+
+
+
+///BOX ACTION CREATORS //
+
+export function addBox(box){
+    return { type: 'ADD_BOX', payload:{box}}
+}
+
+
+
