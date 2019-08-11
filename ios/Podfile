@@ -4,6 +4,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 target 'botLabA1' do
   # Pods for botLabA1
+
   pod 'React', :path => '../node_modules/react-native/'
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
   pod 'React-ART', :path => '../node_modules/react-native/Libraries/ART'
@@ -36,6 +37,9 @@ target 'botLabA1' do
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
+
+  pod 'RNFBDatabase', :path => '../node_modules/@react-native-firebase/database/ios'
 
   target 'botLabA1Tests' do
     inherit! :search_paths
