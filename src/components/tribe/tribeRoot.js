@@ -4,6 +4,8 @@ import {FlatList, View} from 'react-native';
 import {styles} from '../theme';
 import TribeComponent from './tribe';
 import {connect} from 'react-redux';
+import moment from 'moment';
+import {addBox, deleteBox, changeTribeName, deleteTribe} from '../../redux/actions';
 
 const tribesSelector = (Obj) => {
     return Object.keys(Obj)
@@ -12,8 +14,65 @@ const tribesSelector = (Obj) => {
 
 
 class TribeRoot extends Component {
+    constructor(props) {
+        super(props);
+        this.changeBoxName = this.changeBoxName.bind(this);
+        this.handleAddBox = this.handleAddBox.bind(this);
+        this.handleDeleteBox = this.handleDeleteBox.bind(this);
+
+
+        this.changeTribeName = this.changeTribeName.bind(this);
+        this.handleDeleteTribe = this.handleDeleteTribe.bind(this);
+        this.computeProgress = this.computeProgress.bind(this);
+        this.state = {};
+
+    }
+
+    handleAddBox(tribeID) {
+        const genericBox = {
+            name: "add a title",
+            id: moment().format(),
+            tribeID: tribeID,
+            open: false,
+            info: "add a description"
+        };
+        //dispatch two actions -> 1. ) create generic step in step database, 2.) add step to child feature of the correct step.
+        this.props.dispatch(addBox(genericBox));
+    }
+
+    handleDeleteBox(boxID){
+        this.props.dispatch(deleteBox(boxID))
+
+    }
+
+    changeBoxName(boxID){
+
+    }
+
+    changeTribeName(text,index){
+        this.props.dispatch(changeTribeName(text,index))
+    }
+
+    handleDeleteTribe(tribeID) {
+        this.props.dispatch(deleteTribe(tribeID))
+    }
+
+//input relevant steps
+    computeProgress(tribeID){
+        let steps = this.props.storeSteps.filter(function(step) {return step.tribeID === tribeID});
+        console.log(steps);
+        let total = steps.length;
+        let checkSteps = steps.filter( function(step) {return step.done === true});
+        console.log(checkSteps);
+        let checked = checkSteps.length;
+        return total/checked;
+    }
+
+
     render() {
+        console.log(this.props.state);
         console.log(this.props.storeTribes);
+
         return (
             <View>
                 < FlatList style = {styles.bottomContainer}
@@ -24,6 +83,14 @@ class TribeRoot extends Component {
                                    info = {item.info}
                                    id = {item.id}
                                    open = {item.open}
+                                   handleDeleteBox = {this.handleDeleteBox}
+                                   handleAddBox = {this.handleAddBox}
+                                   changeBoxName = {this.changeBoxName}
+                                   tribeID = {item.id}
+                                   computeProgress = {this.computeProgress}
+
+                                   handleDeleteTribe = {this.handleDeleteTribe}
+                                   changeTribeName = {this.changeTribeName}
                                 />
                            )}
                 />
@@ -36,7 +103,11 @@ class TribeRoot extends Component {
 TribeRoot.propTypes = {};
 
 const mapStateToProps = (state /*, ownProps*/) => ({
-    storeTribes: tribesSelector(state.tribes.byHash)});
+    storeTribes: tribesSelector(state.tribes.byHash),
+    storeSteps:  tribesSelector(state.steps.byHash),
+    state: state
+
+});
 
 export default connect(mapStateToProps)(TribeRoot);
 

@@ -4,6 +4,7 @@ import update from 'immutability-helper';
 const initialState = {
     count: 0,
     byId: [],
+    userID:' ',
     byHash: {},
     name: "Add a Name",
     profileImage: "",

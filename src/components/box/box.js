@@ -15,7 +15,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 class Box extends Component {
 
-    handleAddStep(tribeID) {
+    handleAddStep(tribeID, boxID) {
         const genericStep = {
             name: "add a title",
             data: [0],
@@ -27,6 +27,7 @@ class Box extends Component {
             steps: [],
             deadline:"",
             userID: "",
+            boxId: boxID,
             tribeID: tribeID,
             info: "add a description"
         };
@@ -39,33 +40,41 @@ class Box extends Component {
         return (
             <View style={styles.goals}>
                 <View style = {{flexDirection: "row"}}>
-                    <Identity size = "small"/>
-                    <Button
-                        icon = {<Ionicons style = {{marginRight: 5}}
-                                          name = {'ios-add'}
-                                          color = "black"
-                                          disabledStyle = {{color:"grey"}}
-                                          size = {20}
-                                          onPress = {() => this.handleAddStep(this.props.tribeID)}/> }
-                        type = "clear"
-                        onPress = {() => this.handleAddStep(this.props.tribeID)}
-                        />
-
                     <Button
                         icon = {
                             <Icon
-                                name= 'eye'
-                                color = '#3676FF'
-                                size = {20}
+                                name= 'times'
+                                color = 'black'
+                                size = {15}
+                                onPress = {() => this.props.handleDeleteBox(this.props.id)}
+
                             />
                         }
                         containerStyle = {{}}
                         title={ ""}
                         type="clear"
+                        onPress = {() => this.props.handleDeleteBox(this.props.id)}
+                    />
+                    <Button
+                        icon = {<Icon style = {{marginRight: 5}}
+                                          name = 'plus'
+                                          color = "black"
+                                          disabledStyle = {{color:"grey"}}
+                                          size = {15}
+                                          onPress = {() => this.handleAddStep(this.props.tribeID)}/> }
+                        type = "clear"
+                        onPress = {() => this.handleAddStep(this.props.tribeID)}
                     />
                 </View>
                 <StepRoot
                     tribeID = {this.props.tribeID}
+                    handleAddStep = {this.props.handleAddStep}
+                    handleDeleteStep = {this.props.handleDeleteStep}
+                    changeStepName = {this.props.changeStepName}
+                    changeStepInfo = {this.props.changeStepInfo}
+                    handleCheck = {this.props.handleCheck}
+                    checkCheck = {this.props.checkCheck}
+                    handleSwitch = {this.props.handleSwitch}
                 />
             </View>
         );

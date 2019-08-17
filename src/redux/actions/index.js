@@ -1,4 +1,8 @@
 
+
+import firebase from 'react-native-firebase';
+
+
 /*Add Action Types */
 
 export const ADD_STEP = 'ADD STEP';
@@ -21,9 +25,13 @@ export const TOGGLE_DONE = 'TOGGLE_DONE';
 
 
 export const ADD_TRIBE = 'ADD_TRIBE';
+export const DELETE_TRIBE = 'DELETE_TRIBE';
+export const TOGGLE_TRIBE_OPEN = 'TOGGLE_TRIBE_OPEN';
+export const CHANGE_TRIBE_NAME = 'CHANGE_TRIBE_NAME';
 
 
 export const ADD_BOX = 'ADD_BOX';
+export const DELETE_BOX = 'DELETE_BOX';
 
 /* action creators */
 export function addProfileImage(image) {
@@ -99,13 +107,6 @@ export function changeName(name){
 }
 
 
-///TRIBE ACTION CREATORS //
-
-export function addTribe(tribe){
-    return { type: 'ADD_TRIBE', payload:{tribe}}
-}
-
-
 
 ///BOX ACTION CREATORS //
 
@@ -113,5 +114,38 @@ export function addBox(box){
     return { type: 'ADD_BOX', payload:{box}}
 }
 
+export function deleteBox(index){
+    return {type: 'DELETE_BOX', payload: index}
+}
+
+
+///TRIBE ACTION CREATORS //
+
+
+export function addTribe(tribe){
+    return { type: 'ADD_TRIBE', payload:{tribe}}
+}
+
+
+export const addTribeDB = (tribe) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('tribes').add(tribe);
+
+        dispatch({type: 'ADD_TRIBE', payload:{tribe}})
+    }
+};
+
+export function changeTribeName(text, id){
+    return {type: "CHANGE_TRIBE_NAME", payload: {text, id}}
+}
+
+export function deleteTribe(index){
+    return {type: 'DELETE_TRIBE', payload: index}
+}
+
+
+export function toggleTribeOpen(index){
+    return {type: 'TOGGLE_TRIBE_OPEN', payload: index }
+}
 
 

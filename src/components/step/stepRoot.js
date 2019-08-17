@@ -19,7 +19,6 @@ import moment from "moment";
 ///*** This should be like a displayer of steps component that takes the specific filter as a prop ***.
 
 
-
 const goalsSelector = (Obj) => {
     return Object.keys(Obj)
         .map((Key) => Obj[Key]);
@@ -38,17 +37,11 @@ function checkForID(step, ids) {
 const childrenSelector = (steps, ids) => steps.filter(step => checkForID(step, ids));
 
 
+
 export class StepRoot extends React.Component {
 
     constructor(props) {
         super(props);
-        this.changeStepName = this.changeStepName.bind(this);
-        this.changeStepInfo = this.changeStepInfo.bind(this);
-        this.handleSwitch = this.handleSwitch.bind(this);
-        this.handleAddStep = this.handleAddStep.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
-        this.handleCheck = this.handleCheck.bind(this);
-        this.checkCheck = this.checkCheck.bind(this);
 
 
         this.state = {};
@@ -69,22 +62,6 @@ export class StepRoot extends React.Component {
         this.props.dispatch(addDate(this.props.id))
     }
 
-    handleDelete(id) {
-        this.props.dispatch(deleteStep(id))
-    }
-
-    printOut(days) {
-        if (days) {
-            return days.toString;
-        }
-        return " no days"
-    }
-
-    handleSwitch(id) {
-        //change switch binary
-        this.props.dispatch(toggleOpen(id))
-    }
-
     addTime() {
         //NOTE: You have to dispatch this action with TIME and ID.]
         const length = this.props.data.length;
@@ -99,14 +76,6 @@ export class StepRoot extends React.Component {
         this.props.dispatch(subtractTime(this.props.id, data, length))
     }
 
-    changeStepName(text, id) {
-        this.props.dispatch(changeStepName(text, id));
-    }
-
-    changeStepInfo(text, id) {
-        console.log(text);
-        this.props.dispatch(changeStepInfo(text, id));
-    }
 
     handleAddStep(parentID) {
         const genericStep = {
@@ -156,13 +125,14 @@ export class StepRoot extends React.Component {
                 data = {filteredSteps}
                 renderItem={({item}) => (
                     <Step
-                        changeStepName = {this.changeStepName}
-                        changeStepInfo = {this.changeStepInfo}
-                        handleSwitch = {this.handleSwitch}
-                        handleAddStep = {this.handleAddStep}
-                        handleDelete = {this.handleDelete}
-                        handleCheck = {this.handleCheck}
-                        checkCheck = {this.checkCheck}
+                        changeStepName = {this.props.changeStepName}
+                        changeStepInfo = {this.props.changeStepInfo}
+                        handleSwitch = {this.props.handleSwitch}
+                        handleAddStep = {this.props.handleAddStep}
+                        handleDeleteStep = {this.props.handleDeleteStep}
+                        handleCheck = {this.props.handleCheck}
+                        checkCheck = {this.props.checkCheck}
+
                         name = {item.name}
                         info = {item.info}
                         id = {item.id}

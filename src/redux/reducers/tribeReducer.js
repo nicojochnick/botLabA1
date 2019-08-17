@@ -46,20 +46,21 @@ const tribes = (state = initialState, action) => {
                         open: {$apply: function (x){return !x;}}}}
             });
 
+        case 'DELETE_TRIBE':
+            const newState = {
+                ...state
+            };
+            const ID = action.payload.index;
+            console.log(action.payload);
+            delete newState.byHash[action.payload];
+            return newState;
 
-case 'DELETE_TRIBE':
-const newState = {
-    ...state
+
+        default:
+            return state;
+    }
 };
-const ID = action.payload.index;
-console.log(action.payload);
-delete newState.byHash[action.payload];
-return newState;
 
 
-default:
-return state;
-}
-};
 
 export default tribes;

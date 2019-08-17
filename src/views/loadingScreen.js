@@ -1,7 +1,6 @@
 import React from 'react'
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native'
-import { firebase } from '@react-native-firebase/auth';
-
+import firebase from 'react-native-firebase';
 export default class LoadingScreen extends React.Component {
 
     componentDidMount() {
@@ -9,7 +8,6 @@ export default class LoadingScreen extends React.Component {
             this.props.navigation.navigate(user ? 'App' : 'Auth')
         })
     }
-
 
     render() {
         return (

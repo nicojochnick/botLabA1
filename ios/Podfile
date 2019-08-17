@@ -33,13 +33,14 @@ target 'botLabA1' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
-
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
-
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
+  pod 'Firebase/Core', '~> 6.3.0'
+  pod 'Firebase/Firestore', '~> 6.3.0'
+  pod 'Firebase/Storage', '~> 6.3.0'
+  pod 'Firebase/Auth', '~> 6.3.0'
 
-  pod 'RNFBDatabase', :path => '../node_modules/@react-native-firebase/database/ios'
 
   target 'botLabA1Tests' do
     inherit! :search_paths

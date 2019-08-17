@@ -25,6 +25,7 @@ const steps = (state = initialState, action) => {
                         data: action.payload.step.data,
                         root: action.payload.step.root,
                         tribeID: action.payload.step.tribeID,
+                        boxID: action.payload.step.boxID,
                         userID: action.payload.step.userID,
                         deadline: action.payload.step.deadline,
                         open: action.payload.step.open,
@@ -33,6 +34,7 @@ const steps = (state = initialState, action) => {
                         steps: action.payload.step.steps,
                         date: action.payload.step.date,
                         info: action.payload.step.info,
+
                     }
                 }
             };

@@ -10,6 +10,8 @@ import {styles} from '../theme';
 
 class Identity extends Component {
 
+    state = {name: null};
+
    options = {
         title: 'Select Avatar',
         customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
@@ -59,10 +61,13 @@ class Identity extends Component {
                     onPress = {() => this.openImage(this.options)}
                 />
                 <TextInput
-                    style = {styles.goalText}
-                    onChangeText = {(name) => this.changeName(name)}
+                    style = {styles.identityText}
+                    onChangeText={text => this.changeName(text)}
                     value = {this.props.botID.name}
-                    selectionColor = "blue"/>
+                    selectionColor = "blue"
+                    maxLength = {20}
+                    editable = {this.props.editable}
+                />
 
             </View>
         );

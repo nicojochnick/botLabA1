@@ -44,11 +44,11 @@ export default class Step extends React.Component {
     render() {
         return (
             <View style = {{}}>
-                <View style = {styles.goals}>
+                <View style = {styles.steps}>
                 <View style = {styles.topGoals}>
                     <TextInput
                         style = {styles.goalText}
-                        ref= {(el) => { this.name= el; }}
+                        ref= {(el) => { this.text= el; }}
                         onChangeText= {(name) => this.props.changeStepName(name,this.props.id)}
                         value = {this.props.name}
                         multiline = {true}
@@ -64,12 +64,12 @@ export default class Step extends React.Component {
                             }
                             title={ ""}
                             type="clear"
-                            onPress = {() => this.props.handleDelete(this.props.id)}
+                            onPress = {() => this.props.handleDeleteStep(this.props.id)}
                         />
                         <Button
                             icon = {
                                 <Icon
-                                    name= 'eye'
+                                    name= 'chevron-down'
                                     color = '#3676FF'
                                 />
                             }

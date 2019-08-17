@@ -9,7 +9,7 @@ const initialState = {
 
 const boxes = (state = initialState, action) => {
     switch (action.type) {
-        case 'ADD_STEP_BOX':
+        case 'ADD_BOX':
             return { ...state,
                 byId: [action.payload.box.id],
                 byHash: {

@@ -9,14 +9,24 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Identity from '../components/user/identity';
 import AddTribe from '../components/tribe/addTribe';
 import TribeComponent from '../components/tribe/tribe';
-import TribeRoot from '../components/tribe/tribeRoot';
+import TribeRoot from '../components/tribe/tribeRoot'
+
+import Users from '../components/test';
+import NavSettings from '../components/navSettings';
+
+
 
 class HomeScreen extends Component {
+
+
     render() {
+
+
         return (
             <ScrollView>
-                    <View style = {{flex: 1, flexDirection: "row",paddingTop: 30, paddingBottom: 10,alignItems: "center", backgroundColor: '#CFCFCF'}}>
-                        <Identity size = {"large"}/>
+                    <View style = {{flex: 1, flexDirection: "row",paddingTop: 30, paddingBottom: 10,alignItems: "center", backgroundColor: '#4978DD'}}>
+                        <Identity size = {"large"} editable = {true}/>
+                        <NavSettings/>
                         <AddTribe/>
                     </View>
                         <TribeRoot/>

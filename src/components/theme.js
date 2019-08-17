@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
         color: "white",
     },
 
-    goals: {
+    steps: {
         fontFamily: "roboto",
         borderWidth: 0,
         backgroundColor: "white",
@@ -52,18 +52,55 @@ export const styles = StyleSheet.create({
         shadowOffset: {width: 0, height: 2},
         shadowOpacity: 5,
         borderRadius: 6,
-        margin: 8,
+        margin: 5,
         padding: 8,
+    },
+
+    goals: {
+        fontFamily: "roboto",
+        borderWidth: 0,
+        backgroundColor: "white",
+        shadowColor: "grey",
+        shadowOffset: {width: 0, height: 2},
+        borderRadius: 6,
+        margin: 0,
+        padding: 8,
+    },
+
+    tribes: {
+        fontFamily: "roboto",
+        borderWidth: 0,
+        backgroundColor: "white",
+        shadowColor: "grey",
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 5,
+        borderRadius: 6,
+        margin: 5,
+        padding: 0,
     },
     topGoals: {
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
 
+    topTribes: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        margin: 10
+    },
+
     goalText: {
-        width: "60%",
+        width: "50%",
         fontSize: 20,
         fontWeight: "bold",
+    },
+
+    identityText: {
+        width: "50%",
+        margin: 10,
+        fontSize: 25,
+        fontWeight: "bold",
+        color: "white"
     },
 
     dayText: {

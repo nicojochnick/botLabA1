@@ -7,9 +7,9 @@ import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
 
 
 export default class Login extends React.Component {
-    state = { email: '', password: '', errorMessage: null }
+    state = { email: '', password: '', errorMessage: null };
     handleLogin = () => {
-        // TODO: Firebase stuff...
+
         console.log('handleLogin')
     };
     render() {
