@@ -13,6 +13,7 @@ import TribeRoot from '../components/tribe/tribeRoot'
 
 import Users from '../components/test';
 import NavSettings from '../components/navSettings';
+import TribeGroup from '../components/tribe/tribeGroup';
 
 
 
@@ -24,12 +25,12 @@ class HomeScreen extends Component {
 
         return (
             <ScrollView>
-                    <View style = {{flex: 1, flexDirection: "row",paddingTop: 30, paddingBottom: 10,alignItems: "center", backgroundColor: '#4978DD'}}>
-                        <Identity size = {"large"} editable = {true}/>
-                        <NavSettings/>
-                        <AddTribe/>
-                    </View>
-                        <TribeRoot/>
+                <View style = {{flex: 1, flexDirection: "row",paddingTop: 30, paddingBottom: 10,alignItems: "center", backgroundColor: '#4978DD'}}>
+                    <Identity size = {"large"} editable = {true}/>
+                    <NavSettings/>
+                    <AddTribe/>
+                </View>
+                <TribeRoot/>
             </ScrollView>
         );
     }

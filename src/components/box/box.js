@@ -39,34 +39,38 @@ class Box extends Component {
         console.log(this.props.tribeID);
         return (
             <View style={styles.goals}>
-                <View style = {{flexDirection: "row"}}>
-                    <Button
-                        icon = {
-                            <Icon
-                                name= 'times'
-                                color = 'black'
-                                size = {15}
-                                onPress = {() => this.props.handleDeleteBox(this.props.id)}
+                    { (!this.props.editing)
+                        ? null
+                        : <View style = {{flexDirection: "row"}} >
+                            <Button
+                                icon={
+                                    <Icon
+                                        name='times'
+                                        color='black'
+                                        size={15}
+                                        onPress={() => this.props.handleDeleteBox(this.props.id)}
 
+                                    />
+                                }
+                                containerStyle={{}}
+                                title={""}
+                                type="clear"
+                                onPress={() => this.props.handleDeleteBox(this.props.id)}
                             />
-                        }
-                        containerStyle = {{}}
-                        title={ ""}
-                        type="clear"
-                        onPress = {() => this.props.handleDeleteBox(this.props.id)}
-                    />
-                    <Button
-                        icon = {<Icon style = {{marginRight: 5}}
-                                          name = 'plus'
-                                          color = "black"
-                                          disabledStyle = {{color:"grey"}}
-                                          size = {15}
-                                          onPress = {() => this.handleAddStep(this.props.tribeID)}/> }
-                        type = "clear"
-                        onPress = {() => this.handleAddStep(this.props.tribeID)}
-                    />
-                </View>
+                            < Button
+                            icon = {<Icon style = {{marginRight: 5}}
+                            name = 'plus'
+                            color = "black"
+                            disabledStyle = {{color: "grey"}}
+                            size = {15}
+                            onPress = {() => this.handleAddStep(this.props.tribeID)}/>}
+                            type = "clear"
+                            onPress = {() => this.handleAddStep(this.props.tribeID)}
+                            />
+                        </View>
+                    }
                 <StepRoot
+
                     tribeID = {this.props.tribeID}
                     handleAddStep = {this.props.handleAddStep}
                     handleDeleteStep = {this.props.handleDeleteStep}
@@ -75,6 +79,7 @@ class Box extends Component {
                     handleCheck = {this.props.handleCheck}
                     checkCheck = {this.props.checkCheck}
                     handleSwitch = {this.props.handleSwitch}
+                    editing = {this.props.editing}
                 />
             </View>
         );

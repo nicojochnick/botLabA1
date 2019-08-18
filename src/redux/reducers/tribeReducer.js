@@ -20,6 +20,7 @@ const tribes = (state = initialState, action) => {
                         userIDs: action.payload.tribe.userID,
                         open: action.payload.tribe.open,
                         info: action.payload.tribe.info,
+                        deadline: action.payload.tribe.deadline,
                     }
                 }
             };
@@ -30,6 +31,15 @@ const tribes = (state = initialState, action) => {
                 byHash: {
                     [action.payload.id]: {
                         name: {$set: action.payload.text}}}
+            });
+
+        case 'ADD_TRIBE_DEADLINE':
+            return update(state, {
+                byHash: {
+                    [action.payload.index]: {
+                        deadline: {$set: action.payload.deadline}
+                    }
+                }
             });
 
         case 'CHANGE_TRIBE_INFO':

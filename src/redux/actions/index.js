@@ -28,6 +28,7 @@ export const ADD_TRIBE = 'ADD_TRIBE';
 export const DELETE_TRIBE = 'DELETE_TRIBE';
 export const TOGGLE_TRIBE_OPEN = 'TOGGLE_TRIBE_OPEN';
 export const CHANGE_TRIBE_NAME = 'CHANGE_TRIBE_NAME';
+export const ADD_TRIBE_DEADLINE = 'ADD_TRIBE_DEADLINE';
 
 
 export const ADD_BOX = 'ADD_BOX';
@@ -141,6 +142,12 @@ export function changeTribeName(text, id){
 
 export function deleteTribe(index){
     return {type: 'DELETE_TRIBE', payload: index}
+}
+
+
+export function addTribeDeadline(index, deadline){
+    return {type: "ADD_TRIBE_DEADLINE", payload: {index, deadline}}
+
 }
 
 

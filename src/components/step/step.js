@@ -52,6 +52,7 @@ export default class Step extends React.Component {
                         onChangeText= {(name) => this.props.changeStepName(name,this.props.id)}
                         value = {this.props.name}
                         multiline = {true}
+                        editable = {this.props.editing}
                     />
 
                    <View style = {{flexDirection: "row"}}>

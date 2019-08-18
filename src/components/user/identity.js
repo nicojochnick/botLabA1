@@ -39,6 +39,8 @@ class Identity extends Component {
                 // this.setState({
                 //     avatarSource: source,
                 // });
+
+
                 this.props.dispatch(addProfileImage(source))
             }
         })

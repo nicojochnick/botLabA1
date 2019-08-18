@@ -5,7 +5,7 @@ import {styles} from '../theme';
 import TribeComponent from './tribe';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import {addBox, deleteBox, changeTribeName, deleteTribe} from '../../redux/actions';
+import {addBox, deleteBox, changeTribeName, deleteTribe, addTribeDeadline} from '../../redux/actions';
 
 const tribesSelector = (Obj) => {
     return Object.keys(Obj)
@@ -19,6 +19,9 @@ class TribeRoot extends Component {
         this.changeBoxName = this.changeBoxName.bind(this);
         this.handleAddBox = this.handleAddBox.bind(this);
         this.handleDeleteBox = this.handleDeleteBox.bind(this);
+
+
+        this.addTribeDeadline = this.addTribeDeadline.bind(this);
 
 
         this.changeTribeName = this.changeTribeName.bind(this);
@@ -57,15 +60,33 @@ class TribeRoot extends Component {
         this.props.dispatch(deleteTribe(tribeID))
     }
 
+    handleDeleteTribeDB(tribeID) {
+        this.props.dispatch(deleteTribe(tribe))
+
+    }
+
 //input relevant steps
     computeProgress(tribeID){
+        console.log(tribeID);
+        console.log(this.props.storeSteps);
         let steps = this.props.storeSteps.filter(function(step) {return step.tribeID === tribeID});
         console.log(steps);
         let total = steps.length;
         let checkSteps = steps.filter( function(step) {return step.done === true});
         console.log(checkSteps);
         let checked = checkSteps.length;
-        return total/checked;
+        let progress = checked/total;
+        if (progress > 0) {
+            return progress
+        } else {
+            return 0;
+        }
+    }
+
+
+
+    addTribeDeadline(index,date){
+        this.props.dispatch(addTribeDeadline(index, date))
     }
 
 
@@ -83,11 +104,13 @@ class TribeRoot extends Component {
                                    info = {item.info}
                                    id = {item.id}
                                    open = {item.open}
+                                   deadline = {item.deadline}
                                    handleDeleteBox = {this.handleDeleteBox}
                                    handleAddBox = {this.handleAddBox}
                                    changeBoxName = {this.changeBoxName}
                                    tribeID = {item.id}
                                    computeProgress = {this.computeProgress}
+                                   addTribeDeadline = {this.addTribeDeadline}
 
                                    handleDeleteTribe = {this.handleDeleteTribe}
                                    changeTribeName = {this.changeTribeName}

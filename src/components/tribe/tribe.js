@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View, TextInput, FlatList, Text, default as Alert} from 'react-native';
+import {View, TextInput, FlatList, Text, default as Alert, ScrollView} from 'react-native';
 import {Button} from 'react-native-elements'
 import {styles} from '../theme';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -18,10 +18,8 @@ import {
 } from 'react-native-popup-menu';
 
 import { ConfirmDialog } from 'react-native-simple-dialogs';
-import Dialog from 'react-native-simple-dialogs/src/Dialog';
-
-
-
+import moment from "moment";
+import TribeGroup from './tribeGroup';
 
 
 class TribeComponent extends Component {
@@ -31,17 +29,15 @@ class TribeComponent extends Component {
             open: true,
             showDeleteConfirm: false,
             editing: false,
+            fOpen: false,
         }
 
     }
 
 
-
-    makeEditable(){
-
+    makeEditable(bool){
+        this.setState({editing: bool})
     }
-
-
 
     openDeleteConfirm(show){
         this.setState({ showDeleteConfirm: show });
@@ -72,6 +68,7 @@ class TribeComponent extends Component {
 
     render() {
         let open = this.state.open;
+        let fOpen = this.state.fOpen;
         console.log(this.props.id);
         return (
             <View style = {styles.tribes}>
@@ -104,27 +101,14 @@ class TribeComponent extends Component {
                 />
                 <View style = {styles.topTribes}>
                         <TextInput
-                            style = {styles.goalText}
+                            style = {styles.goalTitleText}
                             ref= {(el) => { this.name= el; }}
                             value = {this.props.name}
                             multiline = {true}
+                            editable = {this.state.editing}
                             onChangeText = {(text) => this.props.changeTribeName(text,this.props.tribeID)}
                         />
                         <View style = {{flexDirection: "row", justifyContent: "flex-start", }}>
-                            <Button
-                                icon = {
-                                    <Icon
-                                        name= 'times'
-                                        color = 'black'
-                                        size = {20}
-                                        onPress = {() => this.props.handleDeleteTribe(this.props.id)}
-                                    />
-                                }
-                                containerStyle = {{marginLeft: 10}}
-                                title={ ""}
-                                type="clear"
-                                onPress = {() => this.props.handleDeleteTribe(this.props.id)}
-                            />
 
                             <Button
                                 icon =
@@ -143,6 +127,20 @@ class TribeComponent extends Component {
                             <Button
                                 icon = {
                                     <Icon
+                                        name= 'users'
+                                        color = '#3676FF'
+                                        size = {20}
+                                        onPress = {() => this.setState( {f: !fOpen})}
+                                    />}
+                                containerStyle = {{marginLeft: 10}}
+                                title={ ""}
+                                type="clear"
+                                onPress = {() => this.setState( {fOpen: !fOpen})}
+                            />
+
+                            <Button
+                                icon = {
+                                    <Icon
                                         name= 'chevron-down'
                                         color = '#3676FF'
                                         size = {20}
@@ -154,19 +152,18 @@ class TribeComponent extends Component {
                                 onPress = {() => this.setState( {open: !open})}
                             />
 
+
                             <Menu>
                                 <MenuTrigger>
-
                                     <Icon style = {{margin: 7}}
                                                       name = {'ellipsis-v'}
                                                       color = '#3676FF'
                                                       disabledStyle = {{color:"grey"}}
                                                       size = {25}
                                                       />
-
                                 </MenuTrigger>
                                     <MenuOptions>
-                                    <MenuOption onSelect={() => this.makeEditable()} text='Edit' />
+                                    <MenuOption onSelect={() => this.makeEditable(true)} text='Edit' />
                                     <MenuOption onSelect={() => this.openDeleteConfirm(true)} >
                                         <Text style={{color: 'red'}}>Delete</Text>
                                     </MenuOption>
@@ -182,35 +179,50 @@ class TribeComponent extends Component {
 
                     :
                     <View>
-                        <View style = {{flex: 1, justifyContent: "space-between", alignContent: "space-between", margin:5}}>
-                            <DatePicker
-                                style={{width: 200}}
-                                date={null}
-                                mode="date"
-                                placeholder="set a deadline"
-                                format="YYYY-MM-DD"
-                                minDate="2016-05-01"
-                                maxDate="2016-06-01"
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                customStyles={{
-                                    dateIcon: {
-                                        position: 'absolute',
-                                        left: 0,
-                                        top: 4,
-                                        marginLeft: 0
-                                    },
-                                    dateInput: {
-                                        marginLeft: 36
-                                    }
-                                    // ... You can check the source to find the other keys.
-                                }}
-                            />
+                        <View style = {{flex: 1, justifyContent: "space-between", alignContent: "space-between", marginLeft: 10}}>
+                            {(!this.state.editing)
+                                ? <Text style = {styles.titleDeadlineText}> deadline: {this.props.deadline} </Text>
+                                : <DatePicker
+                                    style={{width: 200, fontWeight: "bold"}}
+                                    date={this.props.deadline}
+                                    mode="date"
+                                    placeholder="set a deadline"
+                                    format="YYYY-MM-DD"
+                                    minDate={moment().format('YYYY-MM-DD')}
+                                    maxDate="2025-06-01"
+                                    confirmBtnText="Confirm"
+                                    cancelBtnText="Cancel"
+                                    customStyles={{
+                                        dateIcon: {
+                                            position: 'absolute',
+                                            left: 0,
+                                            top: 4,
+                                            marginLeft: 0
+                                        },
+                                        dateInput: {
+                                            marginLeft: 36
+                                        }
+                                        // ... You can check the source to find the other keys.
+                                    }}
+                                    onDateChange={(date) => {
+                                        this.props.addTribeDeadline(this.props.tribeID, date)
+                                    }}
+                                />
+                            }
+
                             <Progress.Bar
-                                progress={this.props.computeProgress(this.tribeID)} width={300} style={{margin: 10}}
+                                progress={this.props.computeProgress(this.props.id)} width={300} style={{margin: 10}}
                             />
                         </View>
 
+
+
+                        {(!fOpen)
+                            ?null
+                            :<TribeGroup/>
+
+
+                        }
 
                         <View>
                         <BoxRoot
@@ -218,10 +230,25 @@ class TribeComponent extends Component {
                         handleAddBox = {this.props.handleAddBox}
                         handleDeleteBox = {this.props.handleDeleteBox}
                         changeBoxName = {this.props.changeBoxName}
+                        editing = {this.state.editing}
                         />
                         </View>
 
-                    </View>}
+                        { (this.state.editing)
+                            ?
+                                <Button
+                                    style={{width: '20%', justifyContent: "center", alignContent: "center", margin: 20}}
+                                    title = "Done"
+                                    raised = {true}
+                                    buttonStyle={{backgroundColor: "#4978DD"}}
+                                    onPress = {()=> this.makeEditable(false)}
+
+                                />
+                            : null
+
+                        }
+
+                    </View> }
 
             </View>
 

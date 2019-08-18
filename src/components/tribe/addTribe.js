@@ -15,7 +15,8 @@ const genericTribe = {
     id: moment().format(),
     userIDs: [],
     open: false,
-    info: "add a description"
+    info: "add a description",
+    deadline: null,
 };
 
 class AddTribe extends Component {
@@ -31,7 +32,7 @@ class AddTribe extends Component {
             id: moment().format(),
             userIDs: [],
             open: false,
-            info: "add a description"
+            info: "add a description",
         };
         //dispatch two actions -> 1. ) create generic step in step database, 2.) add step to child feature of the correct step.
         this.props.dispatch(addTribe(genericTribe));
@@ -39,6 +40,15 @@ class AddTribe extends Component {
 
 
     handleAddTribeDB() {
+        const genericTribe = {
+            name: "add a title",
+            id: moment().format(),
+            userIDs: [],
+            open: false,
+            info: "add a description",
+            deadline: null,
+        };
+
         this.props.addTribeDB(genericTribe)
     }
 

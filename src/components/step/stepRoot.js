@@ -133,6 +133,8 @@ export class StepRoot extends React.Component {
                         handleCheck = {this.props.handleCheck}
                         checkCheck = {this.props.checkCheck}
 
+                        editing = {this.props.editing}
+
                         name = {item.name}
                         info = {item.info}
                         id = {item.id}

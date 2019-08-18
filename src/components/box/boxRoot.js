@@ -138,6 +138,9 @@ class BoxRoot extends Component {
                                    handleCheck = {this.handleCheck}
                                    checkCheck = {this.checkCheck}
                                    handleSwitch = {this.handleSwitch}
+
+
+                                   editing = {this.props.editing}
                                />
                            )}
                 />

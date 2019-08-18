@@ -90,9 +90,47 @@ export const styles = StyleSheet.create({
     },
 
     goalText: {
-        width: "50%",
+        width: "70%",
         fontSize: 20,
         fontWeight: "bold",
+    },
+
+    groupScroll: {
+        fontFamily: "roboto",
+        borderWidth: 0,
+        backgroundColor: "white",
+        shadowColor: "grey",
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 5,
+        borderRadius: 6,
+        margin: 0,
+        padding: 0,
+
+    },
+
+    groupScrollContainer: {
+        fontFamily: "roboto",
+        borderWidth: 0,
+        backgroundColor: "white",
+        shadowColor: "grey",
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 5,
+        borderRadius: 6,
+        margin: 10,
+
+    },
+
+    goalTitleText: {
+        width: "60%",
+        fontSize: 30,
+        fontWeight: "bold",
+    },
+
+    titleDeadlineText: {
+        width: "80%",
+        fontSize: 20,
+        fontWeight: "bold",
+
     },
 
     identityText: {
