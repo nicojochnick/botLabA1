@@ -30,13 +30,15 @@ class TribeComponent extends Component {
             showDeleteConfirm: false,
             editing: false,
             fOpen: false,
+            name: this.props.name,
+            deadline: this.props.deadline,
         }
 
     }
 
 
     makeEditable(bool){
-        this.setState({editing: bool})
+        this.setState({editing: bool});
     }
 
     openDeleteConfirm(show){
@@ -62,6 +64,11 @@ class TribeComponent extends Component {
         );
     };
 
+    doneSaving(){
+        this.makeEditable(false);
+        this.props.changeTribeName(this.state.name, this.props.id);
+        this.props.addTribeDeadline(this.props.tribeID, this.state.deadline)
+    }
 
 
 
@@ -70,6 +77,11 @@ class TribeComponent extends Component {
         let open = this.state.open;
         let fOpen = this.state.fOpen;
         console.log(this.props.id);
+        let myName = this.state.name;
+        // if (this.state.editing){
+        //     myName = null
+        // }
+
         return (
             <View style = {styles.tribes}>
                 <ConfirmDialog
@@ -103,10 +115,10 @@ class TribeComponent extends Component {
                         <TextInput
                             style = {styles.goalTitleText}
                             ref= {(el) => { this.name= el; }}
-                            value = {this.props.name}
+                            value = {myName}
                             multiline = {true}
                             editable = {this.state.editing}
-                            onChangeText = {(text) => this.props.changeTribeName(text,this.props.tribeID)}
+                            onChangeText = {(text) => this.setState({name:text})}
                         />
                         <View style = {{flexDirection: "row", justifyContent: "flex-start", }}>
 
@@ -163,7 +175,7 @@ class TribeComponent extends Component {
                                                       />
                                 </MenuTrigger>
                                     <MenuOptions>
-                                    <MenuOption onSelect={() => this.makeEditable(true)} text='Edit' />
+                                    <MenuOption onSelect={() => this.makeEditable(true, myName)} text='Edit' />
                                     <MenuOption onSelect={() => this.openDeleteConfirm(true)} >
                                         <Text style={{color: 'red'}}>Delete</Text>
                                     </MenuOption>
@@ -184,7 +196,7 @@ class TribeComponent extends Component {
                                 ? <Text style = {styles.titleDeadlineText}> deadline: {this.props.deadline} </Text>
                                 : <DatePicker
                                     style={{width: 200, fontWeight: "bold"}}
-                                    date={this.props.deadline}
+                                    date={this.state.deadline}
                                     mode="date"
                                     placeholder="set a deadline"
                                     format="YYYY-MM-DD"
@@ -205,7 +217,7 @@ class TribeComponent extends Component {
                                         // ... You can check the source to find the other keys.
                                     }}
                                     onDateChange={(date) => {
-                                        this.props.addTribeDeadline(this.props.tribeID, date)
+                                        this.setState( {deadline: date})
                                     }}
                                 />
                             }
@@ -241,7 +253,7 @@ class TribeComponent extends Component {
                                     title = "Done"
                                     raised = {true}
                                     buttonStyle={{backgroundColor: "#4978DD"}}
-                                    onPress = {()=> this.makeEditable(false)}
+                                    onPress = {()=> this.doneSaving()}
 
                                 />
                             : null

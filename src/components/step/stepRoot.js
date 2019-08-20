@@ -73,7 +73,7 @@ export class StepRoot extends React.Component {
     subtractTime() {
         const length = this.props.data.length;
         const data = this.props.data.slice(-1)[0] - 15;
-        this.props.dispatch(subtractTime(this.props.id, data, length))
+        this.props.dispatch(subtractTime(this.props.id, data,length))
     }
 
 
@@ -94,8 +94,27 @@ export class StepRoot extends React.Component {
         this.props.dispatch(addChildStep(parentID, [genericStep.id]))
     }
 
+    handleAddStepDB(parentID){
+        const genericStep = {
+            name: "add a title",
+            data: [0],
+            done: false,
+            date: moment().format('dddd, MMMM Do'),
+            id: moment().format(),
+            open: false,
+            root: false,
+            steps: [],
+            info: "add a description"
+        };
+
+    }
+
     handleCheck(id, childrenID, allSteps) {
         this.props.dispatch(toggleDone(id));
+    }
+
+    handleCheckDB(id){
+
     }
 
     checkCheck(id, childrenID, allSteps) {

@@ -140,6 +140,19 @@ export function changeTribeName(text, id){
     return {type: "CHANGE_TRIBE_NAME", payload: {text, id}}
 }
 
+export const changeTribeNameDB = (text,id) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('tribes').where('id', '==', id)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update( {"name": text})
+            });
+            dispatch({type: 'CHANGE_TRIBE_NAME', payload: {text,id}});
+        });
+    };
+
+};
+
 export const deleteTribeDB = (id) => {
     return (dispatch, getState) => {
         firebase.firestore().collection('tribes').where('id', '==', id)
@@ -163,6 +176,19 @@ export function addTribeDeadline(index, deadline){
     return {type: "ADD_TRIBE_DEADLINE", payload: {index, deadline}}
 
 }
+
+export const addTribeDeadlineDB = (index,deadline) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('tribes').where('id', '==', index)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update( {"deadline":deadline})
+            });
+            dispatch({type: 'ADD_TRIBE_DEADLINE', payload: {index,deadline}});
+        });
+    };
+
+};
 
 
 export function toggleTribeOpen(index){

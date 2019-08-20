@@ -13,7 +13,7 @@ import {
     deleteTribe,
     addTribeDeadline,
     addTribeDB,
-    deleteTribeDB,
+    deleteTribeDB, changeTribeNameDB, addTribeDeadlineDB,
 } from '../../redux/actions';
 
 const tribesSelector = (Obj) => {
@@ -30,10 +30,15 @@ class TribeRoot extends Component {
         this.handleDeleteBox = this.handleDeleteBox.bind(this);
 
         this.addTribeDeadline = this.addTribeDeadline.bind(this);
-
         this.changeTribeName = this.changeTribeName.bind(this);
-        this.handleDeleteTribeDB = this.handleDeleteTribeDB.bind(this);
         this.computeProgress = this.computeProgress.bind(this);
+
+        this.handleDeleteTribeDB = this.handleDeleteTribeDB.bind(this);
+        this.changeTribeNameDB = this.changeTribeNameDB.bind(this);
+        this.addTribeDeadlineDB = this.addTribeDeadlineDB.bind(this);
+
+
+
         this.state = {
             //flat list accepts an array of object
             tribeData: []
@@ -53,6 +58,18 @@ class TribeRoot extends Component {
         this.props.dispatch(addBox(genericBox));
     }
 
+
+    handleAddBoxDB(tribeID){
+        const genericBox = {
+            name: "add a title",
+            id: moment().format(),
+            tribeID: tribeID,
+            open: false,
+            info: "add a description"
+        };
+
+    }
+
     handleDeleteBox(boxID){
         this.props.dispatch(deleteBox(boxID))
 
@@ -64,6 +81,9 @@ class TribeRoot extends Component {
 
     changeTribeName(text,index){
         this.props.dispatch(changeTribeName(text,index))
+    }
+    changeTribeNameDB(text,index){
+        this.props.changeTribeNameDB(text,index)
     }
 
     handleDeleteTribe(tribeID) {
@@ -95,11 +115,14 @@ class TribeRoot extends Component {
     addTribeDeadline(index,date){
         this.props.dispatch(addTribeDeadline(index, date))
     }
+    addTribeDeadlineDB(index,deadline){
+        this.props.addTribeDeadlineDB(index,deadline)
+    }
 
     getMyTribes() {
         const db = firebase.firestore();
         // db.settings({ timestampsInSnapshots: true});
-        db.collection('tribes').where("userID", '===',this.props.filter).get().then((snapshot) => {
+        db.collection('tribes').where("userID", '==',this.props.filter).get().then((snapshot) => {
             let data = snapshot.docs.map(function(documentSnapshot) {
                 return documentSnapshot.data()
             });
@@ -145,10 +168,10 @@ class TribeRoot extends Component {
                                    changeBoxName = {this.changeBoxName}
                                    tribeID = {item.id}
                                    computeProgress = {this.computeProgress}
-                                   addTribeDeadline = {this.addTribeDeadline}
+                                   addTribeDeadline = {this.addTribeDeadlineDB}
 
                                    handleDeleteTribe = {this.handleDeleteTribeDB}
-                                   changeTribeName = {this.changeTribeName}
+                                   changeTribeName = {this.changeTribeNameDB}
                                 />
                            )}
                 />
@@ -168,7 +191,9 @@ const mapStateToProps = (state /*, ownProps*/) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        handleDeleteTribeDB: (tribe) => dispatch(deleteTribeDB(tribe))
+        handleDeleteTribeDB: (tribe) => dispatch(deleteTribeDB(tribe)),
+        changeTribeNameDB: (text,index)=> dispatch(changeTribeNameDB(text,index)),
+        addTribeDeadlineDB: (index,deadline) => dispatch(addTribeDeadlineDB(index,deadline))
     }
 };
 
