@@ -15,6 +15,7 @@ import {
     deleteStep,
     toggleDone, toggleOpen,
 } from '../../redux/actions';
+import Step from '../step/step';
 
 
 const boxesSelector = (Obj) => {
@@ -118,8 +119,10 @@ class BoxRoot extends Component {
             <View>
                 < FlatList style = {styles.bottomContainer}
                            data = {filteredBoxes}
+                           listKey={(item, index) => 'D' + index.toString()}
                            renderItem={({item}) => (
                                <Box
+                                   listKey= "Sunique"
                                    name = {item.name}
                                    info = {item.info}
                                    id = {item.id}
@@ -130,7 +133,6 @@ class BoxRoot extends Component {
                                    handleAddBox = {this.props.handleAddBox}
                                    handleDeleteBox = {this.props.handleDeleteBox}
 
-
                                    handleAddStep = {this.handleAddStep}
                                    handleDeleteStep = {this.handleDeleteStep}
                                    changeStepName = {this.changeStepName}
@@ -138,7 +140,6 @@ class BoxRoot extends Component {
                                    handleCheck = {this.handleCheck}
                                    checkCheck = {this.checkCheck}
                                    handleSwitch = {this.handleSwitch}
-
 
                                    editing = {this.props.editing}
                                />
@@ -149,9 +150,7 @@ class BoxRoot extends Component {
         );
     }
 }
-
 BoxRoot.propTypes = {};
-
 
 const mapStateToProps = (state /*, ownProps*/) => ({
     storeBoxes: boxesSelector(state.boxes.byHash)});

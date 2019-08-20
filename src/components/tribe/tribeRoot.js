@@ -1,11 +1,20 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {FlatList, View} from 'react-native';
+import {FlatList, View, Text} from 'react-native';
 import {styles} from '../theme';
 import TribeComponent from './tribe';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import {addBox, deleteBox, changeTribeName, deleteTribe, addTribeDeadline} from '../../redux/actions';
+import * as firebase from 'react-native-firebase';
+import {
+    addBox,
+    deleteBox,
+    changeTribeName,
+    deleteTribe,
+    addTribeDeadline,
+    addTribeDB,
+    deleteTribeDB,
+} from '../../redux/actions';
 
 const tribesSelector = (Obj) => {
     return Object.keys(Obj)
@@ -20,16 +29,17 @@ class TribeRoot extends Component {
         this.handleAddBox = this.handleAddBox.bind(this);
         this.handleDeleteBox = this.handleDeleteBox.bind(this);
 
-
         this.addTribeDeadline = this.addTribeDeadline.bind(this);
 
-
         this.changeTribeName = this.changeTribeName.bind(this);
-        this.handleDeleteTribe = this.handleDeleteTribe.bind(this);
+        this.handleDeleteTribeDB = this.handleDeleteTribeDB.bind(this);
         this.computeProgress = this.computeProgress.bind(this);
-        this.state = {};
-
+        this.state = {
+            //flat list accepts an array of object
+            tribeData: []
+        };
     }
+
 
     handleAddBox(tribeID) {
         const genericBox = {
@@ -61,19 +71,18 @@ class TribeRoot extends Component {
     }
 
     handleDeleteTribeDB(tribeID) {
-        this.props.dispatch(deleteTribe(tribe))
+        this.props.handleDeleteTribeDB(tribeID);
 
     }
-
 //input relevant steps
     computeProgress(tribeID){
-        console.log(tribeID);
-        console.log(this.props.storeSteps);
+        // console.log(tribeID);
+        // console.log(this.props.storeSteps);
         let steps = this.props.storeSteps.filter(function(step) {return step.tribeID === tribeID});
-        console.log(steps);
+        // console.log(steps);
         let total = steps.length;
         let checkSteps = steps.filter( function(step) {return step.done === true});
-        console.log(checkSteps);
+        // console.log(checkSteps);
         let checked = checkSteps.length;
         let progress = checked/total;
         if (progress > 0) {
@@ -83,22 +92,48 @@ class TribeRoot extends Component {
         }
     }
 
-
-
     addTribeDeadline(index,date){
         this.props.dispatch(addTribeDeadline(index, date))
     }
 
+    getMyTribes() {
+        const db = firebase.firestore();
+        // db.settings({ timestampsInSnapshots: true});
+        db.collection('tribes').where("userID", '===',this.props.filter).get().then((snapshot) => {
+            let data = snapshot.docs.map(function(documentSnapshot) {
+                return documentSnapshot.data()
+            });
+            this.setState({ tribeData: data })
+
+        });
+    }
+
+    componentDidMount(): void {
+      this.getMyTribes()
+
+    }
 
     render() {
-        console.log(this.props.state);
-        console.log(this.props.storeTribes);
+
+        // let filter = this.props.filter;
+        // console.log(filter);
+        // let tribes = firebase.firestore().collection('tribes');
+        // console.log(tribes);
+        // //let userTribes = tribes.filter(function(tribe){return tribes.id})
+        // let userTribes = tribes.where("userID", '===',filter);
+        // console.log(userTribes);
+        // console.log(this.props.state);
+        // console.log(this.props.storeTribes);
+        console.log(this.state.tribeData);
+
 
         return (
             <View>
-                < FlatList style = {styles.bottomContainer}
-                           data = {this.props.storeTribes}
-                           renderItem={({item}) => (
+                <FlatList style = {styles.bottomContainer}
+                           data = {this.state.tribeData}
+                          listKey={(item, index) => 'D' + index.toString()}
+
+                          renderItem={({item}) => (
                                <TribeComponent
                                    name = {item.name}
                                    info = {item.info}
@@ -112,7 +147,7 @@ class TribeRoot extends Component {
                                    computeProgress = {this.computeProgress}
                                    addTribeDeadline = {this.addTribeDeadline}
 
-                                   handleDeleteTribe = {this.handleDeleteTribe}
+                                   handleDeleteTribe = {this.handleDeleteTribeDB}
                                    changeTribeName = {this.changeTribeName}
                                 />
                            )}
@@ -129,9 +164,14 @@ const mapStateToProps = (state /*, ownProps*/) => ({
     storeTribes: tribesSelector(state.tribes.byHash),
     storeSteps:  tribesSelector(state.steps.byHash),
     state: state
-
 });
 
-export default connect(mapStateToProps)(TribeRoot);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        handleDeleteTribeDB: (tribe) => dispatch(deleteTribeDB(tribe))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TribeRoot);
 
 

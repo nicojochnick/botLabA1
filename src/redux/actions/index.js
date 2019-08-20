@@ -140,6 +140,20 @@ export function changeTribeName(text, id){
     return {type: "CHANGE_TRIBE_NAME", payload: {text, id}}
 }
 
+export const deleteTribeDB = (id) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('tribes').where('id', '==', id)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.delete();
+
+            });
+        });
+        dispatch({type: 'DELETE_TRIBE', payload: id});
+    };
+};
+
+
 export function deleteTribe(index){
     return {type: 'DELETE_TRIBE', payload: index}
 }

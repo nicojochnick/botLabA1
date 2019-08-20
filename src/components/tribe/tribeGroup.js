@@ -59,7 +59,7 @@ class TribeGroup extends Component {
             <View style = {styles.groupScrollContainer}>
             <ScrollView style = {styles.groupScroll}>
                 <FlatList
-                    listKey={"unique"}
+                    listKey="Superunique"
                     keyExtractor={this.keyExtractor}
                     data={list}
                     renderItem={this.renderItem}

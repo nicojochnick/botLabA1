@@ -18,6 +18,9 @@ import { PersistGate } from 'redux-persist/integration/react'
 import TopStack from './src/navigation/topStack';
 import thunk from 'redux-thunk'
 import { MenuProvider } from 'react-native-popup-menu';
+import {reactReduxFirebase, firebaseReducer, getFirebase, firebase} from 'react-redux-firebase';
+import {compose} from 'react-native';
+
 
 
 
@@ -26,6 +29,13 @@ const persistConfig = {
   key: 'root',
   storage,
 };
+
+const reduxFirebaseConfig = {
+    userProfile: 'users', // save users profiles to 'users' collection
+};
+
+//const comp = compose(reactReduxFirebase(firebase, reduxFirebaseConfig));
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = createStore(persistedReducer, applyMiddleware(thunk));
 const persists = persistStore(store);

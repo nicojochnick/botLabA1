@@ -121,10 +121,13 @@ export class StepRoot extends React.Component {
         console.log(filteredSteps);
 
         return (
-            < FlatList style = {styles.bottomContainer}
+            < FlatList
+                style = {styles.bottomContainer}
                 data = {filteredSteps}
+                listKey={(item, index) => 'D' + index.toString()}
                 renderItem={({item}) => (
                     <Step
+
                         changeStepName = {this.props.changeStepName}
                         changeStepInfo = {this.props.changeStepInfo}
                         handleSwitch = {this.props.handleSwitch}

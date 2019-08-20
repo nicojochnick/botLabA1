@@ -17,7 +17,8 @@ const tribes = (state = initialState, action) => {
                     [action.payload.tribe.id]: {
                         name: action.payload.tribe.name,
                         id: action.payload.tribe.id,
-                        userIDs: action.payload.tribe.userID,
+                        userID: action.payload.tribe.userID,
+                        friendIDS: action.payload.tribe.friendIDS,
                         open: action.payload.tribe.open,
                         info: action.payload.tribe.info,
                         deadline: action.payload.tribe.deadline,

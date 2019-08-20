@@ -14,31 +14,13 @@ import TribeRoot from '../components/tribe/tribeRoot'
 import Users from '../components/test';
 import NavSettings from '../components/navSettings';
 import TribeGroup from '../components/tribe/tribeGroup';
-import firebase from 'react-native-firebase';
-
-
-let user = firebase.auth().currentUser;
-let name, email, photoUrl, uid, emailVerified;
-
-if (user != null) {
-    name = user.displayName;
-    email = user.email;
-    photoUrl = user.photoURL;
-    emailVerified = user.emailVerified;
-    uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
-                     // this value to authenticate with your backend server, if
-                     // you have one. Use User.getToken() instead.
-}
 
 
 
-
-
-class HomeScreen extends Component {
+export default class FriendGoalView extends Component {
 
 
     render() {
-        console.log(uid);
 
 
         return (
@@ -48,13 +30,11 @@ class HomeScreen extends Component {
                     <NavSettings/>
                     <AddTribe/>
                 </View>
-                <TribeRoot filter = {uid} />
+                <TribeRoot/>
             </ScrollView>
         );
     }
 }
 
-HomeScreen.propTypes = {};
+FriendGoalView.propTypes = {};
 
-
-export default HomeScreen;

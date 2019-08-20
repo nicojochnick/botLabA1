@@ -19,6 +19,20 @@ const genericTribe = {
     deadline: null,
 };
 
+
+let  user = firebase.auth().currentUser;
+let name, email, photoUrl, uid, emailVerified;
+
+if (user != null) {
+    name = user.displayName;
+    email = user.email;
+    photoUrl = user.photoURL;
+    emailVerified = user.emailVerified;
+    uid = user.uid;
+}
+
+
+
 class AddTribe extends Component {
 
     constructor() {
@@ -39,11 +53,17 @@ class AddTribe extends Component {
     }
 
 
+
+
+
+
+
     handleAddTribeDB() {
         const genericTribe = {
             name: "add a title",
             id: moment().format(),
-            userIDs: [],
+            userID: uid,
+            friendIDS: [],
             open: false,
             info: "add a description",
             deadline: null,
@@ -51,7 +71,6 @@ class AddTribe extends Component {
 
         this.props.addTribeDB(genericTribe)
     }
-
 
 
     render() {
