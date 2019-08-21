@@ -36,6 +36,15 @@ if (user != null) {
 
 class HomeScreen extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            editingProfile: false
+        }
+
+    }
+
 
     render() {
         console.log(uid);

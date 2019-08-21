@@ -239,6 +239,7 @@ class TribeComponent extends Component {
                         <View>
                         <BoxRoot
                         tribeID = {this.props.tribeID}
+                        filter = {this.props.id}
                         handleAddBox = {this.props.handleAddBox}
                         handleDeleteBox = {this.props.handleDeleteBox}
                         changeBoxName = {this.props.changeBoxName}

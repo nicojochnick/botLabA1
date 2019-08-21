@@ -13,7 +13,7 @@ import {
     deleteTribe,
     addTribeDeadline,
     addTribeDB,
-    deleteTribeDB, changeTribeNameDB, addTribeDeadlineDB,
+    deleteTribeDB, changeTribeNameDB, addTribeDeadlineDB, addBoxDB,
 } from '../../redux/actions';
 
 const tribesSelector = (Obj) => {
@@ -26,7 +26,7 @@ class TribeRoot extends Component {
     constructor(props) {
         super(props);
         this.changeBoxName = this.changeBoxName.bind(this);
-        this.handleAddBox = this.handleAddBox.bind(this);
+        this.handleAddBoxDB = this.handleAddBoxDB.bind(this);
         this.handleDeleteBox = this.handleDeleteBox.bind(this);
 
         this.addTribeDeadline = this.addTribeDeadline.bind(this);
@@ -36,7 +36,6 @@ class TribeRoot extends Component {
         this.handleDeleteTribeDB = this.handleDeleteTribeDB.bind(this);
         this.changeTribeNameDB = this.changeTribeNameDB.bind(this);
         this.addTribeDeadlineDB = this.addTribeDeadlineDB.bind(this);
-
 
 
         this.state = {
@@ -58,25 +57,24 @@ class TribeRoot extends Component {
         this.props.dispatch(addBox(genericBox));
     }
 
-
     handleAddBoxDB(tribeID){
         const genericBox = {
             name: "add a title",
             id: moment().format(),
             tribeID: tribeID,
             open: false,
-            info: "add a description"
+            info: "add a description",
+            steps : []
         };
+        this.props.addBoxDB(genericBox)
 
     }
 
     handleDeleteBox(boxID){
         this.props.dispatch(deleteBox(boxID))
-
     }
 
     changeBoxName(boxID){
-
     }
 
     changeTribeName(text,index){
@@ -155,16 +153,16 @@ class TribeRoot extends Component {
                 <FlatList style = {styles.bottomContainer}
                            data = {this.state.tribeData}
                           listKey={(item, index) => 'D' + index.toString()}
-
                           renderItem={({item}) => (
                                <TribeComponent
+
                                    name = {item.name}
                                    info = {item.info}
                                    id = {item.id}
                                    open = {item.open}
                                    deadline = {item.deadline}
                                    handleDeleteBox = {this.handleDeleteBox}
-                                   handleAddBox = {this.handleAddBox}
+                                   handleAddBox = {this.handleAddBoxDB}
                                    changeBoxName = {this.changeBoxName}
                                    tribeID = {item.id}
                                    computeProgress = {this.computeProgress}
@@ -193,7 +191,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         handleDeleteTribeDB: (tribe) => dispatch(deleteTribeDB(tribe)),
         changeTribeNameDB: (text,index)=> dispatch(changeTribeNameDB(text,index)),
-        addTribeDeadlineDB: (index,deadline) => dispatch(addTribeDeadlineDB(index,deadline))
+        addTribeDeadlineDB: (index,deadline) => dispatch(addTribeDeadlineDB(index,deadline)),
+        addBoxDB: (box) => dispatch(addBoxDB(box)),
     }
 };
 

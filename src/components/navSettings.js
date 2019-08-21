@@ -65,8 +65,6 @@ class NavSettings extends Component {
         return (
             <View>
 
-
-
                 <Menu>
                     <MenuTrigger>
                         <Icon style = {{marginRight: 10}}

@@ -43,6 +43,15 @@ export function addStep(step){
     return { type: 'ADD_STEP', payload:{step}}
 }
 
+export const addStepDB = (boxID, step) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('stepBox').where('id', '==', boxID)
+            .update( {steps: firebase.firestore.FieldValue.arrayUnion(step)});
+        dispatch({type: 'ADD_STEP', payload:{step}})
+    }
+};
+
+
 export function addChildStep(parentID, childID) {
     return { type: 'ADD_CHILD_STEP', payload: {parentID, childID}}
 }
@@ -92,12 +101,9 @@ export function toggleOpen(index){
     return {type: 'TOGGLE_OPEN', payload: index }
 }
 
-
 export function toggleDone(id){
     return {type: 'TOGGLE_DONE', payload: id}
-
 }
-
 
 export function storeRenderCount(count){
     return {type: STORE_RENDER, payload: count}
@@ -108,12 +114,17 @@ export function changeName(name){
 }
 
 
-
 ///BOX ACTION CREATORS //
-
 export function addBox(box){
     return { type: 'ADD_BOX', payload:{box}}
 }
+
+export const addBoxDB = (box) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('stepBox').add(box);
+        dispatch({type: 'ADD_BOX', payload:{box}})
+    }
+};
 
 export function deleteBox(index){
     return {type: 'DELETE_BOX', payload: index}
@@ -122,11 +133,9 @@ export function deleteBox(index){
 
 ///TRIBE ACTION CREATORS //
 
-
 export function addTribe(tribe){
     return { type: 'ADD_TRIBE', payload:{tribe}}
 }
-
 
 export const addTribeDB = (tribe) => {
     return (dispatch, getState) => {

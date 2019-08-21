@@ -9,13 +9,14 @@ import moment from '../step/stepRoot';
 import {
     addBox,
     addChildStep,
-    addStep,
+    addStep, addStepDB,
     changeStepInfo,
     changeStepName,
     deleteStep,
     toggleDone, toggleOpen,
 } from '../../redux/actions';
 import Step from '../step/step';
+import * as firebase from "react-native-firebase";
 
 
 const boxesSelector = (Obj) => {
@@ -38,7 +39,6 @@ const childrenSelector = (steps, ids) => steps.filter(step => checkForID(step, i
 
 
 class BoxRoot extends Component {
-
     constructor(props) {
         super(props);
         this.handleAddStep = this.handleAddStep.bind(this);
@@ -49,7 +49,10 @@ class BoxRoot extends Component {
         this.handleSwitch = this.handleSwitch.bind(this);
         this.changeStepInfo = this.changeStepInfo.bind(this);
 
-        this.state = {};
+        this.handleAddStepDB = this.handleAddStepDB.bind(this);
+        this.state = {
+            boxData:null
+        };
 
     }
 
@@ -57,11 +60,17 @@ class BoxRoot extends Component {
         this.props.dispatch(changeStepName(text, id));
     }
 
+    changeStepNameDB(text,id){
+
+    }
+
     changeStepInfo(text, id) {
         console.log(text);
         this.props.dispatch(changeStepInfo(text, id));
     }
+    changeStepInfoDB(text,info) {
 
+    }
 
     handleAddStep(boxID) {
         const genericStep = {
@@ -80,8 +89,30 @@ class BoxRoot extends Component {
         this.props.dispatch(addStep(genericStep));
     }
 
+
+    handleAddStepDB(boxID){
+        const genericStep = {
+            name: "add a title",
+            data: [0],
+            done: false,
+            date: moment().format('dddd, MMMM Do'),
+            id: moment().format(),
+            open: false,
+            root: false,
+            steps: [],
+            info: "add a description",
+            boxID: boxID,
+        };
+        this.props.handleAddStepDB(boxID, genericStep)
+
+    }
+
     handleDeleteStep(id){
         this.props.dispatch(deleteStep(id))
+    }
+
+    handleDeleteStepDB(){
+
     }
 
     handleSwitch(id) {
@@ -93,6 +124,10 @@ class BoxRoot extends Component {
     handleCheck(id, childrenID, allSteps) {
         this.props.dispatch(toggleDone(id));
     }
+
+    handleCheckDB(id){
+
+    };
 
     checkCheck(id, childrenID, allSteps) {
         if (childrenID === undefined || childrenID.length < 1) {
@@ -110,6 +145,22 @@ class BoxRoot extends Component {
         }
     }
 
+    getBoxes(){
+        const db = firebase.firestore();
+        // db.settings({ timestampsInSnapshots: true});
+        db.collection('boxes').where("tribeID", '==',this.props.filter).get().then((snapshot) => {
+            let data = snapshot.docs.map(function(documentSnapshot) {
+                return documentSnapshot.data()
+            });
+            this.setState({ boxData: data })
+
+        });
+    }
+
+    componentDidMount(): void {
+        this.getBoxes();
+    }
+
 
     render() {
         console.log(this.props.storeBoxes);
@@ -118,11 +169,10 @@ class BoxRoot extends Component {
         return (
             <View>
                 < FlatList style = {styles.bottomContainer}
-                           data = {filteredBoxes}
+                           data = {null}
                            listKey={(item, index) => 'D' + index.toString()}
                            renderItem={({item}) => (
                                <Box
-                                   listKey= "Sunique"
                                    name = {item.name}
                                    info = {item.info}
                                    id = {item.id}
@@ -133,7 +183,7 @@ class BoxRoot extends Component {
                                    handleAddBox = {this.props.handleAddBox}
                                    handleDeleteBox = {this.props.handleDeleteBox}
 
-                                   handleAddStep = {this.handleAddStep}
+                                   handleAddStep = {this.handleAddStepDB}
                                    handleDeleteStep = {this.handleDeleteStep}
                                    changeStepName = {this.changeStepName}
                                    changeStepInfo = {this.changeStepInfo}
@@ -155,4 +205,12 @@ BoxRoot.propTypes = {};
 const mapStateToProps = (state /*, ownProps*/) => ({
     storeBoxes: boxesSelector(state.boxes.byHash)});
 
-export default connect(mapStateToProps)(BoxRoot);
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+
+        handleAddStepDB:(tribeID, step) => dispatch(addStepDB(tribeID, step))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BoxRoot);

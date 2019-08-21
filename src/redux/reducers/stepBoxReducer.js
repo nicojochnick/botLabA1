@@ -21,6 +21,7 @@ const boxes = (state = initialState, action) => {
                         tribeID: action.payload.box.tribeID,
                         open: action.payload.box.open,
                         info: action.payload.box.info,
+                        steps: action.payload.steps,
                     }
                 }
             };
