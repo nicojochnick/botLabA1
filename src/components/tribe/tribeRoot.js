@@ -25,14 +25,12 @@ const tribesSelector = (Obj) => {
 class TribeRoot extends Component {
     constructor(props) {
         super(props);
-        this.changeBoxName = this.changeBoxName.bind(this);
-        this.handleAddBoxDB = this.handleAddBoxDB.bind(this);
-        this.handleDeleteBox = this.handleDeleteBox.bind(this);
 
         this.addTribeDeadline = this.addTribeDeadline.bind(this);
         this.changeTribeName = this.changeTribeName.bind(this);
         this.computeProgress = this.computeProgress.bind(this);
 
+        this.handleAddBoxDB = this.handleAddBoxDB.bind(this);
         this.handleDeleteTribeDB = this.handleDeleteTribeDB.bind(this);
         this.changeTribeNameDB = this.changeTribeNameDB.bind(this);
         this.addTribeDeadlineDB = this.addTribeDeadlineDB.bind(this);
@@ -43,7 +41,6 @@ class TribeRoot extends Component {
             tribeData: []
         };
     }
-
 
     handleAddBox(tribeID) {
         const genericBox = {
@@ -67,14 +64,6 @@ class TribeRoot extends Component {
             steps : []
         };
         this.props.addBoxDB(genericBox)
-
-    }
-
-    handleDeleteBox(boxID){
-        this.props.dispatch(deleteBox(boxID))
-    }
-
-    changeBoxName(boxID){
     }
 
     changeTribeName(text,index){
@@ -92,15 +81,12 @@ class TribeRoot extends Component {
         this.props.handleDeleteTribeDB(tribeID);
 
     }
-//input relevant steps
+
+
     computeProgress(tribeID){
-        // console.log(tribeID);
-        // console.log(this.props.storeSteps);
         let steps = this.props.storeSteps.filter(function(step) {return step.tribeID === tribeID});
-        // console.log(steps);
         let total = steps.length;
         let checkSteps = steps.filter( function(step) {return step.done === true});
-        // console.log(checkSteps);
         let checked = checkSteps.length;
         let progress = checked/total;
         if (progress > 0) {
@@ -155,19 +141,18 @@ class TribeRoot extends Component {
                           listKey={(item, index) => 'D' + index.toString()}
                           renderItem={({item}) => (
                                <TribeComponent
-
                                    name = {item.name}
                                    info = {item.info}
                                    id = {item.id}
                                    open = {item.open}
                                    deadline = {item.deadline}
-                                   handleDeleteBox = {this.handleDeleteBox}
-                                   handleAddBox = {this.handleAddBoxDB}
-                                   changeBoxName = {this.changeBoxName}
+
+
                                    tribeID = {item.id}
+
+                                   handleAddBox = {this.handleAddBoxDB}
                                    computeProgress = {this.computeProgress}
                                    addTribeDeadline = {this.addTribeDeadlineDB}
-
                                    handleDeleteTribe = {this.handleDeleteTribeDB}
                                    changeTribeName = {this.changeTribeNameDB}
                                 />

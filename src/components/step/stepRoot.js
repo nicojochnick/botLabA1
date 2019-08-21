@@ -12,12 +12,10 @@ import {
     subtractTime,
     addStep,
     toggleOpen,
-    updateDate, addChildStep, toggleDone,
+    updateDate, addChildStep, toggleDone, addStepDB,
 } from '../../redux/actions';
 import moment from "moment";
-
-///*** This should be like a displayer of steps component that takes the specific filter as a prop ***.
-
+import * as firebase from "react-native-firebase";
 
 const goalsSelector = (Obj) => {
     return Object.keys(Obj)
@@ -39,73 +37,31 @@ const childrenSelector = (steps, ids) => steps.filter(step => checkForID(step, i
 
 
 export class StepRoot extends React.Component {
-
     constructor(props) {
         super(props);
-
-
+        this.changeStepName = this.changeStepName.bind(this);
+        this.changeStepInfo = this.changeStepInfo.bind(this);
+        this.handleDeleteStep = this.handleDeleteStep.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
+        this.handleSwitch = this.handleSwitch.bind(this);
+        this.checkCheck = this.checkCheck.bind(this);
         this.state = {};
-
     }
 
-    checkDate() {
-        const curDate = moment().format('dddd, MMMM Do');
-        if (this.props.date[0] !== curDate) {
-            this.props.dispatch(updateDate(this.props.id, curDate));
-            this.props.dispatch(addDate(this.props.id))
-        }
-    }
-
-    testFunction() {
-        const curDate = moment().format('dddd, MMMM Do');
-        this.props.dispatch(updateDate(this.props.id, curDate));
-        this.props.dispatch(addDate(this.props.id))
-    }
-
-    addTime() {
-        //NOTE: You have to dispatch this action with TIME and ID.]
-        const length = this.props.data.length;
-        const data = this.props.data.slice(-1)[0] + 15;
-
-        this.props.dispatch(addTime(this.props.id, data, length))
-    }
-
-    subtractTime() {
-        const length = this.props.data.length;
-        const data = this.props.data.slice(-1)[0] - 15;
-        this.props.dispatch(subtractTime(this.props.id, data,length))
+    changeStepName(text, id) {
+        this.props.dispatch(changeStepName(text, id));
     }
 
 
-    handleAddStep(parentID) {
-        const genericStep = {
-            name: "add a title",
-            data: [0],
-            done: false,
-            date: moment().format('dddd, MMMM Do'),
-            id: moment().format(),
-            open: false,
-            root: false,
-            steps: [],
-            info: "add a description"
-        };
-        //dispatch two actions -> 1. ) create generic step in step database, 2.) add step to child feature of the correct step.
-        this.props.dispatch(addStep(genericStep));
-        this.props.dispatch(addChildStep(parentID, [genericStep.id]))
+    changeStepNameDB(text,id){
+
     }
 
-    handleAddStepDB(parentID){
-        const genericStep = {
-            name: "add a title",
-            data: [0],
-            done: false,
-            date: moment().format('dddd, MMMM Do'),
-            id: moment().format(),
-            open: false,
-            root: false,
-            steps: [],
-            info: "add a description"
-        };
+    handleDeleteStep(id){
+        this.props.dispatch(deleteStep(id))
+    }
+
+    handleDeleteStepDB(id){
 
     }
 
@@ -114,46 +70,64 @@ export class StepRoot extends React.Component {
     }
 
     handleCheckDB(id){
+    }
+
+    changeStepInfo(text, id) {
+        console.log(text);
+        this.props.dispatch(changeStepInfo(text, id));
+    }
+    changeStepInfoDB(text,info) {
 
     }
+
+    handleSwitch(id) {
+        //change switch binary
+        this.props.dispatch(toggleOpen(id))
+    }
+    handleSwitchDB(id){
+
+    };
 
     checkCheck(id, childrenID, allSteps) {
         if (childrenID === undefined || childrenID.length < 1) {
             return false
         } else {
-        const children = childrenSelector(childrenID, allSteps);
-        for (i = 0; i < children.length - 1; i++) {
-            if (children[i].done === false) {
-                return false;
+            const children = childrenSelector(childrenID, allSteps);
+            for (i = 0; i < children.length - 1; i++) {
+                if (children[i].done === false) {
+                    return false;
+                }
             }
+            //this needs to be the parentID!
+            this.props.dispatch(toggleDone(id))
+
         }
-        //this needs to be the parentID!
-        this.props.dispatch(toggleDone(id))
+    }
+
+    checkCheckDB(id){
 
     }
-}
+
 
 
     render() {
-        console.log(this.props.storeSteps);
-        const filteredSteps = this.props.storeSteps.filter((item) => item.tribeID === this.props.tribeID);
-        console.log(filteredSteps);
-
+        // console.log(this.props.storeSteps);
+        // const filteredSteps = this.props.storeSteps.filter((item) => item.tribeID === this.props.tribeID);
+        // console.log(filteredSteps);
         return (
             < FlatList
                 style = {styles.bottomContainer}
-                data = {filteredSteps}
+                data = {this.props.steps}
                 listKey={(item, index) => 'D' + index.toString()}
                 renderItem={({item}) => (
                     <Step
-
-                        changeStepName = {this.props.changeStepName}
-                        changeStepInfo = {this.props.changeStepInfo}
-                        handleSwitch = {this.props.handleSwitch}
+                        changeStepName = {this.changeStepName}
+                        changeStepInfo = {this.changeStepInfo}
+                        handleSwitch = {this.handleSwitch}
                         handleAddStep = {this.props.handleAddStep}
-                        handleDeleteStep = {this.props.handleDeleteStep}
-                        handleCheck = {this.props.handleCheck}
-                        checkCheck = {this.props.checkCheck}
+                        handleDeleteStep = {this.handleDeleteStep}
+                        handleCheck = {this.handleCheck}
+                        checkCheck = {this.checkCheck}
 
                         editing = {this.props.editing}
 
@@ -176,8 +150,72 @@ export class StepRoot extends React.Component {
     }
 
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+
+    };
+};
+
 const mapStateToProps = (state /*, ownProps*/) => ({
     storeSteps: goalsSelector(state.steps.byHash)});
 
-export default connect(mapStateToProps)(StepRoot);
+export default connect(mapStateToProps, mapDispatchToProps)(StepRoot);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// checkDate() {
+//     const curDate = moment().format('dddd, MMMM Do');
+//     if (this.props.date[0] !== curDate) {
+//         this.props.dispatch(updateDate(this.props.id, curDate));
+//         this.props.dispatch(addDate(this.props.id))
+//     }
+// }
+//
+// testFunction() {
+//     const curDate = moment().format('dddd, MMMM Do');
+//     this.props.dispatch(updateDate(this.props.id, curDate));
+//     this.props.dispatch(addDate(this.props.id))
+// }
+//
+// addTime() {
+//     //NOTE: You have to dispatch this action with TIME and ID.]
+//     const length = this.props.data.length;
+//     const data = this.props.data.slice(-1)[0] + 15;
+//
+//     this.props.dispatch(addTime(this.props.id, data, length))
+// }
+//
+// subtractTime() {
+//     const length = this.props.data.length;
+//     const data = this.props.data.slice(-1)[0] - 15;
+//     this.props.dispatch(subtractTime(this.props.id, data,length))
+// }
+
+// checkCheck(id, childrenID, allSteps) {
+//         if (childrenID === undefined || childrenID.length < 1) {
+//             return false
+//         } else {
+//         const children = childrenSelector(childrenID, allSteps);
+//         for (i = 0; i < children.length - 1; i++) {
+//             if (children[i].done === false) {
+//                 return false;
+//             }
+//         }
+//         //this needs to be the parentID!
+//         this.props.dispatch(toggleDone(id))
+//
+//     }
+// }

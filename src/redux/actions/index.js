@@ -45,12 +45,17 @@ export function addStep(step){
 
 export const addStepDB = (boxID, step) => {
     return (dispatch, getState) => {
+        console.log(step);
         firebase.firestore().collection('stepBox').where('id', '==', boxID)
-            .update( {steps: firebase.firestore.FieldValue.arrayUnion(step)});
-        dispatch({type: 'ADD_STEP', payload:{step}})
-    }
-};
+            .get().then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    doc.ref.update({steps: firebase.firestore.FieldValue.arrayUnion(step)})
+                });
+                dispatch({type: 'ADD_STEP', payload: {step}})
+        });
+    };
 
+};
 
 export function addChildStep(parentID, childID) {
     return { type: 'ADD_CHILD_STEP', payload: {parentID, childID}}
@@ -126,9 +131,23 @@ export const addBoxDB = (box) => {
     }
 };
 
+
 export function deleteBox(index){
     return {type: 'DELETE_BOX', payload: index}
 }
+
+
+export const deleteBoxDB = (id) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('stepBox').where('id', '==', id)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.delete();
+            });
+        });
+        dispatch({type: 'DELETE_BOX', payload: id});
+    };
+};
 
 
 ///TRIBE ACTION CREATORS //

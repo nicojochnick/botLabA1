@@ -15,31 +15,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 class Box extends Component {
 
-    handleAddStep(tribeID, boxID) {
-        const genericStep = {
-            name: "add a title",
-            data: [0],
-            done: false,
-            date: moment().format('dddd, MMMM Do'),
-            id: moment().format(),
-            open: false,
-            root: false,
-            steps: [],
-            deadline:"",
-            userID: "",
-            boxId: boxID,
-            tribeID: tribeID,
-            info: "add a description"
-        };
-        //dispatch two actions -> 1. ) create generic step in step database, 2.) add step to child feature of the correct step.
-        this.props.dispatch(addStep(genericStep));
-    }
-
     render() {
         console.log(this.props.tribeID);
         return (
             <View style={styles.goals}>
-                    { (!this.props.editing)
+                    { (false)
                         ? null
                         : <View style = {{flexDirection: "row"}} >
                             <Button
@@ -63,23 +43,18 @@ class Box extends Component {
                             color = "black"
                             disabledStyle = {{color: "grey"}}
                             size = {15}
-                            onPress = {() => this.handleAddStep(this.props.tribeID)}/>}
+                            onPress = {() => this.props.handleAddStep(this.props.id)}/>}
                             type = "clear"
-                            onPress = {() => this.handleAddStep(this.props.tribeID)}
+                            onPress = {() => this.props.handleAddStep(this.props.id)}
                             />
                         </View>
                     }
                 <StepRoot
-
                     tribeID = {this.props.tribeID}
                     handleAddStep = {this.props.handleAddStep}
-                    handleDeleteStep = {this.props.handleDeleteStep}
-                    changeStepName = {this.props.changeStepName}
-                    changeStepInfo = {this.props.changeStepInfo}
-                    handleCheck = {this.props.handleCheck}
-                    checkCheck = {this.props.checkCheck}
                     handleSwitch = {this.props.handleSwitch}
                     editing = {this.props.editing}
+                    steps = {this.props.steps}
                 />
             </View>
         );

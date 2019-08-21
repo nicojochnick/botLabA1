@@ -70,9 +70,6 @@ class TribeComponent extends Component {
         this.props.addTribeDeadline(this.props.tribeID, this.state.deadline)
     }
 
-
-
-
     render() {
         let open = this.state.open;
         let fOpen = this.state.fOpen;
@@ -84,33 +81,6 @@ class TribeComponent extends Component {
 
         return (
             <View style = {styles.tribes}>
-                <ConfirmDialog
-                    title="Please Confirm"
-                    message="Are you sure you want to delete your goal?"
-                    onTouchOutside={ () => this.openDeleteConfirm(false) }
-                    visible={this.state.showDeleteConfirm }
-                    negativeButton={
-                        {
-                            title: "No",
-                            onPress: this.optionNo,
-                            // disabled: true,
-                            titleStyle: {
-                                color: "blue",
-                                colorDisabled: "aqua",
-                            },
-                            style: {
-                                backgroundColor: "transparent",
-                                backgroundColorDisabled: "transparent",
-                            },
-                        }
-                    }
-                    positiveButton={
-                        {
-                            title: "Yes",
-                            onPress: this.optionYes,
-                        }
-                    }
-                />
                 <View style = {styles.topTribes}>
                         <TextInput
                             style = {styles.goalTitleText}
@@ -120,22 +90,7 @@ class TribeComponent extends Component {
                             editable = {this.state.editing}
                             onChangeText = {(text) => this.setState({name:text})}
                         />
-                        <View style = {{flexDirection: "row", justifyContent: "flex-start", }}>
-
-                            <Button
-                                icon =
-                                    {<Icon style = {{marginRight: 5}}
-                                           name = 'plus'
-                                           color = "black"
-                                           disabledStyle = {{color:"grey"}}
-                                           size = {20}
-                                           onPress = {() => this.props.handleAddBox(this.props.id)}/> }
-                                type = "clear"
-                                iconRight = {true}
-                                onPress = {() => this.props.handleAddBox(this.props.id)}
-
-                            />
-
+                        <View style = {{flexDirection: "row", justifyContent: "space-between", }}>
                             <Button
                                 icon = {
                                     <Icon
@@ -158,20 +113,20 @@ class TribeComponent extends Component {
                                         size = {20}
                                         onPress = {() => this.setState( {open: !open})}
                                     />}
-                                containerStyle = {{marginLeft: 10}}
+                                containerStyle = {{marginLeft: 15, marginRight: 15}}
                                 title={ ""}
                                 type="clear"
                                 onPress = {() => this.setState( {open: !open})}
                             />
 
-
                             <Menu>
                                 <MenuTrigger>
-                                    <Icon style = {{margin: 7}}
-                                                      name = {'ellipsis-v'}
-                                                      color = '#3676FF'
-                                                      disabledStyle = {{color:"grey"}}
-                                                      size = {25}
+                                    <Icon
+                                        style = {{margin: 7}}
+                                        name = {'ellipsis-v'}
+                                        color = '#3676FF'
+                                        disabledStyle = {{color:"grey"}}
+                                        size = {29}
                                                       />
                                 </MenuTrigger>
                                     <MenuOptions>
@@ -181,88 +136,107 @@ class TribeComponent extends Component {
                                     </MenuOption>
                                 </MenuOptions>
                             </Menu>
-
                         </View>
-
                     </View>
 
-                { !open
+                {!open
                     ? null
-
                     :
                     <View>
                         <View style = {{flex: 1, justifyContent: "space-between", alignContent: "space-between", marginLeft: 10}}>
                             {(!this.state.editing)
                                 ? <Text style = {styles.titleDeadlineText}> deadline: {this.props.deadline} </Text>
-                                : <DatePicker
-                                    style={{width: 200, fontWeight: "bold"}}
-                                    date={this.state.deadline}
-                                    mode="date"
-                                    placeholder="set a deadline"
-                                    format="YYYY-MM-DD"
-                                    minDate={moment().format('YYYY-MM-DD')}
-                                    maxDate="2025-06-01"
-                                    confirmBtnText="Confirm"
-                                    cancelBtnText="Cancel"
-                                    customStyles={{
-                                        dateIcon: {
-                                            position: 'absolute',
-                                            left: 0,
-                                            top: 4,
-                                            marginLeft: 0
-                                        },
-                                        dateInput: {
-                                            marginLeft: 36
-                                        }
-                                        // ... You can check the source to find the other keys.
-                                    }}
-                                    onDateChange={(date) => {
-                                        this.setState( {deadline: date})
-                                    }}
-                                />
+                                :
+                                <View style = {{flexDirection: "row"}}>
+
+                                    <Button
+                                        style = {{width: '100%', marginTop: 0, marginBottom: 10}}
+                                        title = "Add To Do's"
+                                        buttonStyle={{backgroundColor: "#4978DD"}}
+                                        onPress = {() => this.props.handleAddBox(this.props.id)}
+
+                                    />
+
+                                    <DatePicker
+                                        style={{width: '60%', marginLeft: 10}}
+                                        date={this.state.deadline}
+                                        mode="date"
+                                        placeholder="set a deadline"
+                                        format="YYYY-MM-DD"
+                                        minDate={moment().format('YYYY-MM-DD')}
+                                        maxDate="2025-06-01"
+                                        confirmBtnText="Confirm"
+                                        cancelBtnText="Cancel"
+                                        customStyles={{
+                                            dateIcon: {
+                                                position: 'absolute',
+                                                left: 0,
+                                                top: 4,
+                                                marginLeft: 0
+                                            },
+                                            dateInput: {
+                                                marginLeft: 36
+                                            }
+                                            // ... You can check the source to find the other keys.
+                                        }}
+                                        onDateChange={(date) => {
+                                            this.setState( {deadline: date})
+                                        }}
+                                    />
+                                </View>
                             }
 
                             <Progress.Bar
                                 progress={this.props.computeProgress(this.props.id)} width={300} style={{margin: 10}}
                             />
                         </View>
-
-
-
                         {(!fOpen)
                             ?null
-                            :<TribeGroup/>
-
-
-                        }
-
+                            :<TribeGroup/>}
                         <View>
-                        <BoxRoot
-                        tribeID = {this.props.tribeID}
-                        filter = {this.props.id}
-                        handleAddBox = {this.props.handleAddBox}
-                        handleDeleteBox = {this.props.handleDeleteBox}
-                        changeBoxName = {this.props.changeBoxName}
-                        editing = {this.state.editing}
-                        />
+                            <BoxRoot
+                                tribeID = {this.props.tribeID}
+                                filter = {this.props.id}
+                                handleAddBox = {this.props.handleAddBox}
+                                editing = {this.state.editing}
+                            />
                         </View>
-
-                        { (this.state.editing)
+                        {(this.state.editing)
                             ?
                                 <Button
                                     style={{width: '20%', justifyContent: "center", alignContent: "center", margin: 20}}
-                                    title = "Done"
+                                    title = "Save"
                                     raised = {true}
                                     buttonStyle={{backgroundColor: "#4978DD"}}
                                     onPress = {()=> this.doneSaving()}
 
                                 />
                             : null
-
                         }
-
-                    </View> }
-
+                    </View>
+                }
+                <ConfirmDialog
+                    title="Please Confirm"
+                    message="Are you sure you want to delete your goal?"
+                    onTouchOutside={ () => this.openDeleteConfirm(false) }
+                    visible={this.state.showDeleteConfirm }
+                    negativeButton={{
+                            title: "No",
+                            onPress: this.optionNo,
+                            // disabled: true,
+                            titleStyle: {
+                                color: "blue",
+                                colorDisabled: "aqua",
+                            },
+                            style: {
+                                backgroundColor: "transparent",
+                                backgroundColorDisabled: "transparent",
+                            },}}
+                    positiveButton={
+                        {
+                            title: "Yes",
+                            onPress: this.optionYes,
+                        }}/>
             </View>
 
         );
