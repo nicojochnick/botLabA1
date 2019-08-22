@@ -1,5 +1,7 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+source 'https://github.com/CocoaPods/Specs.git'
+
 
 
 target 'botLabA1' do
@@ -33,13 +35,13 @@ target 'botLabA1' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
-  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
-  pod 'Firebase/Core', '~> 6.3.0'
-  pod 'Firebase/Firestore', '~> 6.3.0'
-  pod 'Firebase/Storage', '~> 6.3.0'
-  pod 'Firebase/Auth', '~> 6.3.0'
+  pod 'Firebase/Core', '~> 6.5.0'
+  pod 'Firebase/Firestore', '~> 6.5.0'
+  pod 'Firebase/Storage', '~> 6.5.0'
+  pod 'Firebase/Auth', '~> 6.5.0'
+
 
 
   target 'botLabA1Tests' do
