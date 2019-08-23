@@ -12,7 +12,7 @@ import {
     subtractTime,
     addStep,
     toggleOpen,
-    updateDate, addChildStep, toggleDone, addStepDB,
+    updateDate, addChildStep, toggleDone, addStepDB, deleteStepDB, toggleDoneDB, changeStepNameDB,
 } from '../../redux/actions';
 import moment from "moment";
 import * as firebase from "react-native-firebase";
@@ -39,12 +39,13 @@ const childrenSelector = (steps, ids) => steps.filter(step => checkForID(step, i
 export class StepRoot extends React.Component {
     constructor(props) {
         super(props);
-        this.changeStepName = this.changeStepName.bind(this);
+        this.changeStepNameDB = this.changeStepNameDB.bind(this);
         this.changeStepInfo = this.changeStepInfo.bind(this);
-        this.handleDeleteStep = this.handleDeleteStep.bind(this);
-        this.handleCheck = this.handleCheck.bind(this);
+        this.handleDeleteStepDB = this.handleDeleteStepDB.bind(this);
         this.handleSwitch = this.handleSwitch.bind(this);
         this.checkCheck = this.checkCheck.bind(this);
+        this.toggleDoneDB = this.toggleDoneDB.bind(this);
+
         this.state = {};
     }
 
@@ -53,23 +54,24 @@ export class StepRoot extends React.Component {
     }
 
 
-    changeStepNameDB(text,id){
-
+    changeStepNameDB(text,id, boxID){
+        this.props.changeStepNameDB(text,id,boxID);
     }
+
 
     handleDeleteStep(id){
         this.props.dispatch(deleteStep(id))
     }
 
-    handleDeleteStepDB(id){
-
+    handleDeleteStepDB(boxID, id){
+        this.props.deleteStepDB(boxID, id)
     }
 
-    handleCheck(id, childrenID, allSteps) {
+    toggleDone(id, childrenID, allSteps) {
         this.props.dispatch(toggleDone(id));
     }
-
-    handleCheckDB(id){
+    toggleDoneDB(id, boxID){
+        this.props.toggleDoneDB(id,boxID)
     }
 
     changeStepInfo(text, id) {
@@ -121,12 +123,13 @@ export class StepRoot extends React.Component {
                 listKey={(item, index) => 'D' + index.toString()}
                 renderItem={({item}) => (
                     <Step
-                        changeStepName = {this.changeStepName}
+                        changeStepName = {this.changeStepNameDB}
                         changeStepInfo = {this.changeStepInfo}
+                        toggleDone = {this.toggleDoneDB}
+
                         handleSwitch = {this.handleSwitch}
                         handleAddStep = {this.props.handleAddStep}
-                        handleDeleteStep = {this.handleDeleteStep}
-                        handleCheck = {this.handleCheck}
+                        handleDeleteStep = {this.handleDeleteStepDB}
                         checkCheck = {this.checkCheck}
 
                         editing = {this.props.editing}
@@ -140,6 +143,8 @@ export class StepRoot extends React.Component {
                         steps = {item.steps}
                         date = {item.date}
                         done = {item.done}
+                        boxID = {this.props.boxID}
+
                         storeSteps = {this.props.storeSteps}
                     />
                 )}
@@ -153,6 +158,9 @@ export class StepRoot extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        deleteStepDB: (boxID, stepID) => dispatch(deleteStepDB(boxID, stepID)),
+        toggleDoneDB: (id, boxID) => dispatch(toggleDoneDB(id, boxID)),
+        changeStepNameDB: (text, id, boxID) => dispatch(changeStepNameDB(text, id, boxID)),
 
     };
 };

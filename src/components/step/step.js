@@ -34,75 +34,118 @@ export default class Step extends React.Component {
         super(props);
         this.state = {
             addStepInnerToggle: true,
-            addStepOutToggle: true
+            addStepOutToggle: true,
+            open: false,
+            editingStep: false,
+            name: this.props.name
 
 
         }
     }
 
 
+
+
+    handleEdit(){
+        this.setState({editingStep: !this.state.editingStep});
+        this.setState({open: true})
+
+
+    }
+
+    doneSaving(){
+        this.setState({editingStep: !this.state.editingStep});
+        this.setState({open: false});
+        this.props.changeStepName(this.state.name,this.props.id, this.props.boxID)
+
+    }
+
+
     render() {
+        let color = 'grey';
+        if (this.state.editingStep){
+            color = '#3676FF'
+        }
         return (
             <View style = {{}}>
                 <View style = {styles.steps}>
-                <View style = {styles.topGoals}>
-                    <TextInput
-                        style = {styles.goalText}
-                        ref= {(el) => { this.text= el; }}
-                        onChangeText= {(name) => this.props.changeStepName(name,this.props.id)}
-                        value = {this.props.name}
-                        multiline = {true}
-                        editable = {this.props.editing}
-                    />
+                    <View style = {styles.topGoals}>
+                        <TextInput
+                            style = {styles.goalText}
+                            ref= {(el) => { this.text= el; }}
+                            onChangeText= {(name) => this.setState({name: name}) }
+                            value = {this.state.name}
+                            multiline = {true}
+                            editable = {this.state.editingStep}
+                        />
 
-                   <View style = {{flexDirection: "row"}}>
-                        <Button
-                            icon = {
-                                <Icon
-                                    name= 'times'
-                                    color = 'grey'
-                                />
-                            }
-                            title={ ""}
-                            type="clear"
-                            onPress = {() => this.props.handleDeleteStep(this.props.id)}
-                        />
-                        <Button
-                            icon = {
-                                <Icon
-                                    name= 'chevron-down'
-                                    color = '#3676FF'
-                                />
-                            }
-                            containerStyle = {{marginRight: -10}}
-                            title={ ""}
-                            type="clear"
-                            onPress = {() => this.props.handleSwitch(this.props.id)}
-                        />
-                        <CheckBox
-                            containerStyle = {{margin: -7, marginRight: -10}}
-                            checked={this.props.done}
-                            onPress={() => this.props.handleCheck(this.props.id, this.props.steps, this.props.storeSteps)}
-                            checkedColor='#3676FF'
+                        <View style = {{flexDirection: "row"}}>
+                            <Button
+                                icon = {
+                                    <Icon
+                                        name= 'times'
+                                        color = 'grey'
+                                    />
+                                }
+                                title={ ""}
+                                type="clear"
+                                onPress = {() => this.props.handleDeleteStep(this.props.boxID, this.props.id)}
+                            />
 
-                        />
-                   </View>
-                </View>
-                {(this.props.open)
-                    ? (true)
-                        ? <View>
-                            <TextInput
-                                ref= {(el) => { this.name= el; }}
-                                onChangeText= {(name) => this.props.changeStepInfo(name,this.props.id)}
-                                value = {this.props.info}
-                                multiline = {true}
+                            <Button
+                                icon = {
+                                    <Icon
+                                        name= 'edit'
+                                        color = {color}
+                                    />
+                                }
+                                title={ ""}
+                                type="clear"
+                                onPress = {() => this.handleEdit()}
+                            />
+                            {/*<Button*/}
+                            {/*    icon = {*/}
+                            {/*        <Icon*/}
+                            {/*            name= 'chevron-down'*/}
+                            {/*            color = '#3676FF'*/}
+                            {/*        />*/}
+                            {/*    }*/}
+                            {/*    containerStyle = {{marginRight: -10}}*/}
+                            {/*    title={ ""}*/}
+                            {/*    type="clear"*/}
+                            {/*    onPress = {() => this.props.handleSwitch(this.props.id)}*/}
+                            {/*/>*/}
+                            <CheckBox
+                                containerStyle = {{margin: -7, marginRight: -10}}
+                                checked={this.props.done}
+                                onPress={() => this.props.toggleDone(this.props.id, this.props.boxID)}
+                                checkedColor='#3676FF'
 
                             />
                         </View>
-                        : null
+                    </View>
+                    {(this.state.open)
+                        ? (true)
+                            ? <View>
+                                {/*<TextInput*/}
+                                {/*    ref= {(el) => { this.name= el; }}*/}
+                                {/*    onChangeText= {(name) => this.props.changeStepInfo(name,this.props.id)}*/}
+                                {/*    value = {this.props.info}*/}
+                                {/*    multiline = {true}*/}
 
-                    : null
-                }
+                                {/*/>*/}
+                                <Button
+                                    style={{width: '30%', justifyContent: "flex-end", alignContent: "center", margin: 10}}
+                                    title = "Save"
+                                    buttonStyle={{backgroundColor: "#4978DD"}}
+                                    onPress = {()=> this.doneSaving()}
+
+                                />
+                            </View>
+                            : null
+
+                        : null
+                    }
                     {(this.state.addStepInnerToggle)
                         ? <View>
                         </View>
@@ -115,8 +158,6 @@ export default class Step extends React.Component {
         );
     }
 }
-
-
 
 
 

@@ -32,6 +32,7 @@ class TribeComponent extends Component {
             fOpen: false,
             name: this.props.name,
             deadline: this.props.deadline,
+            loading: true,
         }
 
     }

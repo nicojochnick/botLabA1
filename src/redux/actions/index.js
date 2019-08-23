@@ -48,10 +48,28 @@ export const addStepDB = (boxID, step) => {
         console.log(step);
         firebase.firestore().collection('stepBox').where('id', '==', boxID)
             .get().then(function (querySnapshot) {
-                querySnapshot.forEach(function (doc) {
-                    doc.ref.update({steps: firebase.firestore.FieldValue.arrayUnion(step)})
-                });
-                dispatch({type: 'ADD_STEP', payload: {step}})
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({steps: firebase.firestore.FieldValue.arrayUnion(step)})
+            });
+            dispatch({type: 'ADD_STEP', payload: {step}})
+        });
+    };
+
+};
+
+
+export function deleteStep(index){
+    return {type: 'DELETE_STEP', payload: index}
+}
+
+export const deleteStepDB = (boxID, StepID) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('stepBox').where('id', '==', boxID)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({steps: doc.data().steps.filter(step => step.id !== StepID)})
+            });
+            dispatch({type: 'DELETE_STEP', payload: {StepID}})
         });
     };
 
@@ -73,6 +91,27 @@ export function changeStepName(text, id){
     return {type: "CHANGE_STEP_NAME", payload: {text, id}}
 }
 
+
+export const changeStepNameDB = (text, index, boxID) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('stepBox').where('id', '==', boxID)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({ steps : doc.data().steps.map(step => {
+                        if (step.id === index) {
+                            step.name = text;
+                            return step
+                        } else {
+                            return step
+                        }
+                    })})
+            });
+            dispatch({type: 'CHANGE_STEP_NAME', payload: {text, index}})
+        });
+    };
+
+};
+
 export function changeStepInfo(text, id){
     return {type: "CHANGE_STEP_INFO", payload: {text, id}}
 }
@@ -93,9 +132,6 @@ export function updateDate(index,date){
     return {type: 'UPDATE_DATE', payload: {index, date}}
 }
 
-export function deleteStep(index){
-    return {type: 'DELETE_STEP', payload: index}
-}
 
 export function toggleCheck(index){
     return {type: TOGGLE_CHECK, payload: index}
@@ -110,6 +146,30 @@ export function toggleDone(id){
     return {type: 'TOGGLE_DONE', payload: id}
 }
 
+
+
+export const toggleDoneDB = (index, boxID) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('stepBox').where('id', '==', boxID)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({ steps : doc.data().steps.map(step => {
+                        if (step.id === index) {
+                            step.done = !step.done;
+                            return step
+                        } else {
+                            return step
+                        }
+                    })})
+            });
+            dispatch({type: 'TOGGLE_DONE', payload: {index}})
+        });
+    };
+
+};
+
+
+
 export function storeRenderCount(count){
     return {type: STORE_RENDER, payload: count}
 }
@@ -117,7 +177,6 @@ export function storeRenderCount(count){
 export function changeName(name){
     return {type: CHANGE_NAME, payload: name}
 }
-
 
 ///BOX ACTION CREATORS //
 export function addBox(box){
@@ -131,11 +190,9 @@ export const addBoxDB = (box) => {
     }
 };
 
-
 export function deleteBox(index){
     return {type: 'DELETE_BOX', payload: index}
 }
-
 
 export const deleteBoxDB = (id) => {
     return (dispatch, getState) => {
@@ -148,7 +205,6 @@ export const deleteBoxDB = (id) => {
         dispatch({type: 'DELETE_BOX', payload: id});
     };
 };
-
 
 ///TRIBE ACTION CREATORS //
 
@@ -222,5 +278,7 @@ export const addTribeDeadlineDB = (index,deadline) => {
 export function toggleTribeOpen(index){
     return {type: 'TOGGLE_TRIBE_OPEN', payload: index }
 }
+
+
 
 
