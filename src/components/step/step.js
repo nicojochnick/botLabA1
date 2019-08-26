@@ -1,4 +1,4 @@
-import {Text, View, TextInput, FlatList} from 'react-native';
+import {Text, View, KeyboardAvoidingView,TextInput, FlatList} from 'react-native';
 import React from 'react';
 import {styles} from '../theme'
 import {Button,CheckBox} from 'react-native-elements';
@@ -69,7 +69,7 @@ export default class Step extends React.Component {
         return (
             <View style = {{}}>
                 <View style = {styles.steps}>
-                    <View style = {styles.topGoals}>
+                    <KeyboardAvoidingView style = {styles.topGoals}>
                         <TextInput
                             style = {styles.goalText}
                             ref= {(el) => { this.text= el; }}
@@ -123,7 +123,7 @@ export default class Step extends React.Component {
 
                             />
                         </View>
-                    </View>
+                    </KeyboardAvoidingView>
                     {(this.state.open)
                         ? (true)
                             ? <View>

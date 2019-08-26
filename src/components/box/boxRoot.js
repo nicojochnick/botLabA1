@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {FlatList, View} from 'react-native';
+import {ActivityIndicator, FlatList, View} from 'react-native';
 import {styles} from '../theme';
 import TribeComponent from '../tribe/tribe';
 import Box from './box';
@@ -39,13 +39,18 @@ const childrenSelector = (steps, ids) => steps.filter(step => checkForID(step, i
 class BoxRoot extends Component {
     constructor(props) {
         super(props);
+
+        this.unsubscribe = null;
+        this.ref = firebase.firestore().collection('stepBox');
+
         this.handleAddStepDB = this.handleAddStepDB.bind(this);
 
         this.changeBoxName = this.changeBoxName.bind(this);
         this.handleDeleteBoxDB = this.handleDeleteBoxDB.bind(this);
 
         this.state = {
-            boxData: []
+            boxData: [],
+            loading: false,
         };
 
     }
@@ -97,37 +102,59 @@ class BoxRoot extends Component {
     }
 
     componentDidMount(): void {
-        this.getBoxes();
+        this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
+
     }
+
+    componentWillUnmount(): void {
+        this.unsubscribe();
+    }
+
+    onCollectionUpdate = (snapshot) => {
+        this.ref.where("tribeID", '==',this.props.tribeID).get().then((snapshot) => {
+            let data = snapshot.docs.map(function(documentSnapshot) {
+                return documentSnapshot.data()
+            });
+            this.setState({ boxData: data, loading: false })
+        });
+    };
+
 
 
     render() {
+        let loading = this.state.loading
         // console.log(this.props.storeBoxes);
         // const filteredBoxes = this.props.storeBoxes.filter((item) => item.tribeID === this.props.tribeID);
         // console.log(filteredBoxes);
         console.log(this.state.boxData);
         return (
             <View>
-                < FlatList style = {styles.bottomContainer}
-                           data = {this.state.boxData}
-                           listKey={(item, index) => 'D' + index.toString()}
-                           renderItem={({item}) => (
-                               <Box
-                                   name = {item.name}
-                                   info = {item.info}
-                                   id = {item.id}
-                                   open = {item.open}
-                                   tribeID = {this.props.tribeID}
-                                   steps = {item.steps}
+                {!(loading)
+                    ?
+                    <View>
+                        < FlatList style = {styles.bottomContainer}
+                        data = {this.state.boxData}
+                        listKey={(item, index) => 'D' + index.toString()}
+                        renderItem={({item}) => (
+                        <Box
+                        name = {item.name}
+                        info = {item.info}
+                        id = {item.id}
+                        open = {item.open}
+                        tribeID = {this.props.tribeID}
+                        steps = {item.steps}
 
-                                   handleAddStep = {this.handleAddStepDB}
-                                   changeBoxName = {this.changeBoxName}
-                                   handleAddBox = {this.props.handleAddBox}
-                                   handleDeleteBox = {this.handleDeleteBoxDB}
-                                   editing = {this.props.editing}
-                               />
-                           )}
-                />
+                        handleAddStep = {this.handleAddStepDB}
+                        changeBoxName = {this.changeBoxName}
+                        handleAddBox = {this.props.handleAddBox}
+                        handleDeleteBox = {this.handleDeleteBoxDB}
+                        editing = {this.props.editing}
+                        />
+                        )}
+                        />
+                    </View>
+                    : <ActivityIndicator style = {{margin: 30}} size="large" color="#0000ff" />
+                }
             </View>
         );
     }

@@ -25,7 +25,7 @@ export default class FriendGoalView extends Component {
 
         return (
             <ScrollView>
-                <View style = {{flex: 1, flexDirection: "row",paddingTop: 30, paddingBottom: 10,alignItems: "center", backgroundColor: '#4978DD'}}>
+                <View style = {{flex: 1, flexDirection: "row",paddingTop: 30, paddingBottom: 10,alignItems: "center", backgroundColor: '#186aed'}}>
                     <Identity size = {"large"} editable = {true}/>
                     <NavSettings/>
                     <AddTribe/>

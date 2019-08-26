@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {FlatList, View, Text} from 'react-native';
+import {FlatList, View, KeyboardAvoidingView,Text, ActivityIndicator} from 'react-native';
 import {styles} from '../theme';
 import TribeComponent from './tribe';
 import {connect} from 'react-redux';
@@ -25,6 +25,8 @@ const tribesSelector = (Obj) => {
 class TribeRoot extends Component {
     constructor(props) {
         super(props);
+        this.unsubscribe = null;
+        this.ref = firebase.firestore().collection('tribes');
 
         this.addTribeDeadline = this.addTribeDeadline.bind(this);
         this.changeTribeName = this.changeTribeName.bind(this);
@@ -38,11 +40,13 @@ class TribeRoot extends Component {
 
         this.state = {
             //flat list accepts an array of object
+            loading: true,
             tribeData: []
         };
     }
 
     handleAddBox(tribeID) {
+
         const genericBox = {
             name: "add a title",
             id: moment().format(),
@@ -82,9 +86,14 @@ class TribeRoot extends Component {
 
     }
 
-
     computeProgress(tribeID){
-        let steps = this.props.storeSteps.filter(function(step) {return step.tribeID === tribeID});
+
+        if (tribeID){
+            return 0
+        }
+        let data = [];// db.settings({ timestampsInSnapshots: true});
+
+        let steps = data.filter(function(step) {return step.tribeID === tribeID});
         let total = steps.length;
         let checkSteps = steps.filter( function(step) {return step.done === true});
         let checked = checkSteps.length;
@@ -96,6 +105,7 @@ class TribeRoot extends Component {
         }
     }
 
+
     addTribeDeadline(index,date){
         this.props.dispatch(addTribeDeadline(index, date))
     }
@@ -104,9 +114,8 @@ class TribeRoot extends Component {
     }
 
     getMyTribes() {
-        const db = firebase.firestore();
         // db.settings({ timestampsInSnapshots: true});
-        db.collection('tribes').where("userID", '==',this.props.filter).get().then((snapshot) => {
+        this.ref.where("userID", '==',this.props.filter).get().then((snapshot) => {
             let data = snapshot.docs.map(function(documentSnapshot) {
                 return documentSnapshot.data()
             });
@@ -116,49 +125,60 @@ class TribeRoot extends Component {
     }
 
     componentDidMount(): void {
-      this.getMyTribes()
+        this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
 
     }
 
+    componentWillUnmount(): void {
+        this.unsubscribe();
+    }
+
+    onCollectionUpdate = (snapshot) => {
+        this.ref.where("userID", '==',this.props.filter).get().then((snapshot) => {
+            let data = snapshot.docs.map(function(documentSnapshot) {
+                return documentSnapshot.data()
+            });
+            this.setState({ tribeData: data, loading: false })
+        });
+
+
+    };
+
+
     render() {
 
-        // let filter = this.props.filter;
-        // console.log(filter);
-        // let tribes = firebase.firestore().collection('tribes');
-        // console.log(tribes);
-        // //let userTribes = tribes.filter(function(tribe){return tribes.id})
-        // let userTribes = tribes.where("userID", '===',filter);
-        // console.log(userTribes);
-        // console.log(this.props.state);
-        // console.log(this.props.storeTribes);
+
         console.log(this.state.tribeData);
+
+        let loading = this.state.loading;
 
 
         return (
             <View>
-                <FlatList style = {styles.bottomContainer}
-                           data = {this.state.tribeData}
-                          listKey={(item, index) => 'D' + index.toString()}
-                          renderItem={({item}) => (
-                               <TribeComponent
-                                   name = {item.name}
-                                   info = {item.info}
-                                   id = {item.id}
-                                   open = {item.open}
-                                   deadline = {item.deadline}
 
+                { !(loading)
+                    ? <KeyboardAvoidingView>
+                        <FlatList style = {styles.bottomContainer}
+                        data = {this.state.tribeData}
+                        listKey={(item, index) => 'D' + index.toString()}
+                        renderItem={({item}) => (
+                        <TribeComponent
+                            name={item.name}
+                            info={item.info}
+                            id={item.id}
+                            open={item.open}
+                            deadline={item.deadline}
+                            tribeID={item.id}
+                            handleAddBox={this.handleAddBoxDB}
+                            computeProgress={this.computeProgress}
+                            addTribeDeadline={this.addTribeDeadlineDB}
+                            handleDeleteTribe={this.handleDeleteTribeDB}
+                            changeTribeName={this.changeTribeNameDB}
+                        />)}
+                        /></KeyboardAvoidingView>
 
-                                   tribeID = {item.id}
-
-                                   handleAddBox = {this.handleAddBoxDB}
-                                   computeProgress = {this.computeProgress}
-                                   addTribeDeadline = {this.addTribeDeadlineDB}
-                                   handleDeleteTribe = {this.handleDeleteTribeDB}
-                                   changeTribeName = {this.changeTribeNameDB}
-                                />
-                           )}
-                />
-
+                    : <ActivityIndicator style = {{margin: 30}} size="large" color="#0000ff" />
+                }
             </View>
         );
     }

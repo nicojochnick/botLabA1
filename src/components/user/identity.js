@@ -6,11 +6,22 @@ import {connect} from "react-redux";
 import ImagePicker from 'react-native-image-picker';
 import {addProfileImage, changeName, changeStepName} from '../../redux/actions';
 import {styles} from '../theme';
+import firebase from 'react-native-firebase';
+
+
 
 
 class Identity extends Component {
+    constructor(props){
+        super(props);
+        this.user = firebase.auth().currentUser;
+        this.state = {
+            name: this.user.displayName,
+            profileURL: this.user.photoURL,
 
-    state = {name: null};
+        }
+    }
+
 
    options = {
         title: 'Select Avatar',
@@ -31,27 +42,53 @@ class Identity extends Component {
             } else if (response.customButton) {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
-                const source = {uri: response.uri};
+                const source = response.uri;
 
                 // You can also display the image using data:
                 // const source = { uri: 'data:image/jpeg;base64,' + response.data };
 
-                // this.setState({
-                //     avatarSource: source,
-                // });
+               this.setState({profileURL: source});
+                this.user.updateProfile({
+                    photoURL: source
+                })
 
+                let uid = this.user.uid;
+                firebase.firestore().collection('users').where('fbID', '==', uid).get().then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+                        doc.ref.update({"photoURL":source})
+                    });
+                });
 
-                this.props.dispatch(addProfileImage(source))
             }
         })
     }
 
     changeName(text) {
-        this.props.dispatch(changeName(text));
+        this.setState({name: text});
+        this.user.updateProfile({
+            displayName: text
+        });
+        let uid = this.user.uid;
+        firebase.firestore().collection('users').where('fbID', '==', uid).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({"name": text})
+            });
+        });
+
+        // this.props.dispatch(changeName(text));
+    }
+
+    onComponenetDidMount(){
+        //add listener snapshot of correct user object
+        firebase.firestore().collection('users').onSnapshot(this.onCollectionUpdate)
+
     }
 
     render() {
+
         console.log(this.props.botID);
+        let uri = this.state.profileURL;
+        let name = this.state.name;
 
         return (
             <View style = {{flexDirection: "row", alignContent: "center", paddingTop: 10}}>
@@ -59,13 +96,13 @@ class Identity extends Component {
                     rounded = {true}
                     containerStyle = {{marginLeft: 10, borderWidth: 2, borderColor: "white"}}
                     size= {this.props.size}
-                    source = {{uri:this.props.botID.profileImage.uri }}
+                    source = {{uri: uri}}
                     onPress = {() => this.openImage(this.options)}
                 />
                 <TextInput
                     style = {styles.identityText}
                     onChangeText={text => this.changeName(text)}
-                    value = {this.props.botID.name}
+                    value = {name}
                     selectionColor = "blue"
                     maxLength = {20}
                     editable = {this.props.editable}

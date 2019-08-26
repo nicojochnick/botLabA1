@@ -20,11 +20,17 @@ import {
 import { ConfirmDialog } from 'react-native-simple-dialogs';
 import moment from "moment";
 import TribeGroup from './tribeGroup';
+import * as firebase from "react-native-firebase";
 
 
 class TribeComponent extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
+
+        this.unsubscribe = null;
+        this.ref = firebase.firestore().collection('stepBox');
+
+
         this.state = {
             open: true,
             showDeleteConfirm: false,
@@ -35,7 +41,10 @@ class TribeComponent extends Component {
             loading: true,
         }
 
+
     }
+
+
 
 
     makeEditable(bool){
@@ -69,6 +78,26 @@ class TribeComponent extends Component {
         this.makeEditable(false);
         this.props.changeTribeName(this.state.name, this.props.id);
         this.props.addTribeDeadline(this.props.tribeID, this.state.deadline)
+    }
+
+
+    onCollectionUpdate = (snapshot) => {
+        this.ref.where("tribeID", '==',this.props.tribeID).get().then((snapshot) => {
+            let data = snapshot.docs.map(function(documentSnapshot) {
+                return documentSnapshot.data()
+            });
+            this.setState({ boxData: data, loading: false })
+        });
+    };
+
+
+    componentDidMount(): void {
+        this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
+
+    }
+
+    componentWillUnmount(): void {
+        this.unsubscribe();
     }
 
     render() {

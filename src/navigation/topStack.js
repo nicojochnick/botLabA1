@@ -10,9 +10,7 @@ import createIconButtonComponent from 'react-native-vector-icons/lib/icon-button
 import FriendGoalView from '../views/friendGoalView';
 
 class TopStack extends Component {
-    static navigationOptions = {
-        title: 'HomeScreen',
-    };
+
     render() {
     }
 }
@@ -20,8 +18,20 @@ class TopStack extends Component {
 const AuthStack = createStackNavigator({
     Login: Login,
     SignUp: SignUp
+
 },{
-    initialRouteName: "SignUp"
+    initialRouteName: "SignUp",
+    headerTransparent: true,
+    defaultNavigationOptions: {
+        headerTransparent: true,
+        headerStyle: {
+            backgroundColor: '#186aed',
+        },
+        headerTitleStyle: {
+            fontWeight: 'bold',
+        },
+    },
+
 });
 
 
@@ -52,7 +62,8 @@ const AppContainer =  createAppContainer(createSwitchNavigator(
         App: AppDrawer,
         Auth: AuthStack,
     }, {
+        headerTransparent: true,
         initialRouteName: "AuthLoading"
-    }
+    },
 ));
 export default AppContainer;

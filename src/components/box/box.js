@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View} from 'react-native'
+import {KeyboardAvoidingView, View} from 'react-native'
 import {Avatar, Button} from 'react-native-elements';
 import StepRoot from '../step/stepRoot';
 import {addChildStep, addStep} from '../../redux/actions';
@@ -18,7 +18,7 @@ class Box extends Component {
     render() {
         console.log(this.props.tribeID);
         return (
-            <View style={styles.goals}>
+            <KeyboardAvoidingView style={styles.goals}>
                     { (false)
                         ? null
                         : <View style = {{flexDirection: "row"}} >
@@ -58,7 +58,7 @@ class Box extends Component {
                     editing = {this.props.editing}
                     steps = {this.props.steps}
                 />
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 }
