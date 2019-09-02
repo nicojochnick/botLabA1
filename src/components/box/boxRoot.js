@@ -9,7 +9,7 @@ import moment from 'moment';
 import {
     addBox,
     addChildStep,
-    addStep, addStepDB,
+    addStep, addStepDB, changeBoxNameDB,
     changeStepInfo,
     changeStepName, deleteBox, deleteBoxDB,
     deleteStep,
@@ -17,6 +17,7 @@ import {
 } from '../../redux/actions';
 import Step from '../step/step';
 import * as firebase from "react-native-firebase";
+import {Button} from 'react-native-elements';
 
 
 const boxesSelector = (Obj) => {
@@ -45,15 +46,16 @@ class BoxRoot extends Component {
 
         this.handleAddStepDB = this.handleAddStepDB.bind(this);
 
-        this.changeBoxName = this.changeBoxName.bind(this);
+        this.changeBoxNameDB = this.changeBoxNameDB.bind(this);
         this.handleDeleteBoxDB = this.handleDeleteBoxDB.bind(this);
+        this.computeBoxProgress = this.computeBoxProgress.bind(this);
 
         this.state = {
             boxData: [],
             loading: false,
         };
-
     }
+
 
     handleDeleteBox(boxID){
         this.props.dispatch(deleteBox(boxID))
@@ -63,7 +65,8 @@ class BoxRoot extends Component {
         this.props.handleDeleteBoxDB(boxID)
     }
 
-    changeBoxName(boxID){
+    changeBoxNameDB(text,boxID){
+        this.props.changeBoxNameDB(text,boxID)
     }
 
     handleAddStepDB(boxID){
@@ -101,6 +104,20 @@ class BoxRoot extends Component {
         });
     }
 
+    computeBoxProgress(steps){
+        let total = steps.length;
+        let checkSteps = steps.filter( function(step) {return step.done === true});
+        let checked = checkSteps.length;
+        let progress = checked/total;
+        if (progress > 0) {
+            return progress
+        } else {
+            return 0;
+        }
+    }
+
+
+
     componentDidMount(): void {
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
 
@@ -119,10 +136,8 @@ class BoxRoot extends Component {
         });
     };
 
-
-
     render() {
-        let loading = this.state.loading
+        let loading = this.state.loading;
         // console.log(this.props.storeBoxes);
         // const filteredBoxes = this.props.storeBoxes.filter((item) => item.tribeID === this.props.tribeID);
         // console.log(filteredBoxes);
@@ -143,9 +158,10 @@ class BoxRoot extends Component {
                         open = {item.open}
                         tribeID = {this.props.tribeID}
                         steps = {item.steps}
+                        computeBoxProgress = {this.computeBoxProgress}
 
                         handleAddStep = {this.handleAddStepDB}
-                        changeBoxName = {this.changeBoxName}
+                        changeBoxName = {this.changeBoxNameDB}
                         handleAddBox = {this.props.handleAddBox}
                         handleDeleteBox = {this.handleDeleteBoxDB}
                         editing = {this.props.editing}
@@ -167,7 +183,8 @@ const mapStateToProps = (state /*, ownProps*/) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         handleAddStepDB:(boxID, step) => dispatch(addStepDB(boxID, step)),
-        handleDeleteBoxDB:(id) => dispatch(deleteBoxDB(id))
+        handleDeleteBoxDB:(id) => dispatch(deleteBoxDB(id)),
+        changeBoxNameDB: (text, id) => dispatch(changeBoxNameDB(text,id))
     };
 };
 

@@ -30,13 +30,13 @@ class HomeScreen extends Component {
         super(props);
 
         this.state = {
-            editingProfile: false
+            editingProfile: false,
+            uid: null,
         }
 
     }
 
-
-    render() {
+    componentDidMount(): void {
         console.log(uid);
         let user = firebase.auth().currentUser;
         let name, email, photoUrl, uid, emailVerified;
@@ -46,11 +46,16 @@ class HomeScreen extends Component {
             email = user.email;
             photoUrl = user.photoURL;
             emailVerified = user.emailVerified;
-            uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
+            this.setState({uid:user.uid})  // The user's ID, unique to the Firebase project. Do NOT use
                              // this value to authenticate with your backend server, if
                              // you have one. Use User.getToken() instead.
         }
 
+    }
+
+
+    render() {
+        console.log(this.state.uid)
         return (
             <KeyboardAwareScrollView>
             <ScrollView>
@@ -59,7 +64,7 @@ class HomeScreen extends Component {
                     <NavSettings/>
                     <AddTribe/>
                 </View>
-                <TribeRoot filter = {uid} />
+                <TribeRoot friendTribeView = {false} filter = {this.state.uid} />
             </ScrollView>
             </KeyboardAwareScrollView>
         );

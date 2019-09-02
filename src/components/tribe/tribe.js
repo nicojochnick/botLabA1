@@ -32,6 +32,7 @@ class TribeComponent extends Component {
 
 
         this.state = {
+            boxData: [],
             open: true,
             showDeleteConfirm: false,
             editing: false,
@@ -39,11 +40,11 @@ class TribeComponent extends Component {
             name: this.props.name,
             deadline: this.props.deadline,
             loading: true,
+            author: this.props.author
         }
 
 
     }
-
 
 
 
@@ -90,10 +91,9 @@ class TribeComponent extends Component {
         });
     };
 
-
     componentDidMount(): void {
-        this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
-
+        this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
+        this.props.getTribeMembers(this.props.friendIDS);
     }
 
     componentWillUnmount(): void {
@@ -103,12 +103,20 @@ class TribeComponent extends Component {
     render() {
         let open = this.state.open;
         let fOpen = this.state.fOpen;
-        console.log(this.props.id);
+        let dColor = "grey";
+        let fColor = "grey";
+        if (fOpen) {
+            fColor =  '#3676FF';
+        }
+        if (open) {
+            dColor = '#3676FF';
+        }
+        console.log(this.props.friendIDS);
+        console.log(this.props.searchData);
         let myName = this.state.name;
         // if (this.state.editing){
         //     myName = null
         // }
-
         return (
             <View style = {styles.tribes}>
                 <View style = {styles.topTribes}>
@@ -125,7 +133,7 @@ class TribeComponent extends Component {
                                 icon = {
                                     <Icon
                                         name= 'users'
-                                        color = '#3676FF'
+                                        color = {fColor}
                                         size = {20}
                                         onPress = {() => this.setState( {f: !fOpen})}
                                     />}
@@ -134,12 +142,11 @@ class TribeComponent extends Component {
                                 type="clear"
                                 onPress = {() => this.setState( {fOpen: !fOpen})}
                             />
-
                             <Button
                                 icon = {
                                     <Icon
                                         name= 'chevron-down'
-                                        color = '#3676FF'
+                                        color = {dColor}
                                         size = {20}
                                         onPress = {() => this.setState( {open: !open})}
                                     />}
@@ -148,7 +155,6 @@ class TribeComponent extends Component {
                                 type="clear"
                                 onPress = {() => this.setState( {open: !open})}
                             />
-
                             <Menu>
                                 <MenuTrigger>
                                     <Icon
@@ -168,61 +174,79 @@ class TribeComponent extends Component {
                             </Menu>
                         </View>
                     </View>
+                <View style = {{marginLeft: 10, marginBottom: 10, marginTop: -9}}>
+                <Text style = {{fontWeight: "500", color: "grey"}}> by {this.state.author} </Text>
+                </View>
+                {(!fOpen)
+                    ?null
+                    :<TribeGroup friendIDS = {this.props.friendIDS}
+                                 tribeID = {this.props.id}
+                                 getTribeMembers = {this.props.getTribeMembers}
+                                 tribeFriends = {this.props.friends}
+                                 friendData = {this.props.friendData}
+                                 searchData = {this.props.searchData}
+                                 addFriendToTribe = {this.props.addFriendToTribe}
 
+                    />
+                }
                 {!open
                     ? null
                     :
                     <View>
                         <View style = {{flex: 1, justifyContent: "space-between", alignContent: "space-between", marginLeft: 10}}>
                             {(!this.state.editing)
-                                ? <Text style = {styles.titleDeadlineText}> deadline: {this.props.deadline} </Text>
-                                :
-                                <View style = {{flexDirection: "row"}}>
-
+                                ? null
+                                // ? <Text style = {styles.titleDeadlineText}> deadline: {this.props.deadline} </Text>
+                                : <View style = {{flexDirection: "row"}}>
                                     <Button
                                         style = {{width: '100%', marginTop: 0, marginBottom: 10}}
                                         title = "Add To Do's"
                                         buttonStyle={{backgroundColor: "#4978DD"}}
                                         onPress = {() => this.props.handleAddBox(this.props.id)}
-
                                     />
 
-                                    <DatePicker
-                                        style={{width: '60%', marginLeft: 10}}
-                                        date={this.state.deadline}
-                                        mode="date"
-                                        placeholder="set a deadline"
-                                        format="YYYY-MM-DD"
-                                        minDate={moment().format('YYYY-MM-DD')}
-                                        maxDate="2025-06-01"
-                                        confirmBtnText="Confirm"
-                                        cancelBtnText="Cancel"
-                                        customStyles={{
-                                            dateIcon: {
-                                                position: 'absolute',
-                                                left: 0,
-                                                top: 4,
-                                                marginLeft: 0
-                                            },
-                                            dateInput: {
-                                                marginLeft: 36
-                                            }
-                                            // ... You can check the source to find the other keys.
-                                        }}
-                                        onDateChange={(date) => {
-                                            this.setState( {deadline: date})
-                                        }}
+                                    <Button
+                                        style={{justifyContent: "flex-end", alignContent: "flex-end", marginLeft: 10}}
+                                        title = "Save"
+                                        buttonStyle={{backgroundColor: "#4978DD"}}
+                                        onPress = {()=> this.doneSaving()}
                                     />
+
+
+                                    {/*<DatePicker*/}
+                                    {/*    style={{width: '60%', marginLeft: 10}}*/}
+                                    {/*    date={this.state.deadline}*/}
+                                    {/*    mode="date"*/}
+                                    {/*    placeholder="set a deadline"*/}
+                                    {/*    format="YYYY-MM-DD"*/}
+                                    {/*    minDate={moment().format('YYYY-MM-DD')}*/}
+                                    {/*    maxDate="2025-06-01"*/}
+                                    {/*    confirmBtnText="Confirm"*/}
+                                    {/*    cancelBtnText="Cancel"*/}
+                                    {/*    customStyles={{*/}
+                                    {/*        dateIcon: {*/}
+                                    {/*            position: 'absolute',*/}
+                                    {/*            left: 0,*/}
+                                    {/*            top: 4,*/}
+                                    {/*            marginLeft: 0*/}
+                                    {/*        },*/}
+                                    {/*        dateInput: {*/}
+                                    {/*            marginLeft: 36*/}
+                                    {/*        }*/}
+                                    {/*        // ... You can check the source to find the other keys.*/}
+                                    {/*    }}*/}
+                                    {/*    onDateChange={(date) => {*/}
+                                    {/*        this.setState( {deadline: date})*/}
+                                    {/*    }}*/}
+                                    {/*/>*/}
                                 </View>
                             }
 
-                            <Progress.Bar
-                                progress={this.props.computeProgress(this.props.id)} width={300} style={{margin: 10}}
-                            />
+                            {/*<Progress.Bar*/}
+                            {/*    progress={this.props.computeProgress(this.props.id)} width={300} style={{margin: 10}}*/}
+                            {/*/>*/}
                         </View>
-                        {(!fOpen)
-                            ?null
-                            :<TribeGroup/>}
+
                         <View>
                             <BoxRoot
                                 tribeID = {this.props.tribeID}
@@ -231,18 +255,6 @@ class TribeComponent extends Component {
                                 editing = {this.state.editing}
                             />
                         </View>
-                        {(this.state.editing)
-                            ?
-                                <Button
-                                    style={{width: '20%', justifyContent: "center", alignContent: "center", margin: 20}}
-                                    title = "Save"
-                                    raised = {true}
-                                    buttonStyle={{backgroundColor: "#4978DD"}}
-                                    onPress = {()=> this.doneSaving()}
-
-                                />
-                            : null
-                        }
                     </View>
                 }
                 <ConfirmDialog

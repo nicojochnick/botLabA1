@@ -71,7 +71,7 @@ export default class Step extends React.Component {
                 <View style = {styles.steps}>
                     <KeyboardAvoidingView style = {styles.topGoals}>
                         <TextInput
-                            style = {styles.goalText}
+                            style = {{fontSize: 15, fontWeight: "600"}}
                             ref= {(el) => { this.text= el; }}
                             onChangeText= {(name) => this.setState({name: name}) }
                             value = {this.state.name}
@@ -80,6 +80,8 @@ export default class Step extends React.Component {
                         />
 
                         <View style = {{flexDirection: "row"}}>
+                            { (this.props.editing)
+                                ? <View style = {{flexDirection: "row"}}>
                             <Button
                                 icon = {
                                     <Icon
@@ -93,16 +95,19 @@ export default class Step extends React.Component {
                             />
 
                             <Button
-                                icon = {
-                                    <Icon
-                                        name= 'edit'
-                                        color = {color}
-                                    />
-                                }
-                                title={ ""}
-                                type="clear"
-                                onPress = {() => this.handleEdit()}
-                            />
+                                    icon={
+                                        <Icon
+                                            name='edit'
+                                            color={color}
+                                        />
+                                    }
+                                    title={""}
+                                    type="clear"
+                                    onPress={() => this.handleEdit()}
+                                />
+                                </View>
+                                :null
+                            }
                             {/*<Button*/}
                             {/*    icon = {*/}
                             {/*        <Icon*/}

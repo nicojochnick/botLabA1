@@ -10,7 +10,6 @@ import createIconButtonComponent from 'react-native-vector-icons/lib/icon-button
 import FriendGoalView from '../views/friendGoalView';
 
 class TopStack extends Component {
-
     render() {
     }
 }
@@ -31,27 +30,29 @@ const AuthStack = createStackNavigator({
             fontWeight: 'bold',
         },
     },
-
 });
-
 
 const AppDrawer = createBottomTabNavigator(
     { Home: HomeScreen, FriendView: FriendGoalView
     }, { defaultNavigationOptions: ({ navigation }) => ({
-            headerTransparent: true,
             tabBarIcon: ({ focused, horizontal, tintColor }) => {
                 const { routeName } = navigation.state;
                 let IconComponent = Ionicons;
                 let iconName;
-                if (routeName === 'HomeScreen'){
-                    iconName = `md-person`;
+                if (routeName === 'Home'){
+                    iconName = `ios-contact`;
+                } else if (routeName === 'FriendView') {
+                    iconName = 'ios-contacts'
                 }
-                return <IconComponent style = {{marginTop: 9}} name={iconName}  size={24} color={tintColor} />;
+                return <IconComponent style = {{marginTop: 9}} name={iconName}  size={28} color={'#186aed'} />;
             },
         }),
         tabBarOptions: {
             activeTintColor: 'dodgerblue',
             inactiveTintColor: 'gray',
+            showLabel: false,
+
+
         },
     }
 );

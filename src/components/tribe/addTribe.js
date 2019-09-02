@@ -52,17 +52,12 @@ class AddTribe extends Component {
         this.props.dispatch(addTribe(genericTribe));
     }
 
-
-
-
-
-
-
     handleAddTribeDB() {
         const genericTribe = {
             name: "add a title",
             id: moment().format(),
             userID: uid,
+            author: name,
             friendIDS: [],
             open: false,
             info: "add a description",

@@ -206,6 +206,18 @@ export const deleteBoxDB = (id) => {
     };
 };
 
+export const changeBoxNameDB = (text,id) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('stepBox').where('id', '==', id)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update( {"name": text})
+            });
+        });
+    };
+
+};
+
 ///TRIBE ACTION CREATORS //
 
 export function addTribe(tribe){
@@ -273,6 +285,21 @@ export const addTribeDeadlineDB = (index,deadline) => {
     };
 
 };
+
+export const addFriendToTribeDB = (friendID, TribeID) => {
+    return (dispatch, getState) => {
+        console.log(friendID)
+        console.log(TribeID)
+        firebase.firestore().collection('tribes').where('id', '==', TribeID)
+            .get().then(function (querySnapshot) {
+            console.log(querySnapshot);
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({friendIDS: firebase.firestore.FieldValue.arrayUnion(friendID)})
+            })
+        });
+    };
+};
+
 
 
 export function toggleTribeOpen(index){
