@@ -13,7 +13,13 @@ import {
     deleteTribe,
     addTribeDeadline,
     addTribeDB,
-    deleteTribeDB, changeTribeNameDB, addTribeDeadlineDB, addBoxDB, addFriendToTribe, addFriendToTribeDB,
+    deleteTribeDB,
+    changeTribeNameDB,
+    addTribeDeadlineDB,
+    addBoxDB,
+    addFriendToTribe,
+    addFriendToTribeDB,
+    addFriendIDToTribeDB,
 } from '../../redux/actions';
 
 const tribesSelector = (Obj) => {
@@ -40,6 +46,8 @@ class TribeRoot extends Component {
         this.getTribeMembers = this.getTribeMembers.bind(this);
 
         this.addFriendToTribeDB = this.addFriendToTribeDB.bind(this);
+        this.addFriendIDToTribeDB = this.addFriendIDToTribeDB.bind(this);
+
 
 
         this.state = {
@@ -92,9 +100,6 @@ class TribeRoot extends Component {
         this.props.handleDeleteTribeDB(tribeID);
 
     }
-
-    ///filter function where you only get the users that correspond with your list of friend IDs
-
     addTribeDeadline(index, date) {
         this.props.dispatch(addTribeDeadline(index, date))
     }
@@ -158,9 +163,15 @@ class TribeRoot extends Component {
         this.setState({friendData: fData})
     }
 
-    addFriendToTribeDB(friendID, TribeID){
-       this.props.addFriendToTribeDB(friendID,TribeID)
+    addFriendToTribeDB(friend, TribeID){
+       this.props.addFriendToTribeDB(friend,TribeID)
     };
+
+    addFriendIDToTribeDB(friendID, TribeID){
+        this.props.addFriendIDToTribeDB(friendID,TribeID)
+    };
+
+
 
 
     componentDidMount(): void {
@@ -185,7 +196,7 @@ class TribeRoot extends Component {
                     console.log(snapshot);
                     return documentSnapshot.data()
                 });
-                console.log(data)
+                console.log(data);
                 this.setState({tribeData: data, loading: false})
             });
         } else {
@@ -196,10 +207,11 @@ class TribeRoot extends Component {
                 this.setState({tribeData: data, loading: false})
             });
         }
+
     };
 
     render() {
-        console.log(this.state.searchData);
+        console.log(this.state.tribeData);
         console.log(this.props.filter);
         console.log(this.props.friendTribeView);
         let loading = this.state.loading;
@@ -212,6 +224,7 @@ class TribeRoot extends Component {
                         listKey={(item, index) => 'D' + index.toString()}
                         renderItem={({item}) => (
                         <TribeComponent
+                            listKey={(item, index) => 'D' + index.toString()}
                             name={item.name}
                             author = {item.author}
                             info={item.info}
@@ -220,15 +233,19 @@ class TribeRoot extends Component {
                             deadline={item.deadline}
                             tribeID={item.id}
                             friendIDS = {item.friendIDS}
-                            friends = {this.state.friendData}
+                            friends = {item.friends}
+
+                            addFriendToTribe = {this.addFriendToTribeDB}
+                            addFriendIDToTribe = {this.addFriendIDToTribeDB}
+
+
+                            friendData = {this.state.friendData}
                             handleAddBox={this.handleAddBoxDB}
                             computeProgress={this.computeProgress}
                             addTribeDeadline={this.addTribeDeadlineDB}
                             handleDeleteTribe={this.handleDeleteTribeDB}
                             changeTribeName={this.changeTribeNameDB}
                             getTribeMembers = {this.getTribeMembers}
-                            addFriendToTribe = {this.addFriendToTribeDB}
-                            friendData = {this.state.friendData}
                             searchData = {this.state.searchData}
                         />)}
                         />
@@ -252,7 +269,9 @@ const mapDispatchToProps = (dispatch) => {
         changeTribeNameDB: (text,index)=> dispatch(changeTribeNameDB(text,index)),
         addTribeDeadlineDB: (index,deadline) => dispatch(addTribeDeadlineDB(index,deadline)),
         addBoxDB: (box) => dispatch(addBoxDB(box)),
-        addFriendToTribeDB: (friendID, tribeID) =>dispatch(addFriendToTribeDB(friendID, tribeID))
+        addFriendToTribeDB: (friend, tribeID) =>dispatch(addFriendToTribeDB(friend, tribeID)),
+        addFriendIDToTribeDB: (friendID, tribeID) =>dispatch(addFriendIDToTribeDB(friendID, tribeID))
+
     }
 };
 

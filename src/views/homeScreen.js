@@ -55,7 +55,7 @@ class HomeScreen extends Component {
 
 
     render() {
-        console.log(this.state.uid)
+        console.log(this.state.uid);
         return (
             <KeyboardAwareScrollView>
             <ScrollView>

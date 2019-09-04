@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {ScrollView,View, FlatList,TextInput, Text} from 'react-native';
+import {ScrollView, View, FlatList, TextInput, Text, ActivityIndicator} from 'react-native';
 import {Avatar, Button, ListItem, SearchBar, Divider} from 'react-native-elements';
 import {styles} from '../theme'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as firebase from 'react-native-firebase';
+import moment from 'moment';
 
 
 
@@ -19,25 +20,14 @@ class TribeGroup extends Component {
             searchHit: false,
             searchMessage: null,
             friendData: null,
+            friends: this.props.friends,
+            friendIDS: this.props.friendIDS,
             searchData:null,
+            gotMems: false
         }
 
     }
 
-
-    getUserByEmail(data){
-        const db = firebase.firestore();
-        db.collection('users').where("email", '==', this.state.friendEmail).get().
-        then(function (querySnapshot) {
-            let data = querySnapshot.docs.map( function (doc) {
-                let friendID = doc.data().userID;
-                let name = doc.data().name;
-                return {name: name, friendID: friendID};
-            });
-            this.setState({ boxData: data })
-        });
-
-    };
 
     getEmails(mail){
         const db = firebase.firestore();
@@ -50,16 +40,39 @@ class TribeGroup extends Component {
         });
     }
 
+    getTribeMembers(friendIDS) {
+        let fData = [];
+        firebase.firestore().collection('users').get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.data().userID);
+                if (friendIDS.includes(doc.data().userID)) {
+                    let name = doc.data().name;
+                    let picture = doc.data().photoURL;
+                    let userID = doc.data().userID;
+                    let user = {picture: picture, name: name, userID: userID};
+                    fData.push(user)
+                }
+            });
+        })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+            });
+        this.setState({friendData: fData, gotMems: true})
+    }
 
 
-    // keyExtractor = (item, index) => index.toString();
+
+    keyExtractor = (item, index) => index.toString();
     renderItem = ({ item }) => (
         <ListItem
             style = {{borderWidth: 1, borderRadius: 5, borderColor:"grey", margin: 10,padding: 2}}
             title={item.name}
+            // listKey = {moment().format()}
             // leftAvatar={{
             //     source: {uri: item.picture}
             // }}
+
             leftIcon = {
                 <Icon style = {{marginRight: 10}}
                               name = {'user-circle'}
@@ -72,7 +85,7 @@ class TribeGroup extends Component {
 
     componentDidMount(): void {
         console.log(this.props.friendIDS);
-
+        this.getTribeMembers(this.props.friendIDS)
     }
 
     triggerSearch() {
@@ -80,19 +93,17 @@ class TribeGroup extends Component {
         let data = this.state.friendEmail;
         console.log(data);
         this.getEmails(data)
-        //     console.log(user);
-        //     this.setState({searchData: user});
-        //     this.setState({searchHit: true})
-        // }
     }
 
     triggerAdd(){
-        this.props.addFriendToTribe(this.state.searchData[0].userID, this.props.tribeID)
+        this.props.addFriendIDToTribe(this.state.searchData[0].userID, this.props.tribeID);
+        this.props.addFriendToTribe(this.state.searchData[0], this.props.tribeID);
         this.setState({searchData: null})
     }
 
     render() {
-        console.log(this.state.searchData);
+        console.log(this.state.searchData)
+        console.log(this.state.friendData);
 
         return (
             <View style = {styles.groupScrollContainer}>
@@ -150,12 +161,18 @@ class TribeGroup extends Component {
                 }
                 <Divider/>
                 <ScrollView style = {styles.groupScroll}>
-                    <FlatList
-                        listKey="Superunique"
-                        // keyExtractor={this.keyExtractor}
-                        data={this.props.tribeFriends}
-                        renderItem={this.renderItem}
-                    />
+                    { (this.state.gotMems)
+                        ?
+                        <View>
+                        <FlatList
+                            listKey="Superunique"
+                            // keyExtractor={this.keyExtractor}
+                            data={this.props.friends}
+                            renderItem={this.renderItem}
+                            />
+                        </View>
+                        : <ActivityIndicator style = {{margin: 30}} size="small" color="#0000ff" />
+                    }
                 </ScrollView>
             </View>
         );

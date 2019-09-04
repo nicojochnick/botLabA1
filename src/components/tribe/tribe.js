@@ -135,7 +135,7 @@ class TribeComponent extends Component {
                                         name= 'users'
                                         color = {fColor}
                                         size = {20}
-                                        onPress = {() => this.setState( {f: !fOpen})}
+                                        onPress = {() => this.setState( {fOpen: !fOpen})}
                                     />}
                                 containerStyle = {{marginLeft: 10}}
                                 title={ ""}
@@ -180,11 +180,12 @@ class TribeComponent extends Component {
                 {(!fOpen)
                     ?null
                     :<TribeGroup friendIDS = {this.props.friendIDS}
+                                 friends = {this.props.friends}
                                  tribeID = {this.props.id}
                                  getTribeMembers = {this.props.getTribeMembers}
-                                 tribeFriends = {this.props.friends}
                                  friendData = {this.props.friendData}
                                  searchData = {this.props.searchData}
+                                 addFriendIDToTribe = {this.props.addFriendIDToTribe}
                                  addFriendToTribe = {this.props.addFriendToTribe}
 
                     />

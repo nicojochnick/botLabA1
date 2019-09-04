@@ -44,14 +44,13 @@ const AppDrawer = createBottomTabNavigator(
                 } else if (routeName === 'FriendView') {
                     iconName = 'ios-contacts'
                 }
-                return <IconComponent style = {{marginTop: 9}} name={iconName}  size={28} color={'#186aed'} />;
+                return <IconComponent style = {{marginTop: 9}} name={iconName} color = {tintColor} size={28}  />;
             },
         }),
         tabBarOptions: {
-            activeTintColor: 'dodgerblue',
-            inactiveTintColor: 'gray',
+            activeTintColor: '#2067ff',
+            inactiveTintColor: 'lightgrey',
             showLabel: false,
-
 
         },
     }
