@@ -91,19 +91,20 @@ class Identity extends Component {
         let name = this.state.name;
 
         return (
-            <View style = {{flexDirection: "row", alignContent: "center", paddingTop: 10}}>
+            <View style = {{flexDirection: "row", alignContent: "center", paddingTop: 10, marginBottom: -10}}>
                 <Avatar
                     rounded = {true}
-                    containerStyle = {{marginLeft: 10, borderWidth: 2, borderColor: "white"}}
+                    containerStyle = {{marginLeft: 10, marginBottom: -50, borderWidth: 2, borderColor: "white"}}
                     size= {this.props.size}
                     source = {{uri: uri}}
                     onPress = {() => this.openImage(this.options)}
                 />
                 <TextInput
-                    style = {styles.identityText}
+                    style = {[styles.identityText, {marginBottom: -15}]}
+                    placeholder = {"add name!"}
                     onChangeText={text => this.changeName(text)}
                     value = {name}
-                    selectionColor = "blue"
+                    selectionColor = "white"
                     maxLength = {20}
                     editable = {this.props.editable}
                 />

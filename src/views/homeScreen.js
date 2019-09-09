@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View, Text, KeyboardAvoidingView, ScrollView, default as Header} from 'react-native';
+import {View, Text, KeyboardAvoidingView, ScrollView,RefreshControl, ActivityIndicator} from 'react-native';
 import {Card, Button} from 'react-native-elements'
 import BotA1Top from '../components/botA1/botA1Top';
 import StepRoot from '../components/step/stepRoot';
@@ -16,6 +16,7 @@ import NavSettings from '../components/navSettings';
 import TribeGroup from '../components/tribe/tribeGroup';
 import firebase from 'react-native-firebase';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import BotA1Component from '../components/botA1/botA1Component';
 
 
 
@@ -32,6 +33,8 @@ class HomeScreen extends Component {
         this.state = {
             editingProfile: false,
             uid: null,
+            refresh: false,
+            firstAdd: false,
         }
 
     }
@@ -46,24 +49,26 @@ class HomeScreen extends Component {
             email = user.email;
             photoUrl = user.photoURL;
             emailVerified = user.emailVerified;
-            this.setState({uid:user.uid})  // The user's ID, unique to the Firebase project. Do NOT use
-                             // this value to authenticate with your backend server, if
-                             // you have one. Use User.getToken() instead.
+            this.setState({uid:user.uid})
         }
-
     }
-
 
     render() {
         console.log(this.state.uid);
         return (
             <KeyboardAwareScrollView>
             <ScrollView>
-                <View style = {{flex: 1, flexDirection: "row",paddingTop: 30, paddingBottom: 10,alignItems: "center", backgroundColor: '#186aed'}}>
-                    <Identity size = {"large"} editable = {true}/>
-                    <NavSettings/>
-                    <AddTribe/>
+                <View style = {{flex: 1, flexDirection: "column", alignItems:"flex-end", paddingTop: 50, marginTop: 0, marginBottom: 0, backgroundColor: '#186aed'}}>
+                    <View style = {{flex: 1,flexDirection: "row", marginBottom: 0, }}>
+                        <AddTribe uid = {this.state.uid}/>
+                        <NavSettings/>
+                    </View>
+                    <View style = {{marginTop: 0}}>
+                    <BotA1Top/>
+                    </View>
+
                 </View>
+                <View style = {{height: 50, backgroundColor: 'transparent'}}/>
                 <TribeRoot friendTribeView = {false} filter = {this.state.uid} />
             </ScrollView>
             </KeyboardAwareScrollView>

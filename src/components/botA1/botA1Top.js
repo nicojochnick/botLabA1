@@ -46,7 +46,6 @@ class BotA1Top extends Component {
         if (this.props.count < 2) {
             this.props.dispatch(storeRenderCount());
             return StepsBot.introduction
-
         }
         else return StepsBot.mainMenu
 
@@ -58,8 +57,7 @@ class BotA1Top extends Component {
         console.log(this.state.currentStep);
         // this.findCurrentStep();
         return (
-            <View>
-
+            <View style = {{height: 300}}>
             <BotA1Component steps = {this.state.currentStep} handleEnd = {this.handleEnd}/>
             </View>
         );

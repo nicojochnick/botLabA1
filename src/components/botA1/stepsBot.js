@@ -45,7 +45,6 @@ export const StepsBot = {
 
     ],
 
-
     newIntro: [
         {
             id: '1',
@@ -111,12 +110,9 @@ export const StepsBot = {
             id: 'saveName',
             component: <BotFunctions/>,
             asMessage: true,
-            trigger: '8'
+            end: true
         },
-        {
 
-            id: '8'
-        },
 
 
 
@@ -203,4 +199,34 @@ export const StepsBot = {
 };
 
 
+//TODO add intro
+
+// Hi! What’s your name
+//
+// Nice to meet you ___,
+//     I’m Acy, your personal
+// coach.
+//
+//     To start, tell me something
+// you would like to improve
+// upon, it can be vague like
+// “be more relaxed” or specific
+// like 2x my annual income.
+//
+//     Ok, great. Now tell me just
+// one thing you can start doing
+// everyday to help you get
+// closer to that goal. You can
+// of course change this later.
+//
+//     We are going to track this, and
+// see if its really helping you get
+// closer to your goal. Improvement
+// is an iterative process, and
+// were going to work together
+// to find the system that works
+// for you.
+//
+//         Click below to see
+// this live on your home page. "
 

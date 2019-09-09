@@ -172,8 +172,6 @@ class TribeRoot extends Component {
     };
 
 
-
-
     componentDidMount(): void {
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
     }
@@ -181,7 +179,6 @@ class TribeRoot extends Component {
     componentWillUnmount(): void {
         this.unsubscribe();
     }
-
 
     //TODO Filter by timestamp ID, not FIREBASE ID
     onCollectionUpdate = (snapshot) => {
@@ -201,7 +198,9 @@ class TribeRoot extends Component {
             });
         } else {
             this.ref.where("userID", '==', this.props.filter).get().then((snapshot) => {
+                console.log("gettingData");
                 let data = snapshot.docs.map(function (documentSnapshot) {
+                    console.log(documentSnapshot.data())
                     return documentSnapshot.data()
                 });
                 this.setState({tribeData: data, loading: false})
@@ -218,38 +217,49 @@ class TribeRoot extends Component {
         return (
             <View>
                 { !(loading)
-                    ? <KeyboardAvoidingView>
-                        <FlatList style = {styles.bottomContainer}
-                        data = {this.state.tribeData}
-                        listKey={(item, index) => 'D' + index.toString()}
-                        renderItem={({item}) => (
-                        <TribeComponent
-                            listKey={(item, index) => 'D' + index.toString()}
-                            name={item.name}
-                            author = {item.author}
-                            info={item.info}
-                            id={item.id}
-                            open={item.open}
-                            deadline={item.deadline}
-                            tribeID={item.id}
-                            friendIDS = {item.friendIDS}
-                            friends = {item.friends}
+                    ? <View>
 
-                            addFriendToTribe = {this.addFriendToTribeDB}
-                            addFriendIDToTribe = {this.addFriendIDToTribeDB}
+                    { (!this.state.tribeData.length < 1)
+                    ?<KeyboardAvoidingView>
+                        <FlatList style={styles.bottomContainer}
+                                  data={this.state.tribeData}
+                                  listKey={(item, index) => 'D' + index.toString()}
+                                  renderItem={({item}) => (
+                                      <TribeComponent
+                                          listKey={(item, index) => 'D' + index.toString()}
+                                          name={item.name}
+                                          author={item.author}
+                                          info={item.info}
+                                          id={item.id}
+                                          open={item.open}
+                                          deadline={item.deadline}
+                                          tribeID={item.id}
+                                          friendIDS={item.friendIDS}
+                                          friends={item.friends}
+
+                                          addFriendToTribe={this.addFriendToTribeDB}
+                                          addFriendIDToTribe={this.addFriendIDToTribeDB}
 
 
-                            friendData = {this.state.friendData}
-                            handleAddBox={this.handleAddBoxDB}
-                            computeProgress={this.computeProgress}
-                            addTribeDeadline={this.addTribeDeadlineDB}
-                            handleDeleteTribe={this.handleDeleteTribeDB}
-                            changeTribeName={this.changeTribeNameDB}
-                            getTribeMembers = {this.getTribeMembers}
-                            searchData = {this.state.searchData}
-                        />)}
+                                          friendData={this.state.friendData}
+                                          handleAddBox={this.handleAddBoxDB}
+                                          computeProgress={this.computeProgress}
+                                          addTribeDeadline={this.addTribeDeadlineDB}
+                                          handleDeleteTribe={this.handleDeleteTribeDB}
+                                          changeTribeName={this.changeTribeNameDB}
+                                          getTribeMembers={this.getTribeMembers}
+                                          searchData={this.state.searchData}
+                                      />)}
                         />
-                </KeyboardAvoidingView>
+                    </KeyboardAvoidingView>
+
+                    : <View style = {{ flexDirection: "row",margin: 30,justifyContent: "center"}}>
+                            <Text style = {{ fontSize: 15, textAlign: "center",fontWeight: "bold", color: 'grey' }}> No goals 🤔 {"\n"} click the "+" button to add one! </Text>
+                        </View>
+
+                }
+                    </View>
+
                     : <ActivityIndicator style = {{margin: 30}} size="large" color="#0000ff" />
                 }
             </View>

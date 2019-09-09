@@ -20,7 +20,7 @@ const genericTribe = {
 };
 
 
-let  user = firebase.auth().currentUser;
+let user = firebase.auth().currentUser;
 let name, email, photoUrl, uid, emailVerified;
 
 if (user != null) {
@@ -33,10 +33,11 @@ if (user != null) {
 
 
 
+
 class AddTribe extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
     }
 
 
@@ -56,16 +57,39 @@ class AddTribe extends Component {
         const genericTribe = {
             name: "add a title",
             id: moment().format(),
-            userID: uid,
+            userID: this.props.uid,
             author: name,
             friendIDS: [],
             open: false,
             info: "add a description",
             deadline: null,
         };
-
-        this.props.addTribeDB(genericTribe)
+        this.props.addTribeDB(genericTribe);
     }
+
+    componentDidMount(): void {
+
+    }
+
+    getUser(){
+            let UData = [];
+            firebase.firestore().collection('users').get().then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    // doc.data() is never undefined for query doc snapshots
+                    if (friendIDS.includes(doc.data().userID)) {
+                        let name = doc.data().name;
+                        let picture = doc.data().photoURL;
+                        let userID = doc.data().userID;
+                        let user = {picture: picture, name: name, userID: userID};
+                        UData.push(user)
+                    }
+                });
+            })
+                .catch(function (error) {
+                    console.log("Error getting documents: ", error);
+                });
+            this.setState({UserData: UData})
+        }
 
 
     render() {

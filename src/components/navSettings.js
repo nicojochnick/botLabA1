@@ -23,6 +23,7 @@ class NavSettings extends Component {
 
     signOut(){
         firebase.auth().signOut().then(function() {
+            firebase.auth().currentUser = null;
             console.log('Signed Out');
         }, function(error) {
             console.error('Sign Out Error', error);
@@ -67,11 +68,11 @@ class NavSettings extends Component {
 
                 <Menu>
                     <MenuTrigger>
-                        <Icon style = {{marginRight: 10}}
+                        <Icon style = {{margin: 20}}
                               name = {'ellipsis-v'}
                               color = "white"
                               disabledStyle = {{color:"grey"}}
-                              size = {30}/>
+                              size = {35}/>
                     </MenuTrigger>
                     <MenuOptions>
                         <MenuOption onSelect={() => this.makeEditable(true)} text='Edit' />

@@ -10,7 +10,6 @@ class BotA1Component extends Component {
 
     //Note: to create a goal with just user input, use a callback function which takes value data from steps and dispatches an action to the store.
 
-
     render() {
         console.log(this.props.steps);
 

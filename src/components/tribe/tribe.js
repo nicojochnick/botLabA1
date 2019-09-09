@@ -175,7 +175,11 @@ class TribeComponent extends Component {
                         </View>
                     </View>
                 <View style = {{marginLeft: 10, marginBottom: 10, marginTop: -9}}>
-                <Text style = {{fontWeight: "500", color: "grey"}}> by {this.state.author} </Text>
+
+                    {(this.state.author != null)
+                        ?<Text style = {{fontWeight: "500", color: "grey"}}> by {this.state.author} </Text>
+                        : null
+                        }
                 </View>
                 {(!fOpen)
                     ?null
