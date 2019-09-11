@@ -7,9 +7,6 @@ import moment from '../addStep/addStepComponent';
 
 class BotA1Component extends Component {
 
-
-    //Note: to create a goal with just user input, use a callback function which takes value data from steps and dispatches an action to the store.
-
     render() {
         console.log(this.props.steps);
 
@@ -27,7 +24,7 @@ class BotA1Component extends Component {
                 bubbleStyle={{fontColor: "grey"}}
                 botFontColor= "black"
                 hiderHeader = {false}
-                optionBubbleColor = "#47C68C"
+                optionBubbleColor = '#2ECC71'
                 optionFontColor={"white"}
                 steps={this.props.steps}
                 hideBotAvatar={false}

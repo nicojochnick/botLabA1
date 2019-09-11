@@ -12,6 +12,7 @@ import BotA1Component from './botA1Component';
 import {connect} from 'react-redux';
 
 let tick = 0;
+
 class BotA1Top extends Component {
     constructor(props) {
         super(props);

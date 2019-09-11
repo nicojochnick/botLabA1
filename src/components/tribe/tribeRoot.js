@@ -47,6 +47,7 @@ class TribeRoot extends Component {
 
         this.addFriendToTribeDB = this.addFriendToTribeDB.bind(this);
         this.addFriendIDToTribeDB = this.addFriendIDToTribeDB.bind(this);
+        this.addDataToTribeDB = this.addDataToTribeDB.bind(this);
 
 
 
@@ -106,6 +107,10 @@ class TribeRoot extends Component {
 
     addTribeDeadlineDB(index, deadline) {
         this.props.addTribeDeadlineDB(index, deadline)
+    }
+
+    addDataToTribeDB(index,data){
+
     }
 
     computeProgress(tribeID) {
@@ -236,6 +241,8 @@ class TribeRoot extends Component {
                                           tribeID={item.id}
                                           friendIDS={item.friendIDS}
                                           friends={item.friends}
+                                          data = {item.data}
+                                          metricName = {item.metricName}
 
                                           addFriendToTribe={this.addFriendToTribeDB}
                                           addFriendIDToTribe={this.addFriendIDToTribeDB}
@@ -248,6 +255,7 @@ class TribeRoot extends Component {
                                           handleDeleteTribe={this.handleDeleteTribeDB}
                                           changeTribeName={this.changeTribeNameDB}
                                           getTribeMembers={this.getTribeMembers}
+                                          AddDataToTribe = {this.addDataToTribeDB}
                                           searchData={this.state.searchData}
                                       />)}
                         />
@@ -280,7 +288,8 @@ const mapDispatchToProps = (dispatch) => {
         addTribeDeadlineDB: (index,deadline) => dispatch(addTribeDeadlineDB(index,deadline)),
         addBoxDB: (box) => dispatch(addBoxDB(box)),
         addFriendToTribeDB: (friend, tribeID) =>dispatch(addFriendToTribeDB(friend, tribeID)),
-        addFriendIDToTribeDB: (friendID, tribeID) =>dispatch(addFriendIDToTribeDB(friendID, tribeID))
+        addFriendIDToTribeDB: (friendID, tribeID) =>dispatch(addFriendIDToTribeDB(friendID, tribeID)),
+        addDataToTribeDB: (index, data) => dispatch(addDataToTribeDB(index,data))
 
     }
 };

@@ -56,22 +56,20 @@ class HomeScreen extends Component {
     render() {
         console.log(this.state.uid);
         return (
-            <KeyboardAwareScrollView>
+
             <ScrollView>
                 <View style = {{flex: 1, flexDirection: "column", alignItems:"flex-end", paddingTop: 50, marginTop: 0, marginBottom: 0, backgroundColor: '#186aed'}}>
                     <View style = {{flex: 1,flexDirection: "row", marginBottom: 0, }}>
-                        <AddTribe uid = {this.state.uid}/>
                         <NavSettings/>
+                        <AddTribe uid = {this.state.uid}/>
+                        <Identity size = 'large'/>
                     </View>
                     <View style = {{marginTop: 0}}>
                     <BotA1Top/>
                     </View>
-
                 </View>
-                <View style = {{height: 50, backgroundColor: 'transparent'}}/>
                 <TribeRoot friendTribeView = {false} filter = {this.state.uid} />
             </ScrollView>
-            </KeyboardAwareScrollView>
         );
     }
 }

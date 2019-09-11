@@ -68,11 +68,11 @@ class NavSettings extends Component {
 
                 <Menu>
                     <MenuTrigger>
-                        <Icon style = {{margin: 20}}
+                        <Icon style = {{margin:25, }}
                               name = {'ellipsis-v'}
                               color = "white"
                               disabledStyle = {{color:"grey"}}
-                              size = {35}/>
+                              size = {40}/>
                     </MenuTrigger>
                     <MenuOptions>
                         <MenuOption onSelect={() => this.makeEditable(true)} text='Edit' />

@@ -8,6 +8,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import StepBox from '../box/box';
 import Step from '../step/step';
 import BoxRoot from '../box/boxRoot';
+import * as shape from 'd3-shape'
+
 import DatePicker from 'react-native-datepicker';
 import * as Progress from 'react-native-progress';
 import {
@@ -21,6 +23,7 @@ import { ConfirmDialog } from 'react-native-simple-dialogs';
 import moment from "moment";
 import TribeGroup from './tribeGroup';
 import * as firebase from "react-native-firebase";
+import {AreaChart, Grid} from 'react-native-svg-charts';
 
 
 class TribeComponent extends Component {
@@ -45,6 +48,16 @@ class TribeComponent extends Component {
 
 
     }
+
+    checkDate() {
+        const curDate = moment().format('dddd, MMMM Do');
+        if (this.props.date[0] !== curDate) {
+            //update local database with todays Date
+            //add an element to the componenet cloud database
+        }
+    }
+
+
 
 
 
@@ -81,6 +94,11 @@ class TribeComponent extends Component {
         this.props.addTribeDeadline(this.props.tribeID, this.state.deadline)
     }
 
+    activateEdit(){
+
+    }
+
+
 
     onCollectionUpdate = (snapshot) => {
         this.ref.where("tribeID", '==',this.props.tribeID).get().then((snapshot) => {
@@ -114,73 +132,70 @@ class TribeComponent extends Component {
         console.log(this.props.friendIDS);
         console.log(this.props.searchData);
         let myName = this.state.name;
-        // if (this.state.editing){
-        //     myName = null
-        // }
+
         return (
             <View style = {styles.tribes}>
                 <View style = {styles.topTribes}>
+                        <View style = {{width: 180}}>
                         <TextInput
                             style = {styles.goalTitleText}
                             ref= {(el) => { this.name= el; }}
                             value = {myName}
                             multiline = {true}
+                            placeholder = {"add a title"}
                             editable = {this.state.editing}
                             onChangeText = {(text) => this.setState({name:text})}
                         />
-                        <View style = {{flexDirection: "row", justifyContent: "space-between", }}>
-                            <Button
-                                icon = {
-                                    <Icon
-                                        name= 'users'
-                                        color = {fColor}
-                                        size = {20}
-                                        onPress = {() => this.setState( {fOpen: !fOpen})}
-                                    />}
-                                containerStyle = {{marginLeft: 10}}
-                                title={ ""}
-                                type="clear"
-                                onPress = {() => this.setState( {fOpen: !fOpen})}
-                            />
-                            <Button
-                                icon = {
-                                    <Icon
-                                        name= 'chevron-down'
-                                        color = {dColor}
-                                        size = {20}
-                                        onPress = {() => this.setState( {open: !open})}
-                                    />}
-                                containerStyle = {{marginLeft: 15, marginRight: 15}}
-                                title={ ""}
-                                type="clear"
-                                onPress = {() => this.setState( {open: !open})}
-                            />
+                        {(this.state.author != null)
+                                    ?<Text style = {{fontWeight: "500", color: "grey"}}> by {this.state.author} </Text>
+                                    : null
+                        }
+                        </View>
+
+                        <View style ={{flexDirection: "column", flex: 2, marginTop: -10, marginLeft: -10, marginRight: 0,justifyContent: "flex-end"}}>
+                            <TextInput
+                                style ={{fontSize: 60, textAlign: "right", fontWeight: "500"}}
+                                placeholder = "0"
+                            >
+                                {this.props.data.pop()}
+                            </TextInput>
+                            <TextInput
+                                style={{fontSize: 15, textAlign: "right", marginTop: -10}}
+                                placeholder = "add a metric"
+
+                            >
+                                {this.props.metricName}
+                            </TextInput>
+                        </View>
+
+
+                        <View style = {{flexDirection: "row", justifyContent: "flex-end", flex: 0.2}}>
                             <Menu>
                                 <MenuTrigger>
                                     <Icon
-                                        style = {{margin: 7}}
+                                        style = {{margin: 0}}
                                         name = {'ellipsis-v'}
                                         color = '#3676FF'
                                         disabledStyle = {{color:"grey"}}
-                                        size = {29}
+                                        size = {22}
                                                       />
                                 </MenuTrigger>
                                     <MenuOptions>
-                                    <MenuOption onSelect={() => this.makeEditable(true, myName)} text='Edit' />
-                                    <MenuOption onSelect={() => this.openDeleteConfirm(true)} >
+                                    <MenuOption onSelect={() => this.makeEditable(true, myName)} text='Edit'/>
+                                        <MenuOption onSelect={() =>  this.setState( {fOpen: !fOpen})} text='Add Partners'/>
+                                        <MenuOption onSelect={() => this.openDeleteConfirm(true)} >
                                         <Text style={{color: 'red'}}>Delete</Text>
                                     </MenuOption>
                                 </MenuOptions>
                             </Menu>
                         </View>
                     </View>
-                <View style = {{marginLeft: 10, marginBottom: 10, marginTop: -9}}>
 
-                    {(this.state.author != null)
-                        ?<Text style = {{fontWeight: "500", color: "grey"}}> by {this.state.author} </Text>
-                        : null
-                        }
-                </View>
+
+
+
+
+
                 {(!fOpen)
                     ?null
                     :<TribeGroup friendIDS = {this.props.friendIDS}
@@ -198,6 +213,23 @@ class TribeComponent extends Component {
                     ? null
                     :
                     <View>
+                        <View>
+                            <AreaChart
+                                style={{ height: 100 }}
+                                data={this.props.data}
+                                contentInset={{ top: 20, bottom: 5, left: 20, right: 20}}
+                                curve={ shape.curveNatural }
+                                svg={{ fill: '#6161F7' }}
+                            >
+                                <Grid/>
+                            </AreaChart>
+                        </View>
+
+
+
+
+
+
                         <View style = {{flex: 1, justifyContent: "space-between", alignContent: "space-between", marginLeft: 10}}>
                             {(!this.state.editing)
                                 ? null
@@ -247,11 +279,7 @@ class TribeComponent extends Component {
                                 </View>
                             }
 
-                            {/*<Progress.Bar*/}
-                            {/*    progress={this.props.computeProgress(this.props.id)} width={300} style={{margin: 10}}*/}
-                            {/*/>*/}
                         </View>
-
                         <View>
                             <BoxRoot
                                 tribeID = {this.props.tribeID}
@@ -285,9 +313,24 @@ class TribeComponent extends Component {
                             onPress: this.optionYes,
                         }}/>
             </View>
-
         );
     }
 }
 
+
 export default TribeComponent;
+
+
+{/*<Button*/}
+{/*    icon = {*/}
+{/*        <Icon*/}
+{/*            name= 'chevron-down'*/}
+{/*            color = {dColor}*/}
+{/*            size = {20}*/}
+{/*            onPress = {() => this.setState( {open: !open})}*/}
+{/*        />}*/}
+{/*    containerStyle = {{marginLeft: 15, marginRight: 15}}*/}
+{/*    title={ ""}*/}
+{/*    type="clear"*/}
+{/*    onPress = {() => this.setState( {open: !open})}*/}
+{/*/>*/}

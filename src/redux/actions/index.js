@@ -315,6 +315,29 @@ export const addFriendIDToTribeDB = (friendID, TribeID) => {
 };
 
 
+export const addDataToTribe = (index,date, data) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('tribes').where('id', '==', index)
+            .get().then(function (querySnapshot) {
+            console.log(querySnapshot);
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({
+                    steps: doc.data().steps.map(step => {
+                        if (step.id === index) {
+                            step.name = text;
+                            return step
+                        } else {
+                            return step
+                        }
+                    })
+                })
+            });
+        });
+    }
+};
+
+
+
 
 export function toggleTribeOpen(index){
     return {type: 'TOGGLE_TRIBE_OPEN', payload: index }

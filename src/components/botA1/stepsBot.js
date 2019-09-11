@@ -88,7 +88,6 @@ export const StepsBot = {
                 {value: 'GetMotivated', label: 'Motivation', trigger: "Motivation"},
             ],
 
-
         },
 
         {
@@ -112,17 +111,6 @@ export const StepsBot = {
             asMessage: true,
             end: true
         },
-
-
-
-
-
-
-
-
-
-
-
         {
             id: "findaGoal",
             message: "What is the name of the class"
@@ -158,8 +146,6 @@ export const StepsBot = {
             component: <BotFunctions/>,
             asMessage: true,
             trigger: '3'
-
-
         },
         {
             id: '3',
@@ -180,10 +166,6 @@ export const StepsBot = {
         }
     ],
 
-
-
-
-
     makeGoalSimple: [
         {
             id: '1',
@@ -197,6 +179,10 @@ export const StepsBot = {
 
 
 };
+
+
+
+
 
 
 //TODO add intro

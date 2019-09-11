@@ -75,7 +75,7 @@ export const styles = StyleSheet.create({
         shadowOffset: {width: 0, height: 2},
         shadowOpacity: 5,
         borderRadius: 6,
-        margin: 5,
+        margin: 6,
         padding: 0,
     },
     topGoals: {
@@ -86,7 +86,7 @@ export const styles = StyleSheet.create({
     topTribes: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        margin: 10
+        margin: 8
     },
 
     goalText: {
@@ -121,9 +121,10 @@ export const styles = StyleSheet.create({
     },
 
     goalTitleText: {
-        width: "60%",
+        width: "100%",
         fontSize: 30,
         fontWeight: "bold",
+        marginTop: -2,
     },
 
     titleDeadlineText: {

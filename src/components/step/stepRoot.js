@@ -53,11 +53,9 @@ export class StepRoot extends React.Component {
         this.props.dispatch(changeStepName(text, id));
     }
 
-
     changeStepNameDB(text,id, boxID){
         this.props.changeStepNameDB(text,id,boxID);
     }
-
 
     handleDeleteStep(id){
         this.props.dispatch(deleteStep(id))
@@ -79,7 +77,6 @@ export class StepRoot extends React.Component {
         this.props.dispatch(changeStepInfo(text, id));
     }
     changeStepInfoDB(text,info) {
-
     }
 
     handleSwitch(id) {
@@ -102,15 +99,9 @@ export class StepRoot extends React.Component {
             }
             //this needs to be the parentID!
             this.props.dispatch(toggleDone(id))
-
         }
     }
-
-    checkCheckDB(id){
-
-    }
-
-
+    checkCheckDB(id){}
 
     render() {
         // console.log(this.props.storeSteps);

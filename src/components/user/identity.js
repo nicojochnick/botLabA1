@@ -91,22 +91,22 @@ class Identity extends Component {
         let name = this.state.name;
 
         return (
-            <View style = {{flexDirection: "row", alignContent: "center", paddingTop: 10, marginBottom: -10}}>
-                <Avatar
-                    rounded = {true}
-                    containerStyle = {{marginLeft: 10, marginBottom: -50, borderWidth: 2, borderColor: "white"}}
-                    size= {this.props.size}
-                    source = {{uri: uri}}
-                    onPress = {() => this.openImage(this.options)}
-                />
+            <View style = {{flexDirection: "row", justifyContent: "flex-end", alignContent: "flex-start", paddingTop: 10, marginBottom: -10}}>
                 <TextInput
-                    style = {[styles.identityText, {marginBottom: -15}]}
+                    style = {[styles.identityText, {marginBottom: 20, marginLeft: 0, textAlign: "right"}]}
                     placeholder = {"add name!"}
                     onChangeText={text => this.changeName(text)}
                     value = {name}
                     selectionColor = "white"
                     maxLength = {20}
                     editable = {this.props.editable}
+                />
+                <Avatar
+                    rounded = {true}
+                    containerStyle = {{ marginRight: 10, borderWidth: 2, borderColor: "white"}}
+                    size= {this.props.size}
+                    source = {{uri: uri}}
+                    onPress = {() => this.openImage(this.options)}
                 />
 
             </View>

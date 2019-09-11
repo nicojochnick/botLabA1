@@ -55,11 +55,13 @@ class AddTribe extends Component {
 
     handleAddTribeDB() {
         const genericTribe = {
-            name: "add a title",
+            name: "",
             id: moment().format(),
             userID: this.props.uid,
             author: name,
             friendIDS: [],
+            data: [0],
+            metricName: null,
             open: false,
             info: "add a description",
             deadline: null,
@@ -95,11 +97,11 @@ class AddTribe extends Component {
     render() {
         return (
             <Button
-                icon = {<Ionicons style = {{marginRight: 10,}}
+                icon = {<Ionicons style = {{marginRight: -10,}}
                                   name = {'ios-add'}
                                   color = "white"
                                   disabledStyle = {{color:"grey"}}
-                                  size = {60}
+                                  size = {70}
                                   onPress = {() => this.handleAddTribeDB()}/> }
                 type = "clear"
                 onPress = {() => this.handleAddTribeDB()}
