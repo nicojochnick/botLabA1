@@ -286,8 +286,7 @@ class TribeRoot extends Component {
 }
 
 const mapStateToProps = (state /*, ownProps*/) => ({
-    storeTribes: tribesSelector(state.tribes.byHash),
-    storeSteps:  tribesSelector(state.steps.byHash),
+    storeTribes: tribesSelector(state.tribes.byHash), storeSteps:  tribesSelector(state.steps.byHash),
     state: state
 });
 
