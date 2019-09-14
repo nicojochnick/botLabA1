@@ -29,11 +29,8 @@ import {AreaChart, Grid} from 'react-native-svg-charts';
 class TribeComponent extends Component {
     constructor(props) {
         super(props);
-
         this.unsubscribe = null;
         this.ref = firebase.firestore().collection('stepBox');
-
-
         this.state = {
             boxData: [],
             open: true,
@@ -41,25 +38,23 @@ class TribeComponent extends Component {
             editing: false,
             fOpen: false,
             name: this.props.name,
+            nameChange: false,
             deadline: this.props.deadline,
             loading: true,
-            author: this.props.author
-        }
-
-
-    }
-
-    checkDate() {
-        const curDate = moment().format('dddd, MMMM Do');
-        if (this.props.date[0] !== curDate) {
-            //update local database with todays Date
-            //add an element to the componenet cloud database
+            author: this.props.author,
+            metricName: null,
+            metricNameChange: false,
+            metric: null,
+            metricChange: false,
         }
     }
 
-
-
-
+    checkDate(curData) {
+        const curDate = moment().format("MMM D YY");
+        if (curData.date !== curDate) {
+            //add element with data object( with new data and data as zero)
+        }
+    }
 
     makeEditable(bool){
         this.setState({editing: bool});
@@ -89,16 +84,48 @@ class TribeComponent extends Component {
     };
 
     doneSaving(){
+        const curDate = moment().format("MMM D YY");
         this.makeEditable(false);
-        this.props.changeTribeName(this.state.name, this.props.id);
-        this.props.addTribeDeadline(this.props.tribeID, this.state.deadline)
+        if (this.state.metricChange) {
+            this.props.addDataToTribe(this.props.id, this.state.metric, curDate);
+            this.setState({metricChange: false})
+
+        }
+
+        if (this.state.nameChange) {
+            this.props.changeTribeName(this.state.name, this.props.id);
+            this.setState({nameChange: false})
+
+        }
+
+        if (this.state.metricNameChange)
+        this.props.changeMetricName(this.state.metricName, this.props.id);
+        this.setState({metricNameChange: false})
+        //this.props.addTribeDeadline(this.props.tribeID, this.state.deadline)
     }
 
-    activateEdit(){
+    activateEdit(data, param){
+        this.makeEditable(true);
+
+        if ( param === 'name') {
+            this.setState({name:data});
+            this.setState({nameChange : true})
+        }
+
+        if ( param === 'metricName') {
+            this.setState({metricName:data});
+            this.setState({metricNameChange : true})
+        }
+
+        if ( param === 'metric') {
+            let int = data;
+            int = Number(int);
+            this.setState({metricChange: true});
+            this.setState({metric:int})
+        }
+
 
     }
-
-
 
     onCollectionUpdate = (snapshot) => {
         this.ref.where("tribeID", '==',this.props.tribeID).get().then((snapshot) => {
@@ -112,6 +139,8 @@ class TribeComponent extends Component {
     componentDidMount(): void {
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
         this.props.getTribeMembers(this.props.friendIDS);
+        let currData= this.props.cData[this.props.cData.length-1];
+        this.checkDate(currData)
     }
 
     componentWillUnmount(): void {
@@ -132,6 +161,14 @@ class TribeComponent extends Component {
         console.log(this.props.friendIDS);
         console.log(this.props.searchData);
         let myName = this.state.name;
+        let currData= this.props.cData[this.props.cData.length-1];
+        let dataList = [];
+
+        this.props.cData.map(function(item){
+            dataList.push(item.data)
+        });
+
+        console.log(dataList)
 
         return (
             <View style = {styles.tribes}>
@@ -143,8 +180,8 @@ class TribeComponent extends Component {
                             value = {myName}
                             multiline = {true}
                             placeholder = {"add a title"}
-                            editable = {this.state.editing}
-                            onChangeText = {(text) => this.setState({name:text})}
+                            editable = {true}
+                            onChangeText = {(text) => this.activateEdit(text,'name')}
                         />
                         {(this.state.author != null)
                                     ?<Text style = {{fontWeight: "500", color: "grey"}}> by {this.state.author} </Text>
@@ -156,13 +193,14 @@ class TribeComponent extends Component {
                             <TextInput
                                 style ={{fontSize: 60, textAlign: "right", fontWeight: "500"}}
                                 placeholder = "0"
+                                onChangeText = {(text) => this.activateEdit(text,'metric')}
                             >
-                                {this.props.data.pop()}
+                                {currData.data}
                             </TextInput>
                             <TextInput
                                 style={{fontSize: 15, textAlign: "right", marginTop: -10}}
                                 placeholder = "add a metric"
-
+                                onChangeText = {(text) => this.activateEdit(text,'metricName')}
                             >
                                 {this.props.metricName}
                             </TextInput>
@@ -194,8 +232,6 @@ class TribeComponent extends Component {
 
 
 
-
-
                 {(!fOpen)
                     ?null
                     :<TribeGroup friendIDS = {this.props.friendIDS}
@@ -216,18 +252,14 @@ class TribeComponent extends Component {
                         <View>
                             <AreaChart
                                 style={{ height: 100 }}
-                                data={this.props.data}
+                                data={dataList}
                                 contentInset={{ top: 20, bottom: 5, left: 20, right: 20}}
                                 curve={ shape.curveNatural }
-                                svg={{ fill: '#6161F7' }}
+                                svg={{ fill: '#186aed' }}
                             >
                                 <Grid/>
                             </AreaChart>
                         </View>
-
-
-
-
 
 
                         <View style = {{flex: 1, justifyContent: "space-between", alignContent: "space-between", marginLeft: 10}}>

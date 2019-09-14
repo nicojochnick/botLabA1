@@ -12,6 +12,7 @@ import {
     changeTribeName,
     deleteTribe,
     addTribeDeadline,
+    changeMetricNameDB,
     addTribeDB,
     deleteTribeDB,
     changeTribeNameDB,
@@ -19,7 +20,7 @@ import {
     addBoxDB,
     addFriendToTribe,
     addFriendToTribeDB,
-    addFriendIDToTribeDB,
+    addFriendIDToTribeDB, addDataToTribeDB,
 } from '../../redux/actions';
 
 const tribesSelector = (Obj) => {
@@ -39,6 +40,7 @@ class TribeRoot extends Component {
         this.changeTribeName = this.changeTribeName.bind(this);
         this.computeProgress = this.computeProgress.bind(this);
 
+
         this.handleAddBoxDB = this.handleAddBoxDB.bind(this);
         this.handleDeleteTribeDB = this.handleDeleteTribeDB.bind(this);
         this.changeTribeNameDB = this.changeTribeNameDB.bind(this);
@@ -48,6 +50,8 @@ class TribeRoot extends Component {
         this.addFriendToTribeDB = this.addFriendToTribeDB.bind(this);
         this.addFriendIDToTribeDB = this.addFriendIDToTribeDB.bind(this);
         this.addDataToTribeDB = this.addDataToTribeDB.bind(this);
+
+        this.editMetric = this.editMetric.bind(this);
 
 
 
@@ -90,7 +94,11 @@ class TribeRoot extends Component {
     }
 
     changeTribeNameDB(text, index) {
-        this.props.changeTribeNameDB(text, index)
+        this.props.changeTribeName(text, index)
+    }
+
+    editMetric(text,index) {
+        this.props.editMetric(text,index)
     }
 
     handleDeleteTribe(tribeID) {
@@ -109,7 +117,8 @@ class TribeRoot extends Component {
         this.props.addTribeDeadlineDB(index, deadline)
     }
 
-    addDataToTribeDB(index,data){
+    addDataToTribeDB(index,data,date){
+        this.props.addDataToTribeDB(index, data,date)
 
     }
 
@@ -215,6 +224,7 @@ class TribeRoot extends Component {
     };
 
     render() {
+        this.editMetric("hi", 1);
         console.log(this.state.tribeData);
         console.log(this.props.filter);
         console.log(this.props.friendTribeView);
@@ -236,12 +246,11 @@ class TribeRoot extends Component {
                                           author={item.author}
                                           info={item.info}
                                           id={item.id}
-                                          open={item.open}
                                           deadline={item.deadline}
                                           tribeID={item.id}
                                           friendIDS={item.friendIDS}
                                           friends={item.friends}
-                                          data = {item.data}
+                                          cData = {item.continuousData}
                                           metricName = {item.metricName}
 
                                           addFriendToTribe={this.addFriendToTribeDB}
@@ -249,13 +258,14 @@ class TribeRoot extends Component {
 
 
                                           friendData={this.state.friendData}
+                                          changeMetricName = {this.editMetric}
                                           handleAddBox={this.handleAddBoxDB}
                                           computeProgress={this.computeProgress}
                                           addTribeDeadline={this.addTribeDeadlineDB}
                                           handleDeleteTribe={this.handleDeleteTribeDB}
                                           changeTribeName={this.changeTribeNameDB}
                                           getTribeMembers={this.getTribeMembers}
-                                          AddDataToTribe = {this.addDataToTribeDB}
+                                          addDataToTribe = {this.addDataToTribeDB}
                                           searchData={this.state.searchData}
                                       />)}
                         />
@@ -284,12 +294,13 @@ const mapStateToProps = (state /*, ownProps*/) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         handleDeleteTribeDB: (tribe) => dispatch(deleteTribeDB(tribe)),
-        changeTribeNameDB: (text,index)=> dispatch(changeTribeNameDB(text,index)),
+        changeTribeName: (text,index)=> dispatch(changeTribeNameDB(text,index)),
+        editMetric: (text,index) => dispatch(changeMetricNameDB(text,index)),
         addTribeDeadlineDB: (index,deadline) => dispatch(addTribeDeadlineDB(index,deadline)),
         addBoxDB: (box) => dispatch(addBoxDB(box)),
         addFriendToTribeDB: (friend, tribeID) =>dispatch(addFriendToTribeDB(friend, tribeID)),
         addFriendIDToTribeDB: (friendID, tribeID) =>dispatch(addFriendIDToTribeDB(friendID, tribeID)),
-        addDataToTribeDB: (index, data) => dispatch(addDataToTribeDB(index,data))
+        addDataToTribeDB: (index, data, date) => dispatch(addDataToTribeDB(index,data,date)),
 
     }
 };

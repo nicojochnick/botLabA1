@@ -263,6 +263,19 @@ export const deleteTribeDB = (id) => {
 };
 
 
+export const changeMetricNameDB = (text,id) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('tribes').where('id', '==', id)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update( {"metricName": text})
+            });
+        });
+    };
+
+};
+
+
 export function deleteTribe(index){
     return {type: 'DELETE_TRIBE', payload: index}
 }
@@ -315,19 +328,19 @@ export const addFriendIDToTribeDB = (friendID, TribeID) => {
 };
 
 
-export const addDataToTribe = (index,date, data) => {
+export const addDataToTribeDB = (index, data, date) => {
     return (dispatch, getState) => {
         firebase.firestore().collection('tribes').where('id', '==', index)
             .get().then(function (querySnapshot) {
             console.log(querySnapshot);
             querySnapshot.forEach(function (doc) {
                 doc.ref.update({
-                    steps: doc.data().steps.map(step => {
-                        if (step.id === index) {
-                            step.name = text;
-                            return step
+                    continuousData: doc.data().continuousData.map(item => {
+                        if (item.date === date) {
+                            item.data = data;
+                            return item
                         } else {
-                            return step
+                            return item
                         }
                     })
                 })

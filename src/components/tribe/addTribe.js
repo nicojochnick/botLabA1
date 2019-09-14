@@ -60,7 +60,7 @@ class AddTribe extends Component {
             userID: this.props.uid,
             author: name,
             friendIDS: [],
-            data: [0],
+            continuousData: [{date: null, data:0}, {date : moment().format("MMM D YY"), data: 0}],
             metricName: null,
             open: false,
             info: "add a description",

@@ -53,7 +53,6 @@ class BotA1Top extends Component {
     }
 
 
-
     render() {
         console.log(this.state.currentStep);
         // this.findCurrentStep();
