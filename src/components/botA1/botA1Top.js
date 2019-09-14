@@ -24,10 +24,7 @@ class BotA1Top extends Component {
             currentStep: this.getStep(),
             steps: null
         }
-
     };
-
-
 
     handleEnd({ steps, values }) {
         this.setState({currentStep: StepsBot.test});
