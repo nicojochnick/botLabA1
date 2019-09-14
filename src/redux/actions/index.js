@@ -334,16 +334,25 @@ export const addDataToTribeDB = (index, data, date) => {
             .get().then(function (querySnapshot) {
             console.log(querySnapshot);
             querySnapshot.forEach(function (doc) {
-                doc.ref.update({
-                    continuousData: doc.data().continuousData.map(item => {
-                        if (item.date === date) {
-                            item.data = data;
-                            return item
-                        } else {
-                            return item
-                        }
+
+                if (data == null) {
+                    let element = {date: date, data: null};
+                    doc.ref.update({continuousData: firebase.firestore.FieldValue.arrayUnion(element)})
+                }
+
+                else {
+                    doc.ref.update({
+                        continuousData:
+                            doc.data().continuousData.map(item => {
+                                if (item.date === date) {
+                                    item.data = data;
+                                    return item
+                                } else {
+                                    return item
+                                }
+                            })
                     })
-                })
+                }
             });
         });
     }

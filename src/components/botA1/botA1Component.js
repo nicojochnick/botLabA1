@@ -15,20 +15,21 @@ class BotA1Component extends Component {
                 handleEnd={this.props.handleEnd}
                 headerTitle="Speech Recognition"
                 recognitionEnable={true}
-                botBubbleColor = 'white'
-                contentStyle={{backgroundColor: 'rgba(52, 52, 52, 0.0)'}}
-                style={{backgroundColor: 'rgba(52, 52, 52, 0.0)'}}
+                botBubbleColor = 'transparent'
+                bubbleStyle = {{backgroundColor: "white", fontSize: 30}}
+                contentStyle={{backgroundColor: 'transparent', border: 0, padding: 10}}
+                style={{backgroundColor: 'transparent', border: 0, padding: 0}}
                 inputStyle={{backgroundColor: "white"}}
                 submitButtonStyle={{backgroundColor: "white",}}
                 submitButtonContent= {<Ionicons name = {'md-send'} color = "#6161F7" size = {24}/>}
-                bubbleStyle={{fontColor: "grey"}}
                 botFontColor= "black"
                 hiderHeader = {false}
-                optionBubbleColor = '#2ECC71'
+                optionBubbleColor = 'transparent'
                 optionFontColor={"white"}
                 steps={this.props.steps}
                 hideBotAvatar={false}
                 hideUserAvatar={true}
+                customStyle = {{backgroundColor: "transparent", borderWidth: 0, border: -30, padding: -40}}
             />
         );
     }

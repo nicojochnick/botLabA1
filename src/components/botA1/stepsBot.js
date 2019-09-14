@@ -5,6 +5,10 @@ import React from 'react';
 import BotFunctions from './functionsBot/addStepBot';
 import EditName from './functionsBot/editName';
 import EditProfileImageBot from './functionsBot/editProfileImageBot';
+
+import ReportMain from '../reports/reportMain/reportMain'
+
+
 export const StepsBot = {
 
     introduction: [
@@ -82,10 +86,69 @@ export const StepsBot = {
         {
             id: "menuItems",
             options: [
-                {value: 'StartStudySession', label: 'Create a Goal', trigger: "createaGoal"},
-                {value: 'searchGoals', label: 'Find a Goal', trigger: "findaGoal"},
-                {value: 'Tip', label: 'Tip', trigger: "Tip"},
-                {value: 'GetMotivated', label: 'Motivation', trigger: "Motivation"},
+                {value: 'blank', label: 'Analyze', trigger: "analyze"},
+                {value: 'blank', label: 'Coach', trigger: "coach"},
+            ],
+
+        },
+        {
+            id: "analyze",
+            message: "blank"
+
+        },
+
+        {
+            id: "coach",
+            message: "blank"
+
+        }
+
+    ],
+
+
+
+    report: [
+        {
+            id: '1',
+            message: "Hey USERNAME",
+            trigger: "2"
+
+
+        },
+
+        {
+            id: '2',
+            component:
+
+                <ReportMain/>,
+            asMessage: false,
+            end: true
+        },
+
+
+    ],
+
+
+
+
+
+
+
+
+    oldMenu: [
+        {
+            id: "1",
+            message: 'how can I help?',
+            trigger: "menuItems"
+        },
+
+        {
+            id: "menuItems",
+            options: [
+                {value: 'blank', label: 'Analyze', trigger: "createaGoal"},
+                {value: 'blank', label: 'Find a Goal', trigger: "findaGoal"},
+                {value: 'blank', label: 'Tip', trigger: "Tip"},
+                {value: 'blank', label: 'Motivation', trigger: "Motivation"},
             ],
 
         },

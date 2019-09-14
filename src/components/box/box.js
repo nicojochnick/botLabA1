@@ -46,17 +46,17 @@ class Box extends Component {
         }
         return (
             <KeyboardAvoidingView>
-                <View style = {{borderWidth: 1, borderRadius: 5, margin: 5, borderColor: "lightgrey"}}>
+                <View style = {{}}>
 
                 <View style={{flexDirection:"row"}}>
-                <TextInput
-                    style = {{margin: 10, fontSize: 25, fontWeight: "bold"}}
-                    editable = {this.state.editingBox}
-                    onChangeText = {(text) => this.setState({name:text})}
-                >
-                    {this.props.name}
-                </TextInput>
-                { (!this.state.editingBox)
+                {/*<TextInput*/}
+                {/*    style = {{margin: 10, fontSize: 25, fontWeight: "bold"}}*/}
+                {/*    editable = {this.state.editingBox}*/}
+                {/*    onChangeText = {(text) => this.setState({name:text})}*/}
+                {/*>*/}
+                {/*    {this.props.name}*/}
+                {/*</TextInput>*/}
+                { (!this.props.editing)
                         ? null
                         : <View style = {{flexDirection: "row"}} >
                             <Button
@@ -86,24 +86,9 @@ class Box extends Component {
                             />
                         </View>
                     }
-                    {(this.props.editing)
-                    ?< Button
-                        icon = {
-                        <Icon
-                        name= 'edit'
-                        color = {color}
-                        size = {15}
-                        />
-                    }
-                        title={""}
-                        type="clear"
-                        onPress = {() => this.handleEdit()}
-                        />
-                        :null
-                    }
                 </View>
                 <Progress.Bar
-                    progress={this.props.computeBoxProgress(this.props.steps)} width={300} style={{margin: 10}}
+                    progress={this.props.computeBoxProgress(this.props.steps)} width={330} style={{margin: 10}}
                 />
 
                 {(this.state.editingBox)

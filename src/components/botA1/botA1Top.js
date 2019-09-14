@@ -45,7 +45,7 @@ class BotA1Top extends Component {
             this.props.dispatch(storeRenderCount());
             return StepsBot.introduction
         }
-        else return StepsBot.mainMenu
+        else return StepsBot.report
 
     }
 

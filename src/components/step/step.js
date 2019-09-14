@@ -60,6 +60,11 @@ export default class Step extends React.Component {
 
     }
 
+    activeEdit(data) {
+        this.handleEdit()
+        this.setState({name: data})
+    }
+
 
     render() {
         let color = 'grey';
@@ -73,41 +78,31 @@ export default class Step extends React.Component {
                         <TextInput
                             style = {{fontSize: 15, fontWeight: "600"}}
                             ref= {(el) => { this.text= el; }}
-                            onChangeText= {(name) => this.setState({name: name}) }
+                            onChangeText= {(name) => this.activeEdit(name) }
                             value = {this.state.name}
                             multiline = {true}
-                            editable = {this.state.editingStep}
+                            editable = {true}
                         />
 
                         <View style = {{flexDirection: "row"}}>
+
                             { (this.props.editing)
                                 ? <View style = {{flexDirection: "row"}}>
-                            <Button
-                                icon = {
-                                    <Icon
-                                        name= 'times'
-                                        color = 'grey'
+                                    <Button
+                                        icon = {
+                                            <Icon
+                                                name= 'times'
+                                                color = 'grey'
+                                            />
+                                        }
+                                        title={ ""}
+                                        type="clear"
+                                        onPress = {() => this.props.handleDeleteStep(this.props.boxID, this.props.id)}
                                     />
-                                }
-                                title={ ""}
-                                type="clear"
-                                onPress = {() => this.props.handleDeleteStep(this.props.boxID, this.props.id)}
-                            />
-
-                            <Button
-                                    icon={
-                                        <Icon
-                                            name='edit'
-                                            color={color}
-                                        />
-                                    }
-                                    title={""}
-                                    type="clear"
-                                    onPress={() => this.handleEdit()}
-                                />
                                 </View>
-                                :null
+                                : null
                             }
+
                             {/*<Button*/}
                             {/*    icon = {*/}
                             {/*        <Icon*/}

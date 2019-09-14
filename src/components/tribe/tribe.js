@@ -52,7 +52,8 @@ class TribeComponent extends Component {
     checkDate(curData) {
         const curDate = moment().format("MMM D YY");
         if (curData.date !== curDate) {
-            //add element with data object( with new data and data as zero)
+            this.props.addDataToTribe(this.props.id, null, curDate);
+
         }
     }
 
@@ -89,7 +90,6 @@ class TribeComponent extends Component {
         if (this.state.metricChange) {
             this.props.addDataToTribe(this.props.id, this.state.metric, curDate);
             this.setState({metricChange: false})
-
         }
 
         if (this.state.nameChange) {
@@ -98,10 +98,11 @@ class TribeComponent extends Component {
 
         }
 
-        if (this.state.metricNameChange)
-        this.props.changeMetricName(this.state.metricName, this.props.id);
-        this.setState({metricNameChange: false})
-        //this.props.addTribeDeadline(this.props.tribeID, this.state.deadline)
+        if (this.state.metricNameChange) {
+            this.props.changeMetricName(this.state.metricName, this.props.id);
+            this.setState({metricNameChange: false})
+            //this.props.addTribeDeadline(this.props.tribeID, this.state.deadline)
+        }
     }
 
     activateEdit(data, param){
@@ -248,10 +249,11 @@ class TribeComponent extends Component {
                 {!open
                     ? null
                     :
-                    <View>
-                        <View>
+                    <View style = {{marginTop: -10}}>
+
+                        <View style = {{marginTop: 0}}>
                             <AreaChart
-                                style={{ height: 100 }}
+                                style={{ height: 90 }}
                                 data={dataList}
                                 contentInset={{ top: 20, bottom: 5, left: 20, right: 20}}
                                 curve={ shape.curveNatural }
@@ -259,6 +261,14 @@ class TribeComponent extends Component {
                             >
                                 <Grid/>
                             </AreaChart>
+                        </View>
+                        <View>
+                            <BoxRoot
+                                tribeID = {this.props.tribeID}
+                                filter = {this.props.id}
+                                handleAddBox = {this.props.handleAddBox}
+                                editing = {this.state.editing}
+                            />
                         </View>
 
 
@@ -269,7 +279,7 @@ class TribeComponent extends Component {
                                 : <View style = {{flexDirection: "row"}}>
                                     <Button
                                         style = {{width: '100%', marginTop: 0, marginBottom: 10}}
-                                        title = "Add To Do's"
+                                        title = "Add Task Set"
                                         buttonStyle={{backgroundColor: "#4978DD"}}
                                         onPress = {() => this.props.handleAddBox(this.props.id)}
                                     />
@@ -311,14 +321,6 @@ class TribeComponent extends Component {
                                 </View>
                             }
 
-                        </View>
-                        <View>
-                            <BoxRoot
-                                tribeID = {this.props.tribeID}
-                                filter = {this.props.id}
-                                handleAddBox = {this.props.handleAddBox}
-                                editing = {this.state.editing}
-                            />
                         </View>
                     </View>
                 }
