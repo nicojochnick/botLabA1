@@ -23,7 +23,8 @@ class TribeGroup extends Component {
             friends: this.props.friends,
             friendIDS: this.props.friendIDS,
             searchData:null,
-            gotMems: false
+            gotMems: false,
+            open: this.props.open,
         }
 
     }
@@ -67,6 +68,7 @@ class TribeGroup extends Component {
     renderItem = ({ item }) => (
         <ListItem
             style = {{borderWidth: 1, borderRadius: 5, borderColor:"grey", margin: 10,padding: 2}}
+            titleStyle = {{fontWeight: "500"}}
             title={item.name}
             // listKey = {moment().format()}
             // leftAvatar={{
@@ -76,7 +78,7 @@ class TribeGroup extends Component {
             leftIcon = {
                 <Icon style = {{marginRight: 10}}
                               name = {'user-circle'}
-                              color = "black"
+                              color = '#186aed'
                               disabledStyle = {{color:"grey"}}
                               size = {30}/>
             }
@@ -86,6 +88,7 @@ class TribeGroup extends Component {
     componentDidMount(): void {
         console.log(this.props.friendIDS);
         this.getTribeMembers(this.props.friendIDS)
+        this.setState({open: true})
     }
 
     triggerSearch() {
@@ -102,78 +105,91 @@ class TribeGroup extends Component {
     }
 
     render() {
-        console.log(this.state.searchData)
-        console.log(this.state.friendData);
-
         return (
             <View style = {styles.groupScrollContainer}>
-                <View style = {{flexDirection: "row", justifyContent: "flex-start", }}>
-                    <Button
-                        icon = {<Ionicons style = {{marginRight: 0,}}
-                                          name = {'ios-search'}
-                                          color = "black"
-                                          size = {30}
-                                          onPress = {() => this.triggerSearch()}
-                        /> }
-                        type = "clear"
-                        style = {{backgroundColor:"white"}}
-                        onPress = {() => this.triggerSearch()}
+                { (this.props.open)
+                    ?
+                    <View>
+                    <View style = {{flexDirection: "row", justifyContent: "flex-start", }}>
+                        <Button
+                            icon = {<Ionicons style = {{marginRight: 0,}}
+                                              name = {'ios-search'}
+                                              color = "black"
+                                              size = {30}
+                                              onPress = {() => this.triggerSearch()}
+                            /> }
+                            type = "clear"
 
-                    />
-                    <TextInput
-                        style = {{borderWidth: 1, borderRadius: 5, width: 270, borderColor: "grey", margin: 7, padding: 5}}
-                        placeholder = 'type users email'
-                        onChangeText = {(text)=> this.setState({friendEmail: text})}
-                    />
+                            style = {{backgroundColor:"white"}}
+                            onPress = {() => this.triggerSearch()}
 
-                </View>
-                { (this.state.searchData !== null )
-                    ? <View style = {{ margin: 10, borderRadius: 5, borderColor: "grey"}}>
-                        {(this.state.searchData !== null || this.state.searchData !== undefined)
-                            ?<ListItem
-                                style={{borderWidth: 1, borderRadius: 5, borderColor: "grey", margin: 10, padding: 2}}
-                                title={this.state.searchData[0].name}
-                                // leftAvatar={{
-                                //     source: {uri: item.picture}
-                                // }}
-                                leftIcon={
-                                    <Icon style={{marginRight: 10}}
-                                          name={'user-circle'}
-                                          color="black"
-                                          disabledStyle={{color: "grey"}}
-                                          size={30}/>
-                                }
-                                rightIcon={
-                                    <Ionicons style = {{}}
-                                              name = {'ios-add'}
-                                              color = 'black'
-                                              disabledStyle = {{color:"grey"}}
-                                              size = {25}
-                                              onPress = {() => this.triggerAdd()} />
-                                }
+                        />
+                        <TextInput
+                            style = {{borderWidth: 1, borderRadius: 5, width: 230, borderColor: "grey", margin: 7, padding: 5}}
+                            placeholder = 'type users email'
+                            onChangeText = {(text)=> this.setState({friendEmail: text.toLowerCase()})}
+                        />
+                        <Button
+                            type = "clear"
+                            title = 'close'
+                            style = {{backgroundColor:"white"}}
+                            onPress = {() => this.props.closeFriendView()}
 
-                            />
-                            : <Text> No user found, make sure email is correct</Text>
+                        />
+
+
+
+                    </View>
+                    { (this.state.searchData !== null )
+                        ? <View style = {{ margin: 10, borderRadius: 5, borderColor: "grey"}}>
+                            {(this.state.searchData !== null || this.state.searchData !== undefined)
+                                ?<ListItem
+                                    style={{borderWidth: 1, borderRadius: 5, borderColor: "grey", margin: 10, padding: 2}}
+                                    title={this.state.searchData[0].name}
+                                    // leftAvatar={{
+                                    //     source: {uri: item.picture}
+                                    // }}
+                                    leftIcon={
+                                        <Icon style={{marginRight: 10}}
+                                              name={'user-circle'}
+                                              color="blue"
+                                              disabledStyle={{color: "grey"}}
+                                              size={30}/>
+                                    }
+                                    rightIcon={
+                                        <Ionicons style = {{}}
+                                                  name = {'ios-add'}
+                                                  color = 'blue'
+                                                  disabledStyle = {{color:"grey"}}
+                                                  size = {25}
+                                                  onPress = {() => this.triggerAdd()} />
+                                    }
+
+                                />
+                                : <Text> No user found, make sure email is correct</Text>
+                            }
+                        </View>
+                        : null
+
+                    }
+                    <Divider/>
+                    <ScrollView style = {styles.groupScroll}>
+                        { (this.state.gotMems)
+                            ?
+                            <View>
+                            <FlatList
+                                listKey="Superunique"
+                                // keyExtractor={this.keyExtractor}
+                                data={this.props.friends}
+                                renderItem={this.renderItem}
+                                />
+                            </View>
+                            : <ActivityIndicator style = {{margin: 30}} size="small" color="#0000ff" />
                         }
+                    </ScrollView>
                     </View>
                     : null
-
-                }
-                <Divider/>
-                <ScrollView style = {styles.groupScroll}>
-                    { (this.state.gotMems)
-                        ?
-                        <View>
-                        <FlatList
-                            listKey="Superunique"
-                            // keyExtractor={this.keyExtractor}
-                            data={this.props.friends}
-                            renderItem={this.renderItem}
-                            />
-                        </View>
-                        : <ActivityIndicator style = {{margin: 30}} size="small" color="#0000ff" />
                     }
-                </ScrollView>
             </View>
         );
     }

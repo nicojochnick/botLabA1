@@ -17,6 +17,7 @@ import TribeGroup from '../components/tribe/tribeGroup';
 import firebase from 'react-native-firebase';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import BotA1Component from '../components/botA1/botA1Component';
+import FriendGoalView from './friendGoalView';
 
 
 
@@ -35,6 +36,7 @@ class HomeScreen extends Component {
             uid: null,
             refresh: false,
             firstAdd: false,
+            friendIDS: null
         }
 
     }
@@ -49,8 +51,17 @@ class HomeScreen extends Component {
             email = user.email;
             photoUrl = user.photoURL;
             emailVerified = user.emailVerified;
-            this.setState({uid:user.uid})
+            this.setState({uid:user.uid});
+            uid = user.uid
         }
+        firebase.firestore().collection('users').where('fbID', '==', uid).get().then((snapshot) => {
+            console.log(snapshot);
+            let data = snapshot.docs.map(function (documentSnapshot) {
+                console.log(documentSnapshot.data());
+                return documentSnapshot.data().userID
+            });
+            this.setState({friendIDS: data})
+        });
     }
 
     render() {
@@ -66,9 +77,14 @@ class HomeScreen extends Component {
                     </View>
                     <View style = {{marginTop: 0}}>
                     <BotA1Top/>
+
                     </View>
                 </View>
-                <TribeRoot friendTribeView = {false} filter = {this.state.uid} />
+                <View>
+                <TribeRoot friendTribeView = {false} filter = {this.state.uid} friendTribeIDS = {this.state.friendIDS}  />
+                </View>
+
+
             </ScrollView>
         );
     }

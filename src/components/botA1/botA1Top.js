@@ -46,9 +46,7 @@ class BotA1Top extends Component {
             return StepsBot.introduction
         }
         else return StepsBot.report
-
     }
-
 
     render() {
         console.log(this.state.currentStep);

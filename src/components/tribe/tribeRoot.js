@@ -199,32 +199,34 @@ class TribeRoot extends Component {
         console.log("TAKING UPDATE");
         console.log(this.props.friendTribeView);
         console.log(this.props.filter);
-        if (this.props.friendTribeView && this.props.filter !== null) {
-            console.log("here!");
-            this.ref.where('friendIDS', 'array-contains', this.props.filter[0]).get().then((snapshot) => {
-                console.log("here???");
-                let data = snapshot.docs.map(function (documentSnapshot) {
-                    console.log(snapshot);
-                    return documentSnapshot.data()
-                });
-                console.log(data);
-                this.setState({tribeData: data, loading: false})
-            });
-        } else {
-            this.ref.where("userID", '==', this.props.filter).get().then((snapshot) => {
+
+        this.ref.where("userID", '==', this.props.filter).get().then((snapshot) => {
                 console.log("gettingData");
                 let data = snapshot.docs.map(function (documentSnapshot) {
                     console.log(documentSnapshot.data())
                     return documentSnapshot.data()
                 });
                 this.setState({tribeData: data, loading: false})
+        });
+
+        if (this.props.friendTribeView && this.props.friendIDS !== null) {
+            console.log("here!");
+            this.ref.where('friendIDS', 'array-contains', this.props.friendIDS[0]).get().then((snapshot) => {
+                console.log("here???");
+                let data = snapshot.docs.map(function (documentSnapshot) {
+                    console.log(snapshot);
+                    return documentSnapshot.data()
+                });
+                console.log(data);
+                data = this.state.tribeData + data;
+                this.setState({tribeData: data, loading: false})
             });
         }
+
 
     };
 
     render() {
-        this.editMetric("hi", 1);
         console.log(this.state.tribeData);
         console.log(this.props.filter);
         console.log(this.props.friendTribeView);
@@ -271,9 +273,16 @@ class TribeRoot extends Component {
                         />
                     </KeyboardAvoidingView>
 
-                    : <View style = {{ flexDirection: "row",margin: 30,justifyContent: "center"}}>
+                    : <View>
+                            {(!this.props.friendTribeView)
+                                ?
+                            <View style = {{ flexDirection: "row",margin: 30,justifyContent: "center"}}>
                             <Text style = {{ fontSize: 15, textAlign: "center",fontWeight: "bold", color: 'grey' }}> No goals 🤔 {"\n"} click the "+" button to add one! </Text>
-                        </View>
+                            </View>
+                            : null
+                        }
+
+                    </View>
 
                 }
                     </View>

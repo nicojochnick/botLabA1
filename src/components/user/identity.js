@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {View, TextInput} from 'react-native'
-import { Avatar } from 'react-native-elements';
+import {Avatar, Button} from 'react-native-elements';
 import {connect} from "react-redux";
 import ImagePicker from 'react-native-image-picker';
 import {addProfileImage, changeName, changeStepName} from '../../redux/actions';
@@ -18,8 +18,22 @@ class Identity extends Component {
         this.state = {
             name: this.user.displayName,
             profileURL: this.user.photoURL,
+            editing: false
 
         }
+    }
+
+
+    activateEdit(text){
+        this.setState({editing: true});
+        this.setState({name: text});
+    }
+
+    doneSaving(){
+        this.changeName()
+        this.setState({editing: false});
+
+
     }
 
 
@@ -50,7 +64,7 @@ class Identity extends Component {
                this.setState({profileURL: source});
                 this.user.updateProfile({
                     photoURL: source
-                })
+                });
 
                 let uid = this.user.uid;
                 firebase.firestore().collection('users').where('fbID', '==', uid).get().then(function (querySnapshot) {
@@ -85,22 +99,34 @@ class Identity extends Component {
     }
 
     render() {
-
         console.log(this.props.botID);
         let uri = this.state.profileURL;
         let name = this.state.name;
-
         return (
             <View style = {{flexDirection: "row", justifyContent: "flex-end", alignContent: "flex-start", paddingTop: 10, marginBottom: -10}}>
+
+                { (this.state.editing)
+                    ?
+                    <Button
+                        style={{ alignContent: "center", marginTop: 15, marginRight: 0}}
+                        title = "Save"
+                        titleStyle = {{color: "black", fontWeight: "400"}}
+                        buttonStyle={{backgroundColor: "white"}}
+                        onPress = {()=> this.doneSaving()}
+
+                    />
+                    :null
+                }
                 <TextInput
                     style = {[styles.identityText, {marginBottom: 20, marginLeft: 0, textAlign: "right"}]}
                     placeholder = {"add name!"}
-                    onChangeText={text => this.changeName(text)}
+                    onChangeText={text =>this.activateEdit(text)}
                     value = {name}
                     selectionColor = "white"
                     maxLength = {20}
                     editable = {this.props.editable}
                 />
+
                 <Avatar
                     rounded = {true}
                     containerStyle = {{ marginRight: 10, borderWidth: 2, borderColor: "white"}}
@@ -110,6 +136,7 @@ class Identity extends Component {
                 />
 
             </View>
+
         );
     }
 }

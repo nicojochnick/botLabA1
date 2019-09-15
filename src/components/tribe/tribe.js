@@ -31,6 +31,7 @@ class TribeComponent extends Component {
         super(props);
         this.unsubscribe = null;
         this.ref = firebase.firestore().collection('stepBox');
+        this.closeFriendView = this.closeFriendView.bind(this);
         this.state = {
             boxData: [],
             open: true,
@@ -83,6 +84,11 @@ class TribeComponent extends Component {
             300,
         );
     };
+
+
+    closeFriendView() {
+        this.setState({fOpen: false})
+    }
 
     doneSaving(){
         const curDate = moment().format("MMM D YY");
@@ -140,8 +146,10 @@ class TribeComponent extends Component {
     componentDidMount(): void {
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
         this.props.getTribeMembers(this.props.friendIDS);
-        let currData= this.props.cData[this.props.cData.length-1];
+
+        let currData = this.props.cData[this.props.cData.length - 1];
         this.checkDate(currData)
+
     }
 
     componentWillUnmount(): void {
@@ -162,12 +170,16 @@ class TribeComponent extends Component {
         console.log(this.props.friendIDS);
         console.log(this.props.searchData);
         let myName = this.state.name;
-        let currData= this.props.cData[this.props.cData.length-1];
         let dataList = [];
+        let currData = [0];
+        currData = this.props.cData[this.props.cData.length - 1];
 
-        this.props.cData.map(function(item){
+        this.props.cData.map(function (item) {
             dataList.push(item.data)
         });
+
+
+
 
         console.log(dataList)
 
@@ -237,6 +249,8 @@ class TribeComponent extends Component {
                     ?null
                     :<TribeGroup friendIDS = {this.props.friendIDS}
                                  friends = {this.props.friends}
+                                 open = {fOpen}
+                                 closeFriendView = {this.closeFriendView}
                                  tribeID = {this.props.id}
                                  getTribeMembers = {this.props.getTribeMembers}
                                  friendData = {this.props.friendData}

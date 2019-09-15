@@ -58,17 +58,12 @@ export default class FriendGoalView extends Component {
         console.log(this.state.fbID);
         console.log(this.state.myID);
         return (
-            <ScrollView>
-                <View style = {{flex: 1, flexDirection: "row",paddingTop: 30, paddingBottom: 10,alignItems: "center", backgroundColor: '#186aed'}}>
-                    <Identity size = {"large"} editable = {true}/>
-                    <NavSettings/>
-                    <AddTribe/>
-                </View>
+            <View>
                 { (this.state.myID !== null)
                 ? <TribeRoot friendTribeView = {true} filter = {this.state.myID}/>
-                : <ActivityIndicator style = {{margin: 30}} size="large" color="#0000ff" />
+                : null
                 }
-            </ScrollView>
+            </View>
         );
     }
 }

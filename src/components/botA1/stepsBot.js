@@ -5,16 +5,46 @@ import React from 'react';
 import BotFunctions from './functionsBot/addStepBot';
 import EditName from './functionsBot/editName';
 import EditProfileImageBot from './functionsBot/editProfileImageBot';
+import Chat from './chat/chat'
 
 import ReportMain from '../reports/reportMain/reportMain'
 
 
 export const StepsBot = {
 
+    report: [
+        {
+            id: '1',
+            message: "Hey!",
+            trigger: 'input'
+        },
+        {
+            id: "input",
+            user: true,
+            trigger: "3"
+        },
+        {
+            id: "3",
+            component: <Chat/>,
+            asMessage: true
+        }
+    ],
+
+
+
+
+
+
+
+
+
+
+
+
     introduction: [
         {
             id: '1',
-            message: 'What is your name?',
+            message: 'Hi! what is your name?',
             trigger: 'name',
         },
         {
@@ -38,7 +68,7 @@ export const StepsBot = {
 
         {
             id: '5',
-            message: "Let's add a photo to complete your profile",
+            message: "Let's add a photo to complete your beautiful profile",
             trigger: "upload"
         },
         {
@@ -49,6 +79,8 @@ export const StepsBot = {
 
     ],
 
+
+
     newIntro: [
         {
             id: '1',
@@ -58,16 +90,12 @@ export const StepsBot = {
         {
             id: '2',
             user: true,
-            trigger: '3',
+            trigger: '4',
         },
-        {
-            id: '3',
-            user: true,
-            trigger: '4'
-        },
+
         {
             id: '4',
-            message: "{previousValue} - few thanks, I like it.",
+            message: "{previousValue} - I like your name",
             trigger: '5'
         },
         {
@@ -104,30 +132,6 @@ export const StepsBot = {
         }
 
     ],
-
-
-
-    report: [
-        {
-            id: '1',
-            message: "Hey USERNAME",
-            trigger: "2"
-
-
-        },
-
-        {
-            id: '2',
-            component:
-
-                <ReportMain/>,
-            asMessage: false,
-            end: true
-        },
-
-
-    ],
-
 
 
 
@@ -239,11 +243,7 @@ export const StepsBot = {
             id: 'createGoal',
             component: <AddGoal/>
         }],
-
-
 };
-
-
 
 
 
