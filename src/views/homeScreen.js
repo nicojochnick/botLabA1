@@ -15,6 +15,7 @@ import Users from '../components/test';
 import NavSettings from '../components/navSettings';
 import TribeGroup from '../components/tribe/tribeGroup';
 import firebase from 'react-native-firebase';
+import CoreChatContainer from '../components/coreChat/coreChatContainer'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import BotA1Component from '../components/botA1/botA1Component';
 import FriendGoalView from './friendGoalView';
@@ -30,19 +31,26 @@ class HomeScreen extends Component {
 
     constructor(props) {
         super(props);
+        this.ref = firebase.firestore().collection('users');
+
 
         this.state = {
             editingProfile: false,
             uid: null,
             refresh: false,
             firstAdd: false,
-            friendIDS: null
+            userConnectedID: null,
+            userName: ' ',
+            coreUserID: null,
+            message: null,
+            cycle: null,
         }
 
     }
 
     componentDidMount(): void {
-        console.log(uid);
+        this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
+
         let user = firebase.auth().currentUser;
         let name, email, photoUrl, uid, emailVerified;
 
@@ -54,37 +62,86 @@ class HomeScreen extends Component {
             this.setState({uid:user.uid});
             uid = user.uid
         }
+
         firebase.firestore().collection('users').where('fbID', '==', uid).get().then((snapshot) => {
             console.log(snapshot);
             let data = snapshot.docs.map(function (documentSnapshot) {
                 console.log(documentSnapshot.data());
-                return documentSnapshot.data().userID
+                return documentSnapshot.data()
             });
-            this.setState({friendIDS: data})
+            console.log(data);
+            let user = data[0];
+            let messages = user.messages;
+            let cycle = user.cycle;
+            console.log(cycle)
+            console.log(user.userID);
+            console.log(messages)
+
+            this.setState({cycle:cycle});
+            this.setState({coreUserID: user.userID});
+            this.setState({message:messages})
         });
     }
+
+
+    onCollectionUpdate = (snapshot) => {
+        let user = firebase.auth().currentUser;
+        let name, email, photoUrl, uid, emailVerified;
+
+        if (user != null) {
+            name = user.displayName;
+            email = user.email;
+            photoUrl = user.photoURL;
+            emailVerified = user.emailVerified;
+            this.setState({uid:user.uid});
+            uid = user.uid
+        }
+
+        firebase.firestore().collection('users').where('fbID', '==', uid).get().then((snapshot) => {
+            console.log(snapshot);
+            let data = snapshot.docs.map(function (documentSnapshot) {
+                console.log(documentSnapshot.data());
+                return documentSnapshot.data()
+            });
+            console.log(data);
+            let user = data[0];
+            let messages = user.messages;
+            let cycle = user.cycle;
+            console.log(cycle)
+            console.log(user.userID);
+            console.log(messages)
+            this.setState({cycle:cycle});
+            this.setState({coreUserID: user.userID});
+            this.setState({message:messages})
+        });
+
+    };
+
+
+    componentWillUnmount(): void {
+        this.unsubscribe();
+    }
+
 
     render() {
         console.log(this.state.uid);
         return (
 
             <ScrollView>
-                <View style = {{flex: 1, flexDirection: "column", alignItems:"flex-end", paddingTop: 50, marginTop: 0, marginBottom: 0, backgroundColor: '#186aed'}}>
+                <View style = {{flex: 1, flexDirection: "column", alignItems:"flex-end", paddingTop: 30, marginTop: 0, paddingBottom: 10, backgroundColor: '#186aed'}}>
                     <View style = {{flex: 1,flexDirection: "row", marginBottom: 0, }}>
                         <NavSettings/>
                         <AddTribe uid = {this.state.uid}/>
                         <Identity size = 'large'/>
                     </View>
-                    <View style = {{marginTop: 0}}>
-                    <BotA1Top/>
-
-                    </View>
+                </View>
+                <View style = {{marginTop: -10, height: 300, backgroundColor: '#186aed'}}>
+                    <BotA1Top messages = {this.state.message} friendTribeView = {false} filter = {this.state.uid} coreUserID = {this.state.coreUserID}/>
+                    {/*<CoreChatContainer coreUserID = {this.state.coreUserID} messages = {this.state.message}/>*/}
                 </View>
                 <View>
-                <TribeRoot friendTribeView = {false} filter = {this.state.uid} friendTribeIDS = {this.state.friendIDS}  />
+                <TribeRoot friendTribeView = {false} filter = {this.state.uid} coreUserID = {this.state.coreUserID}  />
                 </View>
-
-
             </ScrollView>
         );
     }

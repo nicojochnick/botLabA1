@@ -20,7 +20,7 @@ import {
     addBoxDB,
     addFriendToTribe,
     addFriendToTribeDB,
-    addFriendIDToTribeDB, addDataToTribeDB,
+    addFriendIDToTribeDB, addDataToTribeDB, changeEndGoal,
 } from '../../redux/actions';
 
 const tribesSelector = (Obj) => {
@@ -52,7 +52,7 @@ class TribeRoot extends Component {
         this.addDataToTribeDB = this.addDataToTribeDB.bind(this);
 
         this.editMetric = this.editMetric.bind(this);
-
+        this.changeEndGoal = this.changeEndGoal.bind(this);
 
 
         this.state = {
@@ -122,6 +122,11 @@ class TribeRoot extends Component {
 
     }
 
+    computeOverAllProgress(tribeID) {
+
+    }
+
+
     computeProgress(tribeID) {
 
         if (tribeID) {
@@ -185,6 +190,10 @@ class TribeRoot extends Component {
         this.props.addFriendIDToTribeDB(friendID,TribeID)
     };
 
+    changeEndGoal(text, tribeID){
+        this.props.changeEndGoal(text,tribeID)
+    }
+
 
     componentDidMount(): void {
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
@@ -201,28 +210,26 @@ class TribeRoot extends Component {
         console.log(this.props.filter);
 
         this.ref.where("userID", '==', this.props.filter).get().then((snapshot) => {
-                console.log("gettingData");
-                let data = snapshot.docs.map(function (documentSnapshot) {
-                    console.log(documentSnapshot.data())
-                    return documentSnapshot.data()
-                });
-                this.setState({tribeData: data, loading: false})
+            console.log("gettingData");
+            let data = snapshot.docs.map(function (documentSnapshot) {
+                console.log(documentSnapshot.data())
+                return documentSnapshot.data()
+            });
+            this.setState({tribeData: data, loading: false})
         });
+        console.log("here!");
 
-        if (this.props.friendTribeView && this.props.friendIDS !== null) {
-            console.log("here!");
-            this.ref.where('friendIDS', 'array-contains', this.props.friendIDS[0]).get().then((snapshot) => {
+        if (!this.props.coreUserID == null) {
+            this.ref.where('friendIDS', 'array-contains', this.props.coreUserID).get().then((snapshot) => {
                 console.log("here???");
                 let data = snapshot.docs.map(function (documentSnapshot) {
                     console.log(snapshot);
                     return documentSnapshot.data()
                 });
-                console.log(data);
                 data = this.state.tribeData + data;
                 this.setState({tribeData: data, loading: false})
             });
         }
-
 
     };
 
@@ -254,11 +261,14 @@ class TribeRoot extends Component {
                                           friends={item.friends}
                                           cData = {item.continuousData}
                                           metricName = {item.metricName}
+                                          endGoal = {item.endGoal}
 
                                           addFriendToTribe={this.addFriendToTribeDB}
                                           addFriendIDToTribe={this.addFriendIDToTribeDB}
 
 
+
+                                          changeEndGoal = {this.changeEndGoal}
                                           friendData={this.state.friendData}
                                           changeMetricName = {this.editMetric}
                                           handleAddBox={this.handleAddBoxDB}
@@ -304,6 +314,7 @@ const mapDispatchToProps = (dispatch) => {
         handleDeleteTribeDB: (tribe) => dispatch(deleteTribeDB(tribe)),
         changeTribeName: (text,index)=> dispatch(changeTribeNameDB(text,index)),
         editMetric: (text,index) => dispatch(changeMetricNameDB(text,index)),
+        changeEndGoal: (text,index) => dispatch(changeEndGoal(text, index)),
         addTribeDeadlineDB: (index,deadline) => dispatch(addTribeDeadlineDB(index,deadline)),
         addBoxDB: (box) => dispatch(addBoxDB(box)),
         addFriendToTribeDB: (friend, tribeID) =>dispatch(addFriendToTribeDB(friend, tribeID)),

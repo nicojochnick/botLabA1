@@ -47,11 +47,14 @@ class TribeComponent extends Component {
             metricNameChange: false,
             metric: null,
             metricChange: false,
+            endGoal: null,
+            endGoalChange: false,
         }
     }
 
     checkDate(curData) {
         const curDate = moment().format("MMM D YY");
+        console.log(curData);
         if (curData.date !== curDate) {
             this.props.addDataToTribe(this.props.id, null, curDate);
 
@@ -109,6 +112,12 @@ class TribeComponent extends Component {
             this.setState({metricNameChange: false})
             //this.props.addTribeDeadline(this.props.tribeID, this.state.deadline)
         }
+
+        if (this.state.endGoalChange) {
+            this.props.changeEndGoal(this.state.endGoal, this.props.id);
+            this.setState({endGoalChange: false})
+
+        }
     }
 
     activateEdit(data, param){
@@ -127,8 +136,22 @@ class TribeComponent extends Component {
         if ( param === 'metric') {
             let int = data;
             int = Number(int);
-            this.setState({metricChange: true});
-            this.setState({metric:int})
+            console.log(int)
+            if (!Number.isNaN(int)){
+                this.setState({metricChange: true});
+                this.setState({metric: int})
+            }
+        }
+
+        if (param === 'endGoal') {
+            let int = data;
+            int = Number(int);
+            console.log(int)
+            if (!Number.isNaN(int)) {
+                this.setState({endGoalChange: true});
+                this.setState({endGoal: int})
+            }
+
         }
 
 
@@ -156,6 +179,28 @@ class TribeComponent extends Component {
         this.unsubscribe();
     }
 
+
+    computeProgress(ds,goal){
+        if (goal===null){
+            return 0
+        }
+        console.log(ds);
+        console.log(goal)
+        const arrSum = arr => arr.reduce((a,b) => a + b, 0);
+        let sum = arrSum(ds);
+        console.log(sum)
+
+        return sum / goal
+
+
+    }
+
+    computeTotal(ds){
+        const arrSum = arr => arr.reduce((a,b) => a + b, 0);
+        return arrSum(ds);
+
+    }
+
     render() {
         let open = this.state.open;
         let fOpen = this.state.fOpen;
@@ -173,12 +218,9 @@ class TribeComponent extends Component {
         let dataList = [];
         let currData = [0];
         currData = this.props.cData[this.props.cData.length - 1];
-
         this.props.cData.map(function (item) {
             dataList.push(item.data)
         });
-
-
 
 
         console.log(dataList)
@@ -186,37 +228,60 @@ class TribeComponent extends Component {
         return (
             <View style = {styles.tribes}>
                 <View style = {styles.topTribes}>
-                        <View style = {{width: 180}}>
+                        <View style = {{width: 200}}>
                         <TextInput
                             style = {styles.goalTitleText}
                             ref= {(el) => { this.name= el; }}
                             value = {myName}
-                            multiline = {true}
                             placeholder = {"add a title"}
                             editable = {true}
                             onChangeText = {(text) => this.activateEdit(text,'name')}
                         />
-                        {(this.state.author != null)
-                                    ?<Text style = {{fontWeight: "500", color: "grey"}}> by {this.state.author} </Text>
-                                    : null
-                        }
+                        <View style = {{flexDirection: "row"}}>
+                            <Text style = {{fontSize: 20, fontWeight: 500, color: "grey"}}> Goal: </Text>
+                            <TextInput
+                                style = {{fontSize: 20, fontWeight: 500, color: "blue"}}
+                                ref= {(el) => { this.name= el; }}
+                                placeholder = {"Add Number"}
+                                editable = {true}
+                                onChangeText = {(text) => this.activateEdit(text,'endGoal')}
+                                >
+                                {this.props.endGoal}
+                            </TextInput>
+                        </View>
+                         <View style = {{flexDirection: "row"}}>
+                                <Text style = {{fontSize: 20, fontWeight: 500, color: "grey"}}> Total: </Text>
+                                <Text style = {{fontSize: 20, fontWeight: 500, color: "lightgreen"}}>
+                                    {this.computeTotal(dataList)}
+                                </Text>
+                         </View>
+
+
+                        {/*{(this.state.author != null)*/}
+                        {/*            ?<Text style = {{fontWeight: "500", color: "grey"}}> by {this.state.author} </Text>*/}
+                        {/*            : null*/}
+                        {/*}*/}
                         </View>
 
                         <View style ={{flexDirection: "column", flex: 2, marginTop: -10, marginLeft: -10, marginRight: 0,justifyContent: "flex-end"}}>
+
                             <TextInput
-                                style ={{fontSize: 60, textAlign: "right", fontWeight: "500"}}
+                                style ={{fontSize: 65, textAlign: "right", fontWeight: "500", marginTop: 5}}
                                 placeholder = "0"
                                 onChangeText = {(text) => this.activateEdit(text,'metric')}
                             >
                                 {currData.data}
                             </TextInput>
+                            <View style = {{flexDirection: 'row', flex: 1, alignContent: "flex-end", justifyContent: "flex-end", marginTop: -5}}>
                             <TextInput
-                                style={{fontSize: 15, textAlign: "right", marginTop: -10}}
+                                style={{fontSize: 15, textAlign: "right", marginTop: 5}}
                                 placeholder = "add a metric"
                                 onChangeText = {(text) => this.activateEdit(text,'metricName')}
                             >
                                 {this.props.metricName}
                             </TextInput>
+                            <Text style = {{textAlign: "right", marginTop: 5, marginRight: 0, }}> Today </Text>
+                            </View>
                         </View>
 
 
@@ -233,7 +298,7 @@ class TribeComponent extends Component {
                                 </MenuTrigger>
                                     <MenuOptions>
                                     <MenuOption onSelect={() => this.makeEditable(true, myName)} text='Edit'/>
-                                        <MenuOption onSelect={() =>  this.setState( {fOpen: !fOpen})} text='Add Partners'/>
+                                        <MenuOption onSelect={() =>  this.setState( {fOpen: !fOpen})} text='Partners'/>
                                         <MenuOption onSelect={() => this.openDeleteConfirm(true)} >
                                         <Text style={{color: 'red'}}>Delete</Text>
                                     </MenuOption>
@@ -264,6 +329,9 @@ class TribeComponent extends Component {
                     ? null
                     :
                     <View style = {{marginTop: -10}}>
+                        <Progress.Bar
+                            progress={this.computeProgress(dataList, this.props.endGoal)} width={330} style={{margin: 10}}
+                        />
 
                         <View style = {{marginTop: 0}}>
                             <AreaChart
@@ -294,14 +362,14 @@ class TribeComponent extends Component {
                                     <Button
                                         style = {{width: '100%', marginTop: 0, marginBottom: 10}}
                                         title = "Add Task Set"
-                                        buttonStyle={{backgroundColor: "#4978DD"}}
+                                        buttonStyle={{backgroundColor: '#186aed'}}
                                         onPress = {() => this.props.handleAddBox(this.props.id)}
                                     />
 
                                     <Button
                                         style={{justifyContent: "flex-end", alignContent: "flex-end", marginLeft: 10}}
                                         title = "Save"
-                                        buttonStyle={{backgroundColor: "#4978DD"}}
+                                        buttonStyle={{backgroundColor: '#186aed'}}
                                         onPress = {()=> this.doneSaving()}
                                     />
 

@@ -1,13 +1,14 @@
 
 
 import AddGoal from '../addStep/addStepComponent';
-import React from 'react';
+import React, {Component} from 'react';
 import BotFunctions from './functionsBot/addStepBot';
 import EditName from './functionsBot/editName';
 import EditProfileImageBot from './functionsBot/editProfileImageBot';
 import Chat from './chat/chat'
 
-import ReportMain from '../reports/reportMain/reportMain'
+import ReportMain from './reports/reportMain/reportMain'
+
 
 
 export const StepsBot = {
@@ -31,13 +32,26 @@ export const StepsBot = {
     ],
 
 
+    main: [
+
+        {
+            id: '1',
+            message: 'no competitions? You didnt download this app to be soft did you?',
+            end: true
+        }
+
+    ],
 
 
+    into: [
+        {
+            id: "1",
+            message: 2
 
 
+        }
 
-
-
+    ],
 
 
 
@@ -132,9 +146,6 @@ export const StepsBot = {
         }
 
     ],
-
-
-
 
 
 

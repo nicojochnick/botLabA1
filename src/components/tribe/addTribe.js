@@ -65,6 +65,8 @@ class AddTribe extends Component {
             open: false,
             info: "add a description",
             deadline: null,
+            total: null,
+            endGoal: null,
         };
         this.props.addTribeDB(genericTribe);
     }

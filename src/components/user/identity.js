@@ -9,8 +9,6 @@ import {styles} from '../theme';
 import firebase from 'react-native-firebase';
 
 
-
-
 class Identity extends Component {
     constructor(props){
         super(props);
@@ -23,14 +21,13 @@ class Identity extends Component {
         }
     }
 
-
     activateEdit(text){
         this.setState({editing: true});
         this.setState({name: text});
     }
 
     doneSaving(){
-        this.changeName()
+        this.changeName(this.state.name);
         this.setState({editing: false});
 
 

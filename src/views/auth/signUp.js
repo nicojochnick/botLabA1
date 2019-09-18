@@ -22,13 +22,13 @@ export default class SignUp extends React.Component {
                 let account = {
                      userID: userID,
                      fbID: fbID,
-                    friends: {},
-                    email: email,
-                     name: null
+                     friends: {},
+                     email: email,
+                     name: null,
+                     messages: null,
                 };
 
                 firebase.firestore().collection('users').doc(userID).set(account);
-
                 this.props.navigation.navigate('App')
 
                 }

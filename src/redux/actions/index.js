@@ -35,10 +35,28 @@ export const ADD_BOX = 'ADD_BOX';
 export const DELETE_BOX = 'DELETE_BOX';
 
 /* action creators */
+//Messaging
+export const sendMessage = (userID, messages) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('users').where('userID', '==', userID)
+            .get().then(function (querySnapshot) {
+                console.log(querySnapshot)
+            console.log(userID)
+            querySnapshot.forEach(function (doc) {
+                console.log(doc.data());
+                console.log(userID)
+                doc.ref.update({messages: messages})
+            });
+        });
+    };
+};
+
+
+//Steps
 export function addProfileImage(image) {
     return {type: ADD_PROFILE_IMAGE, payload: image}
-
 }
+
 export function addStep(step){
     return { type: 'ADD_STEP', payload:{step}}
 }
@@ -54,7 +72,6 @@ export const addStepDB = (boxID, step) => {
             dispatch({type: 'ADD_STEP', payload: {step}})
         });
     };
-
 };
 
 
@@ -72,7 +89,6 @@ export const deleteStepDB = (boxID, StepID) => {
             dispatch({type: 'DELETE_STEP', payload: {StepID}})
         });
     };
-
 };
 
 export function addChildStep(parentID, childID) {
@@ -269,6 +285,18 @@ export const changeMetricNameDB = (text,id) => {
             .get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
                 doc.ref.update( {"metricName": text})
+            });
+        });
+    };
+
+};
+
+export const changeEndGoal = (text,id) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('tribes').where('id', '==', id)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update( {"endGoal": text})
             });
         });
     };
