@@ -100,7 +100,26 @@ class Identity extends Component {
         let uri = this.state.profileURL;
         let name = this.state.name;
         return (
-            <View style = {{flexDirection: "row", justifyContent: "flex-end", alignContent: "flex-start", paddingTop: 10, marginBottom: -10}}>
+            <View style = {{ flex: 1, flexDirection: "row", justifyContent: "flex-start", alignContent: "flex-start", paddingTop: 10, marginBottom: -10, marginLeft: 10}}>
+
+                <Avatar
+                    rounded = {true}
+                    containerStyle = {{ marginRight: 5, marginLeft: 1, borderWidth: 2, borderColor: '#3676FF'}}
+                    size= {this.props.size}
+                    source = {{uri: uri}}
+                    onPress = {() => this.openImage(this.options)}
+                />
+
+                <TextInput
+                    style = {[styles.identityText, {marginBottom: 20, marginLeft: 0, textAlign: "left"}]}
+                    placeholder = {"add name!"}
+                    onChangeText={text =>this.activateEdit(text)}
+                    value = {name}
+                    selectionColor = "white"
+                    multiline = {false}
+                    maxLength = {20}
+                    editable = {this.props.editable}
+                />
 
                 { (this.state.editing)
                     ?
@@ -114,24 +133,6 @@ class Identity extends Component {
                     />
                     :null
                 }
-                <TextInput
-                    style = {[styles.identityText, {marginBottom: 20, marginLeft: 0, textAlign: "right"}]}
-                    placeholder = {"add name!"}
-                    onChangeText={text =>this.activateEdit(text)}
-                    value = {name}
-                    selectionColor = "white"
-                    maxLength = {20}
-                    editable = {this.props.editable}
-                />
-
-                <Avatar
-                    rounded = {true}
-                    containerStyle = {{ marginRight: 10, borderWidth: 2, borderColor: "white"}}
-                    size= {this.props.size}
-                    source = {{uri: uri}}
-                    onPress = {() => this.openImage(this.options)}
-                />
-
             </View>
 
         );

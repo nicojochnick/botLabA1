@@ -70,7 +70,7 @@ class NavSettings extends Component {
                     <MenuTrigger>
                         <Icon style = {{margin:25, }}
                               name = {'ellipsis-v'}
-                              color = "white"
+                              color = "darkgrey"
                               disabledStyle = {{color:"grey"}}
                               size = {40}/>
                     </MenuTrigger>

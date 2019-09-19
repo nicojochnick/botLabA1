@@ -139,7 +139,7 @@ export const styles = StyleSheet.create({
         margin: 10,
         fontSize: 25,
         fontWeight: "bold",
-        color: "white"
+        color: "black"
     },
 
     dayText: {

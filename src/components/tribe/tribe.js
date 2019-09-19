@@ -97,6 +97,7 @@ class TribeComponent extends Component {
         const curDate = moment().format("MMM D YY");
         this.makeEditable(false);
         if (this.state.metricChange) {
+
             this.props.addDataToTribe(this.props.id, this.state.metric, curDate);
             this.setState({metricChange: false})
         }
@@ -332,18 +333,21 @@ class TribeComponent extends Component {
                         <Progress.Bar
                             progress={this.computeProgress(dataList, this.props.endGoal)} width={330} style={{margin: 10}}
                         />
-
-                        <View style = {{marginTop: 0}}>
-                            <AreaChart
-                                style={{ height: 90 }}
-                                data={dataList}
-                                contentInset={{ top: 20, bottom: 5, left: 20, right: 20}}
-                                curve={ shape.curveNatural }
-                                svg={{ fill: '#186aed' }}
-                            >
-                                <Grid/>
-                            </AreaChart>
-                        </View>
+                        { (dataList.length > 2 || dataList[1] !== 0)
+                            ?
+                            <View style = {{marginTop: 0}}>
+                                <AreaChart
+                                    style={{ height: 90 }}
+                                    data={dataList}
+                                    contentInset={{ top: 20, bottom: 5, left: 20, right: 20}}
+                                    curve={ shape.curveNatural }
+                                    svg={{ fill: '#186aed' }}
+                                >
+                                    <Grid/>
+                                </AreaChart>
+                            </View>
+                            : null
+                            }
                         <View>
                             <BoxRoot
                                 tribeID = {this.props.tribeID}
@@ -373,33 +377,6 @@ class TribeComponent extends Component {
                                         onPress = {()=> this.doneSaving()}
                                     />
 
-
-                                    {/*<DatePicker*/}
-                                    {/*    style={{width: '60%', marginLeft: 10}}*/}
-                                    {/*    date={this.state.deadline}*/}
-                                    {/*    mode="date"*/}
-                                    {/*    placeholder="set a deadline"*/}
-                                    {/*    format="YYYY-MM-DD"*/}
-                                    {/*    minDate={moment().format('YYYY-MM-DD')}*/}
-                                    {/*    maxDate="2025-06-01"*/}
-                                    {/*    confirmBtnText="Confirm"*/}
-                                    {/*    cancelBtnText="Cancel"*/}
-                                    {/*    customStyles={{*/}
-                                    {/*        dateIcon: {*/}
-                                    {/*            position: 'absolute',*/}
-                                    {/*            left: 0,*/}
-                                    {/*            top: 4,*/}
-                                    {/*            marginLeft: 0*/}
-                                    {/*        },*/}
-                                    {/*        dateInput: {*/}
-                                    {/*            marginLeft: 36*/}
-                                    {/*        }*/}
-                                    {/*        // ... You can check the source to find the other keys.*/}
-                                    {/*    }}*/}
-                                    {/*    onDateChange={(date) => {*/}
-                                    {/*        this.setState( {deadline: date})*/}
-                                    {/*    }}*/}
-                                    {/*/>*/}
                                 </View>
                             }
 
@@ -449,4 +426,34 @@ export default TribeComponent;
 {/*    title={ ""}*/}
 {/*    type="clear"*/}
 {/*    onPress = {() => this.setState( {open: !open})}*/}
+{/*/>*/}
+
+
+
+
+{/*<DatePicker*/}
+{/*    style={{width: '60%', marginLeft: 10}}*/}
+{/*    date={this.state.deadline}*/}
+{/*    mode="date"*/}
+{/*    placeholder="set a deadline"*/}
+{/*    format="YYYY-MM-DD"*/}
+{/*    minDate={moment().format('YYYY-MM-DD')}*/}
+{/*    maxDate="2025-06-01"*/}
+{/*    confirmBtnText="Confirm"*/}
+{/*    cancelBtnText="Cancel"*/}
+{/*    customStyles={{*/}
+{/*        dateIcon: {*/}
+{/*            position: 'absolute',*/}
+{/*            left: 0,*/}
+{/*            top: 4,*/}
+{/*            marginLeft: 0*/}
+{/*        },*/}
+{/*        dateInput: {*/}
+{/*            marginLeft: 36*/}
+{/*        }*/}
+{/*        // ... You can check the source to find the other keys.*/}
+{/*    }}*/}
+{/*    onDateChange={(date) => {*/}
+{/*        this.setState( {deadline: date})*/}
+{/*    }}*/}
 {/*/>*/}

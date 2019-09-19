@@ -19,12 +19,7 @@ import CoreChatContainer from '../components/coreChat/coreChatContainer'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import BotA1Component from '../components/botA1/botA1Component';
 import FriendGoalView from './friendGoalView';
-
-
-
-
-
-
+import ActureHeader from '../components/actureHeader';
 
 
 class HomeScreen extends Component {
@@ -126,21 +121,21 @@ class HomeScreen extends Component {
     render() {
         console.log(this.state.uid);
         return (
-
             <ScrollView>
-                <View style = {{flex: 1, flexDirection: "column", alignItems:"flex-end", paddingTop: 30, marginTop: 0, paddingBottom: 10, backgroundColor: '#186aed'}}>
-                    <View style = {{flex: 1,flexDirection: "row", marginBottom: 0, }}>
+                <View style = {{flex: 1, flexDirection: "column", alignItems:"flex-end", paddingTop: 30, marginTop: 0, paddingBottom: 10,}}>
+                    <View style = {{flex: 1,flexDirection: "row", marginBottom: 0, marginRight: 15 }}>
+                        <Identity size = 'large'/>
                         <NavSettings/>
                         <AddTribe uid = {this.state.uid}/>
-                        <Identity size = 'large'/>
                     </View>
                 </View>
-                <View style = {{marginTop: -10, height: 300, backgroundColor: '#186aed'}}>
-                    <BotA1Top messages = {this.state.message} friendTribeView = {false} filter = {this.state.uid} coreUserID = {this.state.coreUserID}/>
-                    {/*<CoreChatContainer coreUserID = {this.state.coreUserID} messages = {this.state.message}/>*/}
-                </View>
+                {/*<View style = {{marginTop: -10, height: 300, backgroundColor: '#186aed'}}>*/}
+                {/*    /!*<BotA1Top messages = {this.state.message} friendTribeView = {false} filter = {this.state.uid} coreUserID = {this.state.coreUserID}/>*!/*/}
+                {/*    /!*<CoreChatContainer coreUserID = {this.state.coreUserID} messages = {this.state.message}/>*!/*/}
+                {/*</View>*/}
                 <View>
-                <TribeRoot friendTribeView = {false} filter = {this.state.uid} coreUserID = {this.state.coreUserID}  />
+                    <Text style = {{fontWeight: "bold", margin: 10, marginLeft: 5, fontSize: 20}}> Goals  </Text>
+                    <TribeRoot friendTribeView = {false} filter = {this.state.uid} coreUserID = {this.state.coreUserID}  />
                 </View>
             </ScrollView>
         );

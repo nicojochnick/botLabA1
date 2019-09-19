@@ -101,7 +101,7 @@ class AddTribe extends Component {
             <Button
                 icon = {<Ionicons style = {{marginRight: -10,}}
                                   name = {'ios-add'}
-                                  color = "white"
+                                  color = '#3676FF'
                                   disabledStyle = {{color:"grey"}}
                                   size = {70}
                                   onPress = {() => this.handleAddTribeDB()}/> }
