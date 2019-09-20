@@ -1,4 +1,4 @@
-import moment from '../components/addStep/addStepComponent';
+import moment from '../components/botA1/addStep/addStepComponent';
 import {addStep} from '../redux/actions';
 import {Button, ScrollView, View} from 'react-native';
 import {CheckBox, Input, Text} from 'react-native-elements';

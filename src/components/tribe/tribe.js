@@ -56,7 +56,7 @@ class TribeComponent extends Component {
         const curDate = moment().format("MMM D YY");
         console.log(curData);
         if (curData.date !== curDate) {
-            this.props.addDataToTribe(this.props.id, null, curDate);
+            this.props.addDataToTribe(this.props.id, 0, curDate);
 
         }
     }

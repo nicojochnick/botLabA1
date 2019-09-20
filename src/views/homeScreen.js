@@ -20,6 +20,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import BotA1Component from '../components/botA1/botA1Component';
 import FriendGoalView from './friendGoalView';
 import ActureHeader from '../components/actureHeader';
+import SwitchViewTab from '../components/user/switchViewTab';
+import Bio from '../components/user/bio';
+import FollowOrUnfollow from '../components/user/followOrUnfollow';
 
 
 class HomeScreen extends Component {
@@ -27,6 +30,7 @@ class HomeScreen extends Component {
     constructor(props) {
         super(props);
         this.ref = firebase.firestore().collection('users');
+        this.switchView = this.switchView.bind(this);
 
 
         this.state = {
@@ -39,7 +43,15 @@ class HomeScreen extends Component {
             coreUserID: null,
             message: null,
             cycle: null,
+            notMe: this.props.notMe,
+            isGoalSelect: true,
         }
+
+    }
+
+    switchView(){
+        let g = !this.state.isGoalSelect;
+        this.setState({isGoalSelect: g})
 
     }
 
@@ -112,28 +124,49 @@ class HomeScreen extends Component {
 
     };
 
-
     componentWillUnmount(): void {
         this.unsubscribe();
     }
 
-
     render() {
-        console.log(this.state.uid);
+        let goalColor = 'darkgrey';
+        let tribeColor = '#3676FF';
+        if (this.state.isGoalSelect) {
+            goalColor = '#3676FF'
+            tribeColor = 'darkgrey'
+        }
         return (
             <ScrollView>
-                <View style = {{flex: 1, flexDirection: "column", alignItems:"flex-end", paddingTop: 30, marginTop: 0, paddingBottom: 10,}}>
-                    <View style = {{flex: 1,flexDirection: "row", marginBottom: 0, marginRight: 15 }}>
+                <View style = {{flex: 0.1, flexDirection: "column", paddingTop: 35, marginTop: 0, paddingBottom: 10, borderBottomWidth: 0.3}}>
+                    <View style = {{flex: 0.1, flexDirection: "row", justifyContent: "center"}}>
+                        <Text style = {{fontWeight: "bold", fontSize: 20}}> username</Text>
+                    </View>
+
+                    <View style = {{flex: 0.7,flexDirection: "row", marginBottom: 0, marginRight: 15, justifyContent: "flex-end" }}>
                         <Identity size = 'large'/>
                         <NavSettings/>
                         <AddTribe uid = {this.state.uid}/>
                     </View>
+                    <View style = {{flex: 0.3, justifyContent: "flex-start", alignContent: "center", flexDirection: "row"}}>
+                        <SwitchViewTab goalColor = {goalColor}
+                                       tribeColor = {tribeColor}
+                                       switchView = {this.switchView}
+                        />
+                        {(this.state.notMe)
+                            ? <FollowOrUnfollow
+                                followed = {true}
+                            />
+                            : null
+
+                        }
+                    </View>
+
                 </View>
                 {/*<View style = {{marginTop: -10, height: 300, backgroundColor: '#186aed'}}>*/}
                 {/*    /!*<BotA1Top messages = {this.state.message} friendTribeView = {false} filter = {this.state.uid} coreUserID = {this.state.coreUserID}/>*!/*/}
                 {/*    /!*<CoreChatContainer coreUserID = {this.state.coreUserID} messages = {this.state.message}/>*!/*/}
                 {/*</View>*/}
-                <View>
+                <View style = {{flex: 1}}>
                     <Text style = {{fontWeight: "bold", margin: 10, marginLeft: 5, fontSize: 20}}> Goals  </Text>
                     <TribeRoot friendTribeView = {false} filter = {this.state.uid} coreUserID = {this.state.coreUserID}  />
                 </View>

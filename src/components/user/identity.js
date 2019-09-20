@@ -100,8 +100,7 @@ class Identity extends Component {
         let uri = this.state.profileURL;
         let name = this.state.name;
         return (
-            <View style = {{ flex: 1, flexDirection: "row", justifyContent: "flex-start", alignContent: "flex-start", paddingTop: 10, marginBottom: -10, marginLeft: 10}}>
-
+            <View style = {{ flex: 1, flexDirection: "row", justifyContent: "flex-start", alignContent: "flex-start", paddingTop: 5, marginBottom: 10, marginLeft: 10}}>
                 <Avatar
                     rounded = {true}
                     containerStyle = {{ marginRight: 5, marginLeft: 1, borderWidth: 2, borderColor: '#3676FF'}}
@@ -111,11 +110,11 @@ class Identity extends Component {
                 />
 
                 <TextInput
-                    style = {[styles.identityText, {marginBottom: 20, marginLeft: 0, textAlign: "left"}]}
+                    style = {[styles.identityText, {marginBottom: 0, marginLeft: 0, textAlign: "left"}]}
                     placeholder = {"add name!"}
                     onChangeText={text =>this.activateEdit(text)}
                     value = {name}
-                    selectionColor = "white"
+                    selectionColor = "black"
                     multiline = {false}
                     maxLength = {20}
                     editable = {this.props.editable}
@@ -124,15 +123,16 @@ class Identity extends Component {
                 { (this.state.editing)
                     ?
                     <Button
-                        style={{ alignContent: "center", marginTop: 15, marginRight: 0}}
+                        style={{ alignContent: "center", marginTop: 20, marginRight: 0}}
                         title = "Save"
                         titleStyle = {{color: "black", fontWeight: "400"}}
-                        buttonStyle={{backgroundColor: "white"}}
+                        buttonStyle={{backgroundColor: "lightgrey"}}
                         onPress = {()=> this.doneSaving()}
 
                     />
                     :null
                 }
+                <View/>
             </View>
 
         );

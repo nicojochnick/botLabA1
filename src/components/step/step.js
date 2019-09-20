@@ -5,7 +5,7 @@ import {Button,CheckBox} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {AreaChart, Grid} from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
-import AddStepComponent from '../addStep/addStepComponent';
+import AddStepComponent from '../botA1/addStep/addStepComponent';
 import {connect} from 'react-redux';
 import {StepRoot} from './stepRoot';
 import StepHeader from './stepHeader';

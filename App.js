@@ -40,6 +40,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = createStore(persistedReducer, applyMiddleware(thunk));
 const persists = persistStore(store);
 
+
 //Uncomment to reset
 //(async () => { await persists.purge(); })();
 

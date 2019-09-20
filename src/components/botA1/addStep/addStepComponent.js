@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {styles} from '../theme';
+import {styles} from '../../theme';
 import {CheckBox, Input, Text, Button} from 'react-native-elements';
 import {ScrollView, View} from 'react-native';
-import {addStep} from '../../redux/actions';
+import {addStep} from '../../../redux/actions';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import Ionicons from 'react-native-vector-icons/Ionicons';

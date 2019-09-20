@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {FlatList, View} from 'react-native';
-import AddStep from '../components/addStep/addStepComponent';
+import AddStep from '../components/botA1/addStep/addStepComponent';
 import {styles} from "../components/theme";
 import {Button} from 'react-native-elements';
-import AddStepContainer from '../components/addStep/addStepContainer';
+import AddStepContainer from '../components/botA1/addStep/addStepContainer';
 import Step from '../components/step/step';
 
 class AddStepScreen extends Component {

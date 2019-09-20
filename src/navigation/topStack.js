@@ -8,6 +8,7 @@ import SignUp from '../views/auth/signUp';
 import LoadingScreen from '../views/loadingScreen';
 import createIconButtonComponent from 'react-native-vector-icons/lib/icon-button';
 import FriendGoalView from '../views/friendGoalView';
+import FeedView from '../views/FeedView';
 
 class TopStack extends Component {
     render() {
@@ -33,7 +34,7 @@ const AuthStack = createStackNavigator({
 });
 
 const AppDrawer = createBottomTabNavigator(
-    { Home: HomeScreen, FriendView: FriendGoalView
+    { FeedView: FeedView, Home: HomeScreen,
     }, { defaultNavigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ focused, horizontal, tintColor }) => {
                 const { routeName } = navigation.state;
@@ -41,8 +42,8 @@ const AppDrawer = createBottomTabNavigator(
                 let iconName;
                 if (routeName === 'Home'){
                     iconName = `ios-contact`;
-                } else if (routeName === 'FriendView') {
-                    iconName = 'ios-contacts'
+                } else if (routeName === 'FeedView') {
+                    iconName = 'ios-home'
                 }
                 return <IconComponent style = {{marginTop: 9}} name={iconName} color = {tintColor} size={28}  />;
             },
