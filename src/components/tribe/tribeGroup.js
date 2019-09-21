@@ -7,6 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as firebase from 'react-native-firebase';
 import moment from 'moment';
+import UserTag from '../user/userTag';
 
 
 
@@ -19,7 +20,7 @@ class TribeGroup extends Component {
             friendEmail: null,
             searchHit: false,
             searchMessage: null,
-            friendData: null,
+            friendData: this.props.friendData,
             friends: this.props.friends,
             friendIDS: this.props.friendIDS,
             searchData:null,
@@ -39,27 +40,6 @@ class TribeGroup extends Component {
             });
             this.setState({ searchData: data })
         });
-    }
-
-    getTribeMembers(friendIDS) {
-        let fData = [];
-        firebase.firestore().collection('users').get().then(function (querySnapshot) {
-            querySnapshot.forEach(function (doc) {
-                // doc.data() is never undefined for query doc snapshots
-                console.log(doc.data().userID);
-                if (friendIDS.includes(doc.data().userID)) {
-                    let name = doc.data().name;
-                    let picture = doc.data().photoURL;
-                    let userID = doc.data().userID;
-                    let user = {picture: picture, name: name, userID: userID};
-                    fData.push(user)
-                }
-            });
-        })
-            .catch(function (error) {
-                console.log("Error getting documents: ", error);
-            });
-        this.setState({friendData: fData, gotMems: true})
     }
 
 
@@ -87,7 +67,7 @@ class TribeGroup extends Component {
 
     componentDidMount(): void {
         console.log(this.props.friendIDS);
-        this.getTribeMembers(this.props.friendIDS)
+        // this.getTribeMembers(this.props.friendIDS)
         this.setState({open: true})
     }
 
@@ -99,16 +79,15 @@ class TribeGroup extends Component {
     }
 
     triggerAdd(){
-        this.props.addFriendIDToTribe(this.state.searchData[0].userID, this.props.tribeID);
-        this.props.addFriendToTribe(this.state.searchData[0], this.props.tribeID);
+        this.props.addFriendIDDB(this.state.searchData[0].userID,this.props.myID);
+        // this.props.addFriendDB(this.state.searchData[0], this.props.myID);
         this.setState({searchData: null})
     }
 
     render() {
+        console.log(this.props.friendData)
         return (
-            <View style = {styles.groupScrollContainer}>
-                { (this.props.open)
-                    ?
+            <View>
                     <View>
                     <View style = {{flexDirection: "row", justifyContent: "flex-start", }}>
                         <Button
@@ -136,7 +115,6 @@ class TribeGroup extends Component {
                             onPress = {() => this.props.closeFriendView()}
 
                         />
-
 
 
                     </View>
@@ -172,24 +150,24 @@ class TribeGroup extends Component {
                         : null
 
                     }
+                    <View/>
                     <Divider/>
                     <ScrollView style = {styles.groupScroll}>
-                        { (this.state.gotMems)
-                            ?
-                            <View>
+                        <View>
                             <FlatList
                                 listKey="Superunique"
                                 // keyExtractor={this.keyExtractor}
-                                data={this.props.friends}
-                                renderItem={this.renderItem}
+                                data={this.props.friendData}
+                                renderItem={ ({item}) => (
+                                    <UserTag
+                                        avatar = {item.picture}
+                                        name = {item.name}
+                                    />
+                                )}
                                 />
-                            </View>
-                            : <ActivityIndicator style = {{margin: 30}} size="small" color="#0000ff" />
-                        }
+                        </View>
                     </ScrollView>
                     </View>
-                    : null
-                    }
             </View>
         );
     }

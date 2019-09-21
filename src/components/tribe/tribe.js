@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View, TextInput, FlatList, Text, default as Alert, ScrollView} from 'react-native';
+import {View, TextInput, FlatList, Text, default as Alert, Switch, ScrollView} from 'react-native';
 import {Button} from 'react-native-elements'
 import {styles} from '../theme';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -169,7 +169,7 @@ class TribeComponent extends Component {
 
     componentDidMount(): void {
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
-        this.props.getTribeMembers(this.props.friendIDS);
+        // this.props.getTribeMembers(this.props.friendIDS);
 
         let currData = this.props.cData[this.props.cData.length - 1];
         this.checkDate(currData)
@@ -299,7 +299,9 @@ class TribeComponent extends Component {
                                 </MenuTrigger>
                                     <MenuOptions>
                                     <MenuOption onSelect={() => this.makeEditable(true, myName)} text='Edit'/>
-                                        <MenuOption onSelect={() =>  this.setState( {fOpen: !fOpen})} text='Partners'/>
+                                        <MenuOption onSelect={() =>  this.setState( {fOpen: !fOpen})}>
+                                            <Text style = {{color: "navy"}}>Make Private </Text>
+                                        </MenuOption>
                                         <MenuOption onSelect={() => this.openDeleteConfirm(true)} >
                                         <Text style={{color: 'red'}}>Delete</Text>
                                     </MenuOption>
@@ -310,22 +312,6 @@ class TribeComponent extends Component {
 
 
 
-
-                {(!fOpen)
-                    ?null
-                    :<TribeGroup friendIDS = {this.props.friendIDS}
-                                 friends = {this.props.friends}
-                                 open = {fOpen}
-                                 closeFriendView = {this.closeFriendView}
-                                 tribeID = {this.props.id}
-                                 getTribeMembers = {this.props.getTribeMembers}
-                                 friendData = {this.props.friendData}
-                                 searchData = {this.props.searchData}
-                                 addFriendIDToTribe = {this.props.addFriendIDToTribe}
-                                 addFriendToTribe = {this.props.addFriendToTribe}
-
-                    />
-                }
                 {!open
                     ? null
                     :
@@ -457,3 +443,19 @@ export default TribeComponent;
 {/*        this.setState( {deadline: date})*/}
 {/*    }}*/}
 {/*/>*/}
+
+// {(!fOpen)
+//     ?null
+//     :<TribeGroup friendIDS = {this.props.friendIDS}
+//                  friends = {this.props.friends}
+//                  open = {fOpen}
+//                  closeFriendView = {this.closeFriendView}
+//                  tribeID = {this.props.id}
+//                  getTribeMembers = {this.props.getTribeMembers}
+//                  friendData = {this.props.friendData}
+//                  searchData = {this.props.searchData}
+//                  addFriendIDToTribe = {this.props.addFriendIDToTribe}
+//                  addFriendToTribe = {this.props.addFriendToTribe}
+//
+//     />
+// }

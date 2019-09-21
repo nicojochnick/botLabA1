@@ -105,7 +105,7 @@ class Identity extends Component {
                     rounded = {true}
                     containerStyle = {{ marginRight: 5, marginLeft: 1, borderWidth: 2, borderColor: '#3676FF'}}
                     size= {this.props.size}
-                    source = {{uri: uri}}
+                    source = {{uri: this.props.profilePicture}}
                     onPress = {() => this.openImage(this.options)}
                 />
 

@@ -45,10 +45,10 @@ class TribeRoot extends Component {
         this.handleDeleteTribeDB = this.handleDeleteTribeDB.bind(this);
         this.changeTribeNameDB = this.changeTribeNameDB.bind(this);
         this.addTribeDeadlineDB = this.addTribeDeadlineDB.bind(this);
-        this.getTribeMembers = this.getTribeMembers.bind(this);
-
-        this.addFriendToTribeDB = this.addFriendToTribeDB.bind(this);
-        this.addFriendIDToTribeDB = this.addFriendIDToTribeDB.bind(this);
+        // this.getTribeMembers = this.getTribeMembers.bind(this);
+        //
+        // this.addFriendToTribeDB = this.addFriendToTribeDB.bind(this);
+        // this.addFriendIDToTribeDB = this.addFriendIDToTribeDB.bind(this);
         this.addDataToTribeDB = this.addDataToTribeDB.bind(this);
 
         this.editMetric = this.editMetric.bind(this);
@@ -161,34 +161,34 @@ class TribeRoot extends Component {
         });
     }
 
-    getTribeMembers(friendIDS) {
-        let fData = [];
-        firebase.firestore().collection('users').get().then(function (querySnapshot) {
-            querySnapshot.forEach(function (doc) {
-                // doc.data() is never undefined for query doc snapshots
-                console.log(doc.data().userID);
-                if (friendIDS.includes(doc.data().userID)) {
-                    let name = doc.data().name;
-                    let picture = doc.data().photoURL;
-                    let userID = doc.data().userID;
-                    let user = {picture: picture, name: name, userID: userID};
-                    fData.push(user)
-                }
-            });
-        })
-            .catch(function (error) {
-                console.log("Error getting documents: ", error);
-            });
-        this.setState({friendData: fData})
-    }
-
-    addFriendToTribeDB(friend, TribeID){
-       this.props.addFriendToTribeDB(friend,TribeID)
-    };
-
-    addFriendIDToTribeDB(friendID, TribeID){
-        this.props.addFriendIDToTribeDB(friendID,TribeID)
-    };
+    // getTribeMembers(friendIDS) {
+    //     let fData = [];
+    //     firebase.firestore().collection('users').get().then(function (querySnapshot) {
+    //         querySnapshot.forEach(function (doc) {
+    //             // doc.data() is never undefined for query doc snapshots
+    //             console.log(doc.data().userID);
+    //             if (friendIDS.includes(doc.data().userID)) {
+    //                 let name = doc.data().name;
+    //                 let picture = doc.data().photoURL;
+    //                 let userID = doc.data().userID;
+    //                 let user = {picture: picture, name: name, userID: userID};
+    //                 fData.push(user)
+    //             }
+    //         });
+    //     })
+    //         .catch(function (error) {
+    //             console.log("Error getting documents: ", error);
+    //         });
+    //     this.setState({friendData: fData})
+    // }
+    //
+    // addFriendToTribeDB(friend, TribeID){
+    //    this.props.addFriendToTribeDB(friend,TribeID)
+    // };
+    //
+    // addFriendIDToTribeDB(friendID, TribeID){
+    //     this.props.addFriendIDToTribeDB(friendID,TribeID)
+    // };
 
     changeEndGoal(text, tribeID){
         this.props.changeEndGoal(text,tribeID)
@@ -234,9 +234,7 @@ class TribeRoot extends Component {
     };
 
     render() {
-        console.log(this.state.tribeData);
-        console.log(this.props.filter);
-        console.log(this.props.friendTribeView);
+
         let loading = this.state.loading;
         return (
             <View>

@@ -327,11 +327,10 @@ export const addTribeDeadlineDB = (index,deadline) => {
 
 };
 
-export const addFriendToTribeDB = (friend, TribeID) => {
+export const addFriendDB = (friend, myID) => {
     return (dispatch, getState) => {
         console.log(friend);
-        console.log(TribeID);
-        firebase.firestore().collection('tribes').where('id', '==', TribeID)
+        firebase.firestore().collection('users').where('userID', '==', myID)
             .get().then(function (querySnapshot) {
             console.log(querySnapshot);
             querySnapshot.forEach(function (doc) {
@@ -341,15 +340,14 @@ export const addFriendToTribeDB = (friend, TribeID) => {
     };
 };
 
-export const addFriendIDToTribeDB = (friendID, TribeID) => {
+export const addFriendIDDB = (friendID, myID) => {
     return (dispatch, getState) => {
         console.log(friendID)
-        console.log(TribeID)
-        firebase.firestore().collection('tribes').where('id', '==', TribeID)
+        firebase.firestore().collection('users').where('userID', '==', myID)
             .get().then(function (querySnapshot) {
             console.log(querySnapshot);
             querySnapshot.forEach(function (doc) {
-                doc.ref.update({friendIDS: firebase.firestore.FieldValue.arrayUnion(friendID)})
+                doc.ref.update({friendIDs: firebase.firestore.FieldValue.arrayUnion(friendID)})
             })
         });
     };

@@ -23,19 +23,30 @@ import ActureHeader from '../components/actureHeader';
 import SwitchViewTab from '../components/user/switchViewTab';
 import Bio from '../components/user/bio';
 import FollowOrUnfollow from '../components/user/followOrUnfollow';
+import {
+    addBoxDB, addDataToTribeDB, addFriendDB, addFriendIDDB, addFriendIDToTribeDB, addFriendToTribeDB,
+    addTribeDeadlineDB,
+    changeEndGoal,
+    changeMetricNameDB,
+    changeTribeNameDB,
+    deleteTribeDB,
+} from '../redux/actions';
+import {connect} from 'react-redux';
 
 
 class HomeScreen extends Component {
 
     constructor(props) {
         super(props);
+        let user = firebase.auth().currentUser;
         this.ref = firebase.firestore().collection('users');
         this.switchView = this.switchView.bind(this);
-
+        this.getTribeMembers = this.getTribeMembers.bind(this);
+        this.addFriendIDDB = this.addFriendIDDB.bind(this);
 
         this.state = {
             editingProfile: false,
-            uid: null,
+            uid: user.userID,
             refresh: false,
             firstAdd: false,
             userConnectedID: null,
@@ -45,6 +56,10 @@ class HomeScreen extends Component {
             cycle: null,
             notMe: this.props.notMe,
             isGoalSelect: true,
+            profilePicture: null,
+            friendIDs: null,
+            friendData: [],
+            gotMems: false,
         }
 
     }
@@ -55,43 +70,34 @@ class HomeScreen extends Component {
 
     }
 
-    componentDidMount(): void {
-        this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
-
-        let user = firebase.auth().currentUser;
-        let name, email, photoUrl, uid, emailVerified;
-
-        if (user != null) {
-            name = user.displayName;
-            email = user.email;
-            photoUrl = user.photoURL;
-            emailVerified = user.emailVerified;
-            this.setState({uid:user.uid});
-            uid = user.uid
-        }
-
-        firebase.firestore().collection('users').where('fbID', '==', uid).get().then((snapshot) => {
-            console.log(snapshot);
-            let data = snapshot.docs.map(function (documentSnapshot) {
-                console.log(documentSnapshot.data());
-                return documentSnapshot.data()
+    getTribeMembers(friendIDS) {
+        let fData = [];
+        firebase.firestore().collection('users').get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.data().userID);
+                if (friendIDS.includes(doc.data().userID)) {
+                    let name = doc.data().name;
+                    let picture = doc.data().photoURL;
+                    let userID = doc.data().userID;
+                    let user = {picture: picture, name: name, userID: userID};
+                    fData.push(user)
+                }
             });
-            console.log(data);
-            let user = data[0];
-            let messages = user.messages;
-            let cycle = user.cycle;
-            console.log(cycle)
-            console.log(user.userID);
-            console.log(messages)
-
-            this.setState({cycle:cycle});
-            this.setState({coreUserID: user.userID});
-            this.setState({message:messages})
-        });
+        })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+            });
+        this.setState({friendData: fData, gotMems: true})
     }
 
+    addFriendIDDB(friendID, myID){
+        this.props.addFriendIDDB(friendID,myID)
 
-    onCollectionUpdate = (snapshot) => {
+    };
+
+    componentDidMount(): void {
+        this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
         let user = firebase.auth().currentUser;
         let name, email, photoUrl, uid, emailVerified;
 
@@ -104,31 +110,69 @@ class HomeScreen extends Component {
             uid = user.uid
         }
 
-        firebase.firestore().collection('users').where('fbID', '==', uid).get().then((snapshot) => {
-            console.log(snapshot);
-            let data = snapshot.docs.map(function (documentSnapshot) {
-                console.log(documentSnapshot.data());
-                return documentSnapshot.data()
-            });
-            console.log(data);
-            let user = data[0];
-            let messages = user.messages;
-            let cycle = user.cycle;
-            console.log(cycle)
-            console.log(user.userID);
-            console.log(messages)
-            this.setState({cycle:cycle});
-            this.setState({coreUserID: user.userID});
-            this.setState({message:messages})
-        });
-
-    };
+        //
+        // firebase.firestore().collection('users').where('fbID', '==', uid).get().then((snapshot) => {
+        //     console.log(snapshot);
+        //     let data = snapshot.docs.map(function (documentSnapshot) {
+        //         console.log(documentSnapshot.data());
+        //         return documentSnapshot.data()
+        //     });
+        //     console.log(data);
+        //     let user = data[0];
+        //     let messages = user.messages;
+        //     let friendIDs = user.friends
+        //     let profilePicture = user.photoURL
+        //     let cycle = user.cycle;
+        //     console.log(cycle)
+        //     console.log(user.userID);
+        //     console.log(messages)
+        //
+        //     this.setState({cycle:cycle});
+        //     this.setState({coreUserID: user.userID});
+        //     this.setState({message:messages})
+        //     this.setState({profilePicture: profilePicture })
+        // });
+    }
 
     componentWillUnmount(): void {
         this.unsubscribe();
     }
 
+
+    onCollectionUpdate = (snapshot) => {
+        firebase.firestore().collection('users').where('fbID', '==', this.state.uid).get().then((snapshot) => {
+            console.log(snapshot);
+            let data = snapshot.docs.map(function (documentSnapshot) {
+                console.log(documentSnapshot.data());
+                return documentSnapshot.data()
+            });
+            console.log(data);
+            let user = data[0];
+            let friendIDs = user.friendIDs;
+
+            let messages = user.messages;
+            let cycle = user.cycle;
+            let profilePicture = user.photoURL;
+
+            console.log(cycle);
+            console.log(user.userID);
+            console.log(messages);
+            this.setState({cycle:cycle});
+            this.setState({coreUserID: user.userID});
+            this.setState({message:messages});
+            this.setState({profilePicture: profilePicture });
+            this.setState({friendIDs: friendIDs});
+            this.getTribeMembers(this.state.friendIDs)
+
+        });
+
+    };
+
+
+
+
     render() {
+        console.log(this.state.friendData)
         let goalColor = 'darkgrey';
         let tribeColor = '#3676FF';
         if (this.state.isGoalSelect) {
@@ -143,7 +187,7 @@ class HomeScreen extends Component {
                     </View>
 
                     <View style = {{flex: 0.7,flexDirection: "row", marginBottom: 0, marginRight: 15, justifyContent: "flex-end" }}>
-                        <Identity size = 'large'/>
+                        <Identity size = 'large' profilePicture = {this.state.profilePicture}/>
                         <NavSettings/>
                         <AddTribe uid = {this.state.uid}/>
                     </View>
@@ -162,20 +206,62 @@ class HomeScreen extends Component {
                     </View>
 
                 </View>
-                {/*<View style = {{marginTop: -10, height: 300, backgroundColor: '#186aed'}}>*/}
-                {/*    /!*<BotA1Top messages = {this.state.message} friendTribeView = {false} filter = {this.state.uid} coreUserID = {this.state.coreUserID}/>*!/*/}
-                {/*    /!*<CoreChatContainer coreUserID = {this.state.coreUserID} messages = {this.state.message}/>*!/*/}
-                {/*</View>*/}
-                <View style = {{flex: 1}}>
-                    <Text style = {{fontWeight: "bold", margin: 10, marginLeft: 5, fontSize: 20}}> Goals  </Text>
-                    <TribeRoot friendTribeView = {false} filter = {this.state.uid} coreUserID = {this.state.coreUserID}  />
-                </View>
+                { (this.state.isGoalSelect)
+                    ?
+                    <View style={{flex: 1}}>
+                        <TribeRoot friendTribeView={false} filter={this.state.uid} coreUserID={this.state.coreUserID}/>
+                    </View>
+                    :
+                    <View style={{flex: 1}}>
+                        <TribeGroup
+                            friendIDS = {this.state.friendIDS}
+                            myID = {this.state.coreUserID}
+                            gotMems = {this.state.gotMems}
+                            getTribeMembers = {this.getTribeMembers}
+                            friendData = {this.state.friendData}
+                            addFriendIDDB = {this.addFriendIDDB}
+                            />
+
+                    </View>
+                }
             </ScrollView>
         );
     }
 }
 
+const mapStateToProps = (state /*, ownProps*/) => ({
+    state: state
+});
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addFriendIDDB: (friendID, myID) =>dispatch(addFriendIDDB(friendID, myID)),
+    }
+};
+
 HomeScreen.propTypes = {};
 
 
-export default HomeScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+
+
+HomeScreen.propTypes = {};
+
+{/*<TribeGroup friendIDS = {this.props.friendIDS}*/}
+{/*    //                  friends = {this.props.friends}*/}
+{/*    //                  open = {fOpen}*/}
+{/*    //                  closeFriendView = {this.closeFriendView}*/}
+{/*    //                  tribeID = {this.props.id}*/}
+{/*    //                  getTribeMembers = {this.props.getTribeMembers}*/}
+{/*    //                  friendData = {this.props.friendData}*/}
+{/*    //                  searchData = {this.props.searchData}*/}
+{/*    //                  addFriendIDToTribe = {this.props.addFriendIDToTribe}*/}
+{/*    //                  addFriendToTribe = {this.props.addFriendToTribe}*/}
+
+
+
+
+{/*<View style = {{marginTop: -10, height: 300, backgroundColor: '#186aed'}}>*/}
+{/*    /!*<BotA1Top messages = {this.state.message} friendTribeView = {false} filter = {this.state.uid} coreUserID = {this.state.coreUserID}/>*!/*/}
+{/*    /!*<CoreChatContainer coreUserID = {this.state.coreUserID} messages = {this.state.message}/>*!/*/}
+{/*</View>*/}

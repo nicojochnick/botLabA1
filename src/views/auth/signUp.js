@@ -22,7 +22,7 @@ export default class SignUp extends React.Component {
                 let account = {
                      userID: userID,
                      fbID: fbID,
-                     friends: {},
+                    friendIDs: [],
                      email: email,
                      name: null,
                      messages: null,
