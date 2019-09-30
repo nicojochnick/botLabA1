@@ -23,8 +23,6 @@ import {compose} from 'react-native';
 
 
 
-
-
 const persistConfig = {
   key: 'root',
   storage,
@@ -46,7 +44,7 @@ const persists = persistStore(store);
 
 store.subscribe(() => {
   saveState({
-    steps: store.getState()
+
   });
 });
 

@@ -120,7 +120,6 @@ export default class Step extends React.Component {
                                 checked={this.props.done}
                                 onPress={() => this.props.toggleDone(this.props.id, this.props.boxID)}
                                 checkedColor='#3676FF'
-
                             />
                         </View>
                     </KeyboardAvoidingView>
@@ -139,7 +138,6 @@ export default class Step extends React.Component {
                                     title = "Save"
                                     buttonStyle={{backgroundColor: "#4978DD"}}
                                     onPress = {()=> this.doneSaving()}
-
                                 />
                             </View>
                             : null

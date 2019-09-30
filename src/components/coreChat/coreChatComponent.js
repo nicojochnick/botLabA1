@@ -16,8 +16,6 @@ let sample= [
 ];
 
 
-
-
 export class CoreChatComponent extends React.Component {
     renderBubble (props) {
         return (

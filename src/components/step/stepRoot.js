@@ -1,4 +1,5 @@
-import {FlatList} from "react-native";
+import {FlatList, View} from "react-native";
+import {Button} from 'react-native-elements'
 import {styles} from "../theme";
 import Step from './step';
 import React from 'react';
@@ -46,7 +47,13 @@ export class StepRoot extends React.Component {
         this.checkCheck = this.checkCheck.bind(this);
         this.toggleDoneDB = this.toggleDoneDB.bind(this);
 
-        this.state = {};
+        this.state = {
+            todoSwitch: true,
+            doneSwitch: false,
+            allSwitch: false,
+
+
+        };
     }
 
     changeStepName(text, id) {
@@ -55,14 +62,18 @@ export class StepRoot extends React.Component {
 
     changeStepNameDB(text,id, boxID){
         this.props.changeStepNameDB(text,id,boxID);
+
+
     }
 
     handleDeleteStep(id){
         this.props.dispatch(deleteStep(id))
+
     }
 
     handleDeleteStepDB(boxID, id){
         this.props.deleteStepDB(boxID, id)
+
     }
 
     toggleDone(id, childrenID, allSteps) {
@@ -103,14 +114,69 @@ export class StepRoot extends React.Component {
     }
     checkCheckDB(id){}
 
+    componentDidMount(): void {
+        // this.props.sendHeaderMessage(this.props.steps)
+    }
+
     render() {
+
+        let todoColor =  "blue";
+        let doneColor = 'darkgrey';
+        let allColor = 'darkgrey';
+        if (this.state.doneSwitch){
+            todoColor =  'darkgrey';
+            doneColor = 'blue';
+            allColor = "darkgrey"
+        }
+        if (this.state.allSwitch) {
+            todoColor = 'darkgrey';
+            doneColor = 'darkgrey';
+            allColor = 'blue';
+        }
+
+        let allSteps = this.props.steps;
+        let filteredSteps = []
+
+        if (this.state.todoSwitch){
+            filteredSteps = allSteps.filter(function(item){
+                return item.done === false
+            })
+        } else if (this.state.doneSwitch) {
+            filteredSteps = allSteps.filter(function(item){
+                return item.done === true
+            })
+        } else {
+            filteredSteps = allSteps
+        }
         // console.log(this.props.storeSteps);
         // const filteredSteps = this.props.storeSteps.filter((item) => item.tribeID === this.props.tribeID);
         // console.log(filteredSteps);
         return (
+            <View>
+                <View style={{flexDirection: "row"}}>
+                    <Button
+                        titleStyle = {{color:todoColor , textWeight: "bold"}}
+                        type = 'clear'
+                        title = {'upcoming'}
+                        onPress = {()=> this.setState({todoSwitch:true, doneSwitch: false, allSwitch: false})}
+                    />
+                    <Button
+                        titleStyle = {{color:doneColor , textWeight: "bold"}}
+                        type = 'clear'
+                        title = {'completed'}
+                        onPress = {()=> this.setState({todoSwitch:false, doneSwitch: true, allSwitch: false,})}
+                    />
+                    <Button
+                        titleStyle = {{color:allColor , textWeight: "bold"}}
+                        type = 'clear'
+                        title = {'all'}
+                        onPress = {()=> this.setState({todoSwitch:false, doneSwitch: false, allSwitch: true,})}
+                    />
+                </View>
+
             < FlatList
                 style = {styles.bottomContainer}
-                data = {this.props.steps}
+                data = {filteredSteps}
                 listKey={(item, index) => 'D' + index.toString()}
                 renderItem={({item}) => (
                     <Step
@@ -140,6 +206,7 @@ export class StepRoot extends React.Component {
                     />
                 )}
             />
+            </View>
 
         );
 

@@ -1,20 +1,16 @@
 import React, {Component} from 'react';
-import {View,Text} from 'react-native'
 import PropTypes from 'prop-types';
+import {View} from 'react-native'
 
-class MainComments extends Component {
+class CommentPreview extends Component {
     render() {
         return (
             <View>
-
-
+                <FlatList/>
             </View>
-
-
         );
     }
 }
+CommentPreview.propTypes = {};
 
-MainComments.propTypes = {};
-
-export default MainComments;
+export default CommentPreview;

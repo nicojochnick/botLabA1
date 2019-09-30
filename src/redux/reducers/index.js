@@ -4,7 +4,6 @@ import bot from './bot1AReducer.js'
 import tribes from './tribeReducer'
 import boxes from './stepBoxReducer';
 
-
 const appReducer = combineReducers({steps:steps, bot:bot, tribes: tribes, boxes: boxes});
 
 const rootReducer = (state, action) => {

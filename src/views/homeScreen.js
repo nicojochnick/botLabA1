@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View, Text, KeyboardAvoidingView, ScrollView,RefreshControl, ActivityIndicator} from 'react-native';
+import {View, Text, KeyboardAvoidingView, ScrollView,RefreshControl, ActivityIndicator, SafeAreaView} from 'react-native';
 import {Card, Button} from 'react-native-elements'
 import BotA1Top from '../components/botA1/botA1Top';
 import StepRoot from '../components/step/stepRoot';
@@ -29,7 +29,7 @@ import {
     changeEndGoal,
     changeMetricNameDB,
     changeTribeNameDB,
-    deleteTribeDB,
+    deleteTribeDB, removeFriendIDDB,
 } from '../redux/actions';
 import {connect} from 'react-redux';
 
@@ -43,18 +43,22 @@ class HomeScreen extends Component {
         this.switchView = this.switchView.bind(this);
         this.getTribeMembers = this.getTribeMembers.bind(this);
         this.addFriendIDDB = this.addFriendIDDB.bind(this);
+        this.removeFriendIDDB = this.removeFriendIDDB.bind(this);
+
 
         this.state = {
+            alwaysMe: null,
             editingProfile: false,
-            uid: user.userID,
+            uid: null,
             refresh: false,
             firstAdd: false,
             userConnectedID: null,
             userName: ' ',
+            name: null,
             coreUserID: null,
             message: null,
             cycle: null,
-            notMe: this.props.notMe,
+            notMe: false,
             isGoalSelect: true,
             profilePicture: null,
             friendIDs: null,
@@ -63,6 +67,25 @@ class HomeScreen extends Component {
         }
 
     }
+
+
+    static navigationOptions = ({navigation}) => {
+        const notMe = navigation.getParam('notMe', false, );
+        const friendID = navigation.getParam('friendID', false, );
+        const fbID = navigation.getParam('fbID', false, );
+
+
+
+        if (notMe){
+            return {
+            }
+        }
+        return {
+            header: null
+        }
+    };
+
+
 
     switchView(){
         let g = !this.state.isGoalSelect;
@@ -79,8 +102,9 @@ class HomeScreen extends Component {
                 if (friendIDS.includes(doc.data().userID)) {
                     let name = doc.data().name;
                     let picture = doc.data().photoURL;
+                    let fbID = doc.data().fbID;
                     let userID = doc.data().userID;
-                    let user = {picture: picture, name: name, userID: userID};
+                    let user = {picture: picture, name: name, userID: userID, fbID: fbID};
                     fData.push(user)
                 }
             });
@@ -92,46 +116,58 @@ class HomeScreen extends Component {
     }
 
     addFriendIDDB(friendID, myID){
-        this.props.addFriendIDDB(friendID,myID)
-
+        this.props.addFriendIDDB(friendID,this.state.alwaysMe)
     };
 
+    removeFriendIDDB(friendID){
+        console.log(friendID)
+        console.log(this.state.alwaysMe)
+        this.props.removeFriendIDDB(friendID,this.state.alwaysMe)
+    }
+
     componentDidMount(): void {
+        const notMe = this.props.navigation.getParam('notMe', false, );
+        this.setState({notMe: notMe});
+        const friendID = this.props.navigation.getParam('friendID', false, );
+        const fbID = this.props.navigation.getParam('fbID', false, );
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
-        let user = firebase.auth().currentUser;
-        let name, email, photoUrl, uid, emailVerified;
 
-        if (user != null) {
-            name = user.displayName;
-            email = user.email;
-            photoUrl = user.photoURL;
-            emailVerified = user.emailVerified;
-            this.setState({uid:user.uid});
-            uid = user.uid
+        if (notMe) {
+            this.setState({uid: fbID})
+            this.setState({coreUserID: friendID})
+
+            let user = firebase.auth().currentUser;
+            let name, email, photoUrl, uid, emailVerified;
+            if (user != null) {
+                name = user.displayName;
+                email = user.email;
+                photoUrl = user.photoURL;
+                emailVerified = user.emailVerified;
+                uid = user.uid
+            }
+            firebase.firestore().collection('users').where('fbID', '==', uid).get().then((snapshot) => {
+                console.log(snapshot);
+                let data = snapshot.docs.map(function (documentSnapshot) {
+                    console.log(documentSnapshot.data());
+                    return documentSnapshot.data()
+                });
+                console.log(data);
+                let user = data[0];
+                this.setState({alwaysMe: user.userID});
+            });
+
+        } else {
+            let user = firebase.auth().currentUser;
+            let name, email, photoUrl, uid, emailVerified;
+            if (user != null) {
+                name = user.displayName;
+                email = user.email;
+                photoUrl = user.photoURL;
+                emailVerified = user.emailVerified;
+                this.setState({uid: user.uid});
+                uid = user.uid
+            }
         }
-
-        //
-        // firebase.firestore().collection('users').where('fbID', '==', uid).get().then((snapshot) => {
-        //     console.log(snapshot);
-        //     let data = snapshot.docs.map(function (documentSnapshot) {
-        //         console.log(documentSnapshot.data());
-        //         return documentSnapshot.data()
-        //     });
-        //     console.log(data);
-        //     let user = data[0];
-        //     let messages = user.messages;
-        //     let friendIDs = user.friends
-        //     let profilePicture = user.photoURL
-        //     let cycle = user.cycle;
-        //     console.log(cycle)
-        //     console.log(user.userID);
-        //     console.log(messages)
-        //
-        //     this.setState({cycle:cycle});
-        //     this.setState({coreUserID: user.userID});
-        //     this.setState({message:messages})
-        //     this.setState({profilePicture: profilePicture })
-        // });
     }
 
     componentWillUnmount(): void {
@@ -149,7 +185,8 @@ class HomeScreen extends Component {
             console.log(data);
             let user = data[0];
             let friendIDs = user.friendIDs;
-
+            let name = user.name;
+            let username  = user.username;
             let messages = user.messages;
             let cycle = user.cycle;
             let profilePicture = user.photoURL;
@@ -160,9 +197,11 @@ class HomeScreen extends Component {
             this.setState({cycle:cycle});
             this.setState({coreUserID: user.userID});
             this.setState({message:messages});
+            this.setState({name: name});
+            this.setState({username: username});
             this.setState({profilePicture: profilePicture });
             this.setState({friendIDs: friendIDs});
-            this.getTribeMembers(this.state.friendIDs)
+            this.getTribeMembers(friendIDs)
 
         });
 
@@ -172,7 +211,7 @@ class HomeScreen extends Component {
 
 
     render() {
-        console.log(this.state.friendData)
+        console.log(this.state.name)
         let goalColor = 'darkgrey';
         let tribeColor = '#3676FF';
         if (this.state.isGoalSelect) {
@@ -181,35 +220,43 @@ class HomeScreen extends Component {
         }
         return (
             <ScrollView>
-                <View style = {{flex: 0.1, flexDirection: "column", paddingTop: 35, marginTop: 0, paddingBottom: 10, borderBottomWidth: 0.3}}>
+                <SafeAreaView style = {{flex: 0.1, flexDirection: "column", paddingTop: 0, marginTop: 5, paddingBottom: 10, borderBottomWidth: 0.3}}>
                     <View style = {{flex: 0.1, flexDirection: "row", justifyContent: "center"}}>
                         <Text style = {{fontWeight: "bold", fontSize: 20}}> username</Text>
                     </View>
 
                     <View style = {{flex: 0.7,flexDirection: "row", marginBottom: 0, marginRight: 15, justifyContent: "flex-end" }}>
-                        <Identity size = 'large' profilePicture = {this.state.profilePicture}/>
-                        <NavSettings/>
-                        <AddTribe uid = {this.state.uid}/>
+                        <Identity size = 'large' notMe = {this.state.notMe} name = {this.state.name} profilePicture = {this.state.profilePicture}/>
+                        { (this.state.notMe)
+                            ? <FollowOrUnfollow
+                                followed = {true}
+                                friendID = {this.state.coreUserID}
+                                removeFriendIDDB = {this.removeFriendIDDB}
+
+                            />
+                            :
+                            <View style={ {flexDirection: "row"}} >
+                            <NavSettings/>
+                            < AddTribe uid = {this.state.uid}/>
+                            </View>
+                        }
                     </View>
                     <View style = {{flex: 0.3, justifyContent: "flex-start", alignContent: "center", flexDirection: "row"}}>
                         <SwitchViewTab goalColor = {goalColor}
                                        tribeColor = {tribeColor}
                                        switchView = {this.switchView}
                         />
-                        {(this.state.notMe)
-                            ? <FollowOrUnfollow
-                                followed = {true}
-                            />
-                            : null
-
-                        }
                     </View>
 
-                </View>
+                </SafeAreaView>
                 { (this.state.isGoalSelect)
                     ?
                     <View style={{flex: 1}}>
-                        <TribeRoot friendTribeView={false} filter={this.state.uid} coreUserID={this.state.coreUserID}/>
+                        <TribeRoot
+                            friendTribeView={false}
+                            filter={this.state.uid}
+                            coreUserID={this.state.coreUserID}
+                        />
                     </View>
                     :
                     <View style={{flex: 1}}>
@@ -236,6 +283,8 @@ const mapStateToProps = (state /*, ownProps*/) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         addFriendIDDB: (friendID, myID) =>dispatch(addFriendIDDB(friendID, myID)),
+        removeFriendIDDB: (friendID, myID) =>dispatch(removeFriendIDDB(friendID, myID)),
+
     }
 };
 

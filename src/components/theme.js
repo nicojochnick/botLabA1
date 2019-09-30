@@ -78,6 +78,20 @@ export const styles = StyleSheet.create({
         margin: 6,
         padding: 0,
     },
+
+    tribesHeader: {
+        fontFamily: "roboto",
+        borderWidth: 0,
+        shadowColor: "grey",
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 5,
+        borderRadius: 6,
+        margin: 6,
+        padding: 0,
+    },
+
+
+
     topGoals: {
         flexDirection: 'row',
         justifyContent: 'space-between'

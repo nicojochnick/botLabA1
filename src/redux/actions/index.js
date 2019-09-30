@@ -265,6 +265,19 @@ export const changeTribeNameDB = (text,id) => {
 
 };
 
+export const updateHeader = (index,data) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('tribes').where('id', '==', index)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update( {"header": data})
+            });
+        });
+    };
+
+};
+
+
 export const deleteTribeDB = (id) => {
     return (dispatch, getState) => {
         firebase.firestore().collection('tribes').where('id', '==', id)
@@ -340,6 +353,19 @@ export const addFriendDB = (friend, myID) => {
     };
 };
 
+export const removeFriendIDDB = (friendID, myID) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('users').where('userID', '==', myID)
+            .get().then(function (querySnapshot) {
+            console.log(querySnapshot);
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({friendIDs: doc.data().friendIDs.filter(friend => friend !== friendID)})
+            })
+        });
+    };
+};
+
+
 export const addFriendIDDB = (friendID, myID) => {
     return (dispatch, getState) => {
         console.log(friendID)
@@ -354,18 +380,16 @@ export const addFriendIDDB = (friendID, myID) => {
 };
 
 
-export const addDataToTribeDB = (index, data, date) => {
+export const addDataToTribeDB = (index, data, date, insertCol) => {
     return (dispatch, getState) => {
         firebase.firestore().collection('tribes').where('id', '==', index)
             .get().then(function (querySnapshot) {
             console.log(querySnapshot);
             querySnapshot.forEach(function (doc) {
-
-                if (data == null) {
-                    let element = {date: date, data: null};
+                if (insertCol) {
+                    let element = {date: date, data: 0};
                     doc.ref.update({continuousData: firebase.firestore.FieldValue.arrayUnion(element)})
                 }
-
                 else {
                     doc.ref.update({
                         continuousData:

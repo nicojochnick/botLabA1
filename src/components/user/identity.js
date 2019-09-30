@@ -14,8 +14,8 @@ class Identity extends Component {
         super(props);
         this.user = firebase.auth().currentUser;
         this.state = {
-            name: this.user.displayName,
-            profileURL: this.user.photoURL,
+            name: null,
+            profileURL: null,
             editing: false
 
         }
@@ -30,7 +30,6 @@ class Identity extends Component {
         this.changeName(this.state.name);
         this.setState({editing: false});
 
-
     }
 
 
@@ -44,34 +43,38 @@ class Identity extends Component {
     };
 
     openImage(options) {
-        ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            } else {
-                const source = response.uri;
+        if (this.props.notMe){
+            console.log("cant edit a profile that isnt ur own")
+        } else {
+            ImagePicker.showImagePicker(options, (response) => {
+                console.log('Response = ', response);
+                if (response.didCancel) {
+                    console.log('User cancelled image picker');
+                } else if (response.error) {
+                    console.log('ImagePicker Error: ', response.error);
+                } else if (response.customButton) {
+                    console.log('User tapped custom button: ', response.customButton);
+                } else {
+                    const source = response.uri;
 
-                // You can also display the image using data:
-                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+                    // You can also display the image using data:
+                    // const source = { uri: 'data:image/jpeg;base64,' + response.data };
 
-               this.setState({profileURL: source});
-                this.user.updateProfile({
-                    photoURL: source
-                });
-
-                let uid = this.user.uid;
-                firebase.firestore().collection('users').where('fbID', '==', uid).get().then(function (querySnapshot) {
-                    querySnapshot.forEach(function (doc) {
-                        doc.ref.update({"photoURL":source})
+                    this.setState({profileURL: source});
+                    this.user.updateProfile({
+                        photoURL: source
                     });
-                });
 
-            }
-        })
+                    let uid = this.user.uid;
+                    firebase.firestore().collection('users').where('fbID', '==', uid).get().then(function (querySnapshot) {
+                        querySnapshot.forEach(function (doc) {
+                            doc.ref.update({"photoURL": source})
+                        });
+                    });
+
+                }
+            })
+        }
     }
 
     changeName(text) {
@@ -89,16 +92,16 @@ class Identity extends Component {
         // this.props.dispatch(changeName(text));
     }
 
-    onComponenetDidMount(){
-        //add listener snapshot of correct user object
-        firebase.firestore().collection('users').onSnapshot(this.onCollectionUpdate)
-
-    }
+    // componentDidMount(): void {
+    //     this.setState({name: this.props.name})
+    // }
 
     render() {
         console.log(this.props.botID);
-        let uri = this.state.profileURL;
-        let name = this.state.name;
+        let name = this.props.name
+        if (this.state.editing){
+            name = this.state.name
+        }
         return (
             <View style = {{ flex: 1, flexDirection: "row", justifyContent: "flex-start", alignContent: "flex-start", paddingTop: 5, marginBottom: 10, marginLeft: 10}}>
                 <Avatar
@@ -117,7 +120,7 @@ class Identity extends Component {
                     selectionColor = "black"
                     multiline = {false}
                     maxLength = {20}
-                    editable = {this.props.editable}
+                    editable = {!(this.props.notMe)}
                 />
 
                 { (this.state.editing)

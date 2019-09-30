@@ -112,11 +112,11 @@ class Box extends Component {
                 <StepRoot
                     tribeID = {this.props.tribeID}
                     boxID = {this.props.id}
-
                     handleAddStep = {this.props.handleAddStep}
                     handleSwitch = {this.props.handleSwitch}
                     editing = {this.props.editing}
                     steps = {this.props.steps}
+                    sendHeaderMessage = {this.props.sendHeaderMessage}
                 />
                 </View>
                 </View>

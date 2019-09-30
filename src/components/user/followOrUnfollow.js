@@ -8,12 +8,33 @@ class FollowOrUnfollow extends Component {
         super(props)
     }
 
+    removeFriend() {
+        this.props.removeFriendIDDB(this.props.friendID)
+
+    }
+
+    addFriend(){
+
+    }
+
+
+
     render() {
         return (
             <View style = {{flex: 0.5, justifyContent: "flex-end", alignItems: "center"}}>
                 {(this.props.followed)
-                    ? <Button title="unfollow" />
-                    : <Button title="follow" />
+                    ?
+                    <Button
+                        title="unfollow"
+                        onPress = {() => this.removeFriend()}
+                    />
+
+                    :
+                    <Button
+                        title="follow"
+                        onPress = {() => this.props.addFriend()}
+
+                    />
                     }
             </View>
         );

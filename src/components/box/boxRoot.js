@@ -138,6 +138,9 @@ class BoxRoot extends Component {
 
     render() {
         let loading = this.state.loading;
+
+
+
         // console.log(this.props.storeBoxes);
         // const filteredBoxes = this.props.storeBoxes.filter((item) => item.tribeID === this.props.tribeID);
         // console.log(filteredBoxes);
@@ -152,19 +155,19 @@ class BoxRoot extends Component {
                         listKey={(item, index) => 'D' + index.toString()}
                         renderItem={({item}) => (
                         <Box
-                        name = {item.name}
-                        info = {item.info}
-                        id = {item.id}
-                        open = {item.open}
-                        tribeID = {this.props.tribeID}
-                        steps = {item.steps}
-                        computeBoxProgress = {this.computeBoxProgress}
-
-                        handleAddStep = {this.handleAddStepDB}
-                        changeBoxName = {this.changeBoxNameDB}
-                        handleAddBox = {this.props.handleAddBox}
-                        handleDeleteBox = {this.handleDeleteBoxDB}
-                        editing = {this.props.editing}
+                            name = {item.name}
+                            info = {item.info}
+                            id = {item.id}
+                            open = {item.open}
+                            tribeID = {this.props.tribeID}
+                            steps = {item.steps}
+                            computeBoxProgress = {this.computeBoxProgress}
+                            handleAddStep = {this.handleAddStepDB}
+                            changeBoxName = {this.changeBoxNameDB}
+                            handleAddBox = {this.props.handleAddBox}
+                            handleDeleteBox = {this.handleDeleteBoxDB}
+                            editing = {this.props.editing}
+                            sendHeaderMessage = {this.props.sendHeaderMessage}
                         />
                         )}
                         />

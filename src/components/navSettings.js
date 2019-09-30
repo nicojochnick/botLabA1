@@ -9,7 +9,6 @@ import firebase from 'react-native-firebase';
 import {ConfirmDialog} from 'react-native-simple-dialogs';
 
 
-
 class NavSettings extends Component {
     constructor(props) {
         super(props);
@@ -20,7 +19,6 @@ class NavSettings extends Component {
         }
     }
 
-
     signOut(){
         firebase.auth().signOut().then(function() {
             firebase.auth().currentUser = null;
@@ -30,7 +28,6 @@ class NavSettings extends Component {
         });
 
     };
-
 
     makeEditable(bool){
         this.setState({editing: bool})
@@ -60,12 +57,9 @@ class NavSettings extends Component {
         );
     };
 
-
-
     render() {
         return (
             <View>
-
                 <Menu>
                     <MenuTrigger>
                         <Icon style = {{margin:25, }}

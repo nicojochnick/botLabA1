@@ -67,6 +67,7 @@ class AddTribe extends Component {
             deadline: null,
             total: null,
             endGoal: null,
+            update: null,
         };
         this.props.addTribeDB(genericTribe);
     }

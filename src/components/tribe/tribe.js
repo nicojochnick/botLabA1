@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {View, TextInput, FlatList, Text, default as Alert, Switch, ScrollView} from 'react-native';
-import {Button} from 'react-native-elements'
+import {Button, Divider} from 'react-native-elements';
 import {styles} from '../theme';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -24,6 +24,12 @@ import moment from "moment";
 import TribeGroup from './tribeGroup';
 import * as firebase from "react-native-firebase";
 import {AreaChart, Grid} from 'react-native-svg-charts';
+import TribeHeader from './tribeHeader';
+import CoreChatContainer from '../coreChat/coreChatContainer';
+import {CoreChatComponent} from '../coreChat/coreChatComponent';
+import TribeUpdateAdd from './tribeUpdateAdd';
+import SocialTribeTab from './socialTribeTab';
+import CommentTopStack from '../interactions/commentTopStack'
 
 
 class TribeComponent extends Component {
@@ -31,7 +37,9 @@ class TribeComponent extends Component {
         super(props);
         this.unsubscribe = null;
         this.ref = firebase.firestore().collection('stepBox');
+        this.user = firebase.auth().currentUser;
         this.closeFriendView = this.closeFriendView.bind(this);
+        this.sendHeaderMessage = this.sendHeaderMessage.bind(this);
         this.state = {
             boxData: [],
             open: true,
@@ -49,6 +57,9 @@ class TribeComponent extends Component {
             metricChange: false,
             endGoal: null,
             endGoalChange: false,
+            canEdit: true,
+            headerMessage: null,
+            headerOpen: false
         }
     }
 
@@ -56,9 +67,33 @@ class TribeComponent extends Component {
         const curDate = moment().format("MMM D YY");
         console.log(curData);
         if (curData.date !== curDate) {
-            this.props.addDataToTribe(this.props.id, 0, curDate);
-
+            console.log('SENT')
+            this.props.addDataToTribe(this.props.id, 0, curDate,true);
         }
+    }
+
+    sendHeaderMessage(data){
+
+        this.setState({headerOpen: true});
+        this.setState({headerMessage: data})
+
+
+        // let dataList = [];
+        // let message = null;
+        // let currData = this.props.cData[this.props.cData.length - 1];
+        // this.props.cData.map(function (item) {
+        //     dataList.push(item.data)
+        // });
+        // if (currData.data === 0) {
+        //     message = 'no' + " " + this.props.metricName + " " + 'today :(';
+        //     this.setState({headerMessage: message})
+        // }
+
+        // steps = steps.filter(function(item){
+        //     return item.done === false
+        // });
+        // let message = steps.shift().name;
+        // this.setState({message: message})
     }
 
     makeEditable(bool){
@@ -97,8 +132,9 @@ class TribeComponent extends Component {
         const curDate = moment().format("MMM D YY");
         this.makeEditable(false);
         if (this.state.metricChange) {
+             console.log("COOL")
 
-            this.props.addDataToTribe(this.props.id, this.state.metric, curDate);
+            this.props.addDataToTribe(this.props.id, this.state.metric, curDate, false, this.props.metricName);
             this.setState({metricChange: false})
         }
 
@@ -141,6 +177,7 @@ class TribeComponent extends Component {
             if (!Number.isNaN(int)){
                 this.setState({metricChange: true});
                 this.setState({metric: int})
+                console.log('CHANGED')
             }
         }
 
@@ -168,17 +205,22 @@ class TribeComponent extends Component {
     };
 
     componentDidMount(): void {
+        let user = firebase.auth().currentUser;
+        if (user.uid !== this.props.userID){
+            this.setState({canEdit: false })
+        }
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
         // this.props.getTribeMembers(this.props.friendIDS);
-
         let currData = this.props.cData[this.props.cData.length - 1];
-        this.checkDate(currData)
+        this.checkDate(currData);
 
     }
 
     componentWillUnmount(): void {
         this.unsubscribe();
     }
+
+
 
 
     computeProgress(ds,goal){
@@ -203,6 +245,7 @@ class TribeComponent extends Component {
     }
 
     render() {
+        let canEdit = this.state.canEdit
         let open = this.state.open;
         let fOpen = this.state.fOpen;
         let dColor = "grey";
@@ -223,11 +266,18 @@ class TribeComponent extends Component {
             dataList.push(item.data)
         });
 
+        let marginTop = -25
+
 
         console.log(dataList)
 
         return (
-            <View style = {styles.tribes}>
+            <View>
+                {(true)
+                    ?<TribeHeader header = {this.props.header} />
+                    : null
+                }
+            <View style = {[styles.tribes, {marginTop: marginTop}]}>
                 <View style = {styles.topTribes}>
                         <View style = {{width: 200}}>
                         <TextInput
@@ -235,7 +285,7 @@ class TribeComponent extends Component {
                             ref= {(el) => { this.name= el; }}
                             value = {myName}
                             placeholder = {"add a title"}
-                            editable = {true}
+                            editable = {canEdit}
                             onChangeText = {(text) => this.activateEdit(text,'name')}
                         />
                         <View style = {{flexDirection: "row"}}>
@@ -244,7 +294,7 @@ class TribeComponent extends Component {
                                 style = {{fontSize: 20, fontWeight: 500, color: "blue"}}
                                 ref= {(el) => { this.name= el; }}
                                 placeholder = {"Add Number"}
-                                editable = {true}
+                                editable = {canEdit}
                                 onChangeText = {(text) => this.activateEdit(text,'endGoal')}
                                 >
                                 {this.props.endGoal}
@@ -269,6 +319,7 @@ class TribeComponent extends Component {
                             <TextInput
                                 style ={{fontSize: 65, textAlign: "right", fontWeight: "500", marginTop: 5}}
                                 placeholder = "0"
+                                editable = {canEdit}
                                 onChangeText = {(text) => this.activateEdit(text,'metric')}
                             >
                                 {currData.data}
@@ -284,30 +335,33 @@ class TribeComponent extends Component {
                             <Text style = {{textAlign: "right", marginTop: 5, marginRight: 0, }}> Today </Text>
                             </View>
                         </View>
+                    {(canEdit)
 
-
-                        <View style = {{flexDirection: "row", justifyContent: "flex-end", flex: 0.2}}>
+                        ? <View style={{flexDirection: "row", justifyContent: "flex-end", flex: 0.2}}>
                             <Menu>
                                 <MenuTrigger>
                                     <Icon
-                                        style = {{margin: 0}}
-                                        name = {'ellipsis-v'}
-                                        color = '#3676FF'
-                                        disabledStyle = {{color:"grey"}}
-                                        size = {22}
-                                                      />
+                                        style={{margin: 0}}
+                                        name={'ellipsis-v'}
+                                        color='#3676FF'
+                                        disabledStyle={{color: "grey"}}
+                                        size={22}
+                                    />
                                 </MenuTrigger>
-                                    <MenuOptions>
+                                <MenuOptions>
                                     <MenuOption onSelect={() => this.makeEditable(true, myName)} text='Edit'/>
-                                        <MenuOption onSelect={() =>  this.setState( {fOpen: !fOpen})}>
-                                            <Text style = {{color: "navy"}}>Make Private </Text>
-                                        </MenuOption>
-                                        <MenuOption onSelect={() => this.openDeleteConfirm(true)} >
+                                    <MenuOption onSelect={() => this.setState({fOpen: !fOpen})}>
+                                        <Text style={{color: "navy"}}>Make Private </Text>
+                                    </MenuOption>
+                                    <MenuOption onSelect={() => this.openDeleteConfirm(true)}>
                                         <Text style={{color: 'red'}}>Delete</Text>
                                     </MenuOption>
                                 </MenuOptions>
                             </Menu>
                         </View>
+                        : <View style={{flexDirection: "row", justifyContent: "flex-end", flex: 0.2}}> </View>
+                    }
+
                     </View>
 
 
@@ -340,9 +394,9 @@ class TribeComponent extends Component {
                                 filter = {this.props.id}
                                 handleAddBox = {this.props.handleAddBox}
                                 editing = {this.state.editing}
+                                sendHeaderMessage = {this.sendHeaderMessage}
                             />
                         </View>
-
 
                         <View style = {{flex: 1, justifyContent: "space-between", alignContent: "space-between", marginLeft: 10}}>
                             {(!this.state.editing)
@@ -365,10 +419,16 @@ class TribeComponent extends Component {
 
                                 </View>
                             }
-
+                        <Divider style = {{marginTop: 2, marginBottom: 10}}/>
                         </View>
+                        <SocialTribeTab/>
+                        <CommentTopStack tribeID = {this.props.tribeID} userID = {this.props.userID} />
                     </View>
+
+
+
                 }
+
                 <ConfirmDialog
                     title="Please Confirm"
                     message="Are you sure you want to delete your goal?"
@@ -391,6 +451,7 @@ class TribeComponent extends Component {
                             title: "Yes",
                             onPress: this.optionYes,
                         }}/>
+            </View>
             </View>
         );
     }

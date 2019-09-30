@@ -162,6 +162,7 @@ class TribeGroup extends Component {
                                     <UserTag
                                         avatar = {item.picture}
                                         name = {item.name}
+                                        fbID = {item.fbID}
                                     />
                                 )}
                                 />

@@ -20,7 +20,7 @@ import {
     addBoxDB,
     addFriendToTribe,
     addFriendToTribeDB,
-    addFriendIDToTribeDB, addDataToTribeDB, changeEndGoal,
+    addFriendIDToTribeDB, addDataToTribeDB, changeEndGoal, updateHeader,
 } from '../../redux/actions';
 
 const tribesSelector = (Obj) => {
@@ -40,6 +40,7 @@ class TribeRoot extends Component {
         this.changeTribeName = this.changeTribeName.bind(this);
         this.computeProgress = this.computeProgress.bind(this);
 
+        this.updateHeader = this.updateHeader.bind(this);
 
         this.handleAddBoxDB = this.handleAddBoxDB.bind(this);
         this.handleDeleteTribeDB = this.handleDeleteTribeDB.bind(this);
@@ -84,7 +85,9 @@ class TribeRoot extends Component {
             open: false,
             info: "add a description",
             steps: [],
-            deadline: null
+            deadline: null,
+            userID: this.props.myID,
+            update: [],
         };
         this.props.addBoxDB(genericBox)
     }
@@ -117,9 +120,30 @@ class TribeRoot extends Component {
         this.props.addTribeDeadlineDB(index, deadline)
     }
 
-    addDataToTribeDB(index,data,date){
-        this.props.addDataToTribeDB(index, data,date)
+    updateHeader(tribeID, data, type) {
+        console.log(data);
+        let message = '';
+        let timeStamp = moment().format();
+        let send = {message: message, timeStamp: timeStamp};
+        if (type === 'addedData') {
+            let num = data.number;
+            console.log(num);
+            let metric = data.metricName;
+            message = 'did ' + num + " " +metric+ " today!"
+            send.message = message;
+            this.props.updateHeader(tribeID, send)
+        }
 
+    }
+
+    addDataToTribeDB(index, data, date, insertCol, metric){
+        this.props.addDataToTribeDB(index, data, date, insertCol)
+        console.log(data)
+        let num = data;
+        if (data > 0 && insertCol === false ) {
+            let data = {number: num, metricName: metric};
+            this.updateHeader(index, data, 'addedData')
+        }
     }
 
     computeOverAllProgress(tribeID) {
@@ -160,35 +184,6 @@ class TribeRoot extends Component {
 
         });
     }
-
-    // getTribeMembers(friendIDS) {
-    //     let fData = [];
-    //     firebase.firestore().collection('users').get().then(function (querySnapshot) {
-    //         querySnapshot.forEach(function (doc) {
-    //             // doc.data() is never undefined for query doc snapshots
-    //             console.log(doc.data().userID);
-    //             if (friendIDS.includes(doc.data().userID)) {
-    //                 let name = doc.data().name;
-    //                 let picture = doc.data().photoURL;
-    //                 let userID = doc.data().userID;
-    //                 let user = {picture: picture, name: name, userID: userID};
-    //                 fData.push(user)
-    //             }
-    //         });
-    //     })
-    //         .catch(function (error) {
-    //             console.log("Error getting documents: ", error);
-    //         });
-    //     this.setState({friendData: fData})
-    // }
-    //
-    // addFriendToTribeDB(friend, TribeID){
-    //    this.props.addFriendToTribeDB(friend,TribeID)
-    // };
-    //
-    // addFriendIDToTribeDB(friendID, TribeID){
-    //     this.props.addFriendIDToTribeDB(friendID,TribeID)
-    // };
 
     changeEndGoal(text, tribeID){
         this.props.changeEndGoal(text,tribeID)
@@ -250,9 +245,11 @@ class TribeRoot extends Component {
                                       <TribeComponent
                                           listKey={(item, index) => 'D' + index.toString()}
                                           name={item.name}
+                                          userID = {item.userID}
                                           author={item.author}
                                           info={item.info}
                                           id={item.id}
+                                          header = {item.header}
                                           deadline={item.deadline}
                                           tribeID={item.id}
                                           friendIDS={item.friendIDS}
@@ -265,7 +262,6 @@ class TribeRoot extends Component {
                                           addFriendIDToTribe={this.addFriendIDToTribeDB}
 
 
-
                                           changeEndGoal = {this.changeEndGoal}
                                           friendData={this.state.friendData}
                                           changeMetricName = {this.editMetric}
@@ -276,6 +272,7 @@ class TribeRoot extends Component {
                                           changeTribeName={this.changeTribeNameDB}
                                           getTribeMembers={this.getTribeMembers}
                                           addDataToTribe = {this.addDataToTribeDB}
+                                          updateHeader = {this.updateHeader}
                                           searchData={this.state.searchData}
                                       />)}
                         />
@@ -317,7 +314,8 @@ const mapDispatchToProps = (dispatch) => {
         addBoxDB: (box) => dispatch(addBoxDB(box)),
         addFriendToTribeDB: (friend, tribeID) =>dispatch(addFriendToTribeDB(friend, tribeID)),
         addFriendIDToTribeDB: (friendID, tribeID) =>dispatch(addFriendIDToTribeDB(friendID, tribeID)),
-        addDataToTribeDB: (index, data, date) => dispatch(addDataToTribeDB(index,data,date)),
+        addDataToTribeDB: (index, data, date, insertCol) => dispatch(addDataToTribeDB(index,data,date,insertCol)),
+        updateHeader: (index, data) => dispatch(updateHeader(index,data)),
 
     }
 };

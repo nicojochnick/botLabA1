@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {createAppContainer, createStackNavigator, createSwitchNavigator, createBottomTabNavigator} from 'react-navigation';
+import {createAppContainer, createStackNavigator, createSwitchNavigator, createBottomTabNavigator, createDrawerNavigator} from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../views/homeScreen';
 import AddStepScreen from '../views/addStepScreen'
@@ -9,12 +9,13 @@ import LoadingScreen from '../views/loadingScreen';
 import createIconButtonComponent from 'react-native-vector-icons/lib/icon-button';
 import FriendGoalView from '../views/friendGoalView';
 import FeedView from '../views/FeedView';
+import UserTag from '../components/user/userTag';
+import NotificationScreen from '../views/notificationScreen';
 
 class TopStack extends Component {
     render() {
     }
 }
-
 const AuthStack = createStackNavigator({
     Login: Login,
     SignUp: SignUp
@@ -33,8 +34,17 @@ const AuthStack = createStackNavigator({
     },
 });
 
+const HomeStack =  createStackNavigator(
+    {
+        Home: HomeScreen, OtherHome: HomeScreen
+    }, {
+        initialRouteName: "Home",
+        headerTransparent: true,
+    }
+);
+
 const AppDrawer = createBottomTabNavigator(
-    { FeedView: FeedView, Home: HomeScreen,
+    { FeedView: FeedView, Home: HomeStack, Notifications: NotificationScreen
     }, { defaultNavigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ focused, horizontal, tintColor }) => {
                 const { routeName } = navigation.state;
@@ -44,6 +54,8 @@ const AppDrawer = createBottomTabNavigator(
                     iconName = `ios-contact`;
                 } else if (routeName === 'FeedView') {
                     iconName = 'ios-home'
+                } else if (routeName === 'Notifications') {
+                    iconName = 'ios-heart'
                 }
                 return <IconComponent style = {{marginTop: 9}} name={iconName} color = {tintColor} size={28}  />;
             },
@@ -67,4 +79,7 @@ const AppContainer =  createAppContainer(createSwitchNavigator(
         initialRouteName: "AuthLoading"
     },
 ));
+
+
+
 export default AppContainer;
