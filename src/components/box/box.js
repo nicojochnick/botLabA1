@@ -116,6 +116,7 @@ class Box extends Component {
                     handleSwitch = {this.props.handleSwitch}
                     editing = {this.props.editing}
                     steps = {this.props.steps}
+                    canEdit = {this.props.canEdit}
                     sendHeaderMessage = {this.props.sendHeaderMessage}
                 />
                 </View>

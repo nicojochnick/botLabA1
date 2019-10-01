@@ -155,6 +155,7 @@ class BoxRoot extends Component {
                         listKey={(item, index) => 'D' + index.toString()}
                         renderItem={({item}) => (
                         <Box
+                            canEdit = {this.props.canEdit}
                             name = {item.name}
                             info = {item.info}
                             id = {item.id}

@@ -256,8 +256,11 @@ class HomeScreen extends Component {
                         <TribeRoot
                             friendTribeView={false}
                             filter={this.state.uid}
+                            notMe = {this.state.notMe}
                             coreUserID={this.state.coreUserID}
                             alwaysMe = {this.state.alwaysMe}
+                            name = {this.state.name}
+                            profilePicture = {this.state.profilePicture}
 
                         />
                     </View>
@@ -271,7 +274,6 @@ class HomeScreen extends Component {
                             friendData = {this.state.friendData}
                             addFriendIDDB = {this.addFriendIDDB}
                             />
-
                     </View>
                 }
             </ScrollView>

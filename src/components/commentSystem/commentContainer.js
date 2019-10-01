@@ -21,8 +21,10 @@ import * as firebase from "react-native-firebase";
 
 class CommentContainer extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
+        this.unsubscribe = null;
+        this.ref = firebase.firestore().collection('users');
         this.postComment = this.postComment.bind(this);
         this.deleteComment = this.deleteComment.bind(this);
         this.user = firebase.auth().currentUser;
@@ -33,7 +35,8 @@ class CommentContainer extends Component {
 
         }
     }
-    postComment(text){
+
+    postComment(text) {
         let comment = {
             type: null,
             message: text,
@@ -49,11 +52,11 @@ class CommentContainer extends Component {
         console.log("dispatchedInternal")
     }
 
-    deleteComment(){
+    deleteComment() {
         this.props.deleteCommentDB(this.props.commentID)
     }
 
-    getUser(userID){
+    getUser(userID) {
         let isMe = false
         if (userID === this.props.alwaysMe) {
             this.setState({isMe: true})
@@ -61,19 +64,51 @@ class CommentContainer extends Component {
         }
         let userPhoto = null;
         let username = null;
-        if (isMe){
+        if (isMe) {
             userPhoto = this.user.photoURL;
             username = this.user.displayName;
+            this.setState({username: username});
+            this.setState({userPhoto: userPhoto});
         } else {
+            firebase.firestore().collection('users').where('userID', '==', userID).get().then((snapshot) => {
+                let data = snapshot.docs.map(function (documentSnapshot) {
+                    console.log(documentSnapshot.data());
+                    return documentSnapshot.data()
+                });
+                console.log(data);
+                let user = data[0];
+                userPhoto = user.photoURL;
+                username = user.name;
+            });
+            this.setState({username: username});
+            this.setState({userPhoto: userPhoto});
 
         }
-        this.setState({username: username});
-        this.setState({userPhoto: userPhoto});
+
     }
 
     componentDidMount(): void {
-        this.getUser(this.props.userID)
+        // this.getUser(this.props.userID)
+        this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
+
     }
+
+    componentWillUnmount(): void {
+        this.unsubscribe();
+    }
+
+    onCollectionUpdate = (snapshot) => {
+        firebase.firestore().collection('users').where('userID', '==', this.props.userID).get().then((snapshot) => {
+            let data = snapshot.docs.map(function (documentSnapshot) {
+                console.log(documentSnapshot.data());
+                return documentSnapshot.data()
+            });
+            console.log(data);
+            let user = data[0];
+            this.setState({username: user.name});
+            this.setState({userPhoto: user.userPhoto});
+        });
+    };
 
     render() {
         return (

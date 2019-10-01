@@ -265,6 +265,9 @@ class TribeRoot extends Component {
                                           metricName = {item.metricName}
                                           endGoal = {item.endGoal}
 
+                                          tribeAuthorName = {this.props.name}
+                                          tribeAuthorProfilePicture = {this.props.profilePicture}
+
                                           addFriendToTribe={this.addFriendToTribeDB}
                                           addFriendIDToTribe={this.addFriendIDToTribeDB}
 

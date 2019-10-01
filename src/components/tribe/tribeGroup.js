@@ -91,12 +91,15 @@ class TribeGroup extends Component {
                     <View>
                     <View style = {{flexDirection: "row", justifyContent: "flex-start", }}>
                         <Button
-                            icon = {<Ionicons style = {{marginRight: 0,}}
-                                              name = {'ios-search'}
-                                              color = "black"
-                                              size = {30}
-                                              onPress = {() => this.triggerSearch()}
-                            /> }
+                            icon = {
+                                <Ionicons
+                                    style = {{marginRight: 0,}}
+                                    name = {'ios-search'}
+                                    color = "black"
+                                    size = {30}
+                                    onPress = {() => this.triggerSearch()}
+                                />
+                            }
                             type = "clear"
 
                             style = {{backgroundColor:"white"}}

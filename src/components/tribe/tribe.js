@@ -260,7 +260,7 @@ class TribeComponent extends Component {
             dataList.push(item.data)
         });
 
-        let marginTop = -25
+        let marginTop = -25;
 
         return (
             <View style = {{marginTop: 5}}>
@@ -269,7 +269,9 @@ class TribeComponent extends Component {
                         header = {this.props.header}
                         shareTribe = {this.props.shareTribe}
                         tribeID = {this.props.tribeID}
-
+                        canEdit = {canEdit}
+                        tribeAuthorName = {this.props.tribeAuthorName}
+                        tribeAuthorProfilePicture = {this.props.tribeAuthorProfilePicture}
                     />
                     : null
                 }
@@ -333,7 +335,8 @@ class TribeComponent extends Component {
                         </View>
                     {(canEdit)
 
-                        ? <View style={{flexDirection: "row", justifyContent: "flex-end", flex: 0.2}}>
+                        ?
+                        <View style={{flexDirection: "row", justifyContent: "flex-end", flex: 0.2}}>
                             <Menu>
                                 <MenuTrigger>
                                     <Icon
@@ -355,7 +358,9 @@ class TribeComponent extends Component {
                                 </MenuOptions>
                             </Menu>
                         </View>
-                        : <View style={{flexDirection: "row", justifyContent: "flex-end", flex: 0.2}}> </View>
+
+                        : null
+
                     }
 
                     </View>
@@ -390,6 +395,7 @@ class TribeComponent extends Component {
                                 filter = {this.props.id}
                                 handleAddBox = {this.props.handleAddBox}
                                 editing = {this.state.editing}
+                                canEdit = {canEdit}
                                 sendHeaderMessage = {this.sendHeaderMessage}
                             />
                         </View>

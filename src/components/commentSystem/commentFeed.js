@@ -45,7 +45,7 @@ class CommentFeed extends Component {
                 data = {this.state.tribeComments}
                 renderItem={({item}) => (
                     <CommentContainer
-                        message = {item.message}s
+                        message = {item.message}
                         userID = {item.userID}
                         tribeID = {item.tribeID}
                         commentID = {item.commentID}

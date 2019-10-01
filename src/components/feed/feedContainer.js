@@ -7,8 +7,7 @@ class FeedContainer extends Component {
 
     render() {
         return (
-           <TribeRoot
-           />
+           <TribeRoot/>
         );
     }
 }

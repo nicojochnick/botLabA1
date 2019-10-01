@@ -30,15 +30,15 @@ class TribeHeader extends Component {
                 <View style = {{margin: 10, marginTop: 10, flexDirection: "row", flex: 1}}>
                     <View style = {{flexDirection: "row", flex: 0.8}}>
                         <Avatar
-                            source ={{uri: this.user.photoURL}}
+                            source ={{uri: this.props.tribeAuthorProfilePicture}}
                             rounded/>
                         <View style = {{flexDirection: "column"}}>
-                            <Text style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.user.displayName} </Text>
+                            <Text style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.props.tribeAuthorName} </Text>
                             <Text style = {{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17}}>{message}</Text>
                         </View>
                     </View>
                     <View style ={{flexDirection: "row", flex: 0.2}}>
-                        {(false)
+                        {!(this.props.canEdit)
                             ? null
                             : <Button
                                 title = {"Share"}

@@ -80,7 +80,9 @@ export class StepRoot extends React.Component {
         this.props.dispatch(toggleDone(id));
     }
     toggleDoneDB(id, boxID){
-        this.props.toggleDoneDB(id,boxID)
+        if (this.props.canEdit) {
+            this.props.toggleDoneDB(id, boxID)
+        }
     }
 
     changeStepInfo(text, id) {
@@ -180,6 +182,7 @@ export class StepRoot extends React.Component {
                 listKey={(item, index) => 'D' + index.toString()}
                 renderItem={({item}) => (
                     <Step
+                        canEdit = {this.props.canEdit}
                         changeStepName = {this.changeStepNameDB}
                         changeStepInfo = {this.changeStepInfo}
                         toggleDone = {this.toggleDoneDB}
