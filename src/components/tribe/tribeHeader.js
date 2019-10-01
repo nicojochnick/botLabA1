@@ -7,21 +7,23 @@ import firebase from "react-native-firebase";
 
 class TribeHeader extends Component {
     constructor(props){
-        super(props)
+        super(props);
         this.user = firebase.auth().currentUser;
 
     }
 
-
-
     render() {
-
         let message = '';
         if (this.props.header === undefined){
             message = "nothing"
         } else {
             message = this.props.header.message
         }
+
+        // let share= false;
+        // if (this.props.header !== undefined){
+        //     share = this.prop.header.isPosted
+        // }
 
         return (
             <View style = {[{height: 80, backgroundColor: '#186aed', paddingBottom: 15, padding: 10}, styles.tribesHeader]}>
@@ -36,7 +38,7 @@ class TribeHeader extends Component {
                         </View>
                     </View>
                     <View style ={{flexDirection: "row", flex: 0.2}}>
-                        {(this.props.header.isPosted)
+                        {(false)
                             ? null
                             : <Button
                                 title = {"Share"}
@@ -44,8 +46,8 @@ class TribeHeader extends Component {
                                 containerStyle = {{height:40}}
                                 buttonStyle = {{backgroundColor: "white"}}
                                 titleStyle = {{color: '#186aed', fontWeight: "bold"}}
+                                onPress = {() => this.props.shareTribe(this.props.tribeID)}
                                 />
-
                         }
                     </View>
 

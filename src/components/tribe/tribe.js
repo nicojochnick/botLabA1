@@ -73,11 +73,8 @@ class TribeComponent extends Component {
     }
 
     sendHeaderMessage(data){
-
         this.setState({headerOpen: true});
         this.setState({headerMessage: data})
-
-
         // let dataList = [];
         // let message = null;
         // let currData = this.props.cData[this.props.cData.length - 1];
@@ -133,7 +130,6 @@ class TribeComponent extends Component {
         this.makeEditable(false);
         if (this.state.metricChange) {
              console.log("COOL")
-
             this.props.addDataToTribe(this.props.id, this.state.metric, curDate, false, this.props.metricName);
             this.setState({metricChange: false})
         }
@@ -192,7 +188,6 @@ class TribeComponent extends Component {
 
         }
 
-
     }
 
     onCollectionUpdate = (snapshot) => {
@@ -219,7 +214,6 @@ class TribeComponent extends Component {
     componentWillUnmount(): void {
         this.unsubscribe();
     }
-
 
 
 
@@ -268,13 +262,15 @@ class TribeComponent extends Component {
 
         let marginTop = -25
 
-
-        console.log(dataList)
-
         return (
-            <View>
-                {(true)
-                    ?<TribeHeader header = {this.props.header} />
+            <View style = {{marginTop: 5}}>
+                {(this.props.header)
+                    ?<TribeHeader
+                        header = {this.props.header}
+                        shareTribe = {this.props.shareTribe}
+                        tribeID = {this.props.tribeID}
+
+                    />
                     : null
                 }
             <View style = {[styles.tribes, {marginTop: marginTop}]}>

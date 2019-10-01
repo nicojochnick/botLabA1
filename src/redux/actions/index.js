@@ -52,6 +52,8 @@ export const sendMessage = (userID, messages) => {
 };
 
 
+
+
 //Comments
 export const postCommentDB = (comment) => {
     return (dispatch, getState) => {
@@ -256,6 +258,18 @@ export const changeBoxNameDB = (text,id) => {
 };
 
 ///TRIBE ACTION CREATORS //
+
+
+export function shareTribeDB(tribeID, timeStamp){
+    return (dispatch, getState) => {
+        firebase.firestore().collection('tribes').where('id', '==', tribeID)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update( {"posted": timeStamp})
+            });
+        });
+    };
+};
 
 export function addTribe(tribe){
     return { type: 'ADD_TRIBE', payload:{tribe}}

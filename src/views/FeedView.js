@@ -55,6 +55,7 @@ class FeedView extends Component {
 
                 />
 
+
             </View>
         );
     }

@@ -20,7 +20,7 @@ import {
     addBoxDB,
     addFriendToTribe,
     addFriendToTribeDB,
-    addFriendIDToTribeDB, addDataToTribeDB, changeEndGoal, updateHeader,
+    addFriendIDToTribeDB, addDataToTribeDB, changeEndGoal, updateHeader, shareTribeDB,
 } from '../../redux/actions';
 
 const tribesSelector = (Obj) => {
@@ -41,6 +41,7 @@ class TribeRoot extends Component {
         this.computeProgress = this.computeProgress.bind(this);
 
         this.updateHeader = this.updateHeader.bind(this);
+        this.shareTribe = this.shareTribe.bind(this);
 
         this.handleAddBoxDB = this.handleAddBoxDB.bind(this);
         this.handleDeleteTribeDB = this.handleDeleteTribeDB.bind(this);
@@ -77,6 +78,11 @@ class TribeRoot extends Component {
         this.props.dispatch(addBox(genericBox));
     }
 
+    shareTribe(tribeID){
+        let timeStamp = moment().format();
+        this.props.shareTribeDB(tribeID, timeStamp)
+    }
+
     handleAddBoxDB(tribeID) {
         const genericBox = {
             name: "add a title",
@@ -91,6 +97,7 @@ class TribeRoot extends Component {
         };
         this.props.addBoxDB(genericBox)
     }
+
 
     changeTribeName(text, index) {
         this.props.dispatch(changeTribeName(text, index))
@@ -129,15 +136,15 @@ class TribeRoot extends Component {
             let num = data.number;
             console.log(num);
             let metric = data.metricName;
-            message = 'did ' + num + " " +metric+ " today!"
+            if (metric) {message = 'did ' + num + " " +metric+ " today!"}
+            else { message = 'add a metric to your goal!'}
             send.message = message;
             this.props.updateHeader(tribeID, send)
         }
-
     }
 
     addDataToTribeDB(index, data, date, insertCol, metric){
-        this.props.addDataToTribeDB(index, data, date, insertCol)
+        this.props.addDataToTribeDB(index, data, date, insertCol);
         console.log(data)
         let num = data;
         if (data > 0 && insertCol === false ) {
@@ -276,6 +283,7 @@ class TribeRoot extends Component {
                                           addDataToTribe = {this.addDataToTribeDB}
                                           updateHeader = {this.updateHeader}
                                           searchData={this.state.searchData}
+                                          shareTribe = {this.shareTribe}
                                       />)}
                         />
                     </KeyboardAvoidingView>
@@ -290,10 +298,8 @@ class TribeRoot extends Component {
                         }
 
                     </View>
-
                 }
                     </View>
-
                     : <ActivityIndicator style = {{margin: 30}} size="large" color="#0000ff" />
                 }
             </View>
@@ -318,7 +324,7 @@ const mapDispatchToProps = (dispatch) => {
         addFriendIDToTribeDB: (friendID, tribeID) =>dispatch(addFriendIDToTribeDB(friendID, tribeID)),
         addDataToTribeDB: (index, data, date, insertCol) => dispatch(addDataToTribeDB(index,data,date,insertCol)),
         updateHeader: (index, data) => dispatch(updateHeader(index,data)),
-
+        shareTribeDB: (tribeID, timeStamp) => dispatch(shareTribeDB(tribeID, timeStamp))
     }
 };
 
