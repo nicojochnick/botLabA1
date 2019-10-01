@@ -29,7 +29,7 @@ import CoreChatContainer from '../coreChat/coreChatContainer';
 import {CoreChatComponent} from '../coreChat/coreChatComponent';
 import TribeUpdateAdd from './tribeUpdateAdd';
 import SocialTribeTab from './socialTribeTab';
-import CommentTopStack from '../interactions/commentTopStack'
+import CommentTopStack from '../commentSystem/commentTopStack'
 
 
 class TribeComponent extends Component {
@@ -422,7 +422,11 @@ class TribeComponent extends Component {
                         <Divider style = {{marginTop: 2, marginBottom: 10}}/>
                         </View>
                         <SocialTribeTab/>
-                        <CommentTopStack tribeID = {this.props.tribeID} userID = {this.props.userID} />
+                        <CommentTopStack
+                            tribeID = {this.props.tribeID}
+                            userID = {this.props.userID}
+                            alwaysMe = {this.props.alwaysMe}
+                        />
                     </View>
 
 

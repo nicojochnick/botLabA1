@@ -9,11 +9,13 @@ class AddComment extends Component {
         super(props);
         this.user = firebase.auth().currentUser;
         this.state = {
-
+            comment: ''
         }
     }
-    postComment(text, userID, tribeID){
-        this.props.postComment(text)
+    postComment(){
+        let comment = this.state.comment;
+
+        this.props.postComment(comment)
     }
     render() {
         return (
@@ -30,12 +32,13 @@ class AddComment extends Component {
                                 style = {{color: "black", marginLeft: 3, marginTop: 3, fontSize: 17, width: 240}}
                                 multiline = {true}
                                 placeholder = 'type something....'
+                                onChangeText = {(text) => this.setState({ comment: text})}
                             />
                             <Button
                                 type = 'clear'
                                 title = {'post'}
-                                titleStyle = {{color: "lightblue", fontSize: 15}}
-                                onPress = {(text)=> this.postComment(text)}
+                                titleStyle = {{color: '#3676FF', fontSize: 15}}
+                                onPress = {()=> this.postComment()}
                             />
                         </View>
                     </View>

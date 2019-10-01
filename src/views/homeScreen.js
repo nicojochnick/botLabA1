@@ -196,6 +196,7 @@ class HomeScreen extends Component {
             console.log(messages);
             this.setState({cycle:cycle});
             this.setState({coreUserID: user.userID});
+            this.setState({alwaysMe:user.userID})
             this.setState({message:messages});
             this.setState({name: name});
             this.setState({username: username});
@@ -256,6 +257,8 @@ class HomeScreen extends Component {
                             friendTribeView={false}
                             filter={this.state.uid}
                             coreUserID={this.state.coreUserID}
+                            alwaysMe = {this.state.alwaysMe}
+
                         />
                     </View>
                     :
@@ -296,21 +299,3 @@ export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 
 HomeScreen.propTypes = {};
 
-{/*<TribeGroup friendIDS = {this.props.friendIDS}*/}
-{/*    //                  friends = {this.props.friends}*/}
-{/*    //                  open = {fOpen}*/}
-{/*    //                  closeFriendView = {this.closeFriendView}*/}
-{/*    //                  tribeID = {this.props.id}*/}
-{/*    //                  getTribeMembers = {this.props.getTribeMembers}*/}
-{/*    //                  friendData = {this.props.friendData}*/}
-{/*    //                  searchData = {this.props.searchData}*/}
-{/*    //                  addFriendIDToTribe = {this.props.addFriendIDToTribe}*/}
-{/*    //                  addFriendToTribe = {this.props.addFriendToTribe}*/}
-
-
-
-
-{/*<View style = {{marginTop: -10, height: 300, backgroundColor: '#186aed'}}>*/}
-{/*    /!*<BotA1Top messages = {this.state.message} friendTribeView = {false} filter = {this.state.uid} coreUserID = {this.state.coreUserID}/>*!/*/}
-{/*    /!*<CoreChatContainer coreUserID = {this.state.coreUserID} messages = {this.state.message}/>*!/*/}
-{/*</View>*/}

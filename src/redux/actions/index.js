@@ -52,6 +52,27 @@ export const sendMessage = (userID, messages) => {
 };
 
 
+//Comments
+export const postCommentDB = (comment) => {
+    return (dispatch, getState) => {
+        console.log("export External")
+        firebase.firestore().collection('comments').add(comment)
+    }
+};
+
+export const deleteCommentDB = (commentID) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('comments').where('commentID', '==', commentID)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.delete();
+            });
+        });
+    };
+};
+
+
+
 //Steps
 export function addProfileImage(image) {
     return {type: ADD_PROFILE_IMAGE, payload: image}
@@ -243,7 +264,6 @@ export function addTribe(tribe){
 export const addTribeDB = (tribe) => {
     return (dispatch, getState) => {
         firebase.firestore().collection('tribes').add(tribe);
-
         dispatch({type: 'ADD_TRIBE', payload:{tribe}})
     }
 };

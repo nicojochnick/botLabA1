@@ -6,6 +6,8 @@ import CommentFeed from './commentFeed';
 import {View} from 'react-native'
 import AddComment from './addComment';
 import moment from 'moment'
+import {deleteCommentDB, postCommentDB} from '../../redux/actions';
+import * as firebase from "react-native-firebase";
 
 
 //All writes, to the store,
@@ -22,6 +24,8 @@ class CommentContainer extends Component {
     constructor(props){
         super(props);
         this.postComment = this.postComment.bind(this);
+        this.deleteComment = this.deleteComment.bind(this);
+        this.user = firebase.auth().currentUser;
         this.state = {
             isMe: false,
             userPhoto: null,
@@ -29,27 +33,42 @@ class CommentContainer extends Component {
 
         }
     }
-    postComment(text, tribeID, userID){
-        //Make call to comment collection
+    postComment(text){
         let comment = {
             type: null,
-            message: null,
-            userID: null,
-            tribeID: null,
-            commentID: null,
-            timeStamp: null,
-        }
+            message: text,
+            userID: this.props.alwaysMe,
+            tribeID: this.props.tribeID,
+            commentID: moment().format(),
+            timeStamp: moment().format(),
+        };
+
+        console.log(comment);
+
+        this.props.postCommentDB(comment);
+        console.log("dispatchedInternal")
     }
 
-    deleteComment(text){
-
+    deleteComment(){
+        this.props.deleteCommentDB(this.props.commentID)
     }
 
     getUser(userID){
+        let isMe = false
+        if (userID === this.props.alwaysMe) {
+            this.setState({isMe: true})
+            isMe = true
+        }
         let userPhoto = null;
         let username = null;
-        this.setState({username: username})
-        this.setState({userPhoto: userPhoto})
+        if (isMe){
+            userPhoto = this.user.photoURL;
+            username = this.user.displayName;
+        } else {
+
+        }
+        this.setState({username: username});
+        this.setState({userPhoto: userPhoto});
     }
 
     componentDidMount(): void {
@@ -70,6 +89,8 @@ class CommentContainer extends Component {
                 postComment = {this.postComment}
                 userPhoto = {this.state.userPhoto}
                 username = {this.state.username}
+                deleteComment = {this.deleteComment}
+                isMe = {this.state.isMe}
                 />
             }
             </View>
@@ -77,19 +98,25 @@ class CommentContainer extends Component {
     }
 }
 
-CommentContainer.propTypes = {};
+// CommentContainer.propTypes = {
+//
+//     alwaysMe: PropTypes.string,
+//     addComment: PropTypes.bool,
+//     tribeID: PropTypes.string
+//
+//
+// };
 
 const mapStateToProps = (state /*, ownProps*/) => ({
 });
 
 const mapDispatchToProps = (dispatch) => {
     return {
-
-        postComment: (message, userID) => dispatch.postComment(comment)
-
+        postCommentDB: (comment) => dispatch(postCommentDB(comment)),
+        deleteCommentDB: (commentID) => dispatch(deleteCommentDB(commentID)),
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CommentContainer);
+export default connect(null, mapDispatchToProps)(CommentContainer);
 
 

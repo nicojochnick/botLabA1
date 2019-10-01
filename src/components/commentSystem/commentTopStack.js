@@ -9,11 +9,7 @@ import AddComment from './addComment';
 import {styles} from '../theme';
 import CommentContainer from './commentContainer';
 // Two parts: Add an interaction (anyone in a tribe can do this)
-// Root of all previous interactions from most recent to least (only show first 5)
-
-
-
-
+// Root of all previous commentSystem from most recent to least (only show first 5)
 
 class CommentTopStack extends Component {
     constructor(props){
@@ -25,22 +21,28 @@ class CommentTopStack extends Component {
 
 
     render() {
+        console.log(this.props.tribeID)
+        console.log(this.props.alwaysMe)
         return (
             <View>
-                   <CommentFeed/>
-                   <CommentContainer isAddComment = {true} />
+                   <CommentFeed
+                       tribeID = {this.props.tribeID}
+                       alwaysMe = {this.props.alwaysMe}
+                   />
+                   <CommentContainer
+                       tribeID = {this.props.tribeID}
+                       alwaysMe = {this.props.alwaysMe}
+                       isAddComment = {true} />
             </View>
         );
     }
 }
-
 
 const mapStateToProps = (state /*, ownProps*/) => ({
 });
 
 const mapDispatchToProps = (dispatch) => {
     return {
-
 
     }
 };

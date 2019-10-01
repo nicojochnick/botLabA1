@@ -261,6 +261,8 @@ class TribeRoot extends Component {
                                           addFriendToTribe={this.addFriendToTribeDB}
                                           addFriendIDToTribe={this.addFriendIDToTribeDB}
 
+                                          alwaysMe = {this.props.alwaysMe}
+
 
                                           changeEndGoal = {this.changeEndGoal}
                                           friendData={this.state.friendData}
