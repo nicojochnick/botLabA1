@@ -282,6 +282,7 @@ export const addTribeDB = (tribe) => {
     }
 };
 
+
 export function changeTribeName(text, id){
     return {type: "CHANGE_TRIBE_NAME", payload: {text, id}}
 }
@@ -310,6 +311,7 @@ export const updateHeader = (index,data) => {
     };
 
 };
+
 
 
 export const deleteTribeDB = (id) => {

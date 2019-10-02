@@ -270,10 +270,12 @@ class TribeComponent extends Component {
                         shareTribe = {this.props.shareTribe}
                         tribeID = {this.props.tribeID}
                         canEdit = {canEdit}
+                        alwaysMe = {this.props.alwaysMe}
+                        updateLikes = {this.props.updateLikes}
                         tribeAuthorName = {this.props.tribeAuthorName}
                         tribeAuthorProfilePicture = {this.props.tribeAuthorProfilePicture}
                     />
-                    : null
+                    :null
                 }
             <View style = {[styles.tribes, {marginTop: marginTop}]}>
                 <View style = {styles.topTribes}>
@@ -358,15 +360,9 @@ class TribeComponent extends Component {
                                 </MenuOptions>
                             </Menu>
                         </View>
-
                         : null
-
                     }
-
                     </View>
-
-
-
                 {!open
                     ? null
                     :
@@ -400,25 +396,24 @@ class TribeComponent extends Component {
                             />
                         </View>
 
-                        <View style = {{flex: 1, justifyContent: "space-between", alignContent: "space-between", marginLeft: 10}}>
+                        <View style = {{ margin: 5, alignItems: "flex-end"}}>
                             {(!this.state.editing)
                                 ? null
                                 // ? <Text style = {styles.titleDeadlineText}> deadline: {this.props.deadline} </Text>
-                                : <View style = {{flexDirection: "row"}}>
+                                : <View style = {{flexDirection: "row", justifyContent: "space-around",}}>
                                     <Button
-                                        style = {{width: '100%', marginTop: 0, marginBottom: 10}}
-                                        title = "Add Task Set"
+                                        style = {{width: '100%', marginTop: 0, marginBottom: 0}}
+                                        title = "Add Milestones"
                                         buttonStyle={{backgroundColor: '#186aed'}}
                                         onPress = {() => this.props.handleAddBox(this.props.id)}
-                                    />
 
+                                    />
                                     <Button
-                                        style={{justifyContent: "flex-end", alignContent: "flex-end", marginLeft: 10}}
+                                        style={{ marginLeft: 10}}
                                         title = "Save"
                                         buttonStyle={{backgroundColor: '#186aed'}}
                                         onPress = {()=> this.doneSaving()}
                                     />
-
                                 </View>
                             }
                         <Divider style = {{marginTop: 2, marginBottom: 10}}/>
@@ -430,9 +425,6 @@ class TribeComponent extends Component {
                             alwaysMe = {this.props.alwaysMe}
                         />
                     </View>
-
-
-
                 }
 
                 <ConfirmDialog

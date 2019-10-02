@@ -196,27 +196,21 @@ class HomeScreen extends Component {
             console.log(messages);
             this.setState({cycle:cycle});
             this.setState({coreUserID: user.userID});
-            this.setState({alwaysMe:user.userID})
             this.setState({message:messages});
             this.setState({name: name});
             this.setState({username: username});
             this.setState({profilePicture: profilePicture });
             this.setState({friendIDs: friendIDs});
             this.getTribeMembers(friendIDs)
-
         });
-
     };
 
-
-
-
     render() {
-        console.log(this.state.name)
+        console.log(this.state.name);
         let goalColor = 'darkgrey';
         let tribeColor = '#3676FF';
         if (this.state.isGoalSelect) {
-            goalColor = '#3676FF'
+            goalColor = '#3676FF';
             tribeColor = 'darkgrey'
         }
         return (
@@ -289,15 +283,10 @@ const mapDispatchToProps = (dispatch) => {
     return {
         addFriendIDDB: (friendID, myID) =>dispatch(addFriendIDDB(friendID, myID)),
         removeFriendIDDB: (friendID, myID) =>dispatch(removeFriendIDDB(friendID, myID)),
-
     }
 };
 
 HomeScreen.propTypes = {};
-
-
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
-
-
 HomeScreen.propTypes = {};
 

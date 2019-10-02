@@ -3,28 +3,59 @@ import {View, Text} from 'react-native'
 import {Avatar, Button, Input} from 'react-native-elements';
 import {styles} from '../theme';
 import firebase from "react-native-firebase";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 class TribeHeader extends Component {
     constructor(props){
         super(props);
         this.user = firebase.auth().currentUser;
+        this.state = {
+            liked: false,
+            heartIcon:'ios-heart-empty',
+            heartIconColor: 'white',
+            message: '',
+            likes: 0
+
+        }
 
     }
 
-    render() {
+
+    likeUpdate(){
+        this.setState({liked:!this.state.liked});
+        this.setState({likes: this.state.likes+1});
+        this.props.updateLikes(this.props.header, this.props.alwaysMe,this.props.tribeID )
+
+    }
+
+    componentDidMount(): void {
         let message = '';
+        let likes = 0;
         if (this.props.header === undefined){
-            message = "nothing"
+            this.setState({ message: 'nothing'})
+            this.setState({likes: 0})
         } else {
             message = this.props.header.message
+            this.setState({message: message})
+            likes = this.props.header.likes.length;
+            this.setState({likes:likes})
+            let meLike = this.props.header.likes.filter(id => id === this.props.alwaysMe)
+            console.log(meLike)
+            console.log(this.props.header)
+            console.log(this.props.alwaysMe)
+            console.log(meLike)
+            if ( meLike.length  > 0) {
+                console.log("WE LIKED THIS!")
+                let heartIcon = 'ios-heart';
+                let heartIconColor = '#00FF87'
+                this.setState({heartIcon: heartIcon})
+                this.setState({heartIconColor: heartIconColor})
+            }
         }
+    }
 
-        // let share= false;
-        // if (this.props.header !== undefined){
-        //     share = this.prop.header.isPosted
-        // }
-
+    render() {
         return (
             <View style = {[{height: 80, backgroundColor: '#186aed', paddingBottom: 15, padding: 10}, styles.tribesHeader]}>
                 <View style = {{margin: 10, marginTop: 10, flexDirection: "row", flex: 1}}>
@@ -34,12 +65,27 @@ class TribeHeader extends Component {
                             rounded/>
                         <View style = {{flexDirection: "column"}}>
                             <Text style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.props.tribeAuthorName} </Text>
-                            <Text style = {{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17}}>{message}</Text>
+                            <Text style = {{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17}}>{this.state.message}</Text>
                         </View>
                     </View>
-                    <View style ={{flexDirection: "row", flex: 0.2}}>
+                    <View style ={{flexDirection: "row", flex: 0.2, justifyContent: 'flex-end', marginRight: 5}}>
                         {!(this.props.canEdit)
-                            ? null
+                            ? <Button
+
+                                icon = {
+                                    <Ionicons
+                                        name = {this.state.heartIcon}
+                                        color = {this.state.heartIconColor}
+                                        size = {25}
+                                        onPress={()=> this.likeUpdate()}
+                                        raised = {true}
+                                    />
+                                }
+                                type = 'clear'
+                                title = {this.state.likes}
+                                titleStyle = {{color:"white", marginLeft: 5}}
+
+                            />
                             : <Button
                                 title = {"Share"}
                                 raised

@@ -42,6 +42,7 @@ class TribeRoot extends Component {
 
         this.updateHeader = this.updateHeader.bind(this);
         this.shareTribe = this.shareTribe.bind(this);
+        this.updateLikes = this.updateLikes.bind(this);
 
         this.handleAddBoxDB = this.handleAddBoxDB.bind(this);
         this.handleDeleteTribeDB = this.handleDeleteTribeDB.bind(this);
@@ -98,10 +99,16 @@ class TribeRoot extends Component {
         this.props.addBoxDB(genericBox)
     }
 
+    updateLikes(header, userID, tribeID){
+        header.likes.push(userID);
+        this.props.updateHeader(tribeID, header)
+    }
+
 
     changeTribeName(text, index) {
         this.props.dispatch(changeTribeName(text, index))
     }
+
 
     changeTribeNameDB(text, index) {
         this.props.changeTribeName(text, index)
@@ -111,14 +118,15 @@ class TribeRoot extends Component {
         this.props.editMetric(text,index)
     }
 
+
     handleDeleteTribe(tribeID) {
         this.props.dispatch(deleteTribe(tribeID))
     }
 
     handleDeleteTribeDB(tribeID) {
         this.props.handleDeleteTribeDB(tribeID);
-
     }
+
     addTribeDeadline(index, date) {
         this.props.dispatch(addTribeDeadline(index, date))
     }
@@ -131,7 +139,7 @@ class TribeRoot extends Component {
         console.log(data);
         let message = '';
         let timeStamp = moment().format();
-        let send = {message: message, timeStamp: timeStamp};
+        let send = {message: message, timeStamp: timeStamp, likes: []};
         if (type === 'addedData') {
             let num = data.number;
             console.log(num);
@@ -287,6 +295,7 @@ class TribeRoot extends Component {
                                           updateHeader = {this.updateHeader}
                                           searchData={this.state.searchData}
                                           shareTribe = {this.shareTribe}
+                                          updateLikes = {this.updateLikes}
                                       />)}
                         />
                     </KeyboardAvoidingView>
@@ -327,7 +336,7 @@ const mapDispatchToProps = (dispatch) => {
         addFriendIDToTribeDB: (friendID, tribeID) =>dispatch(addFriendIDToTribeDB(friendID, tribeID)),
         addDataToTribeDB: (index, data, date, insertCol) => dispatch(addDataToTribeDB(index,data,date,insertCol)),
         updateHeader: (index, data) => dispatch(updateHeader(index,data)),
-        shareTribeDB: (tribeID, timeStamp) => dispatch(shareTribeDB(tribeID, timeStamp))
+        shareTribeDB: (tribeID, timeStamp) => dispatch(shareTribeDB(tribeID, timeStamp)),
     }
 };
 
