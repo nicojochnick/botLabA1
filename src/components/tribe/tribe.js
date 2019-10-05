@@ -59,7 +59,10 @@ class TribeComponent extends Component {
             endGoalChange: false,
             canEdit: true,
             headerMessage: null,
-            headerOpen: false
+            headerOpen: false,
+
+            tribeAuthorName: null,
+            tribeAuthorProfilePicture: null,
         }
     }
 
@@ -127,7 +130,6 @@ class TribeComponent extends Component {
 
     doneSaving(){
         const curDate = moment().format("MMM D YY");
-        this.makeEditable(false);
         if (this.state.metricChange) {
              console.log("COOL")
             this.props.addDataToTribe(this.props.id, this.state.metric, curDate, false, this.props.metricName);
@@ -151,6 +153,7 @@ class TribeComponent extends Component {
             this.setState({endGoalChange: false})
 
         }
+        this.setState({editing: false})
     }
 
     activateEdit(data, param){
@@ -197,6 +200,16 @@ class TribeComponent extends Component {
             });
             this.setState({ boxData: data, loading: false })
         });
+        firebase.firestore().collection('users').where('fbID', '==', this.props.userID).get().then((snapshot) => {
+                let data = snapshot.docs.map(function (documentSnapshot) {
+                    console.log(documentSnapshot.data());
+                    return documentSnapshot.data()
+                });
+                let user = data[0];
+                this.setState({tribeAuthorName: user.name});
+                this.setState({tribeAuthorProfilePicture: user.userPhoto});
+            }
+        );
     };
 
     componentDidMount(): void {
@@ -208,28 +221,20 @@ class TribeComponent extends Component {
         // this.props.getTribeMembers(this.props.friendIDS);
         let currData = this.props.cData[this.props.cData.length - 1];
         this.checkDate(currData);
-
     }
 
     componentWillUnmount(): void {
         this.unsubscribe();
     }
 
-
-
     computeProgress(ds,goal){
         if (goal===null){
             return 0
         }
-        console.log(ds);
-        console.log(goal)
+
         const arrSum = arr => arr.reduce((a,b) => a + b, 0);
         let sum = arrSum(ds);
-        console.log(sum)
-
         return sum / goal
-
-
     }
 
     computeTotal(ds){
@@ -272,8 +277,8 @@ class TribeComponent extends Component {
                         canEdit = {canEdit}
                         alwaysMe = {this.props.alwaysMe}
                         updateLikes = {this.props.updateLikes}
-                        tribeAuthorName = {this.props.tribeAuthorName}
-                        tribeAuthorProfilePicture = {this.props.tribeAuthorProfilePicture}
+                        tribeAuthorName = {this.state.tribeAuthorName}
+                        tribeAuthorProfilePicture = {this.state.tribeAuthorProfilePicture}
                     />
                     :null
                 }
@@ -336,7 +341,6 @@ class TribeComponent extends Component {
                             </View>
                         </View>
                     {(canEdit)
-
                         ?
                         <View style={{flexDirection: "row", justifyContent: "flex-end", flex: 0.2}}>
                             <Menu>
@@ -363,9 +367,7 @@ class TribeComponent extends Component {
                         : null
                     }
                     </View>
-                {!open
-                    ? null
-                    :
+
                     <View style = {{marginTop: -10}}>
                         <Progress.Bar
                             progress={this.computeProgress(dataList, this.props.endGoal)} width={330} style={{margin: 10}}
@@ -400,13 +402,12 @@ class TribeComponent extends Component {
                             {(!this.state.editing)
                                 ? null
                                 // ? <Text style = {styles.titleDeadlineText}> deadline: {this.props.deadline} </Text>
-                                : <View style = {{flexDirection: "row", justifyContent: "space-around",}}>
+                                : <View style = {{flexDirection: "row", justifyContent: "flex-start",}}>
                                     <Button
                                         style = {{width: '100%', marginTop: 0, marginBottom: 0}}
                                         title = "Add Milestones"
                                         buttonStyle={{backgroundColor: '#186aed'}}
                                         onPress = {() => this.props.handleAddBox(this.props.id)}
-
                                     />
                                     <Button
                                         style={{ marginLeft: 10}}
@@ -421,11 +422,12 @@ class TribeComponent extends Component {
                         <SocialTribeTab/>
                         <CommentTopStack
                             tribeID = {this.props.tribeID}
+                            tribeAuthorName = {this.state.tribeAuthorName}
+                            tribeAuthorProfilePicture = {this.state.tribeAuthorProfilePicture}
                             userID = {this.props.userID}
                             alwaysMe = {this.props.alwaysMe}
                         />
                     </View>
-                }
 
                 <ConfirmDialog
                     title="Please Confirm"

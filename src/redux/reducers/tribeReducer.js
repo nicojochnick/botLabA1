@@ -37,7 +37,7 @@ const tribes = (state = initialState, action) => {
         case 'ADD_TRIBE_DEADLINE':
             return update(state, {
                 byHash: {
-                    [action.payload.index]: {
+                    [action.payload.currUser]: {
                         deadline: {$set: action.payload.deadline}
                     }
                 }
@@ -61,7 +61,7 @@ const tribes = (state = initialState, action) => {
             const newState = {
                 ...state
             };
-            const ID = action.payload.index;
+            const ID = action.payload.currUser;
             console.log(action.payload);
             delete newState.byHash[action.payload];
             return newState;

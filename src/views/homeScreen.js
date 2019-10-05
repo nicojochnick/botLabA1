@@ -145,6 +145,7 @@ class HomeScreen extends Component {
                 emailVerified = user.emailVerified;
                 uid = user.uid
             }
+            //TAKE THIS OUT
             firebase.firestore().collection('users').where('fbID', '==', uid).get().then((snapshot) => {
                 console.log(snapshot);
                 let data = snapshot.docs.map(function (documentSnapshot) {
@@ -165,6 +166,8 @@ class HomeScreen extends Component {
                 photoUrl = user.photoURL;
                 emailVerified = user.emailVerified;
                 this.setState({uid: user.uid});
+                this.setState({alwaysMe: user.uid});
+
                 uid = user.uid
             }
         }
@@ -176,6 +179,7 @@ class HomeScreen extends Component {
 
 
     onCollectionUpdate = (snapshot) => {
+
         firebase.firestore().collection('users').where('fbID', '==', this.state.uid).get().then((snapshot) => {
             console.log(snapshot);
             let data = snapshot.docs.map(function (documentSnapshot) {
@@ -202,6 +206,11 @@ class HomeScreen extends Component {
             this.setState({profilePicture: profilePicture });
             this.setState({friendIDs: friendIDs});
             this.getTribeMembers(friendIDs)
+
+            if (!(this.state.notMe)){
+                this.setState({alwaysMe: user.userID})
+            }
+
         });
     };
 
@@ -227,7 +236,6 @@ class HomeScreen extends Component {
                                 followed = {true}
                                 friendID = {this.state.coreUserID}
                                 removeFriendIDDB = {this.removeFriendIDDB}
-
                             />
                             :
                             <View style={ {flexDirection: "row"}} >
@@ -255,7 +263,6 @@ class HomeScreen extends Component {
                             alwaysMe = {this.state.alwaysMe}
                             name = {this.state.name}
                             profilePicture = {this.state.profilePicture}
-
                         />
                     </View>
                     :

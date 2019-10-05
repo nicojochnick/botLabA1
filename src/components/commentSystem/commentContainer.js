@@ -58,13 +58,13 @@ class CommentContainer extends Component {
 
     getUser(userID) {
         let isMe = false
-        if (userID === this.props.alwaysMe) {
-            this.setState({isMe: true})
-            isMe = true
-        }
+        // if (userID === this.props.alwaysMe) {
+        //     this.setState({isMe: true})
+        //     isMe = true
+        // }
         let userPhoto = null;
         let username = null;
-        if (isMe) {
+        if (false) {
             userPhoto = this.user.photoURL;
             username = this.user.displayName;
             this.setState({username: username});
@@ -84,18 +84,18 @@ class CommentContainer extends Component {
             this.setState({userPhoto: userPhoto});
 
         }
-
     }
 
     componentDidMount(): void {
         // this.getUser(this.props.userID)
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
-
     }
+
 
     componentWillUnmount(): void {
         this.unsubscribe();
     }
+
 
     onCollectionUpdate = (snapshot) => {
         firebase.firestore().collection('users').where('userID', '==', this.props.userID).get().then((snapshot) => {
@@ -106,8 +106,8 @@ class CommentContainer extends Component {
             console.log(data);
             let user = data[0];
             this.setState({username: user.name});
-            this.setState({userPhoto: user.userPhoto});
-        });
+            this.setState({userPhoto: user.userPhoto});}
+        );
     };
 
     render() {

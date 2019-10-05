@@ -53,7 +53,7 @@ const boxes = (state = initialState, action) => {
             const newState = {
                 ...state
             };
-            const ID = action.payload.index;
+            const ID = action.payload.currUser;
             console.log(action.payload);
             delete newState.byHash[action.payload];
             return newState;

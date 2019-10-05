@@ -48,15 +48,15 @@ class TribeRoot extends Component {
         this.handleDeleteTribeDB = this.handleDeleteTribeDB.bind(this);
         this.changeTribeNameDB = this.changeTribeNameDB.bind(this);
         this.addTribeDeadlineDB = this.addTribeDeadlineDB.bind(this);
-        // this.getTribeMembers = this.getTribeMembers.bind(this);
-        //
-        // this.addFriendToTribeDB = this.addFriendToTribeDB.bind(this);
-        // this.addFriendIDToTribeDB = this.addFriendIDToTribeDB.bind(this);
+
         this.addDataToTribeDB = this.addDataToTribeDB.bind(this);
 
         this.editMetric = this.editMetric.bind(this);
         this.changeEndGoal = this.changeEndGoal.bind(this);
 
+        // this.getTribeMembers = this.getTribeMembers.bind(this);
+        // this.addFriendToTribeDB = this.addFriendToTribeDB.bind(this);
+        // this.addFriendIDToTribeDB = this.addFriendIDToTribeDB.bind(this);
 
         this.state = {
             //flat list accepts an array of object
@@ -64,6 +64,7 @@ class TribeRoot extends Component {
             tribeData: [],
             friendData: [],
             searchData: null,
+            friendIDs: this.props.friendIDs
         };
     }
 
@@ -79,7 +80,7 @@ class TribeRoot extends Component {
         this.props.dispatch(addBox(genericBox));
     }
 
-    shareTribe(tribeID){
+    shareTribe(tribeID) {
         let timeStamp = moment().format();
         this.props.shareTribeDB(tribeID, timeStamp)
     }
@@ -99,7 +100,7 @@ class TribeRoot extends Component {
         this.props.addBoxDB(genericBox)
     }
 
-    updateLikes(header, userID, tribeID){
+    updateLikes(header, userID, tribeID) {
         header.likes.push(userID);
         this.props.updateHeader(tribeID, header)
     }
@@ -114,8 +115,8 @@ class TribeRoot extends Component {
         this.props.changeTribeName(text, index)
     }
 
-    editMetric(text,index) {
-        this.props.editMetric(text,index)
+    editMetric(text, index) {
+        this.props.editMetric(text, index)
     }
 
 
@@ -144,18 +145,21 @@ class TribeRoot extends Component {
             let num = data.number;
             console.log(num);
             let metric = data.metricName;
-            if (metric) {message = 'did ' + num + " " +metric+ " today!"}
-            else { message = 'add a metric to your goal!'}
+            if (metric) {
+                message = 'did ' + num + " " + metric + " today!"
+            } else {
+                message = 'add a metric to your goal!'
+            }
             send.message = message;
             this.props.updateHeader(tribeID, send)
         }
     }
 
-    addDataToTribeDB(index, data, date, insertCol, metric){
+    addDataToTribeDB(index, data, date, insertCol, metric) {
         this.props.addDataToTribeDB(index, data, date, insertCol);
         console.log(data)
         let num = data;
-        if (data > 0 && insertCol === false ) {
+        if (data > 0 && insertCol === false) {
             let data = {number: num, metricName: metric};
             this.updateHeader(index, data, 'addedData')
         }
@@ -189,34 +193,29 @@ class TribeRoot extends Component {
         }
     }
 
-    getMyTribes() {
-        // db.settings({ timestampsInSnapshots: true});
-        this.ref.where("userID", '==', this.props.filter).get().then((snapshot) => {
-            let data = snapshot.docs.map(function (documentSnapshot) {
-                return documentSnapshot.data()
-            });
-            this.setState({tribeData: data})
-
-        });
+    sortTribes(data){
+        console.log("SORTING")
+        return data.sort((a,b) => {
+                let x = new Date(a.header.timeStamp);
+                let y = new Date(b.header.timeStamp);
+                return x - y
+            }
+        );
     }
 
-    changeEndGoal(text, tribeID){
-        this.props.changeEndGoal(text,tribeID)
+    changeEndGoal(text, tribeID) {
+        this.props.changeEndGoal(text, tribeID)
     }
-
 
     componentDidMount(): void {
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
     }
-
     componentWillUnmount(): void {
         this.unsubscribe();
     }
-
     //TODO Filter by timestamp ID, not FIREBASE ID
     onCollectionUpdate = (snapshot) => {
         console.log("TAKING UPDATE");
-        console.log(this.props.friendTribeView);
         console.log(this.props.filter);
 
         this.ref.where("userID", '==', this.props.filter).get().then((snapshot) => {
@@ -228,29 +227,41 @@ class TribeRoot extends Component {
             this.setState({tribeData: data, loading: false})
         });
         console.log("here!");
-
-        if (!this.props.coreUserID == null) {
-            this.ref.where('friendIDS', 'array-contains', this.props.coreUserID).get().then((snapshot) => {
-                console.log("here???");
-                let data = snapshot.docs.map(function (documentSnapshot) {
-                    console.log(snapshot);
-                    return documentSnapshot.data()
+        console.log(this.props.isFeed)
+        if (this.props.isFeed) {
+            console.log(this.props.friendIDs)
+            let len = this.props.friendIDs.length
+            let i = 0
+            let alldata = []
+            while (i<len) {
+                //pull all posted tribes of currUSer ID FriendList and sort them by least to most recent
+                this.ref.where('id', '==',this.props.alwaysMe).get().then((snapshot) => {
+                    let data = snapshot.docs.map(function (documentSnapshot) {
+                        console.log(data);
+                        return documentSnapshot.data()
+                    });
+                    console.log(data)
+                    data = data.filter(x => x.header.timeStamp !== false);
+                    console.log(data)
+                    data = this.state.tribeData + data;
+                    console.log(data)
+                    data = this.sortTribes(data);
+                    console.log(data)
+                    this.setState({tribeData: data, loading: false})
                 });
-                data = this.state.tribeData + data;
-                this.setState({tribeData: data, loading: false})
-            });
-        }
 
+            }
+
+
+        }
     };
 
     render() {
-
         let loading = this.state.loading;
         return (
             <View>
                 { !(loading)
                     ? <View>
-
                     { (!this.state.tribeData.length < 1)
                     ?<KeyboardAvoidingView>
                         <FlatList style={styles.bottomContainer}
@@ -273,15 +284,12 @@ class TribeRoot extends Component {
                                           metricName = {item.metricName}
                                           endGoal = {item.endGoal}
 
-                                          tribeAuthorName = {this.props.name}
-                                          tribeAuthorProfilePicture = {this.props.profilePicture}
+                                          // tribeAuthorName = {this.props.name}
+                                          // tribeAuthorProfilePicture = {this.props.profilePicture}
 
                                           addFriendToTribe={this.addFriendToTribeDB}
                                           addFriendIDToTribe={this.addFriendIDToTribeDB}
-
                                           alwaysMe = {this.props.alwaysMe}
-
-
                                           changeEndGoal = {this.changeEndGoal}
                                           friendData={this.state.friendData}
                                           changeMetricName = {this.editMetric}

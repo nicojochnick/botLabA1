@@ -80,7 +80,7 @@ const steps = (state = initialState, action) => {
         case 'ADD_DATE':
             return update(state, {
                 byHash: {
-                    [action.payload.index]: {
+                    [action.payload.currUser]: {
                         data: {$push: [0]
                         }
                     }
@@ -90,8 +90,8 @@ const steps = (state = initialState, action) => {
             return {...state,
                 byHash: {
                 ...state.byHash,
-                    [action.payload.index] : {
-                    ...state.byHash[action.payload.index],
+                    [action.payload.currUser] : {
+                    ...state.byHash[action.payload.currUser],
                         date: [action.payload.date]
                     }
                 }
@@ -109,7 +109,7 @@ const steps = (state = initialState, action) => {
             const newState = {
                 ...state
             };
-            const ID = action.payload.index;
+            const ID = action.payload.currUser;
             console.log(action.payload);
             delete newState.byHash[action.payload];
             return newState;
@@ -118,7 +118,7 @@ const steps = (state = initialState, action) => {
         case 'ADD_TIME':
            return update(state, {
                 byHash: {
-                    [action.payload.index]: {
+                    [action.payload.currUser]: {
                         data: {
                             [action.payload.length-1]:
                                 {$set: action.payload.data}
@@ -130,7 +130,7 @@ const steps = (state = initialState, action) => {
         case 'SUBTRACT_TIME':
             return update(state, {
                 byHash: {
-                    [action.payload.index]: {
+                    [action.payload.currUser]: {
                         data: {
                             [action.payload.length-1]:
                                 {$set: action.payload.data}
