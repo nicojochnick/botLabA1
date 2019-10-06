@@ -37,7 +37,7 @@ import {
     changeEndGoal,
     changeMetricNameDB, changeTribeName,
     changeTribeNameDB, deleteTribe,
-    deleteTribeDB, shareTribeDB, updateHeader,
+    deleteTribeDB, shareTribeDB, unshareTribeDB, updateHeader,
 } from '../../redux/actions';
 import {connect} from 'react-redux';
 
@@ -55,6 +55,8 @@ class TribeComponent extends Component {
 
         this.updateHeader = this.updateHeader.bind(this);
         this.shareTribe = this.shareTribe.bind(this);
+        this.unshareTribe = this.unshareTribe.bind(this);
+
         this.updateLikes = this.updateLikes.bind(this);
 
         this.handleAddBoxDB = this.handleAddBoxDB.bind(this);
@@ -113,6 +115,10 @@ class TribeComponent extends Component {
     shareTribe(tribeID) {
         let timeStamp = moment().format();
         this.props.shareTribeDB(tribeID, timeStamp)
+    }
+    unshareTribe(tribeID) {
+        let timeStamp = moment().format();
+        this.props.unshareTribeDB(tribeID, timeStamp)
     }
 
     handleAddBoxDB(tribeID) {
@@ -426,8 +432,11 @@ class TribeComponent extends Component {
             <View style = {{marginTop: 5}}>
                 {(this.props.header)
                     ?<TribeHeader
+                        posted = {this.props.posted}
+                        isPublic = {this.props.isPublic}
                         header = {this.props.header}
                         shareTribe = {this.shareTribe}
+                        unshareTribe = {this.unshareTribe}
                         tribeID = {this.props.tribeID}
                         canEdit = {canEdit}
                         alwaysMe = {this.props.alwaysMe}
@@ -623,6 +632,7 @@ const mapDispatchToProps = (dispatch) => {
         addDataToTribeDB: (index, data, date, insertCol) => dispatch(addDataToTribeDB(index,data,date,insertCol)),
         updateHeader: (index, data) => dispatch(updateHeader(index,data)),
         shareTribeDB: (tribeID, timeStamp) => dispatch(shareTribeDB(tribeID, timeStamp)),
+        unshareTribeDB: (tribeID, timeStamp) => dispatch(unshareTribeDB(tribeID, timeStamp)),
     }
 };
 

@@ -149,30 +149,28 @@ export default  class TribeRoot extends Component {
                                           cData = {item.continuousData}
                                           metricName = {item.metricName}
                                           endGoal = {item.endGoal}
+                                          posted = {item.posted}
+                                          isPublic = {item.isPublic}
 
                                           alwaysMe = {this.props.alwaysMe}
-
                                           // tribeAuthorName = {this.props.name}
                                           // tribeAuthorProfilePicture = {this.props.profilePicture}
                                       />)}
                         />
                     </KeyboardAvoidingView>
-
                     : <ActivityIndicator style = {{margin: 30}} size="large" color="#0000ff" />
                 }
                     </View>
-                    : <ActivityIndicator style = {{margin: 30}} size="large" color="#0000ff" />
+                    :<ActivityIndicator style = {{margin: 30}} size="large" color="#0000ff" />
                 }
             </View>
         );
     }
 }
-
 const mapStateToProps = (state /*, ownProps*/) => ({
     storeTribes: tribesSelector(state.tribes.byHash), rstoreSteps:  tribesSelector(state.steps.byHash),
     state: state
 });
-
 // const mapDispatchToProps = (dispatch) => {
 //     return {
 //         handleDeleteTribeDB: (tribe) => dispatch(deleteTribeDB(tribe)),
@@ -188,7 +186,6 @@ const mapStateToProps = (state /*, ownProps*/) => ({
 //         shareTribeDB: (tribeID, timeStamp) => dispatch(shareTribeDB(tribeID, timeStamp)),
 //     }
 // };
-
 // export default connect(mapStateToProps, mapDispatchToProps)(TribeRoot);
 
 TribeRoot.propTypes = {};

@@ -43,8 +43,17 @@ const HomeStack =  createStackNavigator(
     }
 );
 
+const FeedStack =  createStackNavigator(
+    {
+        FeedView: FeedView, FriendHome: HomeScreen
+    }, {
+        initialRouteName: "FeedView",
+        headerTransparent: true,
+    }
+);
+
 const AppDrawer = createBottomTabNavigator(
-    { FeedView: FeedView, Home: HomeStack, Notifications: NotificationScreen
+    { FeedView: FeedStack, Home: HomeStack, Notifications: NotificationScreen
     }, { defaultNavigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ focused, horizontal, tintColor }) => {
                 const { routeName } = navigation.state;

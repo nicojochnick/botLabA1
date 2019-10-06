@@ -33,7 +33,7 @@ class TribeHeader extends Component {
         let message = '';
         let likes = 0;
         if (this.props.header === undefined){
-            this.setState({ message: 'nothing'})
+            this.setState({ message: 'nothing'});
             this.setState({likes: 0})
         } else {
             message = this.props.header.message
@@ -41,11 +41,11 @@ class TribeHeader extends Component {
             likes = this.props.header.likes.length;
             this.setState({likes:likes})
             let meLike = this.props.header.likes.filter(id => id === this.props.alwaysMe)
-            console.log(meLike)
-            console.log(this.props.header)
-            console.log(this.props.alwaysMe)
-            console.log(meLike)
-            if ( meLike.length  > 0) {
+            console.log(meLike);
+            console.log(this.props.header);
+            console.log(this.props.alwaysMe);
+            console.log(meLike);
+            if (meLike.length  > 0) {
                 console.log("WE LIKED THIS!")
                 let heartIcon = 'ios-heart';
                 let heartIconColor = '#00FF87'
@@ -57,21 +57,28 @@ class TribeHeader extends Component {
 
     render() {
         return (
-            <View style = {[{height: 80, backgroundColor: '#186aed', paddingBottom: 15, padding: 10}, styles.tribesHeader]}>
+            <View style = {[{ backgroundColor: '#186aed', paddingBottom: 15, padding: 10}, styles.tribesHeader]}>
                 <View style = {{margin: 10, marginTop: 10, flexDirection: "row", flex: 1}}>
                     <View style = {{flexDirection: "row", flex: 0.8}}>
                         <Avatar
                             source ={{uri: this.props.tribeAuthorProfilePicture}}
                             rounded/>
                         <View style = {{flexDirection: "column"}}>
-                            <Text style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.props.tribeAuthorName} </Text>
-                            <Text style = {{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17}}>{this.state.message}</Text>
+                            <Text
+                                style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.props.tribeAuthorName} </Text>
+                            <Text
+                                style = {{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17, width: "100%"}}
+                                numberOfLines={4}
+                            >
+                                {this.state.message}
+                            </Text>
                         </View>
                     </View>
-                    <View style ={{flexDirection: "row", flex: 0.2, justifyContent: 'flex-end', marginRight: 5}}>
-                        {!(this.props.canEdit)
+                    <View style ={{flexDirection: "row", flex: 0.2, justifyContent: 'flex-end', marginRight: -3}}>
+                        { (this.props.isPublic)
+                        ? <View>
+                            {!(this.props.canEdit )
                             ? <Button
-
                                 icon = {
                                     <Ionicons
                                         name = {this.state.heartIcon}
@@ -86,14 +93,29 @@ class TribeHeader extends Component {
                                 titleStyle = {{color:"white", marginLeft: 5}}
 
                             />
-                            : <Button
-                                title = {"Share"}
+                            : <View>
+                            { !(this.props.posted)
+                                ? <Button
+                                title = {"post"}
                                 raised
-                                containerStyle = {{height:40}}
+                                containerStyle = {{height: 40}}
                                 buttonStyle = {{backgroundColor: "white"}}
                                 titleStyle = {{color: '#186aed', fontWeight: "bold"}}
                                 onPress = {() => this.props.shareTribe(this.props.tribeID)}
                                 />
+                                :<Button
+                                    title = {"unpost"}
+                                    raised
+                                    containerStyle = {{height: 40, width: 90}}
+                                    buttonStyle = {{backgroundColor: '#186aed', borderColor: "white", borderWidth: 1}}
+                                    titleStyle = {{color: 'white', fontWeight: "bold"}}
+                                    onPress = {() => this.props.unshareTribe(this.props.tribeID)}
+                                    />
+                            }
+                            </View>
+                        }
+                            </View>
+                        : <Text style = {{color: "white"}} > Goal is Private </Text>
                         }
                     </View>
 

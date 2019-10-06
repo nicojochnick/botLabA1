@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FeedContainer from '../components/feed/feedContainer';
 import firebase from "react-native-firebase";
 import TribeRoot from '../components/tribe/tribeRoot';
+import SearchContainer from '../components/search/searchContainer';
 
 
 
@@ -27,20 +28,16 @@ class FeedView extends Component {
             }
     }
 
+    static navigationOptions = ({navigation}) => {
+        return {
+            header: null
+        }
+    };
+
     updateSearch() {
         this.setState({search});
     };
 
-    getEmails(mail){
-        const db = firebase.firestore();
-        // db.settings({ timestampsInSnapshots: true});
-        db.collection('users').where("email", '==',mail).get().then((snapshot) => {
-            let data = snapshot.docs.map(function(documentSnapshot) {
-                return documentSnapshot.data()
-            });
-            this.setState({ searchData: data })
-        });
-    }
 
     componentDidMount(): void {
         let user = firebase.auth().currentUser;
@@ -77,23 +74,7 @@ class FeedView extends Component {
         console.log(filter);
         return (
             <View style={{paddingTop: 50, backgroundColor: '#E0E7EA'}}>
-                <SearchBar
-                    lightTheme={true}
-                    placeholder='search friends'
-                    onChangeText={() => this.updateSearch}
-                    clearIcon={
-                        <Ionicons
-                            name={'ios-close'}
-                            size={25}
-                        />
-                    }
-                    searchIcon={
-                        <Ionicons
-                            name={'ios-search'}
-                            size={25}
-                        />
-                    }
-                />
+                <SearchContainer/>
                 { (this.state.alwaysMe !== null )
                    ?
                     <TribeRoot

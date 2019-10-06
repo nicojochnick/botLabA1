@@ -9,6 +9,19 @@ class UserTag extends Component {
         super(props )
     }
 
+
+    navigate(userID, fbID) {
+        let way = this.props.route;
+        if (way==='home'){
+            this.props.navigation.navigate('OtherHome', { notMe: true, friendID: userID, fbID: fbID})
+        }
+        if (way === 'feed') {
+            this.props.navigation.navigate('FriendHome', { notMe: true, friendID: userID, fbID: fbID})
+        }
+
+    }
+
+
     navigateToProfile(userID, fbID) {
         this.props.navigation.navigate('OtherHome', { notMe: true, friendID: userID, fbID: fbID})
     }
@@ -30,7 +43,7 @@ class UserTag extends Component {
                 //     />
                 // }
                 chevron
-                onPress = {() => this.navigateToProfile(this.props.userID, this.props.fbID)}
+                onPress = {() => this.navigate(this.props.userID, this.props.fbID)}
             />
         );
     }

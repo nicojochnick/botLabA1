@@ -164,6 +164,7 @@ class TribeGroup extends Component {
                                         avatar = {item.picture}
                                         name = {item.name}
                                         fbID = {item.fbID}
+                                        route = {'home'}
                                     />
                                 )}
                                 />

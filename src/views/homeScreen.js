@@ -68,14 +68,10 @@ class HomeScreen extends Component {
 
     }
 
-
     static navigationOptions = ({navigation}) => {
         const notMe = navigation.getParam('notMe', false, );
         const friendID = navigation.getParam('friendID', false, );
         const fbID = navigation.getParam('fbID', false, );
-
-
-
         if (notMe){
             return {
             }
@@ -234,6 +230,8 @@ class HomeScreen extends Component {
                                 followed = {true}
                                 friendID = {this.state.coreUserID}
                                 removeFriendIDDB = {this.removeFriendIDDB}
+                                friendsIDs = {this.state.friendIDs}
+                                alwaysMe = {this.state.alwaysMe}
                             />
                             :
                             <View style={ {flexDirection: "row"}} >
@@ -249,7 +247,7 @@ class HomeScreen extends Component {
                         />
                     </View>
                 </SafeAreaView>
-                { (this.state.isGoalSelect)
+                {(this.state.isGoalSelect)
                     ?
                     <View style={{flex: 1}}>
                         <TribeRoot

@@ -271,6 +271,18 @@ export function shareTribeDB(tribeID, timeStamp){
     };
 };
 
+export function unshareTribeDB(tribeID, timeStamp){
+    return (dispatch, getState) => {
+        firebase.firestore().collection('tribes').where('id', '==', tribeID)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update( {"posted": false})
+            });
+        });
+    };
+};
+
+
 export function addTribe(tribe){
     return { type: 'ADD_TRIBE', payload:{tribe}}
 }
@@ -465,6 +477,11 @@ export function toggleTribeOpen(index){
     return {type: 'TOGGLE_TRIBE_OPEN', payload: index }
 }
 
-
+///Notifications
+export const sendNotification = (notfication) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('notifications').add(notfication);
+    }
+};
 
 
