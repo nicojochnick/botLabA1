@@ -21,7 +21,7 @@ import {
 
 import { ConfirmDialog } from 'react-native-simple-dialogs';
 import moment from "moment";
-import TribeGroup from './tribeGroup';
+import TribeGroup from '../groups/tribeGroup';
 import * as firebase from "react-native-firebase";
 import {AreaChart, Grid} from 'react-native-svg-charts';
 import TribeHeader from './tribeHeader';
@@ -30,6 +30,16 @@ import {CoreChatComponent} from '../coreChat/coreChatComponent';
 import TribeUpdateAdd from './tribeUpdateAdd';
 import SocialTribeTab from './socialTribeTab';
 import CommentTopStack from '../commentSystem/commentTopStack'
+import {
+    addBox,
+    addBoxDB, addDataToTribeDB, addFriendIDToTribeDB, addFriendToTribeDB, addTribeDeadline,
+    addTribeDeadlineDB,
+    changeEndGoal,
+    changeMetricNameDB, changeTribeName,
+    changeTribeNameDB, deleteTribe,
+    deleteTribeDB, shareTribeDB, updateHeader,
+} from '../../redux/actions';
+import {connect} from 'react-redux';
 
 
 class TribeComponent extends Component {
@@ -40,6 +50,23 @@ class TribeComponent extends Component {
         this.user = firebase.auth().currentUser;
         this.closeFriendView = this.closeFriendView.bind(this);
         this.sendHeaderMessage = this.sendHeaderMessage.bind(this);
+
+        this.computeProgress = this.computeProgress.bind(this);
+
+        this.updateHeader = this.updateHeader.bind(this);
+        this.shareTribe = this.shareTribe.bind(this);
+        this.updateLikes = this.updateLikes.bind(this);
+
+        this.handleAddBoxDB = this.handleAddBoxDB.bind(this);
+        this.handleDeleteTribeDB = this.handleDeleteTribeDB.bind(this);
+        this.changeTribeNameDB = this.changeTribeNameDB.bind(this);
+        this.addTribeDeadlineDB = this.addTribeDeadlineDB.bind(this);
+
+        this.addDataToTribeDB = this.addDataToTribeDB.bind(this);
+
+        this.editMetric = this.editMetric.bind(this);
+        this.changeEndGoal = this.changeEndGoal.bind(this);
+
         this.state = {
             boxData: [],
             open: true,
@@ -66,12 +93,139 @@ class TribeComponent extends Component {
         }
     }
 
+
+
+
+
+
+    handleAddBox(tribeID) {
+        const genericBox = {
+            name: "add a title",
+            id: moment().format(),
+            tribeID: tribeID,
+            open: false,
+            info: "add a description"
+        };
+        //dispatch two actions -> 1. ) create generic step in step database, 2.) add step to child feature of the correct step.
+        this.props.dispatch(addBox(genericBox));
+    }
+
+    shareTribe(tribeID) {
+        let timeStamp = moment().format();
+        this.props.shareTribeDB(tribeID, timeStamp)
+    }
+
+    handleAddBoxDB(tribeID) {
+        const genericBox = {
+            name: "add a title",
+            id: moment().format(),
+            tribeID: tribeID,
+            open: false,
+            info: "add a description",
+            steps: [],
+            deadline: null,
+            userID: this.props.myID,
+            update: [],
+        };
+        this.props.addBoxDB(genericBox)
+    }
+
+    updateLikes(header, userID, tribeID) {
+        header.likes.push(userID);
+        this.props.updateHeader(tribeID, header)
+    }
+
+
+
+
+    changeTribeNameDB(text, index) {
+        this.props.changeTribeName(text, index)
+    }
+
+    editMetric(text, index) {
+        this.props.editMetric(text, index)
+    }
+
+
+    handleDeleteTribeDB(tribeID) {
+        this.props.handleDeleteTribeDB(tribeID);
+    }
+
+
+    addTribeDeadlineDB(index, deadline) {
+        this.props.addTribeDeadlineDB(index, deadline)
+    }
+
+    updateHeader(tribeID, data, type) {
+        console.log(data);
+        let message = '';
+        let timeStamp = moment().format();
+        let send = {message: message, timeStamp: timeStamp, likes: []};
+        if (type === 'addedData') {
+            let num = data.number;
+            console.log(num);
+            let metric = data.metricName;
+            if (metric) {
+                message = 'did ' + num + " " + metric + " today!"
+            } else {
+                message = 'add a metric to your goal!'
+            }
+            send.message = message;
+            this.updateHeader(tribeID, send)
+        }
+    }
+
+    addDataToTribeDB(index, data, date, insertCol, metric) {
+        this.props.addDataToTribeDB(index, data, date, insertCol);
+        console.log(data)
+        let num = data;
+        if (data > 0 && insertCol === false) {
+            let data = {number: num, metricName: metric};
+            this.updateHeader(index, data, 'addedData')
+        }
+    }
+
+
+
+    computeProgress(tribeID) {
+
+        if (tribeID) {
+            return 0
+        }
+        let data = [];// db.settings({ timestampsInSnapshots: true});
+
+        let steps = data.filter(function (step) {
+            return step.tribeID === tribeID
+        });
+        let total = steps.length;
+        let checkSteps = steps.filter(function (step) {
+            return step.done === true
+        });
+        let checked = checkSteps.length;
+        let progress = checked / total;
+        if (progress > 0) {
+            return progress
+        } else {
+            return 0;
+        }
+    }
+
+
+    changeEndGoal(text, tribeID) {
+        this.props.changeEndGoal(text, tribeID)
+    }
+
+
+
+
+
+
     checkDate(curData) {
         const curDate = moment().format("MMM D YY");
         console.log(curData);
         if (curData.date !== curDate) {
             console.log('SENT')
-            this.props.addDataToTribe(this.props.id, 0, curDate,true);
+            this.addDataToTribeDB(this.props.id, 0, curDate,true);
         }
     }
 
@@ -108,7 +262,7 @@ class TribeComponent extends Component {
         this.openDeleteConfirm(false);
 
         setTimeout(
-            () => {this.props.handleDeleteTribe(this.props.id);
+            () => {this.handleDeleteTribeDB(this.props.id);
             },
             300,
         );
@@ -132,24 +286,24 @@ class TribeComponent extends Component {
         const curDate = moment().format("MMM D YY");
         if (this.state.metricChange) {
              console.log("COOL")
-            this.props.addDataToTribe(this.props.id, this.state.metric, curDate, false, this.props.metricName);
+            this.addDataToTribeDB(this.props.id, this.state.metric, curDate, false, this.props.metricName);
             this.setState({metricChange: false})
         }
 
         if (this.state.nameChange) {
-            this.props.changeTribeName(this.state.name, this.props.id);
+            this.changeTribeNameDB(this.state.name, this.props.id);
             this.setState({nameChange: false})
 
         }
 
         if (this.state.metricNameChange) {
-            this.props.changeMetricName(this.state.metricName, this.props.id);
+            this.editMetric(this.state.metricName, this.props.id);
             this.setState({metricNameChange: false})
             //this.props.addTribeDeadline(this.props.tribeID, this.state.deadline)
         }
 
         if (this.state.endGoalChange) {
-            this.props.changeEndGoal(this.state.endGoal, this.props.id);
+            this.changeEndGoal(this.state.endGoal, this.props.id);
             this.setState({endGoalChange: false})
 
         }
@@ -193,6 +347,22 @@ class TribeComponent extends Component {
 
     }
 
+
+    componentDidMount(): void {
+        let user = firebase.auth().currentUser;
+        if (user.uid !== this.props.userID){
+            this.setState({canEdit: false })
+        }
+        this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
+        // this.props.getTribeMembers(this.props.friendIDS);
+        let currData = this.props.cData[this.props.cData.length - 1];
+        this.checkDate(currData);
+    }
+
+    componentWillUnmount(): void {
+        this.unsubscribe();
+    }
+
     onCollectionUpdate = (snapshot) => {
         this.ref.where("tribeID", '==',this.props.tribeID).get().then((snapshot) => {
             let data = snapshot.docs.map(function(documentSnapshot) {
@@ -211,21 +381,6 @@ class TribeComponent extends Component {
             }
         );
     };
-
-    componentDidMount(): void {
-        let user = firebase.auth().currentUser;
-        if (user.uid !== this.props.userID){
-            this.setState({canEdit: false })
-        }
-        this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
-        // this.props.getTribeMembers(this.props.friendIDS);
-        let currData = this.props.cData[this.props.cData.length - 1];
-        this.checkDate(currData);
-    }
-
-    componentWillUnmount(): void {
-        this.unsubscribe();
-    }
 
     computeProgress(ds,goal){
         if (goal===null){
@@ -272,11 +427,11 @@ class TribeComponent extends Component {
                 {(this.props.header)
                     ?<TribeHeader
                         header = {this.props.header}
-                        shareTribe = {this.props.shareTribe}
+                        shareTribe = {this.shareTribe}
                         tribeID = {this.props.tribeID}
                         canEdit = {canEdit}
                         alwaysMe = {this.props.alwaysMe}
-                        updateLikes = {this.props.updateLikes}
+                        updateLikes = {this.updateLikes}
                         tribeAuthorName = {this.state.tribeAuthorName}
                         tribeAuthorProfilePicture = {this.state.tribeAuthorProfilePicture}
                     />
@@ -311,7 +466,6 @@ class TribeComponent extends Component {
                                     {this.computeTotal(dataList)}
                                 </Text>
                          </View>
-
 
                         {/*{(this.state.author != null)*/}
                         {/*            ?<Text style = {{fontWeight: "500", color: "grey"}}> by {this.state.author} </Text>*/}
@@ -367,7 +521,6 @@ class TribeComponent extends Component {
                         : null
                     }
                     </View>
-
                     <View style = {{marginTop: -10}}>
                         <Progress.Bar
                             progress={this.computeProgress(dataList, this.props.endGoal)} width={330} style={{margin: 10}}
@@ -391,7 +544,7 @@ class TribeComponent extends Component {
                             <BoxRoot
                                 tribeID = {this.props.tribeID}
                                 filter = {this.props.id}
-                                handleAddBox = {this.props.handleAddBox}
+                                handleAddBox = {this.handleAddBoxDB}
                                 editing = {this.state.editing}
                                 canEdit = {canEdit}
                                 sendHeaderMessage = {this.sendHeaderMessage}
@@ -407,7 +560,7 @@ class TribeComponent extends Component {
                                         style = {{width: '100%', marginTop: 0, marginBottom: 0}}
                                         title = "Add Milestones"
                                         buttonStyle={{backgroundColor: '#186aed'}}
-                                        onPress = {() => this.props.handleAddBox(this.props.id)}
+                                        onPress = {() => this.handleAddBoxDB(this.props.id)}
                                     />
                                     <Button
                                         style={{ marginLeft: 10}}
@@ -457,8 +610,25 @@ class TribeComponent extends Component {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        handleDeleteTribeDB: (tribe) => dispatch(deleteTribeDB(tribe)),
+        changeTribeName: (text,index)=> dispatch(changeTribeNameDB(text,index)),
+        editMetric: (text,index) => dispatch(changeMetricNameDB(text,index)),
+        changeEndGoal: (text,index) => dispatch(changeEndGoal(text, index)),
+        addTribeDeadlineDB: (index,deadline) => dispatch(addTribeDeadlineDB(index,deadline)),
+        addBoxDB: (box) => dispatch(addBoxDB(box)),
+        addFriendToTribeDB: (friend, tribeID) =>dispatch(addFriendToTribeDB(friend, tribeID)),
+        addFriendIDToTribeDB: (friendID, tribeID) =>dispatch(addFriendIDToTribeDB(friendID, tribeID)),
+        addDataToTribeDB: (index, data, date, insertCol) => dispatch(addDataToTribeDB(index,data,date,insertCol)),
+        updateHeader: (index, data) => dispatch(updateHeader(index,data)),
+        shareTribeDB: (tribeID, timeStamp) => dispatch(shareTribeDB(tribeID, timeStamp)),
+    }
+};
 
-export default TribeComponent;
+
+export default connect(null, mapDispatchToProps)(TribeComponent);
+
 
 
 {/*<Button*/}

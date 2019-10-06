@@ -5,6 +5,7 @@ import {SearchBar} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FeedContainer from '../components/feed/feedContainer';
 import firebase from "react-native-firebase";
+import TribeRoot from '../components/tribe/tribeRoot';
 
 
 
@@ -21,13 +22,25 @@ class FeedView extends Component {
             alwaysMe: null,
             uid: null,
             friendIDs: [],
-            loading: true
-        };
+            loading: true,
+            filter: [],
+            }
     }
 
-    updateSearch = search => {
+    updateSearch() {
         this.setState({search});
     };
+
+    getEmails(mail){
+        const db = firebase.firestore();
+        // db.settings({ timestampsInSnapshots: true});
+        db.collection('users').where("email", '==',mail).get().then((snapshot) => {
+            let data = snapshot.docs.map(function(documentSnapshot) {
+                return documentSnapshot.data()
+            });
+            this.setState({ searchData: data })
+        });
+    }
 
     componentDidMount(): void {
         let user = firebase.auth().currentUser;
@@ -54,18 +67,20 @@ class FeedView extends Component {
         });
     };
 
-
     render() {
-        const {search} = this.state;
+
         console.log(this.state.friendIDs);
         console.log(this.state.alwaysMe);
+        let letMyFriends = this.state.friendIDs
+        let Me = this.state.alwaysMe
+        let filter = letMyFriends.push(Me);
+        console.log(filter);
         return (
             <View style={{paddingTop: 50, backgroundColor: '#E0E7EA'}}>
                 <SearchBar
                     lightTheme={true}
                     placeholder='search friends'
-                    onChangeText={this.updateSearch}
-                    value={search}
+                    onChangeText={() => this.updateSearch}
                     clearIcon={
                         <Ionicons
                             name={'ios-close'}
@@ -79,10 +94,15 @@ class FeedView extends Component {
                         />
                     }
                 />
-                <FeedContainer
-                    alwaysMe={this.state.alwaysMe}
-                    friendIDs={this.state.friendIDs}
-                />
+                { (this.state.alwaysMe !== null )
+                   ?
+                    <TribeRoot
+                        filter={letMyFriends}
+                        notMe={false}
+                        alwaysMe={this.state.alwaysMe}
+                    />
+                    : null
+                }
             </View>
             );
         }

@@ -13,7 +13,7 @@ import TribeRoot from '../components/tribe/tribeRoot'
 
 import Users from '../components/test';
 import NavSettings from '../components/navSettings';
-import TribeGroup from '../components/tribe/tribeGroup';
+import TribeGroup from '../components/groups/tribeGroup';
 import firebase from 'react-native-firebase';
 import CoreChatContainer from '../components/coreChat/coreChatContainer'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -114,15 +114,16 @@ class HomeScreen extends Component {
             });
         this.setState({friendData: fData, gotMems: true})
     }
+    //TODO update friendList of all my tribes
 
     addFriendIDDB(friendID, myID){
-        this.props.addFriendIDDB(friendID,this.state.alwaysMe)
+        this.props.addFriendIDDB(friendID,this.state.alwaysMe,this.state.uid)
     };
 
     removeFriendIDDB(friendID){
         console.log(friendID)
         console.log(this.state.alwaysMe)
-        this.props.removeFriendIDDB(friendID,this.state.alwaysMe)
+        this.props.removeFriendIDDB(friendID,this.state.alwaysMe, this.state.uid)
     }
 
     componentDidMount(): void {
@@ -145,7 +146,7 @@ class HomeScreen extends Component {
                 emailVerified = user.emailVerified;
                 uid = user.uid
             }
-            //TAKE THIS OUT
+            //TODO TAKE THIS OUT
             firebase.firestore().collection('users').where('fbID', '==', uid).get().then((snapshot) => {
                 console.log(snapshot);
                 let data = snapshot.docs.map(function (documentSnapshot) {
@@ -177,9 +178,7 @@ class HomeScreen extends Component {
         this.unsubscribe();
     }
 
-
     onCollectionUpdate = (snapshot) => {
-
         firebase.firestore().collection('users').where('fbID', '==', this.state.uid).get().then((snapshot) => {
             console.log(snapshot);
             let data = snapshot.docs.map(function (documentSnapshot) {
@@ -206,7 +205,6 @@ class HomeScreen extends Component {
             this.setState({profilePicture: profilePicture });
             this.setState({friendIDs: friendIDs});
             this.getTribeMembers(friendIDs)
-
             if (!(this.state.notMe)){
                 this.setState({alwaysMe: user.userID})
             }
@@ -218,7 +216,7 @@ class HomeScreen extends Component {
         console.log(this.state.name);
         let goalColor = 'darkgrey';
         let tribeColor = '#3676FF';
-        if (this.state.isGoalSelect) {
+        if (this.state.isGoalSelect){
             goalColor = '#3676FF';
             tribeColor = 'darkgrey'
         }
@@ -250,7 +248,6 @@ class HomeScreen extends Component {
                                        switchView = {this.switchView}
                         />
                     </View>
-
                 </SafeAreaView>
                 { (this.state.isGoalSelect)
                     ?
@@ -288,8 +285,8 @@ const mapStateToProps = (state /*, ownProps*/) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addFriendIDDB: (friendID, myID) =>dispatch(addFriendIDDB(friendID, myID)),
-        removeFriendIDDB: (friendID, myID) =>dispatch(removeFriendIDDB(friendID, myID)),
+        addFriendIDDB: (friendID, myID, fbID) =>dispatch(addFriendIDDB(friendID, myID)),
+        removeFriendIDDB: (friendID, myID, fbID) =>dispatch(removeFriendIDDB(friendID, myID))
     }
 };
 

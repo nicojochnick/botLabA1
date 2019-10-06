@@ -376,7 +376,7 @@ export const addTribeDeadlineDB = (index,deadline) => {
 
 };
 
-export const addFriendDB = (friend, myID) => {
+export const addFriendDB = (friend, myID, fbID) => {
     return (dispatch, getState) => {
         console.log(friend);
         firebase.firestore().collection('users').where('userID', '==', myID)
@@ -386,16 +386,30 @@ export const addFriendDB = (friend, myID) => {
                 doc.ref.update({friends: firebase.firestore.FieldValue.arrayUnion(friend)})
             })
         });
+        firebase.firestore().collection('tribes').where('userID', '==', fbID).where('public', '==', true)
+            .get().then(function (querySnapshot) {
+            console.log(querySnapshot);
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({friendIDs: firebase.firestore.FieldValue.arrayUnion(friend)})
+            })
+        });
     };
 };
 
-export const removeFriendIDDB = (friendID, myID) => {
+export const removeFriendIDDB = (friendID, myID, fbID) => {
     return (dispatch, getState) => {
         firebase.firestore().collection('users').where('userID', '==', myID)
             .get().then(function (querySnapshot) {
             console.log(querySnapshot);
             querySnapshot.forEach(function (doc) {
                 doc.ref.update({friendIDs: doc.data().friendIDs.filter(friend => friend !== friendID)})
+            })
+        });
+        firebase.firestore().collection('tribes').where('userID', '==', fbID).where('public', '==', true)
+            .get().then(function (querySnapshot) {
+            console.log(querySnapshot);
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({friendIDs:  doc.data().friendIDs.filter(friend => friend !== friendID)})
             })
         });
     };

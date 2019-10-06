@@ -44,7 +44,6 @@ class FeedContainer extends Component {
 
             });
             i = i + 1
-
         }
         this.setState({data: alldata})
 
@@ -56,11 +55,10 @@ class FeedContainer extends Component {
         console.log(this.props.friendIDs.length>0);
         console.log(this.props.alwaysMe)
         return (
-            <FlatList
-                initialNumToRender={10}
-                data={this.state.data}
-                getItem={null}
-                renderItem={null}
+            <TribeRoot
+                filter={this.props.uid}
+                notMe = {false}
+                alwaysMe = {this.props.alwaysMe}
             />
 
     );

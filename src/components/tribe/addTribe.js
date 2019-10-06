@@ -59,7 +59,7 @@ class AddTribe extends Component {
             id: moment().format(),
             userID: this.props.uid,
             author: name,
-            friendIDS: [],
+            friendIDs: [],
             continuousData: [{date: null, data:0}, {date : moment().format("MMM D YY"), data: 0}],
             metricName: null,
             info: "add a description",
@@ -68,7 +68,8 @@ class AddTribe extends Component {
             endGoal: null,
             update: null,
             posted: false,
-            header: [{}]
+            header: [{}],
+            isPublic: true,
         };
         this.props.addTribeDB(genericTribe);
     }

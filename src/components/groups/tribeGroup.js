@@ -116,9 +116,7 @@ class TribeGroup extends Component {
                             title = 'close'
                             style = {{backgroundColor:"white"}}
                             onPress = {() => this.props.closeFriendView()}
-
                         />
-
 
                     </View>
                     { (this.state.searchData !== null )
