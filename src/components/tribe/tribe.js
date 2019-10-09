@@ -37,7 +37,7 @@ import {
     changeEndGoal,
     changeMetricNameDB, changeTribeName,
     changeTribeNameDB, deleteTribe,
-    deleteTribeDB, shareTribeDB, unshareTribeDB, updateHeader,
+    deleteTribeDB, sendNotification, shareTribeDB, unshareTribeDB, updateHeader,
 } from '../../redux/actions';
 import {connect} from 'react-redux';
 
@@ -50,6 +50,7 @@ class TribeComponent extends Component {
         this.user = firebase.auth().currentUser;
         this.closeFriendView = this.closeFriendView.bind(this);
         this.sendHeaderMessage = this.sendHeaderMessage.bind(this);
+        this.sendLikeNotification = this.sendLikeNotification.bind(this);
 
         this.computeProgress = this.computeProgress.bind(this);
 
@@ -191,6 +192,18 @@ class TribeComponent extends Component {
         }
     }
 
+    sendLikeNotification(){
+        let like = {
+            message : "commented on your goal",
+            fromUserID : this.props.alwaysMe,
+            toUserID: this.props.friendID,
+            timeStamp: moment().format(),
+            action: "like",
+        };
+
+        this.props.sendNotification(like)
+    }
+
 
 
     computeProgress(tribeID) {
@@ -220,10 +233,6 @@ class TribeComponent extends Component {
     changeEndGoal(text, tribeID) {
         this.props.changeEndGoal(text, tribeID)
     }
-
-
-
-
 
 
     checkDate(curData) {
@@ -352,7 +361,6 @@ class TribeComponent extends Component {
         }
 
     }
-
 
     componentDidMount(): void {
         let user = firebase.auth().currentUser;
@@ -530,66 +538,90 @@ class TribeComponent extends Component {
                         : null
                     }
                     </View>
-                    <View style = {{marginTop: -10}}>
+
                         <Progress.Bar
                             progress={this.computeProgress(dataList, this.props.endGoal)} width={330} style={{margin: 10}}
                         />
-                        { (dataList.length > 2 || dataList[1] !== 0)
+                        <View>
+
+                {(true)
+                    ? null
+                    :<View style={{marginTop: -10}}>
+
+                        {(dataList.length > 2 || dataList[1] !== 0)
                             ?
-                            <View style = {{marginTop: 0}}>
+                            <View style={{marginTop: 0}}>
                                 <AreaChart
-                                    style={{ height: 90 }}
+                                    style={{height: 90}}
                                     data={dataList}
-                                    contentInset={{ top: 20, bottom: 5, left: 20, right: 20}}
-                                    curve={ shape.curveNatural }
-                                    svg={{ fill: '#186aed' }}
+                                    contentInset={{top: 20, bottom: 5, left: 20, right: 20}}
+                                    curve={shape.curveNatural}
+                                    svg={{fill: '#186aed'}}
                                 >
                                     <Grid/>
                                 </AreaChart>
                             </View>
                             : null
-                            }
+                        }
                         <View>
                             <BoxRoot
-                                tribeID = {this.props.tribeID}
-                                filter = {this.props.id}
-                                handleAddBox = {this.handleAddBoxDB}
-                                editing = {this.state.editing}
-                                canEdit = {canEdit}
-                                sendHeaderMessage = {this.sendHeaderMessage}
+                                tribeID={this.props.tribeID}
+                                filter={this.props.id}
+                                handleAddBox={this.handleAddBoxDB}
+                                editing={this.state.editing}
+                                canEdit={canEdit}
+                                sendHeaderMessage={this.sendHeaderMessage}
                             />
                         </View>
 
-                        <View style = {{ margin: 5, alignItems: "flex-end"}}>
+                        <View style={{margin: 5, alignItems: "flex-end"}}>
                             {(!this.state.editing)
                                 ? null
                                 // ? <Text style = {styles.titleDeadlineText}> deadline: {this.props.deadline} </Text>
-                                : <View style = {{flexDirection: "row", justifyContent: "flex-start",}}>
+                                : <View style={{flexDirection: "row", justifyContent: "flex-start",}}>
                                     <Button
-                                        style = {{width: '100%', marginTop: 0, marginBottom: 0}}
-                                        title = "Add Milestones"
+                                        style={{width: '100%', marginTop: 0, marginBottom: 0}}
+                                        title="Add Milestones"
                                         buttonStyle={{backgroundColor: '#186aed'}}
-                                        onPress = {() => this.handleAddBoxDB(this.props.id)}
+                                        onPress={() => this.handleAddBoxDB(this.props.id)}
                                     />
                                     <Button
-                                        style={{ marginLeft: 10}}
-                                        title = "Save"
+                                        style={{marginLeft: 10}}
+                                        title="Save"
                                         buttonStyle={{backgroundColor: '#186aed'}}
-                                        onPress = {()=> this.doneSaving()}
+                                        onPress={() => this.doneSaving()}
                                     />
                                 </View>
                             }
-                        <Divider style = {{marginTop: 2, marginBottom: 10}}/>
+                            <Divider style={{marginTop: 2, marginBottom: 10}}/>
                         </View>
                         <SocialTribeTab/>
                         <CommentTopStack
-                            tribeID = {this.props.tribeID}
-                            tribeAuthorName = {this.state.tribeAuthorName}
-                            tribeAuthorProfilePicture = {this.state.tribeAuthorProfilePicture}
-                            userID = {this.props.userID}
-                            alwaysMe = {this.props.alwaysMe}
+                            tribeID={this.props.tribeID}
+                            tribeAuthorName={this.state.tribeAuthorName}
+                            tribeAuthorProfilePicture={this.state.tribeAuthorProfilePicture}
+                            userID={this.props.userID}
+                            alwaysMe={this.props.alwaysMe}
                         />
                     </View>
+                }
+                <View style = {{flexDirection: "row", backgroundColor: "lightgrey",}}>
+                    <Button
+                        icon = {
+                            <Ionicons
+                                name = {'ios-heart'}
+                                color = {this.state.heartIconColor}
+                                size = {25}
+                                onPress={()=> this.likeUpdate()}
+                                raised = {true}
+                            />
+                        }
+                        type = 'clear'
+                        title = {this.state.likes}
+                        titleStyle = {{color:"white", marginLeft: 5}}
+                        />
+                </View>
+                        </View>
 
                 <ConfirmDialog
                     title="Please Confirm"
@@ -633,6 +665,8 @@ const mapDispatchToProps = (dispatch) => {
         updateHeader: (index, data) => dispatch(updateHeader(index,data)),
         shareTribeDB: (tribeID, timeStamp) => dispatch(shareTribeDB(tribeID, timeStamp)),
         unshareTribeDB: (tribeID, timeStamp) => dispatch(unshareTribeDB(tribeID, timeStamp)),
+        sendNotification: (comment) => dispatch(sendNotification(comment)),
+
     }
 };
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View, Text, ActivityIndicator} from 'react-native';
+import {View, Text, ActivityIndicator, ScrollView} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FeedContainer from '../components/feed/feedContainer';
@@ -8,12 +8,7 @@ import firebase from "react-native-firebase";
 import TribeRoot from '../components/tribe/tribeRoot';
 import SearchContainer from '../components/search/searchContainer';
 
-
-
-
-
 class FeedView extends Component {
-
     constructor(props) {
         super(props);
         this.ref = firebase.firestore().collection('users')
@@ -27,7 +22,6 @@ class FeedView extends Component {
             filter: [],
             }
     }
-
     static navigationOptions = ({navigation}) => {
         return {
             header: null
@@ -73,18 +67,18 @@ class FeedView extends Component {
         let filter = letMyFriends.push(Me);
         console.log(filter);
         return (
-            <View style={{paddingTop: 50, backgroundColor: '#E0E7EA'}}>
+            <ScrollView style={{paddingTop: 50, backgroundColor: 'white', flex: 1}}>
                 <SearchContainer/>
                 { (this.state.alwaysMe !== null )
                    ?
                     <TribeRoot
-                        filter={letMyFriends}
+                        isFeed = {true}
                         notMe={false}
                         alwaysMe={this.state.alwaysMe}
                     />
                     : null
                 }
-            </View>
+            </ScrollView>
             );
         }
 }

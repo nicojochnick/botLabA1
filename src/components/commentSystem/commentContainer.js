@@ -6,7 +6,7 @@ import CommentFeed from './commentFeed';
 import {View} from 'react-native'
 import AddComment from './addComment';
 import moment from 'moment'
-import {deleteCommentDB, postCommentDB} from '../../redux/actions';
+import {deleteCommentDB, postCommentDB, sendNotification} from '../../redux/actions';
 import * as firebase from "react-native-firebase";
 
 
@@ -27,7 +27,6 @@ class CommentContainer extends Component {
         this.ref = firebase.firestore().collection('users');
         this.postComment = this.postComment.bind(this);
         this.deleteComment = this.deleteComment.bind(this);
-        this.user = firebase.auth().currentUser;
         this.state = {
             isMe: false,
             userPhoto: null,
@@ -36,7 +35,23 @@ class CommentContainer extends Component {
         }
     }
 
+    //TODO ADD CORRECT TOUSERID
+
+    sendCommentNotification(){
+        let comment = {
+            message : "commented on your goal",
+            fromUserID : this.props.alwaysMe,
+            toUserID: this.props.friendID,
+            timeStamp: moment().format(),
+            action: "comment",
+        };
+        this.props.sendNotification(comment)
+    }
+
+
     postComment(text) {
+        let user = firebase.auth().currentUser;
+
         let comment = {
             type: null,
             message: text,
@@ -49,6 +64,9 @@ class CommentContainer extends Component {
         console.log(comment);
 
         this.props.postCommentDB(comment);
+        if(this.props.userID !== user.uid){
+            this.sendCommentNotification( )
+        }
         console.log("dispatchedInternal")
     }
 
@@ -149,9 +167,11 @@ const mapDispatchToProps = (dispatch) => {
     return {
         postCommentDB: (comment) => dispatch(postCommentDB(comment)),
         deleteCommentDB: (commentID) => dispatch(deleteCommentDB(commentID)),
+        sendNotification: (comment) => dispatch(sendNotification(comment)),
     }
 };
 
 export default connect(null, mapDispatchToProps)(CommentContainer);
+
 
 

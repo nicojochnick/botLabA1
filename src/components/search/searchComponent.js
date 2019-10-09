@@ -23,7 +23,7 @@ class SearchComponent extends Component {
 
     render() {
         return (
-            <View>
+            <View style = {{flex: 1}}>
                 <View>
                 <SearchBar
                     lightTheme={true}
@@ -45,44 +45,56 @@ class SearchComponent extends Component {
                         />
                     }
                 />
-                <View style = {{flexDirection: "row", justifyContent:'center', margin:5}}>
-                {(this.state.friendEmail!==null )
-                    ? <Button
-                        containerStyle = {{width: 100, justifyContent: "flex-end"}}
-                        buttonStyle = {{backgroundColor:'#186aed'}}
-                        title = 'search'
-                        raised
-                        icon = {
-                            <Ionicons
-                                style = {{marginRight: 5 }}
-                                name={'ios-search'}
-                                size={20}
-                                color = 'white'
-                            />
-                        }
-                        onPress = {()=> this.props.triggerSearch(this.state.friendEmail)}
-                    />
-                    :null
-                }
                 </View>
-                </View>
+                <View>
+                    {(this.state.friendEmail !== null)
+                        ? <View style={{flexDirection: "column", justifyContent: 'center', margin: 5}}>
+                            {(this.state.friendEmail !== null)
+                                ?
+                                <Button
+                                    containerStyle={{width: 100, justifyContent: "flex-end"}}
+                                    buttonStyle={{backgroundColor: '#186aed'}}
+                                    title='search'
+                                    raised
+                                    icon={
+                                        <Ionicons
+                                            style={{marginRight: 5}}
+                                            name={'ios-search'}
+                                            size={20}
+                                            color='white'
+                                        />
+                                    }
+                                    onPress={() => this.props.triggerSearch(this.state.friendEmail)}
+                                />
+                                : null
+                            }
+                            {(this.props.searchData !== null)
+                                ? <View style={{margin: 10, borderRadius: 5, borderColor: "grey"}}>
+                                    {(this.props.searchData[0] !== null && this.props.searchData[0] !== undefined)
+                                        ?
+                                        <UserTag
+                                            avatar={this.props.searchData[0].photoURL}
+                                            name={this.props.searchData[0].name}
+                                            fbID={this.props.searchData[0].fbID}
+                                            route={'feed'}
+                                        />
+                                        : <Text style={{
+                                            fontSize: 15,
+                                            fontWeight: "bold",
+                                            color: '#186aed',
+                                            justifyContent: "center"
+                                        }}>No user found, make sure email is correct</Text>
+                                    }
+                                </View>
+                                : null
 
-        { (this.props.searchData !== null )
-            ? <View style = {{ margin: 10, borderRadius: 5, borderColor: "grey"}}>
-                {(this.props.searchData[0] !== null && this.props.searchData[0] !== undefined)
-                    ?
-                    <UserTag
-                        avatar = {this.props.searchData[0].photoURL}
-                        name = {this.props.searchData[0].name}
-                        fbID = {this.props.searchData[0].fbID}
-                        route = {'feed'}
-                    />
-                    : <Text style = {{ fontSize: 15, fontWeight: "bold", color: '#186aed', justifyContent: "center"}} >No user found, make sure email is correct</Text>
-                }
-            </View>
-            : null
+                            }
+                        </View>
+                        : null
+                    }
 
-        }
+                    </View>
+
         </View>
         );
     }

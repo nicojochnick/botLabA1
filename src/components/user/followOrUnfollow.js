@@ -22,16 +22,15 @@ class FollowOrUnfollow extends Component {
         }
     }
 
-
     sendFriendRequest(){
         let friendRequestNotification = {
             message : "wants to join your tribe",
             fromUserID : this.props.alwaysMe,
             toUserID: this.props.friendID,
-            timeStamp: moment().format()
+            timeStamp: moment().format(),
+            action: "friendRequest",
         };
         this.props.sendNotification(friendRequestNotification)
-
     }
 
 
@@ -42,13 +41,11 @@ class FollowOrUnfollow extends Component {
     addFriend(){
         this.setState({isRequestSent: true});
         this.sendFriendRequest()
-
     }
 
     componentDidMount(): void {
         let friendID = this.props.friendID
     }
-
 
     render() {
         return (
@@ -59,12 +56,11 @@ class FollowOrUnfollow extends Component {
                         title="unfollow"
                         onPress = {() => this.removeFriend()}
                     />
-
                     :
                     <View>
                     {!(this.state.isRequestSent)
                         ? <Button
-                            title="Add to Tribe"
+                            title= "Add to Tribe"
                             raised
                             buttonStyle = {{backgroundColor: '#186aed', width: 120}}
                             onPress = {() => this.addFriend()}

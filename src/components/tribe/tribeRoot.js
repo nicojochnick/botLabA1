@@ -99,31 +99,19 @@ export default  class TribeRoot extends Component {
                 this.setState({tribeData: data, loading: false})
             });
         } else {
-            let len = this.props.filter.length
-            console.log(len)
-            let i = 0
-            let allData = []
-            while (i < len) {
-                let pull = this.props.filter[i];
-                console.log(pull)
-                //pull all posted tribes of currUSer ID FriendList and sort them by least to most recent
-                    this.ref.where('userID', '==', pull).get().then(async (snapshot) => {
-                        let data = snapshot.docs.map(function (documentSnapshot) {
-                            console.log(data);
-                            return documentSnapshot.data()
-                        });
-                        console.log(data);
-                        // data = data.filter(x => x.header.timeStamp !== false);
-                        allData.push(data)
-                    });
-                i = i + 1
-            }
-            this.setState({tribeData: allData, loading: false})
+            this.ref.where('friendIDs', 'array-contains', this.props.alwaysMe).get().then( (snapshot) => {
+                let data = snapshot.docs.map(function (documentSnapshot) {
+                    console.log(data);
+                    return documentSnapshot.data()
+                });
+                this.setState({tribeData: data, loading: false})
+            });
         }
     };
 
     render() {
         let loading = this.state.loading;
+        console.log(this.state.tribeData)
         return (
             <View>
                 { !(loading)

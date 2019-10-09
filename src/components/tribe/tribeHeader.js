@@ -4,6 +4,7 @@ import {Avatar, Button, Input} from 'react-native-elements';
 import {styles} from '../theme';
 import firebase from "react-native-firebase";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import moment from '../commentSystem/commentContainer';
 
 
 class TribeHeader extends Component {
@@ -21,11 +22,19 @@ class TribeHeader extends Component {
 
     }
 
+    //TODO Add the correct touserID
+
+
 
     likeUpdate(){
         this.setState({liked:!this.state.liked});
         this.setState({likes: this.state.likes+1});
+        let heartIcon = 'ios-heart';
+        let heartIconColor = '#00FF87'
+        this.setState({heartIcon: heartIcon})
+        this.setState({heartIconColor: heartIconColor})
         this.props.updateLikes(this.props.header, this.props.alwaysMe,this.props.tribeID )
+
 
     }
 

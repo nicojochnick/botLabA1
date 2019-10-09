@@ -31,6 +31,7 @@ class CommentTopStack extends Component {
                    />
                    <CommentContainer
                        tribeID = {this.props.tribeID}
+                       userID = {this.props.userID}
                        alwaysMe = {this.props.alwaysMe}
                        isAddComment = {true} />
             </View>

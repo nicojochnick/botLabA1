@@ -15,6 +15,7 @@ class AddComment extends Component {
     postComment(){
         let comment = this.state.comment;
         this.props.postComment(comment)
+
     }
 
     render() {
