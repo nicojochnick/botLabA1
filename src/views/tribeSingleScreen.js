@@ -9,8 +9,6 @@ class TribeSingleScreen extends Component {
         return (
             <View>
             <TribeComponent
-
-
             />
             </View>
 

@@ -105,7 +105,7 @@ class TribeHeader extends Component {
                             : <View>
                             { !(this.props.posted)
                                 ? <Button
-                                title = {"post"}
+                                title = {"Post"}
                                 raised
                                 containerStyle = {{height: 40}}
                                 buttonStyle = {{backgroundColor: "white"}}
@@ -113,7 +113,7 @@ class TribeHeader extends Component {
                                 onPress = {() => this.props.shareTribe(this.props.tribeID)}
                                 />
                                 :<Button
-                                    title = {"unpost"}
+                                    title = {"Un-Post"}
                                     raised
                                     containerStyle = {{height: 40, width: 90}}
                                     buttonStyle = {{backgroundColor: '#186aed', borderColor: "white", borderWidth: 1}}
@@ -124,8 +124,16 @@ class TribeHeader extends Component {
                             </View>
                         }
                             </View>
-                        : <Text style = {{color: "white"}} > Goal is Private </Text>
+                        : <Button
+                                title = {"Go Live!"}
+                                raised
+                                containerStyle = {{height: 40, width: 90}}
+                                buttonStyle = {{backgroundColor: 'white', borderColor: "white", borderWidth: 1}}
+                                titleStyle = {{color: '#186aed', fontWeight: "bold"}}
+                                onPress = {() => this.props.goLive()}
+                            />
                         }
+
                     </View>
 
                 </View>

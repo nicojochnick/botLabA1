@@ -59,6 +59,7 @@ class TribeComponent extends Component {
         this.unshareTribe = this.unshareTribe.bind(this);
 
         this.updateLikes = this.updateLikes.bind(this);
+        this.goLive = this.goLive.bind(this);
 
         this.handleAddBoxDB = this.handleAddBoxDB.bind(this);
         this.handleDeleteTribeDB = this.handleDeleteTribeDB.bind(this);
@@ -93,6 +94,9 @@ class TribeComponent extends Component {
 
             tribeAuthorName: null,
             tribeAuthorProfilePicture: null,
+
+            isOpen: false,
+            isCommentOpen: false,
         }
     }
 
@@ -297,6 +301,10 @@ class TribeComponent extends Component {
         this.setState({fOpen: false})
     }
 
+    openTribe(){
+        this.setState({isOpen: !this.state.isOpen})
+    }
+
     doneSaving(){
         const curDate = moment().format("MMM D YY");
         if (this.state.metricChange) {
@@ -359,6 +367,10 @@ class TribeComponent extends Component {
             }
 
         }
+
+    }
+
+    goLive(){
 
     }
 
@@ -483,11 +495,6 @@ class TribeComponent extends Component {
                                     {this.computeTotal(dataList)}
                                 </Text>
                          </View>
-
-                        {/*{(this.state.author != null)*/}
-                        {/*            ?<Text style = {{fontWeight: "500", color: "grey"}}> by {this.state.author} </Text>*/}
-                        {/*            : null*/}
-                        {/*}*/}
                         </View>
 
                         <View style ={{flexDirection: "column", flex: 2, marginTop: -10, marginLeft: -10, marginRight: 0,justifyContent: "flex-end"}}>
@@ -539,16 +546,15 @@ class TribeComponent extends Component {
                     }
                     </View>
 
-                        <Progress.Bar
-                            progress={this.computeProgress(dataList, this.props.endGoal)} width={330} style={{margin: 10}}
-                        />
+                        {/*<Progress.Bar*/}
+                        {/*    progress={this.computeProgress(dataList, this.props.endGoal)} width={330} style={{margin: 10, marginBottom: 20}}*/}
+                        {/*/>*/}
                         <View>
 
-                {(true)
+                {(false)
                     ? null
                     :<View style={{marginTop: -10}}>
-
-                        {(dataList.length > 2 || dataList[1] !== 0)
+                        {(false)
                             ?
                             <View style={{marginTop: 0}}>
                                 <AreaChart
@@ -596,32 +602,65 @@ class TribeComponent extends Component {
                             <Divider style={{marginTop: 2, marginBottom: 10}}/>
                         </View>
                         <SocialTribeTab/>
-                        <CommentTopStack
+                    </View>
+                }
+                <View style = {{borderTopWidth: 0.5}}>
+                    <View style = {{flexDirection: "row", justifyContent: "space-between"}}>
+                        <View style = {{flexDirection: "row", margin: 5}}>
+                        <Ionicons
+                            name = {'ios-contacts'}
+                            color = {this.state.heartIconColor}
+                            size = {25}
+                            raised = {true}
+                        />
+                        <Text> 12 </Text>
+                        <Ionicons
+                            name = {'ios-chatbubbles'}
+                            color = {this.state.heartIconColor}
+                            size = {25}
+                            raised = {true}
+                            onPress={()=>this.setState({isCommentOpen: !this.state.isCommentOpen})}
+                            style = {{marginLeft: 5}}
+                        />
+                        <Text> 12 </Text>
+                        </View>
+                        {/*<Button*/}
+                        {/*    icon = {*/}
+                        {/*        <Ionicons*/}
+                        {/*            name = {'ios-arrow-down'}*/}
+                        {/*            color = {this.state.heartIconColor}*/}
+                        {/*            size = {25}*/}
+                        {/*            onPress={()=> this.openTribe()}*/}
+                        {/*            raised = {true}*/}
+                        {/*        />*/}
+                        {/*    }*/}
+                        {/*    iconRight = {true}*/}
+                        {/*    raised*/}
+                        {/*    onPress={()=>this.openTribe()}*/}
+                        {/*    containerStyle = {{margin: 5, marginTop: -10}}*/}
+                        {/*    buttonStyle = {{backgroundColor: "white"}}*/}
+                        {/*    title = {'More'}*/}
+                        {/*    titleStyle = {{color:"black", marginRight: 5}}*/}
+                        {/*/>*/}
+
+                    </View>
+                <View style = {{flexDirection: "row",justifyContent: "flex-end"}}>
+                    {(this.state.isCommentOpen)
+                        ?<CommentTopStack
                             tribeID={this.props.tribeID}
                             tribeAuthorName={this.state.tribeAuthorName}
                             tribeAuthorProfilePicture={this.state.tribeAuthorProfilePicture}
                             userID={this.props.userID}
                             alwaysMe={this.props.alwaysMe}
                         />
-                    </View>
-                }
-                <View style = {{flexDirection: "row", backgroundColor: "lightgrey",}}>
-                    <Button
-                        icon = {
-                            <Ionicons
-                                name = {'ios-heart'}
-                                color = {this.state.heartIconColor}
-                                size = {25}
-                                onPress={()=> this.likeUpdate()}
-                                raised = {true}
-                            />
-                        }
-                        type = 'clear'
-                        title = {this.state.likes}
-                        titleStyle = {{color:"white", marginLeft: 5}}
-                        />
+                        :null
+
+                    }
+
+                </View>
                 </View>
                         </View>
+
 
                 <ConfirmDialog
                     title="Please Confirm"
@@ -734,3 +773,23 @@ export default connect(null, mapDispatchToProps)(TribeComponent);
 //
 //     />
 // }
+
+//TOTALS
+{/*<View style = {{flexDirection: "row"}}>*/}
+{/*    <Text style = {{fontSize: 20, fontWeight: 500, color: "grey"}}> Goal: </Text>*/}
+{/*    <TextInput*/}
+{/*        style = {{fontSize: 20, fontWeight: 500, color: "blue"}}*/}
+{/*        ref= {(el) => { this.name= el; }}*/}
+{/*        placeholder = {"Add Number"}*/}
+{/*        editable = {canEdit}*/}
+{/*        onChangeText = {(text) => this.activateEdit(text,'endGoal')}*/}
+{/*        >*/}
+{/*        {this.props.endGoal}*/}
+{/*    </TextInput>*/}
+{/*</View>*/}
+{/* <View style = {{flexDirection: "row"}}>*/}
+{/*        <Text style = {{fontSize: 20, fontWeight: 500, color: "grey"}}> Total: </Text>*/}
+{/*        <Text style = {{fontSize: 20, fontWeight: 500, color: "lightgreen"}}>*/}
+{/*            {this.computeTotal(dataList)}*/}
+{/*        </Text>*/}
+{/* </View>*/}

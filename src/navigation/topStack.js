@@ -11,6 +11,7 @@ import FriendGoalView from '../views/friendGoalView';
 import FeedView from '../views/FeedView';
 import UserTag from '../components/user/userTag';
 import NotificationScreen from '../views/notificationScreen';
+import TribeSingleScreen from '../views/tribeSingleScreen';
 
 class TopStack extends Component {
     render() {
@@ -46,6 +47,16 @@ const HomeStack =  createStackNavigator(
 const FeedStack =  createStackNavigator(
     {
         FeedView: FeedView, FriendHome: HomeScreen
+    }, {
+        initialRouteName: "FeedView",
+        headerTransparent: true,
+    }
+);
+
+
+const tribeStack =  createStackNavigator(
+    {
+        Feed: FeedView, TribeScreen: TribeSingleScreen
     }, {
         initialRouteName: "FeedView",
         headerTransparent: true,
