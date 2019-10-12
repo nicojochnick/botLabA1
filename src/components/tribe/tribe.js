@@ -375,6 +375,7 @@ class TribeComponent extends Component {
     }
 
     goLive(){
+        this.props.shareTribe( )
 
     }
 

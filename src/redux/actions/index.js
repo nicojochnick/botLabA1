@@ -265,7 +265,7 @@ export function shareTribeDB(tribeID, timeStamp){
         firebase.firestore().collection('tribes').where('id', '==', tribeID)
             .get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
-                doc.ref.update( {"posted": timeStamp, "isPosted": true})
+                doc.ref.update( {"posted": timeStamp, "isPosted": true, "isPublic": true})
             });
         });
     };
@@ -277,6 +277,17 @@ export function unshareTribeDB(tribeID, timeStamp){
             .get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
                 doc.ref.update( {"isPosted": false})
+            });
+        });
+    };
+};
+
+export function makePrivate(tribeID){
+    return (dispatch, getState) => {
+        firebase.firestore().collection('tribes').where('id', '==', tribeID)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update( {"isPosted": false, "isPublic": false})
             });
         });
     };

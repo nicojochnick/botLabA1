@@ -233,7 +233,7 @@ class HomeScreen extends Component {
     };
 
     render() {
-        console.log(this.state.name);
+        console.log(this.state.friendIDs, this.state.alwaysMe);
         let goalColor = 'darkgrey';
         let tribeColor = '#3676FF';
         if (this.state.isGoalSelect){
@@ -260,7 +260,11 @@ class HomeScreen extends Component {
                             :
                             <View style={ {flexDirection: "row"}} >
                             <NavSettings/>
-                            < AddTribe uid = {this.state.uid}/>
+                            < AddTribe
+                                uid = {this.state.uid}
+                                friendIDs ={this.state.friendIDs}
+                                alwaysMe ={this.state.alwaysMe}
+                            />
                             </View>
                         }
                     </View>

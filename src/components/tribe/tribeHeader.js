@@ -130,7 +130,7 @@ class TribeHeader extends Component {
                                 containerStyle = {{height: 40, width: 90}}
                                 buttonStyle = {{backgroundColor: 'white', borderColor: "white", borderWidth: 1}}
                                 titleStyle = {{color: '#186aed', fontWeight: "bold"}}
-                                onPress = {() => this.props.goLive()}
+                                onPress = {() => this.props.shareTribe(this.props.tribeID)}
                             />
                         }
 

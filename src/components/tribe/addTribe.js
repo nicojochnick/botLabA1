@@ -54,12 +54,14 @@ class AddTribe extends Component {
     }
 
     handleAddTribeDB() {
+
+        let friendIDs = this.props.friendIDs;
         const genericTribe = {
             name: "",
             id: moment().format(),
             userID: this.props.uid,
             author: name,
-            friendIDs: [],
+            friendIDs: friendIDs,
             continuousData: [{date: null, data:0}, {date : moment().format("MMM D YY"), data: 0}],
             metricName: null,
             info: "add a description",
@@ -67,7 +69,7 @@ class AddTribe extends Component {
             total: null,
             endGoal: null,
             update: null,
-            posted: false,
+            posted:  moment().format(),
             header: {message: "*status will update here", likes: []},
             isPublic: false,
             isPosted: false,
@@ -76,6 +78,8 @@ class AddTribe extends Component {
     }
 
     componentDidMount(): void {
+        console.log(this.props.friendIDs)
+        console.log(this.props.alwaysMe)
 
     }
 

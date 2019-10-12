@@ -99,11 +99,12 @@ export default  class TribeRoot extends Component {
                 this.setState({tribeData: data, loading: false})
             });
         } else {
-            this.ref.where('friendIDs', 'array-contains', this.props.alwaysMe).get().then( (snapshot) => {
+            this.ref.where('friendIDs', 'array-contains', this.props.alwaysMe).where('isPosted', '==', true).get().then( (snapshot) => {
                 let data = snapshot.docs.map(function (documentSnapshot) {
                     console.log(data);
                     return documentSnapshot.data()
                 });
+                let sortedArray = data.sort((a, b) => a.posted.valueOf() - b.posted.valueOf())
                 this.setState({tribeData: data, loading: false})
             });
         }
@@ -111,6 +112,9 @@ export default  class TribeRoot extends Component {
 
     render() {
         let loading = this.state.loading;
+        let data = this.state.tribeData
+        // let sortedArray = this.state.tribeData.sort((a, b) => a.posted.valueOf() - b.posted.valueOf())
+        let sortedArray  = data.sort((a,b) => new Date(b.posted) - new Date(a.posted));
         console.log(this.state.tribeData)
         return (
             <View>
@@ -119,7 +123,7 @@ export default  class TribeRoot extends Component {
                     { (!this.state.tribeData.length < 1)
                     ?<KeyboardAvoidingView>
                         <FlatList style={styles.bottomContainer}
-                                  data={this.state.tribeData}
+                                  data={sortedArray}
                                   listKey={(item, index) => 'D' + index.toString()}
                                   renderItem={({item}) => (
                                       <TribeComponent
