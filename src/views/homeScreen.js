@@ -110,6 +110,30 @@ class HomeScreen extends Component {
             });
         this.setState({friendData: fData, gotMems: true})
     }
+
+    getTribeMembersFast(friendIDS) {
+        let fData = [];
+        firebase.firestore().collection('users').where('friendIDs', 'array-contains', this.state.coreUserID).get().then((snapshot) => {
+            snapshot.forEach(function (doc) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.data().userID);
+                if (friendIDS.includes(doc.data().userID)) {
+                    let name = doc.data().name;
+                    let picture = doc.data().photoURL;
+                    let fbID = doc.data().fbID;
+                    let userID = doc.data().userID;
+                    let user = {picture: picture, name: name, userID: userID, fbID: fbID};
+                    fData.push(user)
+                }
+            });
+        })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+            });
+        this.setState({friendData: fData, gotMems: true})
+    }
+
+
     //TODO update friendList of all my tribes
 
     addFriendIDDB(friendID, myID){
@@ -204,7 +228,7 @@ class HomeScreen extends Component {
             if (!(this.state.notMe)){
                 this.setState({alwaysMe: user.userID})
             }
-
+            this.getTribeMembersFast()
         });
     };
 

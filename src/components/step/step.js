@@ -44,8 +44,6 @@ export default class Step extends React.Component {
     }
 
 
-
-
     handleEdit(){
         this.setState({editingStep: !this.state.editingStep});
         this.setState({open: true})
@@ -81,7 +79,7 @@ export default class Step extends React.Component {
                             onChangeText= {(name) => this.activeEdit(name) }
                             value = {this.state.name}
                             multiline = {true}
-                            editable = {true}
+                            editable = {this.props.canEdit}
                         />
 
                         <View style = {{flexDirection: "row"}}>
@@ -118,7 +116,7 @@ export default class Step extends React.Component {
                             <CheckBox
                                 containerStyle = {{margin: -7, marginRight: -10}}
                                 checked={this.props.done}
-                                onPress={() => this.props.toggleDone(this.props.id, this.props.boxID)}
+                                onPress={() => this.props.toggleDoneDB(this.props.id, this.props.boxID, this.state.name)}
                                 checkedColor='#3676FF'
                             />
                         </View>

@@ -265,7 +265,7 @@ export function shareTribeDB(tribeID, timeStamp){
         firebase.firestore().collection('tribes').where('id', '==', tribeID)
             .get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
-                doc.ref.update( {"posted": timeStamp})
+                doc.ref.update( {"posted": timeStamp, "isPosted": true})
             });
         });
     };
@@ -276,7 +276,7 @@ export function unshareTribeDB(tribeID, timeStamp){
         firebase.firestore().collection('tribes').where('id', '==', tribeID)
             .get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
-                doc.ref.update( {"posted": false})
+                doc.ref.update( {"isPosted": false})
             });
         });
     };

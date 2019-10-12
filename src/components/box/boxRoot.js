@@ -169,6 +169,7 @@ class BoxRoot extends Component {
                             handleDeleteBox = {this.handleDeleteBoxDB}
                             editing = {this.props.editing}
                             sendHeaderMessage = {this.props.sendHeaderMessage}
+                            toggleDoneDB={this.props.toggleDoneDB}
                         />
                         )}
                         />

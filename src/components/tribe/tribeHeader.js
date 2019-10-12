@@ -103,7 +103,7 @@ class TribeHeader extends Component {
 
                             />
                             : <View>
-                            { !(this.props.posted)
+                            { !(this.props.isPosted)
                                 ? <Button
                                 title = {"Post"}
                                 raised

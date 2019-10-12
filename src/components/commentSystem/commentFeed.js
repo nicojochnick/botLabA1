@@ -40,9 +40,14 @@ class CommentFeed extends Component {
 
     render() {
 
+        let data = this.state.tribeComments
+        if (this.props.isCommentOpen === false){
+            data = data.slice(0,2)
+        }
+
         return (
             <FlatList
-                data = {this.state.tribeComments}
+                data = {data}
                 renderItem={({item}) => (
                     <CommentContainer
                         message = {item.message}
@@ -51,6 +56,7 @@ class CommentFeed extends Component {
                         commentID = {item.commentID}
                         timestamp = {item.timestamp}
                         alwaysMe = {this.props.alwaysMe}
+                        tribeUserID = {this.props.userID}
                     />
                 )
                 }

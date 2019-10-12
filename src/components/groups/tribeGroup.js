@@ -90,33 +90,7 @@ class TribeGroup extends Component {
             <View>
                     <View>
                     <View style = {{flexDirection: "row", justifyContent: "flex-start", }}>
-                        <Button
-                            icon = {
-                                <Ionicons
-                                    style = {{marginRight: 0,}}
-                                    name = {'ios-search'}
-                                    color = "black"
-                                    size = {30}
-                                    onPress = {() => this.triggerSearch()}
-                                />
-                            }
-                            type = "clear"
 
-                            style = {{backgroundColor:"white"}}
-                            onPress = {() => this.triggerSearch()}
-
-                        />
-                        <TextInput
-                            style = {{borderWidth: 1, borderRadius: 5, width: 230, borderColor: "grey", margin: 7, padding: 5}}
-                            placeholder = 'type users email'
-                            onChangeText = {(text)=> this.setState({friendEmail: text.toLowerCase()})}
-                        />
-                        <Button
-                            type = "clear"
-                            title = 'close'
-                            style = {{backgroundColor:"white"}}
-                            onPress = {() => this.props.closeFriendView()}
-                        />
 
                     </View>
                     { (this.state.searchData !== null )
@@ -179,3 +153,32 @@ class TribeGroup extends Component {
 TribeGroup.propTypes = {};
 
 export default TribeGroup;
+
+//
+// <Button
+//     icon = {
+//         <Ionicons
+//             style = {{marginRight: 0,}}
+//             name = {'ios-search'}
+//             color = "black"
+//             size = {30}
+//             onPress = {() => this.triggerSearch()}
+//         />
+//     }
+//     type = "clear"
+//
+//     style = {{backgroundColor:"white"}}
+//     onPress = {() => this.triggerSearch()}
+//
+// />
+// <TextInput
+// style = {{borderWidth: 1, borderRadius: 5, width: 230, borderColor: "grey", margin: 7, padding: 5}}
+// placeholder = 'type users email'
+// onChangeText = {(text)=> this.setState({friendEmail: text.toLowerCase()})}
+// />
+// <Button
+//     type = "clear"
+//     title = 'close'
+//     style = {{backgroundColor:"white"}}
+//     onPress = {() => this.props.closeFriendView()}
+// />

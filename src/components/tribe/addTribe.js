@@ -70,6 +70,7 @@ class AddTribe extends Component {
             posted: false,
             header: {message: "*status will update here", likes: []},
             isPublic: false,
+            isPosted: false,
         };
         this.props.addTribeDB(genericTribe);
     }

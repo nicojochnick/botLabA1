@@ -45,7 +45,7 @@ export class StepRoot extends React.Component {
         this.handleDeleteStepDB = this.handleDeleteStepDB.bind(this);
         this.handleSwitch = this.handleSwitch.bind(this);
         this.checkCheck = this.checkCheck.bind(this);
-        this.toggleDoneDB = this.toggleDoneDB.bind(this);
+        // this.toggleDoneDB = this.toggleDoneDB.bind(this);
 
         this.state = {
             todoSwitch: true,
@@ -61,7 +61,9 @@ export class StepRoot extends React.Component {
     }
 
     changeStepNameDB(text,id, boxID){
-        this.props.changeStepNameDB(text,id,boxID);
+        if (this.props.canEdit) {
+            this.props.changeStepNameDB(text,id,boxID);
+        }
 
 
     }
@@ -76,14 +78,14 @@ export class StepRoot extends React.Component {
 
     }
 
-    toggleDone(id, childrenID, allSteps) {
-        this.props.dispatch(toggleDone(id));
-    }
-    toggleDoneDB(id, boxID){
-        if (this.props.canEdit) {
-            this.props.toggleDoneDB(id, boxID)
-        }
-    }
+    // toggleDone(id, childrenID, allSteps) {
+    //     this.props.dispatch(toggleDone(id));
+    // }
+    // toggleDoneDB(id, boxID){
+    //     if (this.props.canEdit) {
+    //         this.props.toggleDoneDB(id, boxID)
+    //     }
+    // }
 
     changeStepInfo(text, id) {
         console.log(text);
@@ -185,14 +187,17 @@ export class StepRoot extends React.Component {
                         canEdit = {this.props.canEdit}
                         changeStepName = {this.changeStepNameDB}
                         changeStepInfo = {this.changeStepInfo}
-                        toggleDone = {this.toggleDoneDB}
+                        // toggleDone = {this.toggleDoneDB}
 
                         handleSwitch = {this.handleSwitch}
                         handleAddStep = {this.props.handleAddStep}
                         handleDeleteStep = {this.handleDeleteStepDB}
                         checkCheck = {this.checkCheck}
+                        toggleDoneDB = {this.props.toggleDoneDB}
 
                         editing = {this.props.editing}
+                        canEdit = {this.props.canEdit}
+
 
                         name = {item.name}
                         info = {item.info}
@@ -220,7 +225,7 @@ export class StepRoot extends React.Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         deleteStepDB: (boxID, stepID) => dispatch(deleteStepDB(boxID, stepID)),
-        toggleDoneDB: (id, boxID) => dispatch(toggleDoneDB(id, boxID)),
+        // toggleDoneDB: (id, boxID) => dispatch(toggleDoneDB(id, boxID)),
         changeStepNameDB: (text, id, boxID) => dispatch(changeStepNameDB(text, id, boxID)),
 
     };

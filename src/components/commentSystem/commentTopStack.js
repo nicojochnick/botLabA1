@@ -25,10 +25,13 @@ class CommentTopStack extends Component {
         console.log(this.props.alwaysMe)
         return (
             <View>
-                   <CommentFeed
-                       tribeID = {this.props.tribeID}
-                       alwaysMe = {this.props.alwaysMe}
-                   />
+                    <CommentFeed
+                        userID = {this.props.userID}
+                        tribeID={this.props.tribeID}
+                        alwaysMe={this.props.alwaysMe}
+                        isCommentOpen = {this.props.isCommentOpen}
+                    />
+
                    <CommentContainer
                        tribeID = {this.props.tribeID}
                        userID = {this.props.userID}

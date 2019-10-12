@@ -38,7 +38,7 @@ class CommentComponent extends Component {
     render() {
         console.log(this.props.username);
         return (
-            <View style = {{flexDirection: "row", flex: 1, borderWidth: 0, borderTopWidth: 0.2, padding: 8}}>
+            <View style = {{flexDirection: "row", flex: 1, borderWidth: 0, borderTopWidth: 0.2, padding: 5}}>
                 <Avatar
                     source ={{uri: this.props.userPhoto}}
                     rounded/>
@@ -47,17 +47,20 @@ class CommentComponent extends Component {
                         <Text style = {{fontWeight: "bold", marginLeft: 10, fontSize: 17, color: "black", textAlign: "left"}}>
                             {this.props.username}
                         </Text>
-                    <View style = {{ flexDirection: "row", justifyContent: "space-between", marginBottom: 5, borderRadius: 10, padding: 3, marginLeft: 5, width: 300,}}>
+                    <View style = {{ flexDirection: "row", justifyContent: "space-between", marginBottom: 0, borderRadius: 10, padding: 1, marginLeft: 5, width: 300,}}>
                         <Text
                             style = {{color: "black", marginLeft: 3, marginTop: 0, fontSize: 17, width: 240}}
                             multiline = {true}>
                             {this.props.message}
                         </Text>
                         <View style = {{flexDirection: "column", }}>
-                        <Ionicons
-                            onPress = {()=> this.openDeleteConfirm(true)}
-                            name="ios-close-circle-outline"
-                            />
+                            {this.props.showDelete
+                             ? < Ionicons
+                                onPress = {()=> this.openDeleteConfirm(true)}
+                                name="ios-close-circle-outline"
+                                />
+                                : null
+                            }
                         </View>
                     </View>
                 </View>

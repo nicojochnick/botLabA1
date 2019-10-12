@@ -47,7 +47,6 @@ class Box extends Component {
         return (
             <KeyboardAvoidingView>
                 <View style = {{}}>
-
                 <View style={{flexDirection:"row", flex: 1}}>
                 {/*<TextInput*/}
                 {/*    style = {{margin: 10, fontSize: 25, fontWeight: "bold"}}*/}
@@ -58,38 +57,38 @@ class Box extends Component {
                 {/*</TextInput>*/}
                 { (!this.props.editing)
                         ? null
-                        : <View style = {{flexDirection: "row", flex: 1}} >
+                        : <View style = {{flexDirection: "row", flex: 1, justifyContent: "flex-start"}} >
 
                         < Button
                             icon = {<Icon style = {{marginRight: 5}}
                                           name = 'plus'
-                                          color = "green"
-                                          disabledStyle = {{color: "grey"}}
+                                          color = "white"
+                                          disabledStyle = {{color: "white"}}
                                           size = {15}
                                           onPress = {() => this.props.handleAddStep(this.props.id)}/>}
-                            type = "clear"
-                            title = "add todo"
-                            titleStyle = {{margin: 3, color: "green"}}
+                            title = "Add a milestone"
+                            raised
+                            titleStyle = {{margin: 3, color: "white"}}
                             onPress = {() => this.props.handleAddStep(this.props.id)}
-                            containerStyle={{flex: 1, justifyContent: "flex-start"}}
+                            containerStyle={{width: 300, justifyContent: "flex-start", margin: 10}}
                         />
 
-                            <Button
-                                icon={
-                                    <Icon
-                                        name='times'
-                                        color='red'
-                                        size={15}
-                                        onPress={() => this.props.handleDeleteBox(this.props.id)}
+                            {/*<Button*/}
+                            {/*    icon={*/}
+                            {/*        <Icon*/}
+                            {/*            name='times'*/}
+                            {/*            color='red'*/}
+                            {/*            size={15}*/}
+                            {/*            onPress={() => this.props.handleDeleteBox(this.props.id)}*/}
 
-                                    />
-                                }
-                                containerStyle={{flex: 1, justifyContent: "flex-end"}}
-                                title={"delete set"}
-                                titleStyle = {{margin: 4, color: "red"}}
-                                type="clear"
-                                onPress={() => this.props.handleDeleteBox(this.props.id)}
-                            />
+                            {/*        />*/}
+                            {/*    }*/}
+                            {/*    containerStyle={{flex: 1, justifyContent: "flex-end"}}*/}
+                            {/*    title={"delete set"}*/}
+                            {/*    titleStyle = {{margin: 4, color: "red"}}*/}
+                            {/*    type="clear"*/}
+                            {/*    onPress={() => this.props.handleDeleteBox(this.props.id)}*/}
+                            {/*/>*/}
 
                         </View>
                     }
@@ -118,6 +117,8 @@ class Box extends Component {
                     steps = {this.props.steps}
                     canEdit = {this.props.canEdit}
                     sendHeaderMessage = {this.props.sendHeaderMessage}
+                    toggleDoneDB={this.props.toggleDoneDB}
+
                 />
                 </View>
                 </View>

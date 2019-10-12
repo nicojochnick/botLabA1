@@ -31,6 +31,7 @@ class CommentContainer extends Component {
             isMe: false,
             userPhoto: null,
             username: null,
+            showDelete: true
 
         }
     }
@@ -107,6 +108,9 @@ class CommentContainer extends Component {
     componentDidMount(): void {
         // this.getUser(this.props.userID)
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
+        if (this.props.alwaysMe !== this.props.userID && this.props.alwaysMe !== this.props.tribeUserID){
+            this.setState({showDelete: false})
+        }
     }
 
 
@@ -138,12 +142,13 @@ class CommentContainer extends Component {
                     username = {this.state.username}
                 />
                 :<CommentComponent
-                message = {this.props.message}
-                postComment = {this.postComment}
-                userPhoto = {this.state.userPhoto}
-                username = {this.state.username}
-                deleteComment = {this.deleteComment}
-                isMe = {this.state.isMe}
+                    message = {this.props.message}
+                    postComment = {this.postComment}
+                    userPhoto = {this.state.userPhoto}
+                    username = {this.state.username}
+                    deleteComment = {this.deleteComment}
+                    isMe = {this.state.isMe}
+                    showDelete = {this.state.showDelete}
                 />
             }
             </View>

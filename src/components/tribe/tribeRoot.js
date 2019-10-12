@@ -139,6 +139,7 @@ export default  class TribeRoot extends Component {
                                           endGoal = {item.endGoal}
                                           posted = {item.posted}
                                           isPublic = {item.isPublic}
+                                          isPosted = {item.isPosted}
 
                                           alwaysMe = {this.props.alwaysMe}
                                           // tribeAuthorName = {this.props.name}
