@@ -43,6 +43,7 @@ class NotificationRoot extends Component {
                         toUserID = {item.toUserID}
                         timeStamp = {item.timeStamp}
                         action = {item.action }
+                        accepted = {item.accepted}
                         alwaysMe = {this.props.alwaysMe}
                         fbID = {this.props.fbID}
                     />

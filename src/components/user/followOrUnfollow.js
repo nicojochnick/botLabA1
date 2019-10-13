@@ -29,6 +29,7 @@ class FollowOrUnfollow extends Component {
             toUserID: this.props.friendID,
             timeStamp: moment().format(),
             action: "friendRequest",
+            accepted: false,
         };
         this.props.sendNotification(friendRequestNotification)
     }

@@ -46,6 +46,7 @@ class NotificationContainer extends Component {
         return (
             <UserTagContainer
                 action = {this.props.action}
+                accepted = {this.props.accepted}
                 fromFBID = {this.state.fromFBID}
                 fbID = {this.props.fbID}
                 message = {this.props.message}
@@ -53,6 +54,7 @@ class NotificationContainer extends Component {
                 toUserID = {this.props.toUserID}
                 fromPhoto = {this.state.fromPhoto}
                 fromUserName = {this.state.fromUserName}
+                notID = {this.props.timeStamp}
             />
         );
     }

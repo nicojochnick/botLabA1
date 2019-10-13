@@ -245,7 +245,7 @@ class HomeScreen extends Component {
 
                     <View style = {{flex: 0.7,flexDirection: "row", marginBottom: 0, marginRight: 15, justifyContent: "flex-end" }}>
                         <Identity size = 'large' notMe = {this.state.notMe} name = {this.state.name} profilePicture = {this.state.profilePicture}/>
-                        { (this.state.notMe)
+                        { (this.state.notMe && this.state.alwaysMe !== this.state.coreUserID)
                             ? <FollowOrUnfollow
                                 followed = {true}
                                 friendID = {this.state.coreUserID}

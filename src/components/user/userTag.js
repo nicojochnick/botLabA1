@@ -23,7 +23,6 @@ class UserTag extends Component {
 
     }
 
-
     navigateToProfile(userID, fbID) {
         this.props.navigation.navigate('OtherHome', { notMe: true, friendID: userID, fbID: fbID})
     }
@@ -32,8 +31,21 @@ class UserTag extends Component {
         this.props.addFriendIDDB(this.props.fromUserID,this.props.toUserID,this.props.fbID)
     };
 
+    buttonPress(){
+        if (this.props.accepted !== true) {
+        this.props.addFriendIDDB(this.props.fromUserID, this.props.toUserID, this.props.fbID)
+        }
+    }
+
 
     render() {
+        let button = 'accept'
+        let color = '#186aed'
+        if (this.props.accepted){
+            button = 'accepted'
+            color = '#31E781'
+        }
+
         return (
             <ListItem
                 style = {{borderWidth: 0.2, borderColor:"grey", margin: 0, padding: 2}}
@@ -43,12 +55,12 @@ class UserTag extends Component {
                 leftAvatar = {{source: {uri: this.props.avatar}}}
                 rightElement = {
                     <View>
-                    {(this.props.action)
+                    {(this.props.action === 'friendRequest')
                         ? <Button
-                            buttonStyle = {{backgroundColor: '#186aed'}}
-                            title ={"accept"}
+                            buttonStyle = {{backgroundColor: color}}
+                            title ={button}
                             raised = {true}
-                            onPress = {()=> this.props.addFriendIDDB(this.props.fromUserID, this.props.toUserID, this.props.fbID)}
+                            onPress = {()=> this.buttonPress()}
                         />
                     : null
                     }

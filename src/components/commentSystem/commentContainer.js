@@ -40,15 +40,15 @@ class CommentContainer extends Component {
 
     sendCommentNotification(){
         let comment = {
-            message : "commented on your goal",
+            message : "commented on your goal " + this.props.tribeName,
             fromUserID : this.props.alwaysMe,
             toUserID: this.props.friendID,
             timeStamp: moment().format(),
             action: "comment",
+            accepted: false,
         };
         this.props.sendNotification(comment)
     }
-
 
     postComment(text) {
         let user = firebase.auth().currentUser;
@@ -68,7 +68,6 @@ class CommentContainer extends Component {
         if(this.props.userID !== user.uid){
             this.sendCommentNotification( )
         }
-        console.log("dispatchedInternal")
     }
 
     deleteComment() {

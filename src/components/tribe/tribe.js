@@ -213,11 +213,12 @@ class TribeComponent extends Component {
 
     sendLikeNotification(){
         let like = {
-            message : "commented on your goal",
+            message : "liked your goal " + this.state.name,
             fromUserID : this.props.alwaysMe,
             toUserID: this.props.friendID,
             timeStamp: moment().format(),
             action: "like",
+            accepted: false,
         };
 
         this.props.sendNotification(like)
@@ -566,6 +567,7 @@ class TribeComponent extends Component {
                 <View style = {{borderTopWidth: 0.2}}>
                 <View style = {{flexDirection: "row",justifyContent: "flex-end", marginTop:3}}>
                         <CommentTopStack
+                            tribeName = {this.state.name}
                             isCommentOpen = {this.state.isCommentOpen}
                             tribeID={this.props.tribeID}
                             tribeAuthorName={this.state.tribeAuthorName}

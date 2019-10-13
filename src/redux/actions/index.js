@@ -531,9 +531,20 @@ export function toggleTribeOpen(index){
 }
 
 ///Notifications
-export const sendNotification = (notfication) => {
+export const sendNotification = (notification) => {
     return (dispatch, getState) => {
-        firebase.firestore().collection('notifications').add(notfication);
+        firebase.firestore().collection('notifications').add(notification);
+    }
+};
+
+export const acceptNotificationRequest= (notID) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('notifications').where('timeStamp', '==', notID)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({"accepted": true})
+            });
+        })
     }
 };
 
