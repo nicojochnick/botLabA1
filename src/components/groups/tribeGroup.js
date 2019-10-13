@@ -123,7 +123,6 @@ class TribeGroup extends Component {
                             }
                         </View>
                         : null
-
                     }
                     <View/>
                     <Divider/>

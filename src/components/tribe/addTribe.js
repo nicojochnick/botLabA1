@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Button} from 'react-native-elements';
 import {connect} from 'react-redux';
-import {addTribe, addTribeDB} from '../../redux/actions';
+import {addBox, addBoxDB, addTribe, addTribeDB} from '../../redux/actions';
 import moment from "moment";
 import firebase from 'react-native-firebase';
 
@@ -70,11 +70,27 @@ class AddTribe extends Component {
             endGoal: null,
             update: null,
             posted:  moment().format(),
-            header: {message: "*status will update here", likes: []},
+            header: {message: "milestones will update here!", likes: []},
             isPublic: false,
             isPosted: false,
         };
         this.props.addTribeDB(genericTribe);
+        this.handleAddBoxDB(genericTribe.id)
+    }
+
+    handleAddBoxDB(tribeID) {
+        const genericBox = {
+            name: "add a title",
+            id: moment().format(),
+            tribeID: tribeID,
+            open: false,
+            info: "add a description",
+            steps: [],
+            deadline: null,
+            userID: this.props.myID,
+            update: [],
+        };
+        this.props.addBoxDB(genericBox)
     }
 
     componentDidMount(): void {
@@ -125,7 +141,8 @@ AddTribe.propTypes = {};
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addTribeDB: (tribe) => dispatch(addTribeDB(tribe))
+        addTribeDB: (tribe) => dispatch(addTribeDB(tribe)),
+        addBoxDB: (box) => dispatch(addBoxDB(box)),
     }
 };
 

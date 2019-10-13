@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {FlatList, View} from 'react-native'
+import {FlatList, View, ScrollView} from 'react-native'
 import CommentContainer from './commentContainer';
 import * as firebase from "react-native-firebase";
 
@@ -34,6 +34,7 @@ class CommentFeed extends Component {
                 console.log(documentSnapshot.data())
                 return documentSnapshot.data()
             });
+            this.props.checkLength(data.length)
             this.setState({tribeComments: data, loading: false})
         });
     };
@@ -41,10 +42,10 @@ class CommentFeed extends Component {
     render() {
 
         let data = this.state.tribeComments
+        data = data.sort((a,b) =>  new Date(b.timeStamp) - new Date(a.timeStamp));
         if (this.props.isCommentOpen === false){
             data = data.slice(0,2)
         }
-
         return (
             <FlatList
                 data = {data}

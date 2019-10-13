@@ -74,23 +74,23 @@ class TribeHeader extends Component {
                             rounded/>
                         <View style = {{flexDirection: "column"}}>
                             <Text
-                                style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.props.tribeAuthorName} </Text>
+                                style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.props.tribeAuthorName} met a milestone! </Text>
                             <Text
                                 style = {{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17, width: "100%"}}
                                 numberOfLines={4}
                             >
-                                {this.state.message}
+                                {this.props.header.message}
                             </Text>
                         </View>
                     </View>
                     <View style ={{flexDirection: "row", flex: 0.2, justifyContent: 'flex-end', marginRight: -3}}>
                         { (this.props.isPublic)
                         ? <View>
-                            {!(this.props.canEdit )
-                            ? <Button
+                            {/*{!(this.props.canEdit )*/}
+                             <Button
                                 icon = {
                                     <Ionicons
-                                        name = {this.state.heartIcon}
+                                        name = {'ios-thumbs-up'}
                                         color = {this.state.heartIconColor}
                                         size = {25}
                                         onPress={()=> this.likeUpdate()}
@@ -98,31 +98,30 @@ class TribeHeader extends Component {
                                     />
                                 }
                                 type = 'clear'
-                                title = {this.state.likes}
+                                title = {this.props.header.likes.length}
                                 titleStyle = {{color:"white", marginLeft: 5}}
 
                             />
-                            : <View>
-                            { !(this.props.isPosted)
-                                ? <Button
-                                title = {"Post"}
-                                raised
-                                containerStyle = {{height: 40}}
-                                buttonStyle = {{backgroundColor: "white"}}
-                                titleStyle = {{color: '#186aed', fontWeight: "bold"}}
-                                onPress = {() => this.props.shareTribe(this.props.tribeID)}
-                                />
-                                :<Button
-                                    title = {"Un-Post"}
-                                    raised
-                                    containerStyle = {{height: 40, width: 90}}
-                                    buttonStyle = {{backgroundColor: '#186aed', borderColor: "white", borderWidth: 1}}
-                                    titleStyle = {{color: 'white', fontWeight: "bold"}}
-                                    onPress = {() => this.props.unshareTribe(this.props.tribeID)}
-                                    />
-                            }
-                            </View>
-                        }
+                            {/*: <View>*/}
+                            {/*{ !(this.props.isPosted)*/}
+                            {/*    ? <Button*/}
+                            {/*    title = {"Post"}*/}
+                            {/*    raised*/}
+                            {/*    containerStyle = {{height: 40}}*/}
+                            {/*    buttonStyle = {{backgroundColor: "white"}}*/}
+                            {/*    titleStyle = {{color: '#186aed', fontWeight: "bold"}}*/}
+                            {/*    onPress = {() => this.props.shareTribe(this.props.tribeID)}*/}
+                            {/*    />*/}
+                            {/*    :<Button*/}
+                            {/*        title = {"Un-Post"}*/}
+                            {/*        raised*/}
+                            {/*        containerStyle = {{height: 40, width: 90}}*/}
+                            {/*        buttonStyle = {{backgroundColor: '#186aed', borderColor: "white", borderWidth: 1}}*/}
+                            {/*        titleStyle = {{color: 'white', fontWeight: "bold"}}*/}
+                            {/*        onPress = {() => this.props.unshareTribe(this.props.tribeID)}*/}
+                            {/*        />*/}
+                            {/*}*/}
+                            {/*</View>*/}
                             </View>
                         : <Button
                                 title = {"Go Live!"}

@@ -41,6 +41,7 @@ class CommentComponent extends Component {
             <View style = {{flexDirection: "row", flex: 1, borderWidth: 0, borderTopWidth: 0.2, padding: 5}}>
                 <Avatar
                     source ={{uri: this.props.userPhoto}}
+                    size = {'smll'}
                     rounded/>
                     <View
                     style = {{flexDirection: "column"}}>

@@ -71,7 +71,7 @@ class BoxRoot extends Component {
 
     handleAddStepDB(boxID){
         const genericStep = {
-            name: "add a title",
+            name: "",
             data: [0],
             done: false,
             date: moment().format('dddd, MMMM Do'),
@@ -79,7 +79,7 @@ class BoxRoot extends Component {
             open: false,
             root: false,
             steps: [],
-            info: "add a description",
+            info: "",
             boxID: boxID,
         };
         this.props.handleAddStepDB(boxID, genericStep)

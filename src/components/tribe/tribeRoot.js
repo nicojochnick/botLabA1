@@ -113,7 +113,6 @@ export default  class TribeRoot extends Component {
     render() {
         let loading = this.state.loading;
         let data = this.state.tribeData
-        // let sortedArray = this.state.tribeData.sort((a, b) => a.posted.valueOf() - b.posted.valueOf())
         let sortedArray  = data.sort((a,b) => new Date(b.posted) - new Date(a.posted));
         console.log(this.state.tribeData)
         return (

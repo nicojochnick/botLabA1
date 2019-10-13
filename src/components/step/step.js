@@ -73,7 +73,9 @@ export default class Step extends React.Component {
             <View style = {{}}>
                 <View style = {styles.steps}>
                     <KeyboardAvoidingView style = {styles.topGoals}>
+                        <View style = {{width: '80%'}}>
                         <TextInput
+                            placeholder = 'add title!'
                             style = {{fontSize: 15, fontWeight: "600"}}
                             ref= {(el) => { this.text= el; }}
                             onChangeText= {(name) => this.activeEdit(name) }
@@ -81,12 +83,13 @@ export default class Step extends React.Component {
                             multiline = {true}
                             editable = {this.props.canEdit}
                         />
-
-                        <View style = {{flexDirection: "row"}}>
-
-                            { (this.props.editing)
+                        </View>
+                        <View style = {{flexDirection: "column"}}>
+                        <View style = {{flexDirection: "row", justifyContent: "center", alignContent: "center"}}>
+                            { (this.props.canEdit)
                                 ? <View style = {{flexDirection: "row"}}>
                                     <Button
+                                        containerStyle = {{marginRight: -10}}
                                         icon = {
                                             <Icon
                                                 name= 'times'
@@ -100,19 +103,6 @@ export default class Step extends React.Component {
                                 </View>
                                 : null
                             }
-
-                            {/*<Button*/}
-                            {/*    icon = {*/}
-                            {/*        <Icon*/}
-                            {/*            name= 'chevron-down'*/}
-                            {/*            color = '#3676FF'*/}
-                            {/*        />*/}
-                            {/*    }*/}
-                            {/*    containerStyle = {{marginRight: -10}}*/}
-                            {/*    title={ ""}*/}
-                            {/*    type="clear"*/}
-                            {/*    onPress = {() => this.props.handleSwitch(this.props.id)}*/}
-                            {/*/>*/}
                             <CheckBox
                                 containerStyle = {{margin: -7, marginRight: -10}}
                                 checked={this.props.done}
@@ -120,35 +110,19 @@ export default class Step extends React.Component {
                                 checkedColor='#3676FF'
                             />
                         </View>
-                    </KeyboardAvoidingView>
-                    {(this.state.open)
-                        ? (true)
-                            ? <View>
-                                {/*<TextInput*/}
-                                {/*    ref= {(el) => { this.name= el; }}*/}
-                                {/*    onChangeText= {(name) => this.props.changeStepInfo(name,this.props.id)}*/}
-                                {/*    value = {this.props.info}*/}
-                                {/*    multiline = {true}*/}
-
-                                {/*/>*/}
-                                <Button
-                                    style={{width: '30%', justifyContent: "flex-end", alignContent: "center", margin: 10}}
+                            {(this.state.open)
+                                ? <Button
+                                    style={{ justifyContent: "center", alignContent: "center", marginRight: 5}}
                                     title = "Save"
-                                    buttonStyle={{backgroundColor: "#4978DD"}}
+                                    titleStyle = {{color: '#3676FF', margin: -6}}
+                                    type = 'clear'
                                     onPress = {()=> this.doneSaving()}
                                 />
-                            </View>
-                            : null
+                                : null
+                            }
 
-                        : null
-                    }
-                    {(this.state.addStepInnerToggle)
-                        ? <View>
                         </View>
-                        : null
-
-                    }
-
+                    </KeyboardAvoidingView>
                 </View>
             </View>
         );

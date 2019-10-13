@@ -124,18 +124,18 @@ export class StepRoot extends React.Component {
 
     render() {
 
-        let todoColor =  "blue";
+        let todoColor =  '#186aed';
         let doneColor = 'darkgrey';
         let allColor = 'darkgrey';
         if (this.state.doneSwitch){
             todoColor =  'darkgrey';
-            doneColor = 'blue';
+            doneColor = '#186aed';
             allColor = "darkgrey"
         }
         if (this.state.allSwitch) {
             todoColor = 'darkgrey';
             doneColor = 'darkgrey';
-            allColor = 'blue';
+            allColor = '#186aed';
         }
 
         let allSteps = this.props.steps;
@@ -159,19 +159,19 @@ export class StepRoot extends React.Component {
             <View>
                 <View style={{flexDirection: "row"}}>
                     <Button
-                        titleStyle = {{color:todoColor , textWeight: "bold"}}
+                        titleStyle = {{color:todoColor , fontWeight: "bold"}}
                         type = 'clear'
-                        title = {'upcoming'}
+                        title = {'next'}
                         onPress = {()=> this.setState({todoSwitch:true, doneSwitch: false, allSwitch: false})}
                     />
                     <Button
-                        titleStyle = {{color:doneColor , textWeight: "bold"}}
+                        titleStyle = {{color:doneColor , fontWeight: "bold"}}
                         type = 'clear'
-                        title = {'completed'}
+                        title = {'done'}
                         onPress = {()=> this.setState({todoSwitch:false, doneSwitch: true, allSwitch: false,})}
                     />
                     <Button
-                        titleStyle = {{color:allColor , textWeight: "bold"}}
+                        titleStyle = {{color:allColor , fontWeight: "bold"}}
                         type = 'clear'
                         title = {'all'}
                         onPress = {()=> this.setState({todoSwitch:false, doneSwitch: false, allSwitch: true,})}
