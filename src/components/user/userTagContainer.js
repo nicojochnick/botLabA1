@@ -30,6 +30,7 @@ class UserTagContainer extends Component {
                 toUserID = {this.props.toUserID}
                 addFriendIDDB = {this.addFriendIDDB}
                 accepted = {this.props.accepted}
+
             />
         );
     }

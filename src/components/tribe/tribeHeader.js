@@ -10,13 +10,17 @@ import moment from '../commentSystem/commentContainer';
 class TribeHeader extends Component {
     constructor(props){
         super(props);
+        this.ref = firebase.firestore().collection('users');
+
         this.user = firebase.auth().currentUser;
         this.state = {
             liked: false,
             heartIcon:'ios-heart-empty',
             heartIconColor: 'white',
             message: '',
-            likes: 0
+            likes: 0,
+            username: null,
+            userphoto: null
 
         }
 
@@ -39,6 +43,7 @@ class TribeHeader extends Component {
     }
 
     componentDidMount(): void {
+        this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
         let message = '';
         let likes = 0;
         if (this.props.header === undefined){
@@ -63,6 +68,26 @@ class TribeHeader extends Component {
             }
         }
     }
+    componentWillUnmount(): void {
+        this.unsubscribe();
+    }
+
+
+    onCollectionUpdate = (snapshot) => {
+        firebase.firestore().collection('users').where('fbID', '==', this.props.userID).get().then((snapshot) => {
+            let data = snapshot.docs.map(function (documentSnapshot) {
+                console.log(documentSnapshot.data());
+                return documentSnapshot.data()
+            });
+            console.log(data);
+            let user = data;
+            this.setState({username: user.name});
+            this.setState({userphoto: user.photoURL});}
+        );
+    };
+
+
+
 
     render() {
         return (

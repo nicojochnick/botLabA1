@@ -77,6 +77,8 @@ class SearchComponent extends Component {
                                             name={this.props.searchData[0].name}
                                             fbID={this.props.searchData[0].fbID}
                                             route={'feed'}
+                                            isSearch = {true}
+                                            clearSearch = {this.props.clearSearch}
                                         />
                                         : <Text style={{
                                             fontSize: 15,

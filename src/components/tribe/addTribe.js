@@ -55,7 +55,7 @@ class AddTribe extends Component {
 
     handleAddTribeDB() {
 
-        let friendIDs = this.props.friendIDs;
+        let friendIDs = this.props.friendIDs.concat(this.props.alwaysMe)
         const genericTribe = {
             name: "",
             id: moment().format(),

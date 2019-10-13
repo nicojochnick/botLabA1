@@ -44,6 +44,7 @@ class HomeScreen extends Component {
         this.getTribeMembers = this.getTribeMembers.bind(this);
         this.addFriendIDDB = this.addFriendIDDB.bind(this);
         this.removeFriendIDDB = this.removeFriendIDDB.bind(this);
+        this.forceReload = this.forceReload.bind(this);
 
 
         this.state = {
@@ -228,6 +229,10 @@ class HomeScreen extends Component {
         });
     };
 
+    forceReload(){
+        this.forceUpdate()
+    }
+
     render() {
         console.log(this.state.friendIDs, this.state.alwaysMe);
         let goalColor = 'darkgrey';
@@ -240,11 +245,13 @@ class HomeScreen extends Component {
             <ScrollView>
                 <SafeAreaView style = {{flex: 0.1, flexDirection: "column", paddingTop: 0, marginTop: 5, paddingBottom: 10, borderBottomWidth: 0.3}}>
                     <View style = {{flex: 0.1, flexDirection: "row", justifyContent: "center"}}>
-                        <Text style = {{fontWeight: "bold", fontSize: 20}}> username</Text>
                     </View>
-
                     <View style = {{flex: 0.7,flexDirection: "row", marginBottom: 0, marginRight: 15, justifyContent: "flex-end" }}>
-                        <Identity size = 'large' notMe = {this.state.notMe} name = {this.state.name} profilePicture = {this.state.profilePicture}/>
+                        <Identity size = 'large'
+                                  forceReload = {this.forceReload}
+                                  notMe = {this.state.notMe}
+                                  name = {this.state.name}
+                                  profilePicture = {this.state.profilePicture}/>
                         { (this.state.notMe && this.state.alwaysMe !== this.state.coreUserID)
                             ? <FollowOrUnfollow
                                 followed = {true}

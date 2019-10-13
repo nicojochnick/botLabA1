@@ -49,10 +49,13 @@ class TribeComponent extends Component {
         super(props);
         this.unsubscribe = null;
         this.ref = firebase.firestore().collection('stepBox');
+        this.ref2 = firebase.firestore().collection('users');
+        this.ref3 = firebase.firestore().collection('tribes');
         this.user = firebase.auth().currentUser;
         this.closeFriendView = this.closeFriendView.bind(this);
         this.sendHeaderMessage = this.sendHeaderMessage.bind(this);
         this.sendLikeNotification = this.sendLikeNotification.bind(this);
+        this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
 
         this.computeProgress = this.computeProgress.bind(this);
 
@@ -121,7 +124,7 @@ class TribeComponent extends Component {
     }
     shareTribe(tribeID) {
         let timeStamp = moment().format();
-        this.props.shareTribeDB(tribeID, timeStamp)
+        this.props.shareTribeDB(this.props.id, timeStamp)
     }
     unshareTribe(tribeID) {
         let timeStamp = moment().format();
@@ -194,8 +197,9 @@ class TribeComponent extends Component {
     toggleDoneDB(id, boxID, name){
         if (this.state.canEdit) {
             this.props.toggleDoneDB(id, boxID)
+            this.updateHeader(this.props.tribeID, 0, 'milestone', name)
+            this.shareTribe()
         }
-        this.updateHeader(this.props.tribeID, 0, 'milestone', name)
     }
 
 
@@ -366,7 +370,7 @@ class TribeComponent extends Component {
     }
 
     goLive(){
-        this.props.shareTribe( )
+        this.props.shareTribe()
 
     }
 
@@ -376,6 +380,9 @@ class TribeComponent extends Component {
             this.setState({canEdit: false })
         }
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
+        this.unsubscribe = this.ref2.onSnapshot(this.onCollectionUpdate);
+        this.unsubscribe = this.ref3.onSnapshot(this.onCollectionUpdate);
+
         // this.props.getTribeMembers(this.props.friendIDS);
         let currData = this.props.cData[this.props.cData.length - 1];
         this.checkDate(currData);
@@ -385,15 +392,7 @@ class TribeComponent extends Component {
         this.unsubscribe();
     }
 
-
-
     onCollectionUpdate = (snapshot) => {
-        this.ref.where("tribeID", '==',this.props.tribeID).get().then((snapshot) => {
-            let data = snapshot.docs.map(function(documentSnapshot) {
-                return documentSnapshot.data()
-            });
-            this.setState({ boxData: data, loading: false })
-        });
         firebase.firestore().collection('users').where('fbID', '==', this.props.userID).get().then((snapshot) => {
                 let data = snapshot.docs.map(function (documentSnapshot) {
                     console.log(documentSnapshot.data());
@@ -401,9 +400,27 @@ class TribeComponent extends Component {
                 });
                 let user = data[0];
                 this.setState({tribeAuthorName: user.name});
-                this.setState({tribeAuthorProfilePicture: user.userPhoto});
+                this.setState({tribeAuthorProfilePicture: user.photoURL});
             }
         );
+        this.ref.where("tribeID", '==',this.props.tribeID).get().then((snapshot) => {
+            let data = snapshot.docs.map(function(documentSnapshot) {
+                return documentSnapshot.data()
+            });
+            this.setState({ boxData: data, loading: false })
+        });
+
+        this.ref3.where("id", '==',this.props.id).get().then((snapshot) => {
+            let data = snapshot.docs.map(function(documentSnapshot) {
+                return documentSnapshot.data()
+            })
+            console.log(data)
+            this.setState(
+                {
+                    name: data[0].name
+                })
+        });
+
     };
 
     computeProgress(ds,goal){
@@ -437,7 +454,6 @@ class TribeComponent extends Component {
         }
         console.log(this.props.friendIDS);
         console.log(this.props.searchData);
-        let myName = this.state.name;
         let dataList = [];
         let currData = [0];
         currData = this.props.cData[this.props.cData.length - 1];
@@ -459,6 +475,7 @@ class TribeComponent extends Component {
                         unshareTribe = {this.unshareTribe}
                         tribeID = {this.props.tribeID}
                         canEdit = {canEdit}
+                        userID = {this.props.userID}
                         alwaysMe = {this.props.alwaysMe}
                         updateLikes = {this.updateLikes}
                         tribeAuthorName = {this.state.tribeAuthorName}
@@ -471,7 +488,7 @@ class TribeComponent extends Component {
                         <TextInput
                             style = {styles.goalTitleText}
                             ref= {(el) => { this.name= el; }}
-                            value = {myName}
+                            value = {this.state.name}
                             placeholder = {"add a title!"}
                             editable = {canEdit}
                             onChangeText = {(text) => this.activateEdit(text,'name')}

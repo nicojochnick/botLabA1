@@ -19,6 +19,7 @@ class FollowOrUnfollow extends Component {
         this.state = {
             follow: false,
             isRequestSent: false,
+            isFollowing: false,
         }
     }
 
@@ -45,17 +46,31 @@ class FollowOrUnfollow extends Component {
     }
 
     componentDidMount(): void {
-        let friendID = this.props.friendID
+        if (this.props.friendIDS !== undefined) {
+            if (this.props.friendIDs.includes(this.props.alwaysMe)) {
+                this.setState({isFollowing: true})
+            }
+        }
     }
 
     render() {
+        console.log(this.props.friendIDs)
+        let isF = false;
+        if (this.props.friendIDS !== undefined) {
+            if (this.props.friendIDs.includes(this.props.alwaysMe)) {
+                isF = true
+
+            }
+        }
         return (
             <View style = {{flex: 0.5, justifyContent: "flex-end", alignItems: "center"}}>
-                {(this.state.followed)
+                {(isF)
                     ?
                     <Button
-                        title="unfollow"
+                        title="Remove from Tribe"
+                        buttonStyle = {{backgroundColor: '#186aed', width: 120}}
                         onPress = {() => this.removeFriend()}
+                        raised
                     />
                     :
                     <View>

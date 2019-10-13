@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {FlatList, View, KeyboardAvoidingView,Text, ActivityIndicator} from 'react-native';
+import {FlatList, View, KeyboardAvoidingView,Text, ActivityIndicator, RefreshControl} from 'react-native';
+
 import {styles} from '../theme';
 import TribeComponent from './tribe';
 import {connect} from 'react-redux';
@@ -35,6 +36,8 @@ export default  class TribeRoot extends Component {
         this.unsubscribe = null;
         this.ref = firebase.firestore().collection('tribes');
         this.ref2 = firebase.firestore().collection('users');
+        this.user = firebase.auth().currentUser;
+
 
         // this.addTribeDeadline = this.addTribeDeadline.bind(this);
         // this.changeTribeName = this.changeTribeName.bind(this);
@@ -64,7 +67,8 @@ export default  class TribeRoot extends Component {
             tribeData: [],
             friendData: [],
             searchData: null,
-            friendIDs: this.props.friendIDs
+            friendIDs: this.props.friendIDs,
+            refreshed: false,
         };
     }
 
@@ -85,7 +89,7 @@ export default  class TribeRoot extends Component {
     componentWillUnmount(): void {
         this.unsubscribe();
     }
-    //TODO Filter by timestamp ID, not FIREBASE ID
+
     onCollectionUpdate = (snapshot) => {
         console.log("TAKING UPDATE");
         console.log(this.props.filter);
@@ -104,12 +108,14 @@ export default  class TribeRoot extends Component {
                     console.log(data);
                     return documentSnapshot.data()
                 });
-                let sortedArray = data.sort((a, b) => a.posted.valueOf() - b.posted.valueOf())
                 this.setState({tribeData: data, loading: false})
             });
         }
     };
 
+    refresh(){
+
+    }
     render() {
         let loading = this.state.loading;
         let data = this.state.tribeData
@@ -120,7 +126,8 @@ export default  class TribeRoot extends Component {
                 { !(loading)
                     ? <View>
                     { (!this.state.tribeData.length < 1)
-                    ?<KeyboardAvoidingView>
+                    ?
+                        <KeyboardAvoidingView>
                         <FlatList style={styles.bottomContainer}
                                   data={sortedArray}
                                   listKey={(item, index) => 'D' + index.toString()}
@@ -143,13 +150,12 @@ export default  class TribeRoot extends Component {
                                           posted = {item.posted}
                                           isPublic = {item.isPublic}
                                           isPosted = {item.isPosted}
-
                                           alwaysMe = {this.props.alwaysMe}
                                           // tribeAuthorName = {this.props.name}
                                           // tribeAuthorProfilePicture = {this.props.profilePicture}
                                       />)}
                         />
-                    </KeyboardAvoidingView>
+                        </KeyboardAvoidingView>
                     : <ActivityIndicator style = {{margin: 30}} size="large" color="#0000ff" />
                 }
                     </View>

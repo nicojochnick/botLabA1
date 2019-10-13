@@ -18,16 +18,18 @@ class AddComment extends Component {
 
     }
 
+
+
     render() {
         return (
             <View>
                 <View style = {{flexDirection: "row", flex: 1, padding: 8, borderTopWidth: 0.2}}>
                     <Avatar
-                        source ={{uri: this.user.photoURL}}
+                        source ={{uri: this.props.userPhoto}}
                         rounded/>
                     <View
                         style = {{flexDirection: "column"}}>
-                        <Text style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "black", textAlign: "left"}}> {this.user.displayName} </Text>
+                        <Text style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "black", textAlign: "left"}}> {this.props.username}</Text>
                         <View style = {{ flexDirection: "row", marginBottom: 8, borderRadius: 10, padding: 3, margin: 5, width: 300, borderWidth: 0.2, borderColor: "grey"}}>
                             <TextInput
                                 style = {{color: "black", marginLeft: 3, marginTop: 3, fontSize: 17, width: 240}}

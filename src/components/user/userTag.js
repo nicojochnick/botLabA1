@@ -37,6 +37,15 @@ class UserTag extends Component {
         }
     }
 
+    nav(){
+        if(this.props.isSearch) {
+            this.props.clearSearch()
+        }
+        this.navigate(this.props.userID, this.props.fbID)
+    }
+
+
+
 
     render() {
         let button = 'accept'
@@ -67,7 +76,7 @@ class UserTag extends Component {
                     </View>
                 }
                 chevron
-                onPress = {() => this.navigate(this.props.userID, this.props.fbID)}
+                onPress = {() => this.nav()}
             />
         );
     }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View, Text, ActivityIndicator, ScrollView} from 'react-native';
+import {View, Text, ActivityIndicator, RefreshControl, ScrollView} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FeedContainer from '../components/feed/feedContainer';
@@ -19,6 +19,7 @@ class FeedView extends Component {
             uid: null,
             friendIDs: [],
             loading: true,
+            refreshing: false,
             filter: [],
             }
     }
@@ -58,6 +59,11 @@ class FeedView extends Component {
         });
     };
 
+    _onRefresh = () => {
+        this.setState({refreshing: true});
+        t
+    }
+
     render() {
 
         console.log(this.state.friendIDs);
@@ -67,7 +73,15 @@ class FeedView extends Component {
         let filter = letMyFriends.push(Me);
         console.log(filter);
         return (
-            <ScrollView style={{paddingTop: 50, backgroundColor: 'white', flex: 1}}>
+            <ScrollView
+                style={{paddingTop: 50, backgroundColor: 'white', flex: 1}}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={this._onRefresh}
+                    />
+                }
+            >
                 <SearchContainer/>
                 { (this.state.alwaysMe !== null )
                    ?

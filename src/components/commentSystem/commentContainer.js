@@ -119,7 +119,12 @@ class CommentContainer extends Component {
 
 
     onCollectionUpdate = (snapshot) => {
-        firebase.firestore().collection('users').where('userID', '==', this.props.userID).get().then((snapshot) => {
+        let search = this.props.userID
+        if (this.props.isAddComment){
+            search = this.props.alwaysMe
+        }
+
+        this.ref.where('userID', '==', search).get().then((snapshot) => {
             let data = snapshot.docs.map(function (documentSnapshot) {
                 console.log(documentSnapshot.data());
                 return documentSnapshot.data()
@@ -127,7 +132,7 @@ class CommentContainer extends Component {
             console.log(data);
             let user = data[0];
             this.setState({username: user.name});
-            this.setState({userPhoto: user.userPhoto});}
+            this.setState({userPhoto: user.photoURL});}
         );
     };
 

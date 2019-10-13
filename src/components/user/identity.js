@@ -77,13 +77,13 @@ class Identity extends Component {
         }
     }
 
-    changeName(text) {
+    async changeName(text) {
         this.setState({name: text});
         this.user.updateProfile({
             displayName: text
         });
         let uid = this.user.uid;
-        firebase.firestore().collection('users').where('fbID', '==', uid).get().then(function (querySnapshot) {
+        await firebase.firestore().collection('users').where('fbID', '==', uid).get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
                 doc.ref.update({"name": text})
             });
