@@ -8,8 +8,8 @@ class SwitchViewTab extends Component {
     render() {
         return (
             <View style = {{flexDirection: 'row', flex: 0.6, justifyContent: "center"}}>
-                <SwitchViewButton switchView = {this.props.switchView} color = {this.props.goalColor} text = {'goals'}/>
-                <SwitchViewButton switchView = {this.props.switchView} color = {this.props.tribeColor} text = {'tribe'}/>
+                <SwitchViewButton switchView = {this.props.switchView} color = {this.props.goalColor} text = {'missions'}/>
+                <SwitchViewButton switchView = {this.props.switchView} color = {this.props.tribeColor} text = {'people'}/>
             </View>
         );
     }

@@ -28,7 +28,7 @@ class SearchComponent extends Component {
                 <SearchBar
                     lightTheme={false}
                     inputStyle = {{color:"black"}}
-                    placeholder= 'search members by email'
+                    placeholder= {this.props.mess}
                     onChangeText = {(text)=> this.setState({friendEmail: text.toLowerCase()})}
                     value={this.state.friendEmail}
                     clearIcon={

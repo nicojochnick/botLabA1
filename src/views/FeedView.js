@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {View, Text, ActivityIndicator, RefreshControl, ScrollView} from 'react-native';
-import {SearchBar} from 'react-native-elements';
+import {Button, SearchBar} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FeedContainer from '../components/feed/feedContainer';
 import firebase from '@react-native-firebase/app';
@@ -23,11 +23,14 @@ class FeedView extends Component {
             loading: true,
             refreshing: false,
             filter: [],
+            tribeName: 'All Tribes',
+            tribeColor: 'lightgrey',
+            isAllTribe: true
             }
     }
     static navigationOptions = ({navigation}) => {
         return {
-            header: null
+           header: null
         }
     };
 
@@ -63,7 +66,6 @@ class FeedView extends Component {
 
     _onRefresh = () => {
         this.setState({refreshing: true});
-        t
     }
 
     render() {
@@ -74,6 +76,10 @@ class FeedView extends Component {
         let Me = this.state.alwaysMe
         let filter = letMyFriends.push(Me);
         console.log(filter);
+        let searchMess = 'add a tribe member by emails';
+        if (this.state.isAllTribe){
+            searchMess = 'search users by email'
+        }
         return (
             <ScrollView
                 style={{paddingTop: 50, paddingBottom:100, backgroundColor: '#282C33', flex: 1, marginBottom: 0}}
@@ -84,7 +90,27 @@ class FeedView extends Component {
                     />
                 }
             >
-                <SearchContainer/>
+                <View style = {{flexDirection: "row", marginRight: 5}}>
+                    <Button
+                        type = 'clear'
+                        onPress={() => this.props.navigation.toggleDrawer()}
+                        icon = {
+                            <Ionicons
+                                name = {'ios-menu'}
+                                size = {40}
+                                style = {{color: 'lightgrey'}}
+                                onPress={() => this.props.navigation.toggleDrawer()}
+
+                            />
+
+                        }
+                    />
+                <Text style = {{color: this.state.tribeColor, margin: 4, marginTop: 7,  fontWeight: 'bold', fontSize: 33}}> {this.state.tribeName} </Text>
+
+                </View>
+                <SearchContainer
+                    mess = {searchMess}
+                />
                 { (this.state.alwaysMe !== null )
                    ?
                     <TribeRoot

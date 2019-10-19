@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 
-import {createAppContainer, createStackNavigator, createSwitchNavigator, createBottomTabNavigator,} from 'react-navigation';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createStackNavigator } from 'react-navigation-stack';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../views/homeScreen';
 import AddStepScreen from '../views/addStepScreen'
@@ -14,7 +17,7 @@ import UserTag from '../components/user/userTag';
 import NotificationScreen from '../views/notificationScreen';
 import TribeSingleScreen from '../views/tribeSingleScreen';
 import SlideMenuRoot from '../components/slideMenu/slideMenuRoot';
-
+import {createDrawerNavigator} from 'react-navigation-drawer';
 
 class TopStack extends Component {
     render() {
@@ -47,33 +50,64 @@ const HomeStack =  createStackNavigator(
     }
 );
 
-// const slideMenu = createDrawerNavigator({
-//     FeedView:  FeedView,
-//     SlideMenu: SlideMenuRoot
+
+// const SlideMenu = createStackNavigator(
+//     {
+//         SecondScreen: {
+//             screen: SlideMenuRoot,
+//         }
+//     },
+//     {
+//         navigationOptions: ({ navigation }) => ({
+//             initialRouteName: 'SecondScreen',
+//             headerMode: 'screen',
+//             headerTitle: 'Second Screen Header',
+//             drawerLabel: 'Second Screen',
+//         }),
 //     }
 // );
 
+
+
 const FeedStack =  createStackNavigator(
     {
-        FeedView: FeedView, FriendHome: HomeScreen
+        FeedView: FeedView,
+        FriendHome: HomeScreen
     }, {
         initialRouteName: "FeedView",
         headerTransparent: true,
+        drawerBackgroundColor: '#282C33'
+
+    }
+);
+
+const slideMenu = createDrawerNavigator({
+        Feed: {
+            screen: FeedStack,
+        },
+        // Menu: {
+        //     screen: SlideMenuRoot,
+        // },
+    }, {
+
+    contentComponent: SlideMenuRoot,
+    initialRouteName: 'Feed',
+        drawerType: 'slide',
     }
 );
 
 
-const tribeStack =  createStackNavigator(
-    {
-        Feed: FeedView, TribeScreen: TribeSingleScreen
-    }, {
-        initialRouteName: "FeedView",
-        headerTransparent: true,
-    }
-);
+// const tribeStack =  createStackNavigator(
+//     {
+//         Feed: FeedView, TribeScreen: TribeSingleScreen
+//     }, {
+//         initialRouteName: "FeedView",
+//         headerTransparent: true,
+//     }
+// );
 
 const AppDrawer = createBottomTabNavigator(
-    { FeedView: FeedStack, Home: HomeStack, Notifications: NotificationScreen
+    { FeedView: slideMenu, Home: HomeStack, Notifications: NotificationScreen
     }, { defaultNavigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ focused, horizontal, tintColor }) => {
                 const { routeName } = navigation.state;

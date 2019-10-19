@@ -156,10 +156,10 @@ export default  class TribeRoot extends Component {
                                       />)}
                         />
                         </KeyboardAvoidingView>
-                    : <ActivityIndicator style = {{margin: 30}} size="large" color="#0000ff" />
+                    : <ActivityIndicator style = {{margin: 30}} size="large" color="grey" />
                 }
                     </View>
-                    :<ActivityIndicator style = {{margin: 30}} size="large" color="#0000ff" />
+                    :<ActivityIndicator style = {{margin: 30}} size="large" color="grey" />
                 }
             </View>
         );

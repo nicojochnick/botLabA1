@@ -3,9 +3,20 @@ import PropTypes from 'prop-types';
 import GroupTribeComponent from './groupTribeComponent';
 
 class GroupTribeContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        }
+    }
+
     render() {
         return (
-            <GroupTribeComponent/>
+            <GroupTribeComponent
+                tribeName = {null}
+                tribeMembers = {null}
+                tribePhoto = {null}
+                navigate = {this.props.navigate}
+            />
         );
     }
 }

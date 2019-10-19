@@ -46,6 +46,7 @@ class SearchContainer extends Component {
                 triggerSearch = {this.triggerSearch}
                 searchData = {this.state.searchData}
                 clearSearch = {this.clearSearch}
+                mess = {this.props.mess}
             />
         );
     }
