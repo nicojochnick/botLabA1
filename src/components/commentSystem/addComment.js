@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {TextInput, View, Text} from 'react-native';
-import firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
 import {Button, Avatar} from 'react-native-elements';
 
 class AddComment extends Component {

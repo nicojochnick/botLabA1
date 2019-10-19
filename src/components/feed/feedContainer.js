@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {ActivityIndicator, FlatList, View} from 'react-native';
 import TribeRoot from '../tribe/tribeRoot';
-import * as firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
 import FeedRootComponent from './feedRootComponent';
 // Basic IDEA: fetch all tribes by my id and friend id that have a timestamp in posted field, sort by most recent time first
 class FeedContainer extends Component {

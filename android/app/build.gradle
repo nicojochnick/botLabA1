@@ -188,9 +188,9 @@ android {
 }
 
 dependencies {
+    implementation project(':@react-native-firebase_app')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-image-picker')
-    implementation project(':@react-native-firebase_auth')
     implementation project(':react-native-firebase')
     implementation project(':react-native-linear-gradient')
     implementation project(':react-native-svg')

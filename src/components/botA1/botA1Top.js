@@ -10,7 +10,7 @@ import {View} from 'react-native'
 import {Input} from 'react-native-elements'
 import BotA1Component from './botA1Component';
 import {connect} from 'react-redux';
-import * as firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
 
 
 class BotA1Top extends Component {

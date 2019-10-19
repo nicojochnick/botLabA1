@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {View} from 'react-native'
 import NotificationComponent from './notificationComponent';
-import firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
 import UserTag from '../user/userTag';
 import UserTagContainer from '../user/userTagContainer';
 

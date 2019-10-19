@@ -10,7 +10,6 @@ import {styles} from "../theme";
 import Identity from '../user/identity';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import * as firebase from "react-native-firebase";
 import * as Progress from "react-native-progress";
 
 

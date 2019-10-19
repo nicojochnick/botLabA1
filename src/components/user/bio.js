@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {TextInput, View} from 'react-native';
 import {styles} from '../theme';
 import {Button} from 'react-native-elements';
-import firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
 
 class Bio extends Component {
 

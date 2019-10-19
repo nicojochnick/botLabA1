@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {View,FlatList, Text, ScrollView} from 'react-native';
 import NotificationContainer from './notificationContainer';
-import * as firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
 
 //Call relevant Data from the commentSystem collection and format it appropratiely into the notification Component
 class NotificationRoot extends Component {

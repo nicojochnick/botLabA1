@@ -14,7 +14,7 @@ import TribeRoot from '../components/tribe/tribeRoot'
 import Users from '../components/test';
 import NavSettings from '../components/navSettings';
 import TribeGroup from '../components/groups/tribeGroup';
-import firebase from 'react-native-firebase';
+import firebase from '@react-native-firebase/app';
 import CoreChatContainer from '../components/coreChat/coreChatContainer'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import BotA1Component from '../components/botA1/botA1Component';

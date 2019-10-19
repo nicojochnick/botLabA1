@@ -5,7 +5,11 @@ import {Button} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {addBox, addBoxDB, addTribe, addTribeDB} from '../../redux/actions';
 import moment from "moment";
-import firebase from 'react-native-firebase';
+import firebase from '@react-native-firebase/app';
+import '@react-native-firebase/auth';
+
+
+
 
 // import firestore from '@react-native-firebase/firestore';
 

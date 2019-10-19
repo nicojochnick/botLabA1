@@ -1,7 +1,8 @@
 import React from 'react'
 import { StyleSheet, Text, TextInput, View} from 'react-native'
 import {Button, Input} from 'react-native-elements'
-import firebase from 'react-native-firebase';
+import { firebase } from '@react-native-firebase/auth';
+
 import moment from 'moment'
 
 

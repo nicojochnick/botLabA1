@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Menu, MenuOption, MenuOptions, MenuTrigger} from 'react-native-popup-menu';
-import firebase from 'react-native-firebase';
+import firebase from '@react-native-firebase/app';
 import {ConfirmDialog} from 'react-native-simple-dialogs';
 
 

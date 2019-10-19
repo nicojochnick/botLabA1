@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {FlatList, View, ScrollView} from 'react-native'
 import CommentContainer from './commentContainer';
-import * as firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
 
 
 //Comment Structure

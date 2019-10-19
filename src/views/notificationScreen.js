@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {View, FlatList, Text, ActivityIndicator} from 'react-native'
 import NotificationRoot from '../components/notifications/notificationRoot';
-import firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
 
 class NotificationScreen extends Component {
 

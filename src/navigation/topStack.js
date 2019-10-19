@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import {createAppContainer, createStackNavigator, createSwitchNavigator, createBottomTabNavigator,} from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -48,11 +47,11 @@ const HomeStack =  createStackNavigator(
     }
 );
 
-const slideMenu = createDrawerNavigator({
-    FeedView:  FeedView,
-    SlideMenu: SlideMenuRoot
-    }
-);
+// const slideMenu = createDrawerNavigator({
+//     FeedView:  FeedView,
+//     SlideMenu: SlideMenuRoot
+//     }
+// );
 
 const FeedStack =  createStackNavigator(
     {

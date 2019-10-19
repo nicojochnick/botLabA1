@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, Text} from 'react-native'
 import {Avatar, Button, Input} from 'react-native-elements';
 import {styles} from '../theme';
-import firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from '../commentSystem/commentContainer';
 

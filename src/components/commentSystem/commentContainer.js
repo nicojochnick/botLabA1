@@ -7,7 +7,7 @@ import {View} from 'react-native'
 import AddComment from './addComment';
 import moment from 'moment'
 import {deleteCommentDB, postCommentDB, sendNotification} from '../../redux/actions';
-import * as firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
 
 
 //All writes, to the store,

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import SearchComponent from './searchComponent';
 import TribeGroup from '../groups/tribeGroup';
-import firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
 
 class SearchContainer extends Component {
     constructor(props) {

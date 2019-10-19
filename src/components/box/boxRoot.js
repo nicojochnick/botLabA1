@@ -16,7 +16,7 @@ import {
     toggleDone, toggleOpen,
 } from '../../redux/actions';
 import Step from '../step/step';
-import * as firebase from "react-native-firebase";
+import firebase from "@react-native-firebase/app";
 import {Button} from 'react-native-elements';
 
 

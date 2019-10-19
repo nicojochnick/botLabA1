@@ -16,7 +16,7 @@ import {
     updateDate, addChildStep, toggleDone, addStepDB, deleteStepDB, toggleDoneDB, changeStepNameDB,
 } from '../../redux/actions';
 import moment from "moment";
-import * as firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
 
 const goalsSelector = (Obj) => {
     return Object.keys(Obj)

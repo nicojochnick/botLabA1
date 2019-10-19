@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Text, View, TextInput} from 'react-native';
 import {Avatar, Button} from 'react-native-elements';
-import firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
 
 class TribeUpdateAdd extends Component {
     constructor(props){

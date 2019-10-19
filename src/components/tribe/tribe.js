@@ -24,7 +24,7 @@ import {
 import { ConfirmDialog } from 'react-native-simple-dialogs';
 import moment from "moment";
 import TribeGroup from '../groups/tribeGroup';
-import * as firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
 import {AreaChart, Grid} from 'react-native-svg-charts';
 import TribeHeader from './tribeHeader';
 import CoreChatContainer from '../coreChat/coreChatContainer';

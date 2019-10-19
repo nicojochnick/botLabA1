@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {CoreChatComponent} from './coreChatComponent';
 import {GiftedChat} from 'react-native-gifted-chat';
-import * as firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
 import {sendMessage} from '../../redux/actions';
 import {connect} from 'react-redux';
 

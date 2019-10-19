@@ -6,7 +6,7 @@ import {styles} from '../theme';
 import TribeComponent from './tribe';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import * as firebase from 'react-native-firebase';
+import firebase from '@react-native-firebase/app';
 import {
     addBox,
     deleteBox,

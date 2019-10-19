@@ -5,7 +5,7 @@ import {Avatar, Button, ListItem, SearchBar, Divider} from 'react-native-element
 import {styles} from '../theme'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import * as firebase from 'react-native-firebase';
+import firebase from '@react-native-firebase/app';
 import moment from 'moment';
 import UserTag from '../user/userTag';
 

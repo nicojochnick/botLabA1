@@ -6,7 +6,8 @@ import {connect} from "react-redux";
 import ImagePicker from 'react-native-image-picker';
 import {addProfileImage, changeName, changeStepName} from '../../redux/actions';
 import {styles} from '../theme';
-import firebase from 'react-native-firebase';
+import firebase from '@react-native-firebase/app';
+
 
 
 class Identity extends Component {

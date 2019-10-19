@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Text} from 'react-native'
 import PropTypes from 'prop-types';
 import {changeName} from '../../../redux/actions';
-import * as firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
 
 class Chat extends Component {
 

@@ -4,7 +4,9 @@ import {View, Text, ActivityIndicator, RefreshControl, ScrollView} from 'react-n
 import {SearchBar} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FeedContainer from '../components/feed/feedContainer';
-import firebase from "react-native-firebase";
+import firebase from '@react-native-firebase/app';
+import '@react-native-firebase/firestore';
+
 import TribeRoot from '../components/tribe/tribeRoot';
 import SearchContainer from '../components/search/searchContainer';
 
