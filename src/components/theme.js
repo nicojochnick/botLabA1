@@ -47,8 +47,8 @@ export const styles = StyleSheet.create({
     steps: {
         fontFamily: "roboto",
         borderWidth: 0,
-        backgroundColor: "white",
-        shadowColor: "grey",
+        backgroundColor: "#4C5462",
+        shadowColor: "black",
         shadowOffset: {width: 0, height: 2},
         shadowOpacity: 5,
         borderRadius: 6,
@@ -69,24 +69,25 @@ export const styles = StyleSheet.create({
 
     tribes: {
         fontFamily: "roboto",
-        borderWidth: 0,
+        borderWidth: 1,
         backgroundColor: "white",
-        shadowColor: "grey",
+        shadowColor: "black",
         shadowOffset: {width: 0, height: 2},
         shadowOpacity: 5,
         borderRadius: 6,
         margin: 6,
         padding: 0,
+        borderColor: '#2852EE',
     },
 
     tribesHeader: {
         fontFamily: "roboto",
-        borderWidth: 0,
-        shadowColor: "grey",
+        shadowColor: "black",
         shadowOffset: {width: 0, height: 2},
         shadowOpacity: 5,
         borderRadius: 6,
         margin: 6,
+        borderColor: '#2852EE',
         padding: 0,
     },
 
@@ -139,6 +140,7 @@ export const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: "bold",
         marginTop: -2,
+        color: "white"
     },
 
     titleDeadlineText: {

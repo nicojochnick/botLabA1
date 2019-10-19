@@ -45,12 +45,12 @@ class CommentComponent extends Component {
                     rounded/>
                     <View
                     style = {{flexDirection: "column"}}>
-                        <Text style = {{fontWeight: "bold", marginLeft: 10, fontSize: 17, color: "black", textAlign: "left"}}>
+                        <Text style = {{fontWeight: "bold", marginLeft: 10, fontSize: 17, color: "white", textAlign: "left"}}>
                             {this.props.username}
                         </Text>
                     <View style = {{ flexDirection: "row", justifyContent: "space-between", marginBottom: 0, borderRadius: 10, padding: 1, marginLeft: 5, width: 300,}}>
                         <Text
-                            style = {{color: "black", marginLeft: 3, marginTop: 0, fontSize: 17, width: 240}}
+                            style = {{color: "white", marginLeft: 3, marginTop: 0, fontSize: 17, width: 240}}
                             multiline = {true}>
                             {this.props.message}
                         </Text>
@@ -59,6 +59,8 @@ class CommentComponent extends Component {
                              ? < Ionicons
                                 onPress = {()=> this.openDeleteConfirm(true)}
                                 name="ios-close-circle-outline"
+                                size={20}
+                                color = 'white'
                                 />
                                 : null
                             }

@@ -75,8 +75,8 @@ export default class Step extends React.Component {
                     <KeyboardAvoidingView style = {styles.topGoals}>
                         <View style = {{width: '80%'}}>
                         <TextInput
-                            placeholder = 'add title!'
-                            style = {{fontSize: 15, fontWeight: "600"}}
+                            placeholder = 'add title'
+                            style = {{fontSize: 18, fontWeight: "500", color: "white"}}
                             ref= {(el) => { this.text= el; }}
                             onChangeText= {(name) => this.activeEdit(name) }
                             value = {this.state.name}
@@ -114,7 +114,7 @@ export default class Step extends React.Component {
                                 ? <Button
                                     style={{ justifyContent: "center", alignContent: "center", marginRight: 5}}
                                     title = "Save"
-                                    titleStyle = {{color: '#3676FF', margin: -6}}
+                                    titleStyle = {{color: 'white', fontWeight: "bold", margin: -6}}
                                     type = 'clear'
                                     onPress = {()=> this.doneSaving()}
                                 />

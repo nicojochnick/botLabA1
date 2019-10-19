@@ -26,7 +26,7 @@ class SearchComponent extends Component {
             <View style = {{flex: 1}}>
                 <View>
                 <SearchBar
-                    lightTheme={true}
+                    lightTheme={false}
                     inputStyle = {{color:"black"}}
                     placeholder= 'search members by email'
                     onChangeText = {(text)=> this.setState({friendEmail: text.toLowerCase()})}
@@ -48,7 +48,7 @@ class SearchComponent extends Component {
                 </View>
                 <View>
                     {(this.state.friendEmail !== null)
-                        ? <View style={{flexDirection: "column", justifyContent: 'center', margin: 5}}>
+                        ? <View style={{flexDirection: "column", backgroundColor: "#3E4145", justifyContent: 'center', margin: 5}}>
                             {(this.state.friendEmail !== null)
                                 ?
                                 <Button

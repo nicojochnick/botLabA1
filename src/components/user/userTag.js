@@ -57,9 +57,12 @@ class UserTag extends Component {
 
         return (
             <ListItem
-                style = {{borderWidth: 0.2, borderColor:"grey", margin: 0, padding: 2}}
-                titleStyle = {{fontWeight: "500"}}
+                containerStyle = {{backgroundColor: "#3E4145", borderWidth:-1}}
+                contentContainerStyle = {{borderWidth: 0}}
+                style = {{ margin: 0, padding: 0,}}
+                titleStyle = {{fontWeight: "500", color: "white"}}
                 title={this.props.name}
+                subtitleStyle = {{color: "lightgrey"}}
                 subtitle={this.props.message}
                 leftAvatar = {{source: {uri: this.props.avatar}}}
                 rightElement = {

@@ -91,18 +91,18 @@ class TribeHeader extends Component {
 
     render() {
         return (
-            <View style = {[{ backgroundColor: '#186aed', paddingBottom: 15, padding: 10}, styles.tribesHeader]}>
-                <View style = {{margin: 10, marginTop: 10, flexDirection: "row", flex: 1}}>
+            <View style = {[{ backgroundColor: '#2D3861',  borderWidth: 1, borderColor:'2852EE', paddingBottom: 15, padding: 10}, styles.tribesHeader]}>
+                <View style = {{margin: 10, marginTop: 10, flexDirection: "row", flex: 1, width: '95%'}}>
                     <View style = {{flexDirection: "row", flex: 0.8}}>
                         <Avatar
                             source ={{uri: this.props.tribeAuthorProfilePicture}}
                             rounded/>
-                        <View style = {{flexDirection: "column"}}>
+                        <View style = {{flexDirection: "column", width: '98%'}}>
                             <Text
-                                style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.props.tribeAuthorName} met a milestone! </Text>
+                                style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.props.tribeAuthorName} met a milestone </Text>
                             <Text
                                 style = {{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17, width: "100%"}}
-                                numberOfLines={4}
+                                multiline = {true}
                             >
                                 {this.props.header.message}
                             </Text>

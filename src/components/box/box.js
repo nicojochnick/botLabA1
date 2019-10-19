@@ -48,14 +48,7 @@ class Box extends Component {
             <KeyboardAvoidingView>
                 <View style = {{}}>
                 <View style={{flexDirection:"row", flex: 1, justifyContent: "flex-start", alignItems: "center"}}>
-                    <Text style={{color:'#186aed', fontWeight: "bold", fontSize: 25, marginTop: 3 }}> Milestones </Text>
-                {/*<TextInput*/}
-                {/*    style = {{margin: 10, fontSize: 25, fontWeight: "bold"}}*/}
-                {/*    editable = {this.state.editingBox}*/}
-                {/*    onChangeText = {(text) => this.setState({name:text})}*/}
-                {/*>*/}
-                {/*    {this.props.name}*/}
-                {/*</TextInput>*/}
+                    <Text style={{color:'white', fontWeight: "bold", fontSize: 25, marginTop: 3 }}> Milestones </Text>
                 { (!this.props.canEdit)
                         ? null
                         : <View style = {{flexDirection: "row", flex: 1, justifyContent: "flex-end"}} >

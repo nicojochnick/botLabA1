@@ -69,6 +69,7 @@ class CommentTopStack extends Component {
 
                     </View>
                 </View>
+                <View style = {{backgroundColor: "#2D3861"}}>
                     <CommentFeed
                         userID = {this.props.userID}
                         tribeID={this.props.tribeID}
@@ -76,6 +77,7 @@ class CommentTopStack extends Component {
                         isCommentOpen = {this.state.openComments}
                         checkLength = {this.checkLength}
                     />
+                </View>
 
                    <CommentContainer
                        tribeID = {this.props.tribeID}

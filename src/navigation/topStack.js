@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import {createAppContainer, createStackNavigator, createSwitchNavigator, createBottomTabNavigator, createDrawerNavigator} from 'react-navigation';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+
+import {createAppContainer, createStackNavigator, createSwitchNavigator, createBottomTabNavigator,} from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../views/homeScreen';
 import AddStepScreen from '../views/addStepScreen'
@@ -12,6 +14,8 @@ import FeedView from '../views/FeedView';
 import UserTag from '../components/user/userTag';
 import NotificationScreen from '../views/notificationScreen';
 import TribeSingleScreen from '../views/tribeSingleScreen';
+import SlideMenuRoot from '../components/slideMenu/slideMenuRoot';
+
 
 class TopStack extends Component {
     render() {
@@ -41,6 +45,12 @@ const HomeStack =  createStackNavigator(
     }, {
         initialRouteName: "Home",
         headerTransparent: true,
+    }
+);
+
+const slideMenu = createDrawerNavigator({
+    FeedView:  FeedView,
+    SlideMenu: SlideMenuRoot
     }
 );
 
@@ -84,6 +94,9 @@ const AppDrawer = createBottomTabNavigator(
             activeTintColor: '#2067ff',
             inactiveTintColor: 'lightgrey',
             showLabel: false,
+            style: {
+                backgroundColor: '#333740',
+            },
 
         },
     }

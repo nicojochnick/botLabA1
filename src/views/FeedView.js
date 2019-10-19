@@ -74,7 +74,7 @@ class FeedView extends Component {
         console.log(filter);
         return (
             <ScrollView
-                style={{paddingTop: 50, backgroundColor: 'white', flex: 1}}
+                style={{paddingTop: 50, paddingBottom:100, backgroundColor: '#282C33', flex: 1, marginBottom: 0}}
                 refreshControl={
                     <RefreshControl
                         refreshing={this.state.refreshing}

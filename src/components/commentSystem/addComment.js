@@ -15,6 +15,7 @@ class AddComment extends Component {
     postComment(){
         let comment = this.state.comment;
         this.props.postComment(comment)
+        this.setState({comment: ''})
 
     }
 
@@ -22,19 +23,20 @@ class AddComment extends Component {
 
     render() {
         return (
-            <View>
+            <View style = {{backgroundColor: "#2D3861"}}>
                 <View style = {{flexDirection: "row", flex: 1, padding: 8, borderTopWidth: 0.2}}>
                     <Avatar
                         source ={{uri: this.props.userPhoto}}
                         rounded/>
                     <View
                         style = {{flexDirection: "column"}}>
-                        <Text style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "black", textAlign: "left"}}> {this.props.username}</Text>
+                        <Text style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.props.username}</Text>
                         <View style = {{ flexDirection: "row", marginBottom: 8, borderRadius: 10, padding: 3, margin: 5, width: 300, borderWidth: 0.2, borderColor: "grey"}}>
                             <TextInput
-                                style = {{color: "black", marginLeft: 3, marginTop: 3, fontSize: 17, width: 240}}
+                                style = {{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17, width: 240}}
                                 multiline = {true}
                                 placeholder = 'type something....'
+                                value = {this.state.comment}
                                 onChangeText = {(text) => this.setState({ comment: text})}
                             />
                             <Button

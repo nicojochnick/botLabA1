@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View,FlatList, Text} from 'react-native';
+import {View,FlatList, Text, ScrollView} from 'react-native';
 import NotificationContainer from './notificationContainer';
 import * as firebase from "react-native-firebase";
 
@@ -34,7 +34,7 @@ class NotificationRoot extends Component {
 
     render() {
         return (
-            <View>
+            <ScrollView style = {{backgroundColor: '#282C33'}}>
                 <Text style = {{fontSize: 30, color: '#186aed', fontWeight: "bold"}}>  Notifications </Text>
             <FlatList
                 data = {this.state.notifications}
@@ -51,7 +51,7 @@ class NotificationRoot extends Component {
                     />
                     )}
             />
-            </View>
+            </ScrollView>
         );
     }
 }

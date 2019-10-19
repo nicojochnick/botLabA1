@@ -94,7 +94,7 @@ class TribeComponent extends Component {
             metricNameChange: false,
             metric: null,
             metricChange: false,
-            endGoal: null,
+            endGoal: this.props.endGoal,
             endGoalChange: false,
             canEdit: true,
             headerMessage: null,
@@ -330,6 +330,7 @@ class TribeComponent extends Component {
         }
 
         if (this.state.endGoalChange) {
+            console.log("HERE")
             this.changeEndGoal(this.state.endGoal, this.props.id);
             this.setState({endGoalChange: false})
 
@@ -361,10 +362,9 @@ class TribeComponent extends Component {
             }
         }
 
-        if (param === 'description') {
+        if (param === 'endGoal') {
                 this.setState({endGoalChange: true});
                 this.setState({endGoal: data})
-
         }
 
     }
@@ -464,7 +464,7 @@ class TribeComponent extends Component {
         let marginTop = -25;
 
         return (
-            <View style = {{marginTop: 5}}>
+            <View style = {{marginTop:10}}>
                 {(this.props.header)
                     ?<TribeHeader
                         isPosted={this.props.isPosted}
@@ -483,8 +483,9 @@ class TribeComponent extends Component {
                     />
                     :null
                 }
-            <View style = {[styles.tribes, {marginTop: marginTop}]}>
-                    <View style = {{flexDirection: "row", margin: 5, width: '70%'}}>
+            <View style = {[styles.tribes, {marginTop: marginTop, padding: 5, backgroundColor: "#3E4145"}]}>
+                    <View style = {{flexDirection: "row", justifyContent: "flex-start", margin: 5, width: '100%',}}>
+                        <View style = {{flex: 1, flexDirection: "column", width: '100%', alignContent: "flex-start", justifyContent: "flex-start"}}>
                         <TextInput
                             style = {styles.goalTitleText}
                             ref= {(el) => { this.name= el; }}
@@ -493,19 +494,22 @@ class TribeComponent extends Component {
                             editable = {canEdit}
                             onChangeText = {(text) => this.activateEdit(text,'name')}
                         />
-                        <View style ={{ flexDirection: "row", width: '30%', justifyContent: "flex-end", alignItems: 'flex-end', margin: 5}}>
-                            {/*<View style = {{flexDirection: "row", backgroundColor: "lightgrey", borderRadius: 10, padding: 10}}>*/}
-                            {/*    /!*<TextInput*!/*/}
-                            {/*    /!*    style = {{fontSize: 15, fontWeight: 500, color: "black"}}*!/*/}
-                            {/*    /!*    ref= {(el) => { this.name= el; }}*!/*/}
-                            {/*    /!*    placeholder = {"add description!"}*!/*/}
-                            {/*    /!*    editable = {canEdit}*!/*/}
-                            {/*    /!*    multiline = {true}*!/*/}
-                            {/*    /!*    onChangeText = {(text) => this.activateEdit(text,'description')}*!/*/}
-                            {/*    /!*>*!/*/}
-                            {/*    /!*    {this.props.endGoal}*!/*/}
-                            {/*    /!*</TextInput>*!/*/}
-                            {/*    <View/>*/}
+                        <View style = {{flexDirection: "row", width: '100%', marginTop: 3}}>
+                            <Text style = {{fontWeight: 500, fontSize: 15, color: "white", textAlign: "center", marginTop: 0}}>GOAL:  </Text>
+                            <TextInput
+                                    style = {{fontSize: 15, fontWeight: 700, color: 'white'}}
+                                    ref= {(el) => { this.name= el; }}
+                                    placeholder = {"ADD"}
+                                    value = {this.state.endGoal}
+                                    editable = {canEdit}
+                                    onChangeText = {(text) => this.activateEdit(text,'endGoal')}
+                                />
+                            <Text style = {{fontWeight: 600, fontSize: 15, color: "white", textAlign: "left", marginTop: 0}}> |  TOTAL: {this.computeTotal(dataList)}</Text>
+                            <Divider/>
+
+                        </View>
+                        </View>
+                        <View style ={{ flexDirection: "row", width: '30%', justifyContent: "flex-end", alignItems: 'flex-start', marginTop: 0, marginRight: 5}}>
                             {(canEdit)
                                     ?
                                     <View style = {{flexDirection:"row", justifyContent: "center"}}>
@@ -547,26 +551,42 @@ class TribeComponent extends Component {
                                 }
                         </View>
                     </View>
-                        <View>
-
-                {(false)
-                    ? null
-                    :<View style={{marginTop: -10}}>
-                        {(false)
+                <View>
+                    <View>
+                    <View style = {{flexDirection: "row", justifyContent: "space-around"}}>
+                        <View style = {{flexDirection: "column", shadowOffset: {width: 0, height: 2}, shadowColor:"black", shadowOpacity: 2,margin: 2,width: '30%'}}>
+                            <TextInput
+                                style ={{fontSize: 35, textAlign: "center", fontWeight: 600, marginTop: 0, color: "white"}}
+                                placeholder = "0"
+                                editable = {canEdit}
+                                onChangeText = {(text) => this.activateEdit(text,'metric')}
+                            >
+                                {currData.data}
+                            </TextInput>
+                            <Divider/>
+                            <Text style = {{fontWeight: 600, fontSize: 15, color: "white", textAlign: "center", marginTop: 5}}>TODAY </Text>
+                        </View>
+                        <View style={{width: 250,
+                            borderRadius: 5, padding: 5, borderWidth: 0,
+                            shadowOffset: {width: 0, height: 2}, shadowColor:"black"}}>
+                        {(dataList.length > 1)
                             ?
-                            <View style={{marginTop: 0}}>
-                                <AreaChart
-                                    style={{height: 90}}
-                                    data={dataList}
-                                    contentInset={{top: 20, bottom: 5, left: 20, right: 20}}
-                                    curve={shape.curveNatural}
-                                    svg={{fill: '#186aed'}}
-                                >
-                                    <Grid/>
-                                </AreaChart>
-                            </View>
+                            <AreaChart
+                                style={{width: 240, height: 70}}
+                                data={dataList}
+                                contentInset={{top: 10, bottom: 10, left: 5, right: 5}}
+                                curve={shape.curveNatural}
+                                svg={{fill: '#186aed'}}
+                            >
+                                <Grid/>
+                            </AreaChart>
                             : null
                         }
+                        </View>
+
+                        <View>
+                        </View>
+                    </View>
                         <View>
                             <BoxRoot
                                 toggleDoneDB = {this.toggleDoneDB}
@@ -578,20 +598,18 @@ class TribeComponent extends Component {
                                 sendHeaderMessage={this.sendHeaderMessage}
                             />
                         </View>
-                        {/*<SocialTribeTab/>*/}
                     </View>
-                }
                 <View style = {{borderTopWidth: 0.2}}>
-                <View style = {{flexDirection: "row",justifyContent: "flex-end", marginTop:3}}>
-                        <CommentTopStack
-                            tribeName = {this.state.name}
-                            isCommentOpen = {this.state.isCommentOpen}
-                            tribeID={this.props.tribeID}
-                            tribeAuthorName={this.state.tribeAuthorName}
-                            tribeAuthorProfilePicture={this.state.tribeAuthorProfilePicture}
-                            userID={this.props.userID}
-                            alwaysMe={this.props.alwaysMe}
-                        />
+                <View style = {{flexDirection: "row", justifyContent: "flex-end", margin: -3}}>
+                    <CommentTopStack
+                        tribeName = {this.state.name}
+                        isCommentOpen = {this.state.isCommentOpen}
+                        tribeID={this.props.tribeID}
+                        tribeAuthorName={this.state.tribeAuthorName}
+                        tribeAuthorProfilePicture={this.state.tribeAuthorProfilePicture}
+                        userID={this.props.userID}
+                        alwaysMe={this.props.alwaysMe}
+                    />
 
                 </View>
                 </View>
@@ -769,7 +787,18 @@ export default connect(null, mapDispatchToProps)(TribeComponent);
 {/*<Text style = {{textAlign: "right", marginTop: 5, marginRight: 0, }}> Today </Text>*/}
 {/*</View>*/}
 
-
+{/*<View style = {{flexDirection: "row", backgroundColor: "lightgrey", borderRadius: 10, padding: 10}}>*/}
+{/*    /!*<TextInput*!/*/}
+{/*    /!*    style = {{fontSize: 15, fontWeight: 500, color: "black"}}*!/*/}
+{/*    /!*    ref= {(el) => { this.name= el; }}*!/*/}
+{/*    /!*    placeholder = {"add description!"}*!/*/}
+{/*    /!*    editable = {canEdit}*!/*/}
+{/*    /!*    multiline = {true}*!/*/}
+{/*    /!*    onChangeText = {(text) => this.activateEdit(text,'description')}*!/*/}
+{/*    /!*>*!/*/}
+{/*    /!*    {this.props.endGoal}*!/*/}
+{/*    /!*</TextInput>*!/*/}
+{/*    <View/>*/}
 
 {/*<Button*/}
 {/*    icon = {*/}
@@ -789,3 +818,12 @@ export default connect(null, mapDispatchToProps)(TribeComponent);
 {/*    title = {'More'}*/}
 {/*    titleStyle = {{color:"black", marginRight: 5}}*/}
 {/*/>*/}
+
+
+{/*<TextInput*/}
+{/*    style={{fontSize: 20, marginTop: 0}}*/}
+{/*    placeholder = "ADD A METRIC"*/}
+{/*    onChangeText = {(text) => this.activateEdit(text,'metricName')}*/}
+{/*    >*/}
+{/*        {this.props.metricName}*/}
+{/*</TextInput>*/}
