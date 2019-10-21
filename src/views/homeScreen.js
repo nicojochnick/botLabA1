@@ -320,6 +320,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         addFriendIDDB: (friendID, myID, fbID) =>dispatch(addFriendIDDB(friendID, myID)),
         removeFriendIDDB: (friendID, myID, fbID) =>dispatch(removeFriendIDDB(friendID, myID))
+
     }
 };
 

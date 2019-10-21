@@ -7,10 +7,12 @@ class GroupTribeComponent extends Component {
     render() {
         return (
                 <ListItem
-                    leftAvatar={{ source: { uri: this.props.tribePhoto}}}
+                    containerStyle = {{ backgroundColor: "#2E3134"}}
                     title={this.props.tribeName}
-                    subtitle={this.props.tribeMembers}
+                    subtitle={this.props.tribeMembers.length + ' member(s)'}
                     bottomDivider
+                    titleStyle = {{color: "white"}}
+                    subtitleStyle = {{color: 'lightgrey'}}
                     onPress = {()=>this.props.navigate()}
                 />
         );

@@ -9,6 +9,10 @@ import '@react-native-firebase/firestore';
 
 import TribeRoot from '../components/tribe/tribeRoot';
 import SearchContainer from '../components/search/searchContainer';
+import {addFriendIDDB, removeFriendIDDB, updateUser} from '../redux/actions';
+
+import {connect} from 'react-redux';
+
 
 class FeedView extends Component {
     constructor(props) {
@@ -38,6 +42,10 @@ class FeedView extends Component {
         this.setState({search});
     };
 
+    saveUser(user){
+        this.props.updateUser(user);
+        console.log('userDispatch')
+    }
 
     componentDidMount(): void {
         let user = firebase.auth().currentUser;
@@ -61,6 +69,7 @@ class FeedView extends Component {
             this.setState({alwaysMe: user.userID});
             this.setState({friendIDs: user.friendIDs});
             this.setState({loading: false});
+            this.saveUser(user)
         });
     };
 
@@ -70,12 +79,16 @@ class FeedView extends Component {
 
     render() {
 
-        console.log(this.state.friendIDs);
-        console.log(this.state.alwaysMe);
+        if (this.props.user.user.tribeID !== null){
+
+        }
+
+
         let letMyFriends = this.state.friendIDs
         let Me = this.state.alwaysMe
         let filter = letMyFriends.push(Me);
-        console.log(filter);
+
+
         let searchMess = 'add a tribe member by emails';
         if (this.state.isAllTribe){
             searchMess = 'search users by email'
@@ -106,7 +119,6 @@ class FeedView extends Component {
                         }
                     />
                 <Text style = {{color: this.state.tribeColor, margin: 4, marginTop: 7,  fontWeight: 'bold', fontSize: 33}}> {this.state.tribeName} </Text>
-
                 </View>
                 <SearchContainer
                     mess = {searchMess}
@@ -125,5 +137,19 @@ class FeedView extends Component {
         }
 }
 
+
+const mapStateToProps = (state /*, ownProps*/) => ({
+    state: state,
+    user: state.user.user
+});
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addFriendIDDB: (friendID, myID, fbID) =>dispatch(addFriendIDDB(friendID, myID)),
+        removeFriendIDDB: (friendID, myID, fbID) =>dispatch(removeFriendIDDB(friendID, myID)),
+        updateUser: (user) => dispatch(updateUser(user))
+    }
+};
+
 FeedView.propTypes = {};
-export default FeedView;
+export default connect(mapStateToProps, mapDispatchToProps)(FeedView);
+

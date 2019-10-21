@@ -12,8 +12,9 @@ class GroupTribeContainer extends Component {
     render() {
         return (
             <GroupTribeComponent
-                tribeName = {null}
-                tribeMembers = {null}
+                tribeName = {this.props.tribeName}
+                tribeMembers = {this.props.tribeMembers}
+                tribeDescription = {this.props.tribeDescription}
                 tribePhoto = {null}
                 navigate = {this.props.navigate}
             />

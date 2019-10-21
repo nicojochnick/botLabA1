@@ -34,7 +34,25 @@ export const ADD_TRIBE_DEADLINE = 'ADD_TRIBE_DEADLINE';
 export const ADD_BOX = 'ADD_BOX';
 export const DELETE_BOX = 'DELETE_BOX';
 
+
+
+export const  UPDATE_USER_INFO = 'UPDATE_USER_INFO';
+export const CURRENT_TRIBE = 'CURRENT_TRIBE';
+
+
 /* action creators */
+
+
+//USER
+export function updateUser(user){
+    return { type: 'UPDATE_USER_INFO', payload:{user}}
+}
+
+export function updateCurrentTribe(tribeGroupID){
+    return { type: 'CURRENT_TRIBE', payload:{tribeGroupID}}
+}
+
+
 //Messaging
 export const sendMessage = (userID, messages) => {
     return (dispatch, getState) => {
@@ -547,5 +565,80 @@ export const acceptNotificationRequest= (notID) => {
         })
     }
 };
+
+
+//TribeGroup
+export const addTribeGroup = (group) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('groups').add(group);
+    }
+};
+
+
+export const addTribeMember= (memberID, groupID) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('groups').where('members', '==', groupID)
+            .get().then(function (querySnapshot) {
+            console.log(querySnapshot);
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({members: firebase.firestore.FieldValue.arrayUnion(memberID)})
+            })
+        });
+    }
+};
+
+
+
+export const removeTribeMember= (memberID, groupID) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('groups').where('members', '==', groupID)
+            .get().then(function (querySnapshot) {
+            console.log(querySnapshot);
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({members: doc.data().friendIDs.filter(mem=> mem !== memberID)})
+            })
+        });
+    }
+};
+
+
+export const deleteTribeGroup = (id) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('groups').where('id', '==', id)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.delete();
+            });
+        });
+    };
+};
+
+export const updateTribeGroupName = (text,id) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('groups').where('id', '==', id)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update( {"name": text})
+            });
+        });
+    };
+
+};
+
+
+export const updateTribeGroupDescription = (text,id) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('groups').where('id', '==', id)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update( {"description": text})
+            });
+        });
+    };
+
+};
+
+
+
 
 
