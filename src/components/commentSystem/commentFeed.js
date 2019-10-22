@@ -15,9 +15,7 @@ class CommentFeed extends Component {
             tribeComments: [],
             loading: true
         };
-
     }
-
 
     componentDidMount(): void {
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
@@ -40,7 +38,6 @@ class CommentFeed extends Component {
     };
 
     render() {
-
         let data = this.state.tribeComments
         data = data.sort((a,b) =>  new Date(b.timeStamp) - new Date(a.timeStamp));
         if (this.props.isCommentOpen === false){
@@ -59,7 +56,7 @@ class CommentFeed extends Component {
                         alwaysMe = {this.props.alwaysMe}
                         tribeUserID = {this.props.userID}
                     />
-                )
+                    )
                 }
             />
         );

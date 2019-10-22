@@ -42,7 +42,7 @@ class CommentContainer extends Component {
         let comment = {
             message : "commented on your goal " + this.props.tribeName,
             fromUserID : this.props.alwaysMe,
-            toUserID: this.props.friendID,
+            toUserID: this.props.userID,
             timeStamp: moment().format(),
             action: "comment",
             accepted: false,
