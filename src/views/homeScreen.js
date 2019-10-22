@@ -238,6 +238,7 @@ class HomeScreen extends Component {
     }
 
     render() {
+        console.log(this.props.user)
         console.log(this.state.friendIDs, this.state.alwaysMe);
         let goalColor = 'darkgrey';
         let tribeColor = '#3676FF';
@@ -270,6 +271,7 @@ class HomeScreen extends Component {
                             < AddTribe
                                 uid = {this.state.uid}
                                 friendIDs ={this.state.friendIDs}
+                                userID = {this.props.user.user.userID}
                                 alwaysMe ={this.state.alwaysMe}
                             />
                             </View>
@@ -287,9 +289,9 @@ class HomeScreen extends Component {
                     <View style={{flex: 1, backgroundColor: "#23262D"}}>
                         <TribeRoot
                             friendTribeView={false}
-                            filter={this.state.uid}
+                            filter={this.props.user.user.userID}
                             notMe = {this.state.notMe}
-                            coreUserID={this.state.coreUserID}
+                            coreUserID={this.props.coreUserID}
                             alwaysMe = {this.state.alwaysMe}
                             name = {this.state.name}
                             profilePicture = {this.state.profilePicture}
@@ -313,7 +315,7 @@ class HomeScreen extends Component {
 }
 
 const mapStateToProps = (state /*, ownProps*/) => ({
-    state: state
+    user: state.user.user
 });
 
 const mapDispatchToProps = (dispatch) => {

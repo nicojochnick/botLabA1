@@ -196,7 +196,7 @@ class TribeComponent extends Component {
 
     toggleDoneDB(id, boxID, name){
         if (this.state.canEdit) {
-            this.props.toggleDoneDB(id, boxID)
+            this.props.toggleDoneDB(id, boxID);
             this.updateHeader(this.props.tribeID, 0, 'milestone', name)
             this.shareTribe()
         }
@@ -375,8 +375,7 @@ class TribeComponent extends Component {
     }
 
     componentDidMount(): void {
-        let user = firebase.auth().currentUser;
-        if (user.uid !== this.props.userID){
+        if (this.props.user.user.userID !== this.props.userID){
             this.setState({canEdit: false })
         }
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
@@ -393,7 +392,7 @@ class TribeComponent extends Component {
     }
 
     onCollectionUpdate = (snapshot) => {
-        firebase.firestore().collection('users').where('fbID', '==', this.props.userID).get().then((snapshot) => {
+        firebase.firestore().collection('users').where('userID', '==', this.props.userID).get().then((snapshot) => {
                 let data = snapshot.docs.map(function (documentSnapshot) {
                     console.log(documentSnapshot.data());
                     return documentSnapshot.data()
@@ -644,6 +643,11 @@ class TribeComponent extends Component {
     }
 }
 
+const mapStateToProps = (state /*, ownProps*/) => ({
+    user: state.user.user
+});
+
+
 const mapDispatchToProps = (dispatch) => {
     return {
         handleDeleteTribeDB: (tribe) => dispatch(deleteTribeDB(tribe)),
@@ -664,7 +668,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default connect(null, mapDispatchToProps)(TribeComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(TribeComponent);
 
 
 

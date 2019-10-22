@@ -74,7 +74,7 @@ class TribeHeader extends Component {
 
 
     onCollectionUpdate = (snapshot) => {
-        firebase.firestore().collection('users').where('fbID', '==', this.props.userID).get().then((snapshot) => {
+        this.ref.where('userID', '==', this.props.userID).get().then((snapshot) => {
             let data = snapshot.docs.map(function (documentSnapshot) {
                 console.log(documentSnapshot.data());
                 return documentSnapshot.data()
@@ -90,6 +90,7 @@ class TribeHeader extends Component {
 
 
     render() {
+        console.log(this.props.userID)
         return (
             <View style = {[{ backgroundColor: '#2D3861',  borderWidth: 1, borderColor:'2852EE', paddingBottom: 15, padding: 10}, styles.tribesHeader]}>
                 <View style = {{margin: 10, marginTop: 10, flexDirection: "row", flex: 1, width: '95%'}}>

@@ -93,8 +93,13 @@ export default  class TribeRoot extends Component {
     onCollectionUpdate = (snapshot) => {
         console.log("TAKING UPDATE");
         console.log(this.props.filter);
+        let myID = this.props.filter
+        if (this.props.filter == null){
+            myID = 0
+        }
+
         if (!(this.props.isFeed)) {
-            this.ref.where("userID", '==', this.props.filter).get().then((snapshot) => {
+            this.ref.where("userID", '==', myID).get().then((snapshot) => {
                 console.log("gettingData");
                 let data = snapshot.docs.map(function (documentSnapshot) {
                     console.log(documentSnapshot.data())
