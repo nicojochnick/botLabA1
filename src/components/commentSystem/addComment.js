@@ -27,6 +27,8 @@ class AddComment extends Component {
                 <View style = {{flexDirection: "row",paddingTop: 12, borderColor: "white",flex: 1, padding: 0, borderTopWidth: 1}}>
                     <Avatar
                         source ={{uri: this.props.userPhoto}}
+                        avatarStyle = {{ borderRadius: 100, borderWidth: 1, borderColor: "white"}}
+
                         rounded/>
                     <View
                         style = {{flexDirection: "column"}}>

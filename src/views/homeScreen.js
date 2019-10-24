@@ -189,7 +189,8 @@ class HomeScreen extends Component {
                 photoUrl = user.photoURL;
                 emailVerified = user.emailVerified;
                 this.setState({uid: user.uid});
-                this.setState({alwaysMe: user.uid});
+                this.setState({alwaysMe: this.props.user.user.userID});
+                this.setState({coreUserID:this.props.user.user.userID })
 
                 uid = user.uid
             }
@@ -289,7 +290,7 @@ class HomeScreen extends Component {
                     <View style={{flex: 1, backgroundColor: "#23262D"}}>
                         <TribeRoot
                             friendTribeView={false}
-                            filter={this.props.user.user.userID}
+                            filter={this.state.coreUserID}
                             notMe = {this.state.notMe}
                             coreUserID={this.props.coreUserID}
                             alwaysMe = {this.state.alwaysMe}

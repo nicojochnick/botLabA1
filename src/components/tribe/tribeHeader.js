@@ -104,6 +104,8 @@ class TribeHeader extends Component {
                     <View style = {{flexDirection: "row", flex: 0.8}}>
                         <Avatar
                             source ={{uri: this.props.tribeAuthorProfilePicture}}
+                            avatarStyle = {{ borderRadius: 100, borderWidth: 1, borderColor: "white"}}
+
                             rounded/>
                         <View style = {{flexDirection: "column", width: '98%'}}>
                             <Text

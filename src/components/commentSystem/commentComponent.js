@@ -42,7 +42,9 @@ class CommentComponent extends Component {
                 <Avatar
                     source ={{uri: this.props.userPhoto}}
                     size = {'small'}
+                    avatarStyle = {{ borderRadius: 100, borderWidth: 1, borderColor: "white"}}
                     rounded/>
+
                     <View
                     style = {{flexDirection: "column"}}>
                         <Text style = {{fontWeight: "bold", marginLeft: 10, fontSize: 17, color: "white", textAlign: "left"}}>

@@ -64,7 +64,8 @@ class UserTag extends Component {
                 title={this.props.name}
                 subtitleStyle = {{color: "lightgrey"}}
                 subtitle={this.props.message}
-                leftAvatar = {{source: {uri: this.props.avatar}}}
+                leftAvatar = {
+                    { avatarStyle: { borderRadius: 100, borderWidth: 1, borderColor: "white"}, source: {uri: this.props.avatar}}}
                 rightElement = {
                     <View>
                     {(this.props.action === 'friendRequest')

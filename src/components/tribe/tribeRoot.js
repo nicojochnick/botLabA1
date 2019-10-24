@@ -23,6 +23,7 @@ import {
     addFriendToTribeDB,
     addFriendIDToTribeDB, addDataToTribeDB, changeEndGoal, updateHeader, shareTribeDB,
 } from '../../redux/actions';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const tribesSelector = (Obj) => {
     return Object.keys(Obj)
@@ -132,7 +133,7 @@ export default  class TribeRoot extends Component {
                     ? <View>
                     { (!this.state.tribeData.length < 1)
                     ?
-                        <KeyboardAvoidingView>
+                        <KeyboardAwareScrollView behavior="padding" >
                         <FlatList style={styles.bottomContainer}
                                   data={sortedArray}
                                   listKey={(item, index) => 'D' + index.toString()}
@@ -160,7 +161,7 @@ export default  class TribeRoot extends Component {
                                           // tribeAuthorProfilePicture = {this.props.profilePicture}
                                       />)}
                         />
-                        </KeyboardAvoidingView>
+                        </KeyboardAwareScrollView>
                     : <ActivityIndicator style = {{margin: 30}} size="large" color="grey" />
                 }
                     </View>
