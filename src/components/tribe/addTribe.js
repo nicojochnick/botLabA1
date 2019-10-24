@@ -73,7 +73,7 @@ class AddTribe extends Component {
             endGoal: null,
             update: null,
             posted:  moment().format(),
-            header: {message: "milestones will update here!", likes: []},
+            header: {message: "", likes: []},
             isPublic: false,
             isPosted: false,
         };

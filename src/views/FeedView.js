@@ -95,7 +95,7 @@ class FeedView extends Component {
         }
         return (
             <ScrollView
-                style={{paddingTop: 50, paddingBottom:100, backgroundColor: '#282C33', flex: 1, marginBottom: 0}}
+                style={{paddingTop: 0, paddingBottom:100, backgroundColor: '#282C33', flex: 1, marginBottom: 0}}
                 refreshControl={
                     <RefreshControl
                         refreshing={this.state.refreshing}
@@ -103,7 +103,7 @@ class FeedView extends Component {
                     />
                 }
             >
-                <View style = {{flexDirection: "row", marginRight: 5}}>
+                <View style = {{flexDirection: "row", marginRight: 5, paddingTop: 50,}}>
                     <Button
                         type = 'clear'
                         onPress={() => this.props.navigation.toggleDrawer()}

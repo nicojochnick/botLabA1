@@ -34,7 +34,7 @@ class CommentTopStack extends Component {
 
         let m = 'Comments'
         if (this.state.length !== 0){
-            m = this.state.length + ' view all'
+            m = this.state.length + ' comments'
             con = 'ios-chatbubbles'
 
         }
@@ -49,7 +49,7 @@ class CommentTopStack extends Component {
         return (
             <View>
                 <View style = {{flexDirection: "row", justifyContent: "space-between"}}>
-                    <View style = {{flexDirection: "row", margin: -2}}>
+                    <View style = {{flexDirection: "row", margin: 0}}>
                         <Button
                             title = {m}
                             type = 'clear'
@@ -78,15 +78,16 @@ class CommentTopStack extends Component {
                         checkLength = {this.checkLength}
                     />
                 </View>
+                <View style ={{marginBottom: 0,}}>
+                        <CommentContainer
+                            tribeID={this.props.tribeID}
+                            userID={this.props.userID}
+                            alwaysMe={this.props.alwaysMe}
+                            isAddComment={true}
+                            tribeName={this.props.tribeName}
 
-                   <CommentContainer
-                       tribeID = {this.props.tribeID}
-                       userID = {this.props.userID}
-                       alwaysMe = {this.props.alwaysMe}
-                       isAddComment = {true}
-                       tribeName = {this.props.tribeName}
-
-                   />
+                        />
+                </View>
 
             </View>
         );

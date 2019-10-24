@@ -33,11 +33,16 @@ class NotificationRoot extends Component {
 
 
     render() {
+        let sortedArray = null
+        if (this.state.notifications!==undefined) {
+            let data = this.state.notifications;
+             sortedArray = data.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
+        }
         return (
             <ScrollView style = {{backgroundColor: '#282C33'}}>
-                <Text style = {{fontSize: 30, color: '#186aed', fontWeight: "bold"}}>  Notifications </Text>
+                <Text style = {{fontSize: 30, color: 'white', fontWeight: "bold", marginBottom: 10}}>  Notifications </Text>
             <FlatList
-                data = {this.state.notifications}
+                data = {sortedArray}
                 renderItem = {({item}) => (
                     <NotificationContainer
                         message = {item.message}

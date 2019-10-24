@@ -27,7 +27,7 @@ class SearchComponent extends Component {
                 <View>
                 <SearchBar
                     lightTheme={false}
-                    inputStyle = {{color:"black"}}
+                    inputStyle = {{color:"white"}}
                     placeholder= {this.props.mess}
                     onChangeText = {(text)=> this.setState({friendEmail: text.toLowerCase()})}
                     value={this.state.friendEmail}
@@ -36,12 +36,15 @@ class SearchComponent extends Component {
                             name={'ios-close'}
                             size={25}
                             onPress = {()=> this.clear()}
+                            color = {'white'}
+
                         />
                     }
                     searchIcon={
                         <Ionicons
                             name={'ios-search'}
                             size={25}
+                            color = {'white'}
                         />
                     }
                 />

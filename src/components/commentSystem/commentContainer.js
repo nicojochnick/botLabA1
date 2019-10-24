@@ -40,7 +40,7 @@ class CommentContainer extends Component {
 
     sendCommentNotification(){
         let comment = {
-            message : "commented on your goal " + this.props.tribeName,
+            message : "commented on your goal - " + this.props.tribeName,
             fromUserID : this.props.alwaysMe,
             toUserID: this.props.userID,
             timeStamp: moment().format(),

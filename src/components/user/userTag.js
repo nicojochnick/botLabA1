@@ -57,7 +57,7 @@ class UserTag extends Component {
 
         return (
             <ListItem
-                containerStyle = {{backgroundColor: "#3E4145", borderWidth:-1}}
+                containerStyle = {{backgroundColor: "#21262C", borderTopWidth:1}}
                 contentContainerStyle = {{borderWidth: 0}}
                 style = {{ margin: 0, padding: 0,}}
                 titleStyle = {{fontWeight: "500", color: "white"}}
@@ -78,7 +78,7 @@ class UserTag extends Component {
                     }
                     </View>
                 }
-                chevron
+
                 onPress = {() => this.nav()}
             />
         );

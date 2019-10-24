@@ -23,8 +23,8 @@ class AddComment extends Component {
 
     render() {
         return (
-            <View style = {{backgroundColor: "#2D3861"}}>
-                <View style = {{flexDirection: "row", flex: 1, padding: 8, borderTopWidth: 0.2}}>
+            <View>
+                <View style = {{flexDirection: "row",paddingTop: 12, borderColor: "white",flex: 1, padding: 0, borderTopWidth: 1}}>
                     <Avatar
                         source ={{uri: this.props.userPhoto}}
                         rounded/>

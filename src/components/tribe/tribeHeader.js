@@ -20,7 +20,8 @@ class TribeHeader extends Component {
             message: '',
             likes: 0,
             username: null,
-            userphoto: null
+            userphoto: null,
+            didLike: false,
 
         }
 
@@ -31,13 +32,17 @@ class TribeHeader extends Component {
 
 
     likeUpdate(){
-        this.setState({liked:!this.state.liked});
-        this.setState({likes: this.state.likes+1});
-        let heartIcon = 'ios-heart';
-        let heartIconColor = '#00FF87'
-        this.setState({heartIcon: heartIcon})
-        this.setState({heartIconColor: heartIconColor})
-        this.props.updateLikes(this.props.header, this.props.alwaysMe,this.props.tribeID )
+
+        if (this.props.didLike === false) {
+            this.setState({liked:!this.state.liked});
+            this.setState({likes: this.state.likes+1});
+            let heartIcon = 'ios-heart';
+            let heartIconColor = '#00FF87'
+            this.setState({heartIcon: heartIcon})
+            this.setState({heartIconColor: heartIconColor})
+            this.props.updateLikes(this.props.header, this.props.alwaysMe, this.props.tribeID)
+
+        }
 
 
     }
@@ -55,14 +60,11 @@ class TribeHeader extends Component {
             likes = this.props.header.likes.length;
             this.setState({likes:likes})
             let meLike = this.props.header.likes.filter(id => id === this.props.alwaysMe)
-            console.log(meLike);
-            console.log(this.props.header);
-            console.log(this.props.alwaysMe);
-            console.log(meLike);
             if (meLike.length  > 0) {
                 console.log("WE LIKED THIS!")
                 let heartIcon = 'ios-heart';
                 let heartIconColor = '#00FF87'
+                this.setState({didLike: true})
                 this.setState({heartIcon: heartIcon})
                 this.setState({heartIconColor: heartIconColor})
             }
@@ -91,6 +93,11 @@ class TribeHeader extends Component {
 
     render() {
         console.log(this.props.userID)
+        let likeColor = this.state.heartIconColor
+        if (!this.props.didLike){
+            likeColor = 'white'
+
+        }
         return (
             <View style = {[{ backgroundColor: '#2D3861',  borderWidth: 1, borderColor:'2852EE', paddingBottom: 15, padding: 10}, styles.tribesHeader]}>
                 <View style = {{margin: 10, marginTop: 10, flexDirection: "row", flex: 1, width: '95%'}}>
@@ -117,7 +124,7 @@ class TribeHeader extends Component {
                                 icon = {
                                     <Ionicons
                                         name = {'ios-thumbs-up'}
-                                        color = {this.state.heartIconColor}
+                                        color = {likeColor}
                                         size = {25}
                                         onPress={()=> this.likeUpdate()}
                                         raised = {true}

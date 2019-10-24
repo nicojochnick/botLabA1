@@ -40,10 +40,17 @@ class CommentFeed extends Component {
     render() {
         let data = this.state.tribeComments
         data = data.sort((a,b) =>  new Date(b.timeStamp) - new Date(a.timeStamp));
+        let height = 200
         if (this.props.isCommentOpen === false){
-            data = data.slice(0,2)
+            height= 70
+
+        }
+        if (data.length === 0){
+            height = 0
+
         }
         return (
+            <ScrollView style = {{height: height, borderTopWidth: 1, borderColor: "#2852EE", margin: 0, paddingTop: 0}}>
             <FlatList
                 data = {data}
                 renderItem={({item}) => (
@@ -59,6 +66,7 @@ class CommentFeed extends Component {
                     )
                 }
             />
+            </ScrollView>
         );
     }
 }

@@ -101,6 +101,10 @@ class TribeComponent extends Component {
             headerOpen: false,
 
 
+            didLike: false,
+            likedColor: 'white',
+
+
             header: this.props.header,
 
             tribeAuthorName: null,
@@ -146,8 +150,24 @@ class TribeComponent extends Component {
     }
 
     updateLikes(header, userID, tribeID) {
+        this.setState({didLike: true});
         header.likes.push(userID);
+        this.sendLikeNotification();
         this.props.updateHeader(tribeID, header)
+
+    }
+
+    sendLikeNotification(){
+        let like = {
+            message : "liked your goal - " + this.state.name,
+            fromUserID : this.props.alwaysMe,
+            toUserID: this.props.userID,
+            timeStamp: moment().format(),
+            action: "like",
+            accepted: false,
+        };
+
+        this.props.sendNotification(like)
     }
 
 
@@ -190,7 +210,7 @@ class TribeComponent extends Component {
             message = stepName;
             send.message = message;
             this.props.updateHeader(tribeID, send)
-            this.setState({header:send})
+            this.setState({header:send, didLike: false, likeColor: "white"})
         }
     }
 
@@ -215,18 +235,7 @@ class TribeComponent extends Component {
         }
     }
 
-    sendLikeNotification(){
-        let like = {
-            message : "liked your goal " + this.state.name,
-            fromUserID : this.props.alwaysMe,
-            toUserID: this.props.friendID,
-            timeStamp: moment().format(),
-            action: "like",
-            accepted: false,
-        };
 
-        this.props.sendNotification(like)
-    }
 
 
 
@@ -466,6 +475,8 @@ class TribeComponent extends Component {
             <View style = {{marginTop:10}}>
                 {(this.props.header)
                     ?<TribeHeader
+                        didLike = {this.state.didLike}
+                        likeColor = {this.state.likeColor}
                         isPosted={this.props.isPosted}
                         posted = {this.props.posted}
                         isPublic = {this.props.isPublic}
@@ -482,7 +493,7 @@ class TribeComponent extends Component {
                     />
                     :null
                 }
-            <View style = {[styles.tribes, {marginTop: marginTop, padding: 5, backgroundColor: "#3E4145"}]}>
+            <View style = {[styles.tribes, {marginTop: marginTop, padding: 0, backgroundColor: "#3E4145"}]}>
                     <View style = {{flexDirection: "row", justifyContent: "flex-start", margin: 5, width: '100%',}}>
                         <View style = {{flex: 1, flexDirection: "column", width: '100%', alignContent: "flex-start", justifyContent: "flex-start"}}>
                         <TextInput
@@ -493,18 +504,19 @@ class TribeComponent extends Component {
                             editable = {canEdit}
                             onChangeText = {(text) => this.activateEdit(text,'name')}
                         />
-                        <View style = {{flexDirection: "row", width: '100%', marginTop: 3}}>
-                            <Text style = {{fontWeight: 500, fontSize: 15, color: "white", textAlign: "center", marginTop: 0}}>GOAL:  </Text>
+                        <View style = {{flexDirection: "column", width: '100%', marginTop: 3}}>
+                            <View style = {{flexDirection: "row"}}>
+                            <Text style = {{fontWeight: 500, fontSize: 16, color: "white", textAlign: "left", marginTop: 0}}>GOAL:  </Text>
                             <TextInput
-                                    style = {{fontSize: 15, fontWeight: 700, color: 'white'}}
+                                    style = {{fontSize: 16, fontWeight: 700, color: 'white'}}
                                     ref= {(el) => { this.name= el; }}
                                     placeholder = {"ADD"}
                                     value = {this.state.endGoal}
                                     editable = {canEdit}
                                     onChangeText = {(text) => this.activateEdit(text,'endGoal')}
                                 />
-                            <Text style = {{fontWeight: 600, fontSize: 15, color: "white", textAlign: "left", marginTop: 0}}> |  TOTAL: {this.computeTotal(dataList)}</Text>
-                            <Divider/>
+                            </View>
+                            <Text style = {{fontWeight: 600, fontSize: 16, color: "#5BADFF", textAlign: "left", marginTop: 0}}>TOTAL: {this.computeTotal(dataList)}</Text>
 
                         </View>
                         </View>
@@ -553,7 +565,7 @@ class TribeComponent extends Component {
                 <View>
                     <View>
                     <View style = {{flexDirection: "row", justifyContent: "space-around"}}>
-                        <View style = {{flexDirection: "column", shadowOffset: {width: 0, height: 2}, shadowColor:"black", shadowOpacity: 2,margin: 2,width: '30%'}}>
+                        <View style = {{flexDirection: "column", shadowOffset: {width: 0, height: 2}, shadowColor:"black", shadowOpacity: 2, margin: 2,padding: 5,width: '30%'}}>
                             <TextInput
                                 style ={{fontSize: 35, textAlign: "center", fontWeight: 600, marginTop: 0, color: "white"}}
                                 placeholder = "0"
@@ -565,13 +577,13 @@ class TribeComponent extends Component {
                             <Divider/>
                             <Text style = {{fontWeight: 600, fontSize: 15, color: "white", textAlign: "center", marginTop: 5}}>TODAY </Text>
                         </View>
-                        <View style={{width: 250,
-                            borderRadius: 5, padding: 5, borderWidth: 0,
+                        <View style={{width: 250, marginTop: -20, marginBottom: -10,
+                            borderRadius: 5, padding: 2, borderWidth: 0,
                             shadowOffset: {width: 0, height: 2}, shadowColor:"black"}}>
                         {(dataList.length > 1)
                             ?
                             <AreaChart
-                                style={{width: 240, height: 70}}
+                                style={{width: 240, height: 90}}
                                 data={dataList}
                                 contentInset={{top: 10, bottom: 10, left: 5, right: 5}}
                                 curve={shape.curveNatural}
@@ -599,7 +611,7 @@ class TribeComponent extends Component {
                         </View>
                     </View>
                 <View style = {{borderTopWidth: 0.2}}>
-                <View style = {{flexDirection: "row", justifyContent: "flex-end", margin: -3}}>
+                <View style = {{flexDirection: "row", backgroundColor: "#2D3861", width: '100%', justifyContent: "center",}}>
                     <CommentTopStack
                         tribeName = {this.state.name}
                         isCommentOpen = {this.state.isCommentOpen}
@@ -612,7 +624,7 @@ class TribeComponent extends Component {
 
                 </View>
                 </View>
-                        </View>
+                </View>
 
 
                 <ConfirmDialog
@@ -664,6 +676,7 @@ const mapDispatchToProps = (dispatch) => {
         unshareTribeDB: (tribeID, timeStamp) => dispatch(unshareTribeDB(tribeID, timeStamp)),
         sendNotification: (comment) => dispatch(sendNotification(comment)),
         toggleDoneDB: (id, boxID) => dispatch(toggleDoneDB(id, boxID)),
+
     }
 };
 

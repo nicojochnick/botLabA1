@@ -118,9 +118,9 @@ const AppDrawer = createBottomTabNavigator(
                 } else if (routeName === 'FeedView') {
                     iconName = 'ios-home'
                 } else if (routeName === 'Notifications') {
-                    iconName = 'ios-heart'
+                    iconName = 'ios-paper'
                 }
-                return <IconComponent style = {{marginTop: 9}} name={iconName} color = {tintColor} size={28}  />;
+                return <IconComponent style = {{marginTop: 9}} name={iconName} color = {tintColor} size={25}  />;
             },
         }),
         tabBarOptions: {
