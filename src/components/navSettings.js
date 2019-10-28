@@ -69,7 +69,6 @@ class NavSettings extends Component {
                               size = {40}/>
                     </MenuTrigger>
                     <MenuOptions>
-                        <MenuOption onSelect={() => this.makeEditable(true)} text='Edit' />
                         <MenuOption onSelect={() => this.openSignOutConfirm(true)} >
                             <Text style={{color: 'red'}}>Sign Out</Text>
                         </MenuOption>

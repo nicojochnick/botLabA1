@@ -52,6 +52,7 @@ export const addTribeGroup = (group) => {
     }
 };
 
+
 export function changeGroupName(text,id){
     return (dispatch, getState) => {
         firebase.firestore().collection('groups').where('id', '==', id)

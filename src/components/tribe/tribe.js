@@ -612,7 +612,7 @@ class TribeComponent extends Component {
 
                 <ConfirmDialog
                     title="Please Confirm"
-                    message="Are you sure you want to delete your goal?"
+                    message="Are you sure you want to delete this board?"
                     onTouchOutside={ () => this.openDeleteConfirm(false) }
                     visible={this.state.showDeleteConfirm }
                     negativeButton={{

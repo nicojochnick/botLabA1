@@ -88,7 +88,7 @@ class UserTag extends Component {
                             : null
                         }
 
-                        {(this.props.isGroupList)
+                        {(this.props.isGroupList && this.props.canRemove && (this.props.toUserID !== this.props.alwaysMe))
                             ? <Button
                                 title={'remove'}
                                 type ='clear'

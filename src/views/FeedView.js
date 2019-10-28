@@ -195,7 +195,7 @@ class FeedView extends Component {
         return (
 
             <ScrollView
-                style={{paddingTop: 0, paddingBottom:100, backgroundColor: '#282C33', flex: 1, marginBottom: 0}}
+                style={{paddingTop: 0, paddingBottom:100, backgroundColor: '#282C33', flex: 1, marginBottom: 0, padding: 3}}
                 // refreshControl={
                 //     <RefreshControl
                 //         refreshing={this.state.refreshing}
@@ -282,6 +282,7 @@ class FeedView extends Component {
                                 groupID = {this.state.groupID}
                             />
                         <TribeGroup
+                            alwaysMe = {this.state.alwaysMe}
                             friendData={this.state.friendData}
                             getMems={this.state.getMems}
                             groupID = {this.state.groupID}

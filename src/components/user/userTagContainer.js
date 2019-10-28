@@ -74,7 +74,8 @@ class UserTagContainer extends Component {
                 sendGroupNotification = {this.addNotification}
                 isGroupList = {this.props.isGroupList}
                 removeFromGroup = {this.removeFromGroup}
-
+                canRemove = {this.props.canRemove}
+                alwaysMe = {this.props.alwaysMe}
 
             />
         );

@@ -87,6 +87,10 @@ class TribeGroup extends Component {
 
     render() {
         console.log(this.props.friendData)
+        let canRemove = true
+        if (this.props.friendData.length <2) {
+            canRemove = false
+        }
         return (
             <View>
                     <View>
@@ -134,12 +138,14 @@ class TribeGroup extends Component {
                                 data={this.props.friendData}
                                 renderItem={ ({item}) => (
                                     <UserTagContainer
+                                        canRemove = {canRemove}
                                         isGroupList = {true}
                                         fromPhoto = {item.picture}
                                         fromUserName = {item.name}
                                         toUserID = {item.userID}
                                         route = {'home'}
                                         groupID = {this.props.groupID}
+                                        alwaysMe = {this.props.alwaysMe}
                                     />
                                 )}
                                 />
