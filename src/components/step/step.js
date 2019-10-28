@@ -70,9 +70,9 @@ export default class Step extends React.Component {
             color = '#3676FF'
         }
         return (
-            <View style = {{}}>
-                <View style = {styles.steps}>
-                    <KeyboardAvoidingView style = {styles.topGoals}>
+            <View >
+                <View style = {[styles.steps,{borderWidth: 1, borderColor: '#186aed'}]}>
+                    <KeyboardAvoidingView style = {styles.topGoals  }>
                         <View style = {{width: '80%'}}>
                         <TextInput
                             placeholder = 'add title'

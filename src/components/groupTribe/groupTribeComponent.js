@@ -13,7 +13,7 @@ class GroupTribeComponent extends Component {
                     bottomDivider
                     titleStyle = {{color: "white"}}
                     subtitleStyle = {{color: 'lightgrey'}}
-                    onPress = {()=>this.props.navigate()}
+                    onPress = {()=>this.props.navigate(this.props.id, this.props.tribeName)}
                 />
         );
     }

@@ -109,12 +109,12 @@ class TribeHeader extends Component {
                             rounded/>
                         <View style = {{flexDirection: "column", width: '98%'}}>
                             <Text
-                                style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.props.tribeAuthorName} met a milestone </Text>
+                                style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.props.tribeAuthorName}  </Text>
                             <Text
                                 style = {{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17, width: "100%"}}
                                 multiline = {true}
                             >
-                                {this.props.header.message}
+                                completed: {this.props.header.message}
                             </Text>
                         </View>
                     </View>

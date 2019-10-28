@@ -57,7 +57,7 @@ class UserTag extends Component {
 
         return (
             <ListItem
-                containerStyle = {{backgroundColor: "#21262C", borderTopWidth:1}}
+                containerStyle = {{backgroundColor: "#21262C", borderTopWidth:1,borderColor: '#186aed'}}
                 contentContainerStyle = {{borderWidth: 0}}
                 style = {{ margin: 0, padding: 0,}}
                 titleStyle = {{fontWeight: "500", color: "white"}}

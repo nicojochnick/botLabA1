@@ -13,6 +13,7 @@ class GroupTribeContainer extends Component {
         return (
             <GroupTribeComponent
                 tribeName = {this.props.tribeName}
+                id = {this.props.id}
                 tribeMembers = {this.props.tribeMembers}
                 tribeDescription = {this.props.tribeDescription}
                 tribePhoto = {null}

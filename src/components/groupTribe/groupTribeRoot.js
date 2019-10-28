@@ -61,7 +61,6 @@ class GroupTribeRoot extends Component {
                            userTribeIDs = {item.userTribeIDs}
                            tribeGroupTribeIDs = {item.tribeGroupTribeIDs}
                            navigate = {this.navigate}
-
                        />
                        )}
                     />
@@ -71,7 +70,7 @@ class GroupTribeRoot extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateCurrentTribe: (tribeID) => dispatch(updateCurrentTribe(tribeID)),
+        updateCurrentTribe: (tribe) => dispatch(updateCurrentTribe(tribe)),
     };
 };
 

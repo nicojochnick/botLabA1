@@ -43,6 +43,21 @@ export const CURRENT_TRIBE = 'CURRENT_TRIBE';
 /* action creators */
 
 
+//Groups
+
+export function changeGroupName(text,id){
+    return (dispatch, getState) => {
+        firebase.firestore().collection('groups').where('id', '==', id)
+            .get().then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    doc.ref.update( {"name": text})
+                });
+            });
+    };
+
+}
+
+
 //USER
 export function updateUser(user){
     return { type: 'UPDATE_USER_INFO', payload:{user}}
@@ -51,6 +66,8 @@ export function updateUser(user){
 export function updateCurrentTribe(tribeGroupID){
     return { type: 'CURRENT_TRIBE', payload:{tribeGroupID}}
 }
+
+
 
 
 //Messaging

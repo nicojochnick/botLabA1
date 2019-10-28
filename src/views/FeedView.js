@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View, Text, ActivityIndicator, RefreshControl, ScrollView} from 'react-native';
-import {Button, SearchBar} from 'react-native-elements';
+import {View, TextInput, ActivityIndicator, RefreshControl, ScrollView} from 'react-native';
+import {Button, Input, SearchBar} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FeedContainer from '../components/feed/feedContainer';
 import firebase from '@react-native-firebase/app';
@@ -9,15 +9,23 @@ import '@react-native-firebase/firestore';
 
 import TribeRoot from '../components/tribe/tribeRoot';
 import SearchContainer from '../components/search/searchContainer';
-import {addFriendIDDB, removeFriendIDDB, updateUser} from '../redux/actions';
+import {addFriendIDDB, changeGroupName, removeFriendIDDB, updateUser} from '../redux/actions';
 
 import {connect} from 'react-redux';
+import BotA1Component from '../components/botA1/botA1Component';
+import BotA1Top from '../components/botA1/botA1Top';
+import { useFocusEffect } from '@react-navigation/core';
+
+import AddTribe from '../components/tribe/addTribe';
+import { NavigationEvents } from 'react-navigation';
 
 
 class FeedView extends Component {
     constructor(props) {
         super(props);
         this.ref = firebase.firestore().collection('users')
+        this.ref2 = firebase.firestore().collection('groups')
+
         this.user = firebase.auth().currentUser;
         this.state = {
             search: '',
@@ -27,9 +35,12 @@ class FeedView extends Component {
             loading: true,
             refreshing: false,
             filter: [],
-            tribeName: 'All Tribes',
+            groupName: null,
             tribeColor: 'lightgrey',
-            isAllTribe: true
+            isAllTribe: true,
+            groupID: this.props.currentGroup.tribeGroupID,
+            group: null,
+            groups: []
             }
     }
     static navigationOptions = ({navigation}) => {
@@ -47,19 +58,37 @@ class FeedView extends Component {
         console.log('userDispatch')
     }
 
+
     componentDidMount(): void {
         let user = firebase.auth().currentUser;
         this.setState({uid: user.uid});
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
+        this.unsubscribe2 = this.ref2.onSnapshot(this.onCollectionUpdate)
+
+        const { navigation } = this.props;
+        this.focusListener = navigation.addListener('didFocus', () => {
+            console.log("FOCUSED")
+            if (this.props.currentGroup !== undefined) {
+                console.log("FOCUSED")
+                this.ref.onSnapshot(this.onCollectionUpdate)
+                this.setState({
+                        groupID: this.props.currentGroup.tribeGroupID
+                    }
+                )
+            };
+        });
     }
+
 
     componentWillUnmount(): void {
         this.unsubscribe();
+        this.unsubscribe2()
+        this.focusListener.remove();
     }
 
-    onCollectionUpdate = (snapshot) => {
+    onCollectionUpdate = async (snapshot) => {
         let user = firebase.auth().currentUser;
-        this.ref.where('fbID', '==', user.uid).get().then((snapshot) => {
+        await this.ref.where('fbID', '==', user.uid).get().then((snapshot) => {
             console.log(snapshot);
             let data = snapshot.docs.map(function (documentSnapshot) {
                 console.log(documentSnapshot.data());
@@ -71,54 +100,103 @@ class FeedView extends Component {
             this.setState({loading: false});
             this.saveUser(user)
         });
+
+        await this.ref2.where('id', '==', this.state.groupID).get().then((snapshot) => {
+            console.log(snapshot);
+            let data = snapshot.docs.map(function (documentSnapshot) {
+                console.log(documentSnapshot.data());
+                return documentSnapshot.data()
+            });
+            let group = data[0];
+            this.setState({group: group});
+            this.setState({groupName: group.name})
+        });
     };
 
     _onRefresh = () => {
         this.setState({refreshing: true});
+    };
+
+    doneSaving(){
+        this.props.changeGroupName(this.state.groupName,this.state.groupID)
+        this.setState({isEditingName: false})
     }
 
     render() {
+        let groups = null
 
-        if (this.props.user.user.tribeID !== null){
-
-        }
-
-
+        console.log(this.props.navigation.isFocused())
+        console.log(this.props.currentGroup)
+        console.log(this.props.state.user)
+        console.log(this.props.state.groupName)
         let letMyFriends = this.state.friendIDs
         let Me = this.state.alwaysMe
         let filter = letMyFriends.push(Me);
-
 
         let searchMess = 'add a tribe member by emails';
         if (this.state.isAllTribe){
             searchMess = 'search users by email'
         }
         return (
+
             <ScrollView
                 style={{paddingTop: 0, paddingBottom:100, backgroundColor: '#282C33', flex: 1, marginBottom: 0}}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={this.state.refreshing}
-                        onRefresh={this._onRefresh}
-                    />
-                }
+                // refreshControl={
+                //     <RefreshControl
+                //         refreshing={this.state.refreshing}
+                //         onRefresh={this._onRefresh}
+                //     />
+                // }
             >
-                <View style = {{flexDirection: "row", marginRight: 5, paddingTop: 50,}}>
+
+                <View style = {{flexDirection: "row", paddingTop: 50 , justifyContent: "flex-start", alignItems: "flex-start", flex: 1}}>
+                    <View style = {{flexDirection: "row", flex: 0.6}}>
                     <Button
                         type = 'clear'
-                        onPress={() => this.props.navigation.toggleDrawer()}
+                        containerStyle = {{marginRight: 0}}
+                        onPress={() => this.props.navigation.navigate('Menu')}
                         icon = {
                             <Ionicons
                                 name = {'ios-menu'}
                                 size = {40}
                                 style = {{color: 'lightgrey'}}
-                                onPress={() => this.props.navigation.toggleDrawer()}
+                                onPress={() => this.props.navigation.navigate('Menu')}
 
                             />
 
                         }
                     />
-                <Text style = {{color: this.state.tribeColor, margin: 4, marginTop: 7,  fontWeight: 'bold', fontSize: 33}}> {this.state.tribeName} </Text>
+                <TextInput
+                    editable = {true}
+                    value = {this.state.groupName}
+                    multiline={true}
+                    onChangeText = {text=> this.setState({groupName: text, isEditingName: true})}
+                    style = {{color: 'white', margin: 4, paddingLeft: 5, marginTop: 7,  fontWeight: 'bold', fontSize: 30}}
+
+                />
+
+                    </View>
+                    <View style = {{ marginRight: 10, margin: -10, flex: 0.4, flexDirection: "row", alignItem: "flex-start", justifyContent: "flex-end",}}>
+                        {(this.state.isEditingName)
+                            ?
+                            <Button
+                                style={{ alignContent: "center", marginTop: 20, marginRight: 0}}
+                                title = "Save"
+                                titleStyle = {{color: "black", fontWeight: "400"}}
+                                buttonStyle={{backgroundColor: "lightgrey"}}
+                                onPress = {()=> this.doneSaving()}
+
+                            />
+                            :null
+                        }
+                        <AddTribe
+                        uid = {this.state.uid}
+                        friendIDs ={this.state.friendIDs}
+                        groupID = {this.state.groupID}
+                        userID = {this.props.user.user.userID}
+                        alwaysMe ={this.state.alwaysMe}
+                        />
+                    </View>
                 </View>
                 <SearchContainer
                     mess = {searchMess}
@@ -128,6 +206,7 @@ class FeedView extends Component {
                     <TribeRoot
                         isFeed = {true}
                         notMe={false}
+                        groupID = {this.state.groupID}
                         alwaysMe={this.state.alwaysMe}
                     />
                     : null
@@ -140,13 +219,15 @@ class FeedView extends Component {
 
 const mapStateToProps = (state /*, ownProps*/) => ({
     state: state,
-    user: state.user.user
+    user: state.user.user,
+    currentGroup: state.user.currTribe
 });
 const mapDispatchToProps = (dispatch) => {
     return {
         addFriendIDDB: (friendID, myID, fbID) =>dispatch(addFriendIDDB(friendID, myID)),
         removeFriendIDDB: (friendID, myID, fbID) =>dispatch(removeFriendIDDB(friendID, myID)),
-        updateUser: (user) => dispatch(updateUser(user))
+        updateUser: (user) => dispatch(updateUser(user)),
+        changeGroupName: (text, id) => dispatch(changeGroupName(text,id))
     }
 };
 

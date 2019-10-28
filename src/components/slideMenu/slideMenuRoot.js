@@ -17,14 +17,14 @@ class SlideMenuRoot extends Component {
         this.toggle = this.toggle.bind(this)
     }
 
-    static navigationOptions = ({navigation}) => {
-        return {
-            header: null
-        }
-    };
+    // static navigationOptions = ({navigation}) => {
+    //     return {
+    //         header: null
+    //     }
+    // };
 
     toggle(){
-        this.props.navigation.toggleDrawer()
+        this.props.navigation.goBack()
     }
 
     addTribeGroup() {

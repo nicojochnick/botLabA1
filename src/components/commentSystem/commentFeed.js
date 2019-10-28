@@ -42,8 +42,7 @@ class CommentFeed extends Component {
         data = data.sort((a,b) =>  new Date(b.timeStamp) - new Date(a.timeStamp));
         let height = 200
         if (this.props.isCommentOpen === false){
-            height= 70
-
+            height= 0
         }
         if (data.length === 0){
             height = 0

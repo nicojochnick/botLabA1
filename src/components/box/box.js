@@ -46,59 +46,6 @@ class Box extends Component {
         return (
             <KeyboardAvoidingView>
                 <View style = {{}}>
-                <View style={{flexDirection:"row", flex: 1, justifyContent: "flex-start", alignItems: "center"}}>
-                    <Text style={{color:'white', fontWeight: "bold", fontSize: 25, marginTop: 3 }}> Milestones </Text>
-                { (!this.props.canEdit)
-                        ? null
-                        : <View style = {{flexDirection: "row", flex: 1, justifyContent: "flex-end"}} >
-                        < Button
-                            icon = {<Icon style = {{marginRight: 5}}
-                                          name = 'plus'
-                                          color = "white"
-                                          disabledStyle = {{color: "white"}}
-                                          size = {15}
-                                          onPress = {() => this.props.handleAddStep(this.props.id)}/>}
-                            title = "Add a milestone"
-                            raised
-                            titleStyle = {{margin: 0, color: "white"}}
-                            onPress = {() => this.props.handleAddStep(this.props.id)}
-                            buttonStyle = {{backgroundColor:'#186aed'}}
-                            containerStyle={{ justifyContent: "flex-end", margin: 5}}
-                        />
-
-                            {/*<Button*/}
-                            {/*    icon={*/}
-                            {/*        <Icon*/}
-                            {/*            name='times'*/}
-                            {/*            color='red'*/}
-                            {/*            size={15}*/}
-                            {/*            onPress={() => this.props.handleDeleteBox(this.props.id)}*/}
-
-                            {/*        />*/}
-                            {/*    }*/}
-                            {/*    containerStyle={{flex: 1, justifyContent: "flex-end"}}*/}
-                            {/*    title={"delete set"}*/}
-                            {/*    titleStyle = {{margin: 4, color: "red"}}*/}
-                            {/*    type="clear"*/}
-                            {/*    onPress={() => this.props.handleDeleteBox(this.props.id)}*/}
-                            {/*/>*/}
-
-                        </View>
-                    }
-                </View>
-                {/*<Progress.Bar*/}
-                {/*    progress={this.props.computeBoxProgress(this.props.steps)} width={330} style={{margin: 10}}*/}
-                {/*/>*/}
-                {/*{(this.state.editingBox)*/}
-                {/*    ?*/}
-                {/*< Button*/}
-                {/*    style={{width: '30%', justifyCon2tent: "flex-end", alignContent: "center", margin: 10}}*/}
-                {/*    title = "Save"*/}
-                {/*    buttonStyle={{backgroundColor: "#4978DD"}}*/}
-                {/*    onPress = {()=> this.doneSaving()}*/}
-                {/*    />*/}
-                {/*    :null*/}
-                {/*}*/}
                 <View style = {{ marginBottom: 5}}>
                 <StepRoot
                     tribeID = {this.props.tribeID}
@@ -112,6 +59,26 @@ class Box extends Component {
                     toggleDoneDB={this.props.toggleDoneDB}
 
                 />
+                    { (!this.props.canEdit)
+                        ? null
+                        : <View style = {{flexDirection: "row", margin: 5, flex: 1, justifyContent: "center"}} >
+                            < Button
+                                icon = {<Icon style = {{marginRight: 5}}
+                                              name = 'plus'
+                                              color = "white"
+                                              disabledStyle = {{color: "white"}}
+                                              size = {15}
+                                              onPress = {() => this.props.handleAddStep(this.props.id)}/>}
+                                title = "add a card"
+                                raised
+                                titleStyle = {{margin: 0, color: "white"}}
+                                onPress = {() => this.props.handleAddStep(this.props.id)}
+                                buttonStyle = {{backgroundColor:'#186aed'}}
+                                containerStyle={{ justifyContent: "flex-end", marginRight: 3}}
+                            />
+
+                        </View>
+                    }
                 </View>
                 </View>
             </KeyboardAvoidingView>
@@ -123,3 +90,34 @@ Box.propTypes = {};
 
 export default connect()(Box);
 
+
+{/*<Button*/}
+{/*    icon={*/}
+{/*        <Icon*/}
+{/*            name='times'*/}
+{/*            color='red'*/}
+{/*            size={15}*/}
+{/*            onPress={() => this.props.handleDeleteBox(this.props.id)}*/}
+
+{/*        />*/}
+{/*    }*/}
+{/*    containerStyle={{flex: 1, justifyContent: "flex-end"}}*/}
+{/*    title={"delete set"}*/}
+{/*    titleStyle = {{margin: 4, color: "red"}}*/}
+{/*    type="clear"*/}
+{/*    onPress={() => this.props.handleDeleteBox(this.props.id)}*/}
+{/*/>*/}
+
+{/*<Progress.Bar*/}
+{/*    progress={this.props.computeBoxProgress(this.props.steps)} width={330} style={{margin: 10}}*/}
+{/*/>*/}
+{/*{(this.state.editingBox)*/}
+{/*    ?*/}
+{/*< Button*/}
+{/*    style={{width: '30%', justifyCon2tent: "flex-end", alignContent: "center", margin: 10}}*/}
+{/*    title = "Save"*/}
+{/*    buttonStyle={{backgroundColor: "#4978DD"}}*/}
+{/*    onPress = {()=> this.doneSaving()}*/}
+{/*    />*/}
+{/*    :null*/}
+{/*}*/}

@@ -79,6 +79,7 @@ class TribeComponent extends Component {
         this.changeEndGoal = this.changeEndGoal.bind(this);
 
 
+
         this.state = {
             boxData: [],
             open: true,
@@ -99,6 +100,9 @@ class TribeComponent extends Component {
             canEdit: true,
             headerMessage: null,
             headerOpen: false,
+
+
+            shortView: this.props.isFeed,
 
 
             didLike: false,
@@ -159,7 +163,7 @@ class TribeComponent extends Component {
 
     sendLikeNotification(){
         let like = {
-            message : "liked your goal - " + this.state.name,
+            message : "liked " + this.props.header.message,
             fromUserID : this.props.alwaysMe,
             toUserID: this.props.userID,
             timeStamp: moment().format(),
@@ -493,34 +497,21 @@ class TribeComponent extends Component {
                     />
                     :null
                 }
-            <View style = {[styles.tribes, {marginTop: marginTop, padding: 0, backgroundColor: "#3E4145"}]}>
+            <View style = {[styles.tribes, {marginTop: marginTop, padding: 3, backgroundColor: "#3E4145"}]}>
                     <View style = {{flexDirection: "row", justifyContent: "flex-start", margin: 5, width: '100%',}}>
-                        <View style = {{flex: 1, flexDirection: "column", width: '100%', alignContent: "flex-start", justifyContent: "flex-start"}}>
+                        <View style = {{flex: 1, padding: 5, flexDirection: "column", width: '100%', alignContent: "flex-start", justifyContent: "flex-start"}}>
                         <TextInput
                             style = {styles.goalTitleText}
                             ref= {(el) => { this.name= el; }}
                             value = {this.state.name}
-                            placeholder = {"add a title!"}
+                            placeholder = "add a title"
+                            placeholderTextColor="white"
+                            placeholderStyle = {{color:'white'}}
                             editable = {canEdit}
                             onChangeText = {(text) => this.activateEdit(text,'name')}
                         />
-                        <View style = {{flexDirection: "column", width: '100%', marginTop: 3}}>
-                            <View style = {{flexDirection: "row"}}>
-                            <Text style = {{fontWeight: 500, fontSize: 16, color: "white", textAlign: "left", marginTop: 0}}>GOAL:  </Text>
-                            <TextInput
-                                    style = {{fontSize: 16, fontWeight: 700, color: 'white'}}
-                                    ref= {(el) => { this.name= el; }}
-                                    placeholder = {"ADD"}
-                                    value = {this.state.endGoal}
-                                    editable = {canEdit}
-                                    onChangeText = {(text) => this.activateEdit(text,'endGoal')}
-                                />
-                            </View>
-                            <Text style = {{fontWeight: 600, fontSize: 16, color: "#5BADFF", textAlign: "left", marginTop: 0}}>TOTAL: {this.computeTotal(dataList)}</Text>
-
                         </View>
-                        </View>
-                        <View style ={{ flexDirection: "row", width: '30%', justifyContent: "flex-end", alignItems: 'flex-start', marginTop: 0, marginRight: 5}}>
+                        <View style ={{ flexDirection: "row", width: '30%', justifyContent: "flex-end", alignItems: 'flex-start', marginTop: 0, marginRight: 10}}>
                             {(canEdit)
                                     ?
                                     <View style = {{flexDirection:"row", justifyContent: "center"}}>
@@ -535,10 +526,10 @@ class TribeComponent extends Component {
                                                 />
                                             </MenuTrigger>
                                             <MenuOptions>
-                                                <MenuOption onSelect={() => this.makeEditable(true, myName)} text='Edit'/>
-                                                <MenuOption onSelect={() => this.setState({fOpen: !fOpen})}>
-                                                    <Text style={{color: "navy"}}>Make Private </Text>
-                                                </MenuOption>
+                                                <MenuOption onSelect={() => this.makeEditable(true, canEdit)} text='Edit'/>
+                                                {/*<MenuOption onSelect={() => this.setState({fOpen: !fOpen})}>*/}
+                                                {/*    <Text style={{color: "navy"}}>Make Private </Text>*/}
+                                                {/*</MenuOption>*/}
                                                 <MenuOption onSelect={() => this.openDeleteConfirm(true)}>
                                                     <Text style={{color: 'red'}}>Delete</Text>
                                                 </MenuOption>
@@ -562,53 +553,45 @@ class TribeComponent extends Component {
                                 }
                         </View>
                     </View>
+                {/*<View style = {{flexDirection: "row"}}>*/}
+                {/*    <Button*/}
+                {/*        title = 'see all cards'*/}
+                {/*        type= 'clear'*/}
+                {/*        titleStyle = {{color:'#186aed' }}*/}
+                {/*        onPress ={()=> this.setState({shortView: !this.state.shortView})}*/}
+
+                {/*    />*/}
+                {/*    <Button*/}
+                {/*        title = {'comments'}*/}
+                {/*        type = 'clear'*/}
+                {/*        onPress={() => this.setState({openComments: !this.state.openComments})}*/}
+                {/*        titleStyle = {{color:'white', marginLeft: 5}}*/}
+                {/*        icon ={*/}
+                {/*            <Ionicons*/}
+                {/*                name={'ios-chatbubbles'}*/}
+                {/*                color={'white'}*/}
+                {/*                size={25}*/}
+                {/*                raised={true}*/}
+                {/*                onPress={() => this.setState({openComments: !this.state.openComments})}*/}
+                {/*                style={{marginLeft: 5}}*/}
+                {/*            />*/}
+                {/*        }*/}
+                {/*    />*/}
+                {/*</View>*/}
                 <View>
                     <View>
-                    <View style = {{flexDirection: "row", justifyContent: "space-around"}}>
-                        <View style = {{flexDirection: "column", shadowOffset: {width: 0, height: 2}, shadowColor:"black", shadowOpacity: 2, margin: 2,padding: 5,width: '30%'}}>
-                            <TextInput
-                                style ={{fontSize: 35, textAlign: "center", fontWeight: 600, marginTop: 0, color: "white"}}
-                                placeholder = "0"
-                                editable = {canEdit}
-                                onChangeText = {(text) => this.activateEdit(text,'metric')}
-                            >
-                                {currData.data}
-                            </TextInput>
-                            <Divider/>
-                            <Text style = {{fontWeight: 600, fontSize: 15, color: "white", textAlign: "center", marginTop: 5}}>TODAY </Text>
-                        </View>
-                        <View style={{width: 250, marginTop: -20, marginBottom: -10,
-                            borderRadius: 5, padding: 2, borderWidth: 0,
-                            shadowOffset: {width: 0, height: 2}, shadowColor:"black"}}>
-                        {(dataList.length > 1)
-                            ?
-                            <AreaChart
-                                style={{width: 240, height: 90}}
-                                data={dataList}
-                                contentInset={{top: 10, bottom: 10, left: 5, right: 5}}
-                                curve={shape.curveNatural}
-                                svg={{fill: '#186aed'}}
-                            >
-                                <Grid/>
-                            </AreaChart>
-                            : null
-                        }
-                        </View>
+                            <View style={{marginTop: -10}}>
+                                <BoxRoot
+                                    toggleDoneDB={this.toggleDoneDB}
+                                    tribeID={this.props.tribeID}
+                                    filter={this.props.id}
+                                    handleAddBox={this.handleAddBoxDB}
+                                    editing={this.state.editing}
+                                    canEdit={canEdit}
+                                    sendHeaderMessage={this.sendHeaderMessage}
+                                />
+                            </View>
 
-                        <View>
-                        </View>
-                    </View>
-                        <View>
-                            <BoxRoot
-                                toggleDoneDB = {this.toggleDoneDB}
-                                tribeID={this.props.tribeID}
-                                filter={this.props.id}
-                                handleAddBox={this.handleAddBoxDB}
-                                editing={this.state.editing}
-                                canEdit={canEdit}
-                                sendHeaderMessage={this.sendHeaderMessage}
-                            />
-                        </View>
                     </View>
                 <View style = {{borderTopWidth: 0.2}}>
                 <View style = {{flexDirection: "row", backgroundColor: "#2D3861", width: '100%', justifyContent: "center",}}>
@@ -844,3 +827,52 @@ export default connect(mapStateToProps, mapDispatchToProps)(TribeComponent);
 {/*    >*/}
 {/*        {this.props.metricName}*/}
 {/*</TextInput>*/}
+
+
+
+{/*<View style = {{flexDirection: "column", width: '100%', marginTop: 3}}>*/}
+{/*    <View style = {{flexDirection: "row"}}>*/}
+{/*    <Text style = {{fontWeight: 500, fontSize: 16, color: "white", textAlign: "left", marginTop: 0}}>GOAL:  </Text>*/}
+{/*    <TextInput*/}
+{/*            style = {{fontSize: 16, fontWeight: 700, color: 'white'}}*/}
+{/*            ref= {(el) => { this.name= el; }}*/}
+{/*            placeholder = {"ADD"}*/}
+{/*            value = {this.state.endGoal}*/}
+{/*            editable = {canEdit}*/}
+{/*            onChangeText = {(text) => this.activateEdit(text,'endGoal')}*/}
+{/*        />*/}
+{/*    </View>*/}
+{/*    <Text style = {{fontWeight: 600, fontSize: 16, color: "#5BADFF", textAlign: "left", marginTop: 0}}>TOTAL: {this.computeTotal(dataList)}</Text>*/}
+
+
+
+
+{/*<View style = {{flexDirection: "column", shadowOffset: {width: 0, height: 2}, shadowColor:"black", shadowOpacity: 2, margin: 2,padding: 5,width: '30%'}}>*/}
+{/*    <TextInput*/}
+{/*        style ={{fontSize: 35, textAlign: "center", fontWeight: 600, marginTop: 0, color: "white"}}*/}
+{/*        placeholder = "0"*/}
+{/*        editable = {canEdit}*/}
+{/*        onChangeText = {(text) => this.activateEdit(text,'metric')}*/}
+{/*    >*/}
+{/*        {currData.data}*/}
+{/*    </TextInput>*/}
+{/*    <Divider/>*/}
+{/*    <Text style = {{fontWeight: 600, fontSize: 15, color: "white", textAlign: "center", marginTop: 5}}>TODAY </Text>*/}
+{/*</View>*/}
+{/*<View style={{width: 250, marginTop: -20, marginBottom: -10,*/}
+{/*    borderRadius: 5, padding: 2, borderWidth: 0,*/}
+{/*    shadowOffset: {width: 0, height: 2}, shadowColor:"black"}}>*/}
+{/*{(dataList.length > 1)*/}
+{/*    ?*/}
+{/*    <AreaChart*/}
+{/*        style={{width: 240, height: 90}}*/}
+{/*        data={dataList}*/}
+{/*        contentInset={{top: 10, bottom: 10, left: 5, right: 5}}*/}
+{/*        curve={shape.curveNatural}*/}
+{/*        svg={{fill: '#186aed'}}*/}
+{/*    >*/}
+{/*        <Grid/>*/}
+{/*    </AreaChart>*/}
+{/*    : null*/}
+{/*}*/}
+{/*</View>*/}

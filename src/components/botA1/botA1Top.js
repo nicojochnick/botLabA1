@@ -63,7 +63,7 @@ class BotA1Top extends Component {
         console.log(this.props.friendTribeView);
         console.log(this.props.filter);
 
-        this.ref.where("userID", '==', this.props.filter).get().then((snapshot) => {
+        this.ref.where("userID", '==', 0).get().then((snapshot) => {
             console.log("gettingData");
             let data = snapshot.docs.map(function (documentSnapshot) {
                 console.log(documentSnapshot.data())
@@ -91,7 +91,7 @@ class BotA1Top extends Component {
     getStep(){
         let tribeData = this.state.tribeData;
         console.log(tribeData.length)
-        return StepsBot.mainMenu
+        return StepsBot.oldMenu
     }
 
 
@@ -99,7 +99,7 @@ class BotA1Top extends Component {
         console.log(this.state.currentStep);
         // this.findCurrentStep();
         return (
-            <View style = {{height: 300}}>
+            <View style = {{height: 200}}>
             <BotA1Component steps = {this.getStep()} handleEnd = {this.handleEnd}/>
             </View>
         );

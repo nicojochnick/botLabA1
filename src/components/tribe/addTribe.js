@@ -60,10 +60,11 @@ class AddTribe extends Component {
     handleAddTribeDB() {
         let friendIDs = this.props.friendIDs.concat(this.props.alwaysMe)
         const genericTribe = {
-            name: "",
+            name: null,
             id: moment().format(),
             userID: this.props.userID,
             author: name,
+            groupID: this.props.groupID,
             friendIDs: friendIDs,
             continuousData: [{date: null, data:0}, {date : moment().format("MMM D YY"), data: 0}],
             metricName: null,
@@ -97,7 +98,7 @@ class AddTribe extends Component {
     }
 
     componentDidMount(): void {
-        console.log(this.props.friendIDs)
+        console.log(this.props.friendIDs);
         console.log(this.props.alwaysMe)
 
     }
@@ -122,11 +123,10 @@ class AddTribe extends Component {
             this.setState({UserData: UData})
         }
 
-
     render() {
         return (
             <Button
-                icon = {<Ionicons style = {{marginRight: -10,}}
+                icon = {<Ionicons style = {{marginRight: 0}}
                                   name = {'ios-add'}
                                   color = '#3676FF'
                                   disabledStyle = {{color:"grey"}}

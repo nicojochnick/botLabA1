@@ -85,12 +85,12 @@ const slideMenu = createDrawerNavigator({
         Feed: {
             screen: FeedStack,
         },
-        // Menu: {
-        //     screen: SlideMenuRoot,
-        // },
+        Menu: {
+            screen: SlideMenuRoot,
+        },
     }, {
 
-    contentComponent: SlideMenuRoot,
+    // contentComponent: SlideMenuRoot,
     initialRouteName: 'Feed',
         drawerType: 'slide',
     }

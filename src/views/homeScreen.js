@@ -295,6 +295,7 @@ class HomeScreen extends Component {
                             coreUserID={this.props.coreUserID}
                             alwaysMe = {this.state.alwaysMe}
                             name = {this.state.name}
+                            isFeed = {false}
                             profilePicture = {this.state.profilePicture}
                         />
                     </View>

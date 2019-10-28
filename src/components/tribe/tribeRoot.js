@@ -24,6 +24,8 @@ import {
     addFriendIDToTribeDB, addDataToTribeDB, changeEndGoal, updateHeader, shareTribeDB,
 } from '../../redux/actions';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { withNavigationFocus } from 'react-navigation';
+
 
 const tribesSelector = (Obj) => {
     return Object.keys(Obj)
@@ -31,15 +33,13 @@ const tribesSelector = (Obj) => {
 };
 
 
-export default  class TribeRoot extends Component {
+class TribeRoot extends Component {
     constructor(props) {
         super(props);
         this.unsubscribe = null;
         this.ref = firebase.firestore().collection('tribes');
         this.ref2 = firebase.firestore().collection('users');
         this.user = firebase.auth().currentUser;
-
-
         // this.addTribeDeadline = this.addTribeDeadline.bind(this);
         // this.changeTribeName = this.changeTribeName.bind(this);
         // this.computeProgress = this.computeProgress.bind(this);
@@ -61,7 +61,6 @@ export default  class TribeRoot extends Component {
         // this.getTribeMembers = this.getTribeMembers.bind(this);
         // this.addFriendToTribeDB = this.addFriendToTribeDB.bind(this);
         // this.addFriendIDToTribeDB = this.addFriendIDToTribeDB.bind(this);
-
         this.state = {
             //flat list accepts an array of object
             loading: true,
@@ -72,7 +71,6 @@ export default  class TribeRoot extends Component {
             refreshed: false,
         };
     }
-
     sortTribes(data){
         console.log("SORTING")
         return data.sort((a,b) => {
@@ -82,19 +80,16 @@ export default  class TribeRoot extends Component {
             }
         );
     }
-
-
     componentDidMount(): void {
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
     }
     componentWillUnmount(): void {
         this.unsubscribe();
     }
-
     onCollectionUpdate = (snapshot) => {
         console.log("TAKING UPDATE");
         console.log(this.props.filter);
-        let myID = this.props.filter
+        let myID = this.props.filter;
         if (this.props.filter == null){
             myID = 0
         }
@@ -109,7 +104,7 @@ export default  class TribeRoot extends Component {
                 this.setState({tribeData: data, loading: false})
             });
         } else {
-            this.ref.where('friendIDs', 'array-contains', this.props.alwaysMe).where('isPosted', '==', true).get().then( (snapshot) => {
+            this.ref.where('groupID', '==', this.props.groupID).where('isPosted', '==', true).get().then( (snapshot) => {
                 let data = snapshot.docs.map(function (documentSnapshot) {
                     console.log(data);
                     return documentSnapshot.data()
@@ -157,6 +152,7 @@ export default  class TribeRoot extends Component {
                                           isPublic = {item.isPublic}
                                           isPosted = {item.isPosted}
                                           alwaysMe = {this.props.alwaysMe}
+                                          isFeed = {this.props.isFeed}
                                           // tribeAuthorName = {this.props.name}
                                           // tribeAuthorProfilePicture = {this.props.profilePicture}
                                       />)}
@@ -193,7 +189,7 @@ const mapStateToProps = (state /*, ownProps*/) => ({
 // export default connect(mapStateToProps, mapDispatchToProps)(TribeRoot);
 
 TribeRoot.propTypes = {};
-
+export default withNavigationFocus(TribeRoot);
 
 // addFriendToTribe={this.addFriendToTribeDB}
 // addFriendIDToTribe={this.addFriendIDToTribeDB}

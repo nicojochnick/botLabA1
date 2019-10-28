@@ -27,7 +27,6 @@ class CommentTopStack extends Component {
         this.setState({length: l})
     }
 
-
     render() {
         console.log(this.props.tribeID)
         console.log(this.props.alwaysMe)
@@ -39,7 +38,7 @@ class CommentTopStack extends Component {
 
         }
 
-        let c = '#186aed'
+        let c = 'white'
         if (this.state.openComments){
             m = 'Hide'
             c = 'grey'
@@ -71,7 +70,7 @@ class CommentTopStack extends Component {
                 </View>
                 <View style = {{backgroundColor: "#2D3861"}}>
                     <CommentFeed
-                        userID = {this.props.userID}
+                        userIDs = {this.props.userID}
                         tribeID={this.props.tribeID}
                         alwaysMe={this.props.alwaysMe}
                         isCommentOpen = {this.state.openComments}
