@@ -24,7 +24,7 @@ export default class SignUp extends React.Component {
                      userID: userID,
                      fbID: fbID,
                     friendIDs: [],
-                    groupIDS: [],
+                    groupIDs: [],
                      email: email,
                      name: null,
                      messages: null,

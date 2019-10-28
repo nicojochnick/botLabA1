@@ -505,8 +505,8 @@ class TribeComponent extends Component {
                             ref= {(el) => { this.name= el; }}
                             value = {this.state.name}
                             placeholder = "add a title"
-                            placeholderTextColor="white"
-                            placeholderStyle = {{color:'white'}}
+                            placeholderTextColor="grey"
+                            placeholderStyle = {{fontWeight: '300'}}
                             editable = {canEdit}
                             onChangeText = {(text) => this.activateEdit(text,'name')}
                         />

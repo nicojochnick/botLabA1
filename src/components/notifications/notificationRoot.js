@@ -41,7 +41,8 @@ class NotificationRoot extends Component {
         return (
             <ScrollView style = {{backgroundColor: '#282C33'}}>
                 <Text style = {{fontSize: 30, color: 'white', fontWeight: "bold", marginBottom: 10}}>  Notifications </Text>
-            <FlatList
+                <View style = {{borderWidth: 1, borderRadius: 10, margin: 6, padding: 3, borderColor: "white"}}>
+                <FlatList
                 data = {sortedArray}
                 renderItem = {({item}) => (
                     <NotificationContainer
@@ -56,6 +57,7 @@ class NotificationRoot extends Component {
                     />
                     )}
             />
+                </View>
             </ScrollView>
         );
     }

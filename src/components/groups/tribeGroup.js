@@ -91,7 +91,6 @@ class TribeGroup extends Component {
                     <View>
                     <View style = {{flexDirection: "row", justifyContent: "flex-start", }}>
 
-
                     </View>
                     { (this.state.searchData !== null )
                         ? <View style = {{ margin: 10, borderRadius: 5, borderColor: "grey"}}>

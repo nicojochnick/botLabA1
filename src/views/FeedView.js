@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View, TextInput, ActivityIndicator, RefreshControl, ScrollView} from 'react-native';
+import {View, Text, TextInput, ActivityIndicator, RefreshControl, ScrollView} from 'react-native';
 import {Button, Input, SearchBar} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FeedContainer from '../components/feed/feedContainer';
@@ -18,6 +18,7 @@ import { useFocusEffect } from '@react-navigation/core';
 
 import AddTribe from '../components/tribe/addTribe';
 import { NavigationEvents } from 'react-navigation';
+import TribeGroup from '../components/groups/tribeGroup';
 
 
 class FeedView extends Component {
@@ -40,7 +41,11 @@ class FeedView extends Component {
             isAllTribe: true,
             groupID: this.props.currentGroup.tribeGroupID,
             group: null,
-            groups: []
+            groups: [],
+            isMemberOpen: false,
+            friendData: null,
+            memIDs: null,
+            getMems: false,
             }
     }
     static navigationOptions = ({navigation}) => {
@@ -57,6 +62,31 @@ class FeedView extends Component {
         this.props.updateUser(user);
         console.log('userDispatch')
     }
+
+    async getMembersFast() {
+        let fData = [];
+        console.log(this.state.coreUserID)
+        await firebase.firestore().collection('users').where('groupIDs', 'array-contains', this.state.groupID).get().then((snapshot) => {
+            snapshot.forEach(function (doc) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.data().userID);
+                let name = doc.data().name;
+                let picture = doc.data().photoURL;
+                let fbID = doc.data().fbID;
+                let userID = doc.data().userID;
+                let user = {picture: picture, name: name, userID: userID, fbID: fbID};
+                fData.push(user)
+            });
+            console.log(fData)
+            this.setState({friendData: fData, gotMems: true})
+        })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+            });
+    }
+
+
+
 
 
     componentDidMount(): void {
@@ -108,9 +138,30 @@ class FeedView extends Component {
                 return documentSnapshot.data()
             });
             let group = data[0];
+            this.setState({memIDs: group.members})
             this.setState({group: group});
             this.setState({groupName: group.name})
+            this.getMembersFast()
         });
+        let fData = [];
+
+        await this.ref.where('groupIDs', 'array-contains', this.state.groupID).get().then((snapshot) => {
+            snapshot.forEach(function (doc) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.data().userID);
+                let name = doc.data().name;
+                let picture = doc.data().photoURL;
+                let fbID = doc.data().fbID;
+                let userID = doc.data().userID;
+                let user = {picture: picture, name: name, userID: userID, fbID: fbID};
+                fData.push(user)
+            });
+            console.log(fData)
+            this.setState({friendData: fData, gotMems: true})
+        })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+            });
     };
 
     _onRefresh = () => {
@@ -176,7 +227,7 @@ class FeedView extends Component {
                 />
 
                     </View>
-                    <View style = {{ marginRight: 10, margin: -10, flex: 0.4, flexDirection: "row", alignItem: "flex-start", justifyContent: "flex-end",}}>
+                    <View style = {{ marginRight: 10, margin: -10, flex: 0.4, flexDirection: "row", alignItem: "center", justifyContent: "flex-end",}}>
                         {(this.state.isEditingName)
                             ?
                             <Button
@@ -189,6 +240,24 @@ class FeedView extends Component {
                             />
                             :null
                         }
+                        <Button
+                            style={{ alignContent: "center", marginTop: 20, marginRight: 0}}
+
+                            onPress = {() => this.setState({isMemberOpen: !this.state.isMemberOpen})}
+
+                            icon = {
+                                <Ionicons
+                                    name = {'ios-contacts'}
+                                    color = {'white'}
+                                    size = {35}
+                                    onPress = {() => this.setState({isMemberOpen: !this.state.isMemberOpen})}
+                                    raised = {true}
+                                />
+                            }
+                            type = 'clear'
+
+                        />
+
                         <AddTribe
                         uid = {this.state.uid}
                         friendIDs ={this.state.friendIDs}
@@ -198,9 +267,23 @@ class FeedView extends Component {
                         />
                     </View>
                 </View>
-                <SearchContainer
-                    mess = {searchMess}
-                />
+
+                <View>
+                    {(this.state.isMemberOpen)
+                       ?
+                        <View style = {{margin: 6, padding: 2, borderRadius: 10, borderWidth: 1, borderColor: "white"}}>
+                            <Text style = {{margin: 6, fontWeight: "bold", textAlign: "left", color: "white", fontSize: 18,}}> members </Text>
+                            <SearchContainer
+                                mess = {searchMess}
+                            />
+                        <TribeGroup
+                            friendData={this.state.friendData}
+                            getMems={this.state.getMems}
+                        />
+                        </View>
+                        :null
+                    }
+                </View>
                 { (this.state.alwaysMe !== null )
                    ?
                     <TribeRoot

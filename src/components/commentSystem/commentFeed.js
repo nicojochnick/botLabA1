@@ -40,7 +40,7 @@ class CommentFeed extends Component {
     render() {
         let data = this.state.tribeComments
         data = data.sort((a,b) =>  new Date(b.timeStamp) - new Date(a.timeStamp));
-        let height = 200
+        let height = 150
         if (this.props.isCommentOpen === false){
             height= 0
         }

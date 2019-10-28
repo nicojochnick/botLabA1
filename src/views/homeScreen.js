@@ -249,7 +249,7 @@ class HomeScreen extends Component {
         }
         return (
             <ScrollView style = {{backgroundColor: '#282C33'}}>
-                <SafeAreaView style = {{flex: 0.1, flexDirection: "column", paddingTop: 0,paddingBottom: 10, backgroundColor: "#2C2C2C", borderBottomWidth: 0.3}}>
+                <SafeAreaView style = {{flex: 0.1, flexDirection: "column", paddingTop: 0,paddingBottom: 10, backgroundColor: '#282C33'}}>
                     <View style = {{flex: 0.1, flexDirection: "row", justifyContent: "center"}}>
                     </View>
                     <View style = {{flex: 0.7,flexDirection: "row", marginBottom: 0, marginRight: 15, justifyContent: "flex-end" }}>
@@ -278,16 +278,16 @@ class HomeScreen extends Component {
                             </View>
                         }
                     </View>
-                    <View style = {{flex: 0.3, justifyContent: "flex-start", alignContent: "center", flexDirection: "row"}}>
-                        <SwitchViewTab goalColor = {goalColor}
-                                       tribeColor = {tribeColor}
-                                       switchView = {this.switchView}
-                        />
-                    </View>
+                    {/*<View style = {{flex: 0.3, justifyContent: "flex-start", alignContent: "center", flexDirection: "row"}}>*/}
+                    {/*    <SwitchViewTab goalColor = {goalColor}*/}
+                    {/*                   tribeColor = {tribeColor}*/}
+                    {/*                   switchView = {this.switchView}*/}
+                    {/*    />*/}
+                    {/*</View>*/}
                 </SafeAreaView>
                 {(this.state.isGoalSelect)
                     ?
-                    <View style={{flex: 1, backgroundColor: "#23262D"}}>
+                    <View style={{flex: 1, backgroundColor: '#282C33'}}>
                         <TribeRoot
                             friendTribeView={false}
                             filter={this.state.coreUserID}
@@ -301,14 +301,7 @@ class HomeScreen extends Component {
                     </View>
                     :
                     <View style={{flex: 1}}>
-                        <TribeGroup
-                            friendIDS = {this.state.friendIDs}
-                            myID = {this.state.coreUserID}
-                            gotMems = {this.state.gotMems}
-                            getTribeMembers = {this.getTribeMembers}
-                            friendData = {this.state.friendData}
-                            addFriendIDDB = {this.addFriendIDDB}
-                            />
+
                     </View>
                 }
             </ScrollView>
