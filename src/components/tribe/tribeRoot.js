@@ -167,7 +167,7 @@ class TribeRoot extends Component {
                                       />)}
                         />
                         </KeyboardAwareScrollView>
-                    : <ActivityIndicator style = {{margin: 30}} size="large" color="grey" />
+                    : <Text style = {{margin: 20, textAlign: 'center', fontWeight: 'bold',  color: 'white', fontSize: 16, }}> No Boards Created. Add one by pressing the '+' button </Text>
                 }
                     </View>
                     :<ActivityIndicator style = {{margin: 30}} size="large" color="grey" />

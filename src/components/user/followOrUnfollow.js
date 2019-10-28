@@ -9,7 +9,7 @@ import {
     changeEndGoal,
     changeMetricNameDB,
     changeTribeNameDB,
-    deleteTribeDB, sendNotification, shareTribeDB, unshareTribeDB, updateHeader,
+    deleteTribeDB, shareTribeDB, unshareTribeDB, updateHeader,
 } from '../../redux/actions';
 import {connect} from 'react-redux';
 
@@ -32,7 +32,7 @@ class FollowOrUnfollow extends Component {
             action: "friendRequest",
             accepted: false,
         };
-        this.props.sendNotification(friendRequestNotification)
+        // this.props.sending(friendRequestNotification)
     }
 
 
@@ -94,7 +94,7 @@ FollowOrUnfollow.propTypes = {};
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        sendNotification: (friendRequest) => dispatch(sendNotification(friendRequest)),
+
     }
 };
 

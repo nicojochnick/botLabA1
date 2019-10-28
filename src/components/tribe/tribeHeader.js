@@ -110,12 +110,22 @@ class TribeHeader extends Component {
                         <View style = {{flexDirection: "column", width: '98%'}}>
                             <Text
                                 style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.props.tribeAuthorName}  </Text>
-                            <Text
-                                style = {{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17, width: "100%"}}
-                                multiline = {true}
-                            >
-                                completed: {this.props.header.message}
-                            </Text>
+                            {(this.props.header.message === null)
+                                ? <Text
+                                    style={{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17, width: "100%"}}
+                                    multiline={true}
+                                >
+                                    created a new board
+                                </Text>
+
+
+                               : <Text
+                                    style={{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17, width: "100%"}}
+                                    multiline={true}
+                                >
+                                    completed: {this.props.header.message}
+                                </Text>
+                            }
                         </View>
                     </View>
                     <View style ={{flexDirection: "row", flex: 0.2, justifyContent: 'flex-end', marginRight: -3}}>

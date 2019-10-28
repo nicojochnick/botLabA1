@@ -46,7 +46,10 @@ class SearchContainer extends Component {
                 triggerSearch = {this.triggerSearch}
                 searchData = {this.state.searchData}
                 clearSearch = {this.clearSearch}
+                groupName = {this.props.groupName}
+                groupID = {this.props.groupID}
                 mess = {this.props.mess}
+                fromUserID = {this.props.alwaysMe}
             />
         );
     }

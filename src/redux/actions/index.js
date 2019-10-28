@@ -54,6 +54,44 @@ export function changeGroupName(text,id){
                 });
             });
     };
+}
+
+export function addToGroup(userID, groupID) {
+    return (dispatch, getState) => {
+        console.log(userID, groupID)
+        firebase.firestore().collection('groups').where('id', '==', groupID)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({members: firebase.firestore.FieldValue.arrayUnion(userID)})
+            })
+        });
+
+        firebase.firestore().collection('users').where('id', '==', userID)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({groupIDs: firebase.firestore.FieldValue.arrayUnion(groupID)})
+            })
+        });
+    };
+
+}
+
+
+export function removeFromGroup(userID, groupID) {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('groups').where('id', '==', groupID)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({members: doc.data().members.filter(friend => friend !== userID)})
+            })
+        });
+        firebase.firestore().collection('users').where('userID', '==', userID)
+            .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({groupIDs: doc.data().groupIDs.filter(friend => friend !== groupID)})
+            })
+        });
+    };
 
 }
 
@@ -568,6 +606,7 @@ export function toggleTribeOpen(index){
 ///Notifications
 export const sendNotification = (notification) => {
     return (dispatch, getState) => {
+        console.log("SENDING NOTIFICATION")
         firebase.firestore().collection('notifications').add(notification);
     }
 };

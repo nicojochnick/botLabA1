@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import firebase from '@react-native-firebase/app';
 import moment from 'moment';
 import UserTag from '../user/userTag';
+import UserTagContainer from '../user/userTagContainer';
 
 
 
@@ -132,11 +133,13 @@ class TribeGroup extends Component {
                                 // keyExtractor={this.keyExtractor}
                                 data={this.props.friendData}
                                 renderItem={ ({item}) => (
-                                    <UserTag
-                                        avatar = {item.picture}
-                                        name = {item.name}
-                                        fbID = {item.fbID}
+                                    <UserTagContainer
+                                        isGroupList = {true}
+                                        fromPhoto = {item.picture}
+                                        fromUserName = {item.name}
+                                        toUserID = {item.userID}
                                         route = {'home'}
+                                        groupID = {this.props.groupID}
                                     />
                                 )}
                                 />

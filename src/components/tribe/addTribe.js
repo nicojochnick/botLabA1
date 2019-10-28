@@ -74,9 +74,9 @@ class AddTribe extends Component {
             endGoal: null,
             update: null,
             posted:  moment().format(),
-            header: {message: "", likes: []},
-            isPublic: false,
-            isPosted: false,
+            header: {message: null, likes: []},
+            isPublic: true,
+            isPosted: true,
         };
         this.props.addTribeDB(genericTribe);
         this.handleAddBoxDB(genericTribe.id)

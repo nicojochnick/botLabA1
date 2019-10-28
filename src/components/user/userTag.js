@@ -11,6 +11,9 @@ import moment from './followOrUnfollow';
 class UserTag extends Component {
     constructor(props){
         super(props )
+        this.state = {
+            buttonText: 'send group invite'
+        }
     }
 
     navigate(userID, fbID) {
@@ -44,19 +47,13 @@ class UserTag extends Component {
         }
         this.navigate(this.props.userID, this.props.fbID)
     }
-    sendGroupNotification(fromID, toID){
 
-            let groupRequest = {
-                message : "wants you to join the group: " + this.props.groupName,
-                fromUserID : fromID,
-                toUserID: toID,
-                timeStamp: moment().format(),
-                action: "requestToAddToGroup",
-                accepted: false,
-            };
-            this.props.sendNotification(groupRequest)
+    sendNotAndUpdateButton(){
+        this.props.sendGroupNotification(this.props.fromUserID, this.props.toUserID, this.props.groupName)
+        this.setState({buttonText: 'sent'})
 
     }
+
 
 
     render() {
@@ -84,9 +81,18 @@ class UserTag extends Component {
                         {(this.props.action === "requestToAddToGroup")
                             ? <Button
                                 buttonStyle = {{backgroundColor: color}}
-                                title ={'Accept'}
+                                title ={'Accept Invite'}
                                 raised = {true}
                                 onPress = {()=> this.props.addToGroup(this.props.groupID, this.props.toUserID)}
+                            />
+                            : null
+                        }
+
+                        {(this.props.isGroupList)
+                            ? <Button
+                                title={'remove'}
+                                type ='clear'
+                                onPress={() => this.props.removeFromGroup()}
                             />
                             : null
                         }
@@ -103,16 +109,16 @@ class UserTag extends Component {
                         {(this.props.action === 'groupAdd')
                             ? <Button
                                 buttonStyle = {{backgroundColor: color}}
-                                title ={'add user to group'}
+                                title ={this.state.buttonText}
                                 raised = {true}
-                                onPress = {()=> this.sendGroupNotification(this.props.fromID, this.props.toID)}
+                                onPress = {()=>this.sendNotAndUpdateButton()}
                             />
                             : null
                         }
                     </View>
                 }
 
-                onPress = {() => this.nav()}
+                onPress = {() => console.log("pressed user tag")}
             />
         );
     }

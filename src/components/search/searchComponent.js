@@ -76,15 +76,19 @@ class SearchComponent extends Component {
                                 ? <View style={{margin: 0, borderRadius: 5, borderColor: "grey", marginBottom: 2}}>
                                     {(this.props.searchData[0] !== null && this.props.searchData[0] !== undefined)
                                         ?
-                                        <UserTag
-                                            avatar={this.props.searchData[0].photoURL}
-                                            name={this.props.searchData[0].name}
+                                        <UserTagContainer
+                                            fromPhoto={this.props.searchData[0].photoURL}
+                                            fromUserName={this.props.searchData[0].name}
                                             fbID={this.props.searchData[0].fbID}
+                                            toUserID = {this.props.searchData[0].userID}
+                                            fromUserID = {this.props.fromUserID}
                                             route={'feed'}
+                                            groupName = {this.props.groupName}
                                             isAddToGroup = {true}
                                             isSearch = {true}
                                             clearSearch = {this.props.clearSearch}
                                             action = {'groupAdd'}
+                                            groupID = {this.props.groupID}
                                         />
                                         : <Text style={{
                                             fontSize: 15,

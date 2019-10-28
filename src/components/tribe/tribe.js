@@ -163,7 +163,7 @@ class TribeComponent extends Component {
 
     sendLikeNotification(){
         let like = {
-            message : "liked " + this.props.header.message,
+            message : "liked your card " + this.props.header.message,
             fromUserID : this.props.alwaysMe,
             toUserID: this.props.userID,
             timeStamp: moment().format(),
@@ -477,7 +477,7 @@ class TribeComponent extends Component {
 
         return (
             <View style = {{marginTop:10}}>
-                {(this.props.header)
+                {(this.props.header )
                     ?<TribeHeader
                         didLike = {this.state.didLike}
                         likeColor = {this.state.likeColor}

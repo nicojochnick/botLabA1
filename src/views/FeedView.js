@@ -175,6 +175,10 @@ class FeedView extends Component {
 
     render() {
         let groups = null
+        let groupColor = 'white'
+        if(this.state.isMemberOpen){
+            groupColor =  '#3676FF'
+        }
 
         console.log(this.props.navigation.isFocused())
         console.log(this.props.currentGroup)
@@ -242,13 +246,11 @@ class FeedView extends Component {
                         }
                         <Button
                             style={{ alignContent: "center", marginTop: 20, marginRight: 0}}
-
                             onPress = {() => this.setState({isMemberOpen: !this.state.isMemberOpen})}
-
                             icon = {
                                 <Ionicons
                                     name = {'ios-contacts'}
-                                    color = {'white'}
+                                    color = {groupColor}
                                     size = {35}
                                     onPress = {() => this.setState({isMemberOpen: !this.state.isMemberOpen})}
                                     raised = {true}
@@ -275,10 +277,14 @@ class FeedView extends Component {
                             <Text style = {{margin: 6, fontWeight: "bold", textAlign: "left", color: "white", fontSize: 18,}}> members </Text>
                             <SearchContainer
                                 mess = {searchMess}
+                                alwaysMe = {this.state.alwaysMe}
+                                groupName = {this.state.groupName}
+                                groupID = {this.state.groupID}
                             />
                         <TribeGroup
                             friendData={this.state.friendData}
                             getMems={this.state.getMems}
+                            groupID = {this.state.groupID}
                         />
                         </View>
                         :null
