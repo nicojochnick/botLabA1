@@ -45,6 +45,13 @@ export const CURRENT_TRIBE = 'CURRENT_TRIBE';
 
 //Groups
 
+//TribeGroup
+export const addTribeGroup = (group) => {
+    return (dispatch, getState) => {
+        firebase.firestore().collection('groups').add(group);
+    }
+};
+
 export function changeGroupName(text,id){
     return (dispatch, getState) => {
         firebase.firestore().collection('groups').where('id', '==', id)
@@ -58,6 +65,7 @@ export function changeGroupName(text,id){
 
 export function addToGroup(userID, groupID) {
     return (dispatch, getState) => {
+        console.log('ATTEMPTING TO ADD')
         console.log(userID, groupID)
         firebase.firestore().collection('groups').where('id', '==', groupID)
             .get().then(function (querySnapshot) {
@@ -66,7 +74,7 @@ export function addToGroup(userID, groupID) {
             })
         });
 
-        firebase.firestore().collection('users').where('id', '==', userID)
+        firebase.firestore().collection('users').where('userID', '==', userID)
             .get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
                 doc.ref.update({groupIDs: firebase.firestore.FieldValue.arrayUnion(groupID)})
@@ -623,12 +631,7 @@ export const acceptNotificationRequest= (notID) => {
 };
 
 
-//TribeGroup
-export const addTribeGroup = (group) => {
-    return (dispatch, getState) => {
-        firebase.firestore().collection('groups').add(group);
-    }
-};
+
 
 
 export const addTribeMember= (memberID, groupID) => {

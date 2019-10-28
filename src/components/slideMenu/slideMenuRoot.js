@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {ScrollView, View, Text} from 'react-native'
-import {Button, Divider} from 'react-native-elements';
+import {Button, Divider, Input} from 'react-native-elements';
 import TribeGroup from '../groups/tribeGroup';
 import GroupTribeRoot from '../groupTribe/groupTribeRoot';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {addTribeGroup, changeStepNameDB, deleteStepDB} from '../../redux/actions';
+import {addToGroup, addTribeGroup, changeStepNameDB, deleteStepDB} from '../../redux/actions';
 import {connect} from 'react-redux';
 import {StepRoot} from '../step/stepRoot';
 import moment from 'moment';
@@ -15,6 +15,10 @@ class SlideMenuRoot extends Component {
         super(props)
         this.addTribeGroup = this.addTribeGroup.bind(this)
         this.toggle = this.toggle.bind(this)
+        this.state ={
+            groupName: null,
+            isAddOpen: false
+        }
     }
 
     // static navigationOptions = ({navigation}) => {
@@ -27,17 +31,25 @@ class SlideMenuRoot extends Component {
         this.props.navigation.goBack()
     }
 
-    addTribeGroup() {
-        let group = {
-            photo: null,
-            name: null,
-            members: [this.props.user.user.userID],
-            id: moment().format(),
-            userTribeIDs: [],
-            tribeGroupTribeIDs: [],
 
-        };
-        this.props.addTribeGroup(group)
+    addTribeGroup() {
+
+
+        if (this.state.groupName !== null) {
+
+            this.setState({isAddOpen: false})
+            let group = {
+                photo: null,
+                name: this.state.groupName,
+                members: [this.props.user.user.userID],
+                id: moment().format(),
+                userTribeIDs: [],
+                tribeGroupTribeIDs: [],
+
+            };
+            this.props.addTribeGroup(group);
+            this.props.addToGroup(group.members[0], group.id)
+        }
     }
 
     render() {
@@ -49,6 +61,7 @@ class SlideMenuRoot extends Component {
             <ScrollView style  = {{marginTop: 0, backgroundColor: '#282C33'}}>
                 <View style = {{flexDirection: "row", marginTop: 50, justifyContent: "space-between", alignItems: "center", padding: 5}}>
                     <Text style = {{fontWeight: "bold", fontSize: 30, color: "white"}}> Groups </Text>
+
 
                     <Button
                         containerStyle = {{borderRadius: 6,}}
@@ -68,23 +81,64 @@ class SlideMenuRoot extends Component {
                         }
                     />
                 </View>
-                <Divider/>
-                <Button
-                    containerStyle = {{margin: 10, borderRadius: 6,}}
-                    raised
-                    onPress = {() => this.addTribeGroup()}
-                    title = 'Add Group'
-                    titleStyle = {{color: 'white', marginLeft: 5, fontWeight: "bold"}}
-                    buttonStyle = {{backgroundColor:'#186aed'}}
-                    icon = {
-                        <Ionicons
-                            name = {'md-add'}
-                            style = {{color: 'white'}}
-                            size = {30}
-                            onPress = {() => this.addTribeGroup()}
+                {!(this.state.isAddOpen)
+                    ?  <Button
+                        containerStyle={{margin: 10, marginTop: 15, borderRadius: 6,}}
+                        raised
+                        onPress={() => this.setState({isAddOpen: true})}
+                        title='Add Group'
+                        titleStyle={{color: 'white', marginLeft: 5, fontWeight: "bold"}}
+                        buttonStyle={{backgroundColor: '#186aed'}}
+                        icon={
+                            <Ionicons
+                                name={'md-add'}
+                                style={{color: 'white'}}
+                                size={30}
+                                onPress={() => this.setState({isAddOpen: true})}
+                            />
+                        }
+                    />
+                    : <View style={{margin: 7, padding: 2, borderRadius: 5, borderWidth: 2, borderColor: "#186aed"}}>
+                        <Input
+                            label='New Group Name'
+                            value={this.state.groupName}
+                            labelStyle={{color: "white"}}
+                            placeholder='add a name'
+                            selectionColor="white"
+                            containerStyle={{margin: 10, width: '90%'}}
+                            placeholderTextColor='grey'
+                            inputContainerStyle={{borderColor: "#186aed", marginBottom: 10}}
+                            inputStyle={{color: "white",}}
+                            leftIcon={
+                                <Ionicons
+                                    name='ios-at'
+                                    size={24}
+                                    color="#186aed"
+                                    style={{paddingRight: 10, marginLeft: -15}}
+                                />
+                            }
+                            onChangeText={(text) => this.setState({groupName: text})}
                         />
-                    }
-                />
+
+
+                        <Button
+                            containerStyle={{margin: 10, marginTop: -10, borderRadius: 6,}}
+                            raised
+                            onPress={() => this.addTribeGroup()}
+                            title='Add Group'
+                            titleStyle={{color: 'white', marginLeft: 5, fontWeight: "bold"}}
+                            buttonStyle={{backgroundColor: '#186aed'}}
+                            icon={
+                                <Ionicons
+                                    name={'md-add'}
+                                    style={{color: 'white'}}
+                                    size={30}
+                                    onPress={() => this.addTribeGroup()}
+                                />
+                            }
+                        />
+                    </View>
+                }
                 <View style = {{margin: 7, padding: 2, borderRadius: 5, borderWidth: 2, borderColor:"white"}}>
 
                 <GroupTribeRoot
@@ -102,7 +156,8 @@ SlideMenuRoot.propTypes = {};
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addTribeGroup: (tribeGroup) => dispatch(addTribeGroup(tribeGroup))
+        addTribeGroup: (tribeGroup) => dispatch(addTribeGroup(tribeGroup)),
+        addToGroup: (userID, groupID) => dispatch(addToGroup(userID, groupID))
     };
 };
 

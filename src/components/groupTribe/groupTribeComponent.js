@@ -11,7 +11,7 @@ class GroupTribeComponent extends Component {
                     title={this.props.tribeName}
                     subtitle={this.props.tribeMembers.length + ' member(s)'}
                     bottomDivider
-                    titleStyle = {{color: "white"}}
+                    titleStyle = {{color: "white", fontWeight: "bold", }}
                     subtitleStyle = {{color: 'lightgrey'}}
                     onPress = {()=>this.props.navigate(this.props.id, this.props.tribeName)}
                 />
