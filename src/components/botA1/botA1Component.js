@@ -17,11 +17,11 @@ class BotA1Component extends Component {
                 recognitionEnable={true}
                 botBubbleColor = 'transparent'
                 bubbleStyle = {{backgroundColor: "white", fontSize: 30}}
-                contentStyle={{backgroundColor: 'transparent', border: 0, padding: 10}}
+                contentStyle={{backgroundColor: 'transparent', border: 0, padding: 3}}
                 style={{backgroundColor: 'transparent', border: 0, padding: 0}}
                 inputStyle={{backgroundColor: "white"}}
                 submitButtonStyle={{backgroundColor: "white",}}
-                submitButtonContent= {<Ionicons name = {'md-send'} color = "#6161F7" size = {24}/>}
+                submitButtonContent= {<Ionicons name = {'md-send'} color = "black" size = {24}/>}
                 botFontColor= "black"
                 hiderHeader = {false}
                 optionBubbleColor = 'transparent'
@@ -29,7 +29,7 @@ class BotA1Component extends Component {
                 steps={this.props.steps}
                 hideBotAvatar={false}
                 hideUserAvatar={true}
-                customStyle = {{backgroundColor: "transparent", borderWidth: 0, border: -30, padding: -40}}
+                customStyle = {{backgroundColor: "transparent", borderWidth: 0, border: -3, padding: -4}}
             />
         );
     }

@@ -17,11 +17,16 @@ class UserTagContainer extends Component {
         this.props.addFriendIDDB(fromID,toID,fbID, this.props.fromFBID)
         this.props.acceptNotificationRequest(this.props.notID)
     };
+    addToGroup(userID, groupID){
+
+    }
 
     render() {
         return (
             <UserTag
                 name = {this.props.fromUserName}
+                addToGroup = {this.props.addToGroup}
+                groupID = {this.props.groupID}
                 avatar = {this.props.fromPhoto}
                 action = {this.props.action}
                 fbID = {this.props.fbID}

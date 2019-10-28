@@ -249,11 +249,11 @@ class HomeScreen extends Component {
         }
         return (
             <ScrollView style = {{backgroundColor: '#282C33'}}>
-                <SafeAreaView style = {{flex: 0.1, flexDirection: "column", paddingTop: 0,paddingBottom: 10, backgroundColor: '#282C33'}}>
+                <SafeAreaView style = {{flex: 0.1, flexDirection: "column", paddingTop: 0,paddingBottom: 5, backgroundColor: '#282C33'}}>
                     <View style = {{flex: 0.1, flexDirection: "row", justifyContent: "center"}}>
                     </View>
                     <View style = {{flex: 0.7,flexDirection: "row", marginBottom: 0, marginRight: 15, justifyContent: "flex-end" }}>
-                        <Identity size = 'large'
+                        <Identity size = 'medium'
                                   forceReload = {this.forceReload}
                                   notMe = {this.state.notMe}
                                   name = {this.state.name}

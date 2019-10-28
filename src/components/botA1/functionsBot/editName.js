@@ -18,7 +18,7 @@ class EditName extends Component {
 
     render() {
         return(
-        <Text>Cool name!</Text>
+        <Text>whats your plan for today?</Text>
     )
     }
 

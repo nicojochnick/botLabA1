@@ -104,17 +104,17 @@ class Identity extends Component {
             name = this.state.name
         }
         return (
-            <View style = {{ flex: 1, flexDirection: "row", justifyContent: "flex-start", alignContent: "flex-start", paddingTop: 5, marginBottom: 10, marginLeft: 10}}>
+            <View style = {{ flex: 1,  marginTop: 10, flexDirection: "row", justifyContent: "flex-start", alignContent: "center", paddingTop: 5, marginBottom: 10, marginLeft: 10}}>
                 <Avatar
                     rounded = {true}
-                    containerStyle = {{ marginRight: 5, marginLeft: 1, borderWidth: 2, borderColor: '#3676FF'}}
+                    containerStyle = {{ marginRight: 5, marginLeft: 1, borderWidth: 2, borderColor: 'white'}}
                     size= {this.props.size}
                     source = {{uri: this.props.profilePicture}}
                     onPress = {() => this.openImage(this.options)}
                 />
 
                 <TextInput
-                    style = {[styles.identityText, {marginBottom: 0, marginLeft: 0, textAlign: "left", color:"white"}]}
+                    style = {[styles.identityText, {marginBottom: 0, marginTop: -20, marginLeft: 0, textAlign: "left", color:"white"}]}
                     placeholder = {"add name!"}
                     onChangeText={text =>this.activateEdit(text)}
                     value = {name}

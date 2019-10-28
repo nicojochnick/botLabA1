@@ -55,6 +55,7 @@ class NotificationContainer extends Component {
                 fromPhoto = {this.state.fromPhoto}
                 fromUserName = {this.state.fromUserName}
                 notID = {this.props.timeStamp}
+                groupID = {this.props.groupID}
             />
         );
     }

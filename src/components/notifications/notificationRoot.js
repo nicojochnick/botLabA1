@@ -54,6 +54,7 @@ class NotificationRoot extends Component {
                         accepted = {item.accepted}
                         alwaysMe = {this.props.alwaysMe}
                         fbID = {this.props.fbID}
+                        groupID = {item.groupID}
                     />
                     )}
             />

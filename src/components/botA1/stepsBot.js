@@ -13,47 +13,6 @@ import ReportMain from './reports/reportMain/reportMain'
 
 export const StepsBot = {
 
-    report: [
-        {
-            id: '1',
-            message: "Hey!",
-            trigger: 'input'
-        },
-        {
-            id: "input",
-            user: true,
-            trigger: "3"
-        },
-        {
-            id: "3",
-            component: <Chat/>,
-            asMessage: true
-        }
-    ],
-
-
-    main: [
-
-        {
-            id: '1',
-            message: 'no competitions? You didnt download this app to be soft did you?',
-            end: true
-        }
-
-    ],
-
-
-    into: [
-        {
-            id: "1",
-            message: 2
-
-
-        }
-
-    ],
-
-
 
     introduction: [
         {
@@ -93,6 +52,28 @@ export const StepsBot = {
 
     ],
 
+    dayPlan: [
+        {
+            id: '1',
+            message: 'Hi! whats your priority for today?',
+            trigger: '2'
+        },
+        {
+            id: '2',
+            user: true,
+            trigger: '3'
+        },
+        {
+            id: '3',
+            message: 'and how do you plan on achieving it?',
+            trigger: '4'
+        },
+        {
+            id: '4',
+            user: true,
+        }
+
+        ],
 
 
     newIntro: [
@@ -147,114 +128,10 @@ export const StepsBot = {
 
     ],
 
+}
 
 
 
-    oldMenu: [
-        {
-            id: "1",
-            message: 'how can I help?',
-            trigger: "menuItems"
-        },
-
-        {
-            id: "menuItems",
-            options: [
-                {value: 'blank', label: 'Analyze', trigger: "createaGoal"},
-                {value: 'blank', label: 'Find a Goal', trigger: "findaGoal"},
-                {value: 'blank', label: 'Tip', trigger: "Tip"},
-                {value: 'blank', label: 'Motivation', trigger: "Motivation"},
-            ],
-
-        },
-
-        {
-            id: 'createaGoal',
-            message: 'What would you like to title your goal?',
-            trigger: 'title',
-        },
-        {
-            id: "title",
-            user: true,
-            trigger: "7"
-        },
-        {
-            id: '7',
-            message: " {previousValue}- I like it!",
-            trigger: 'saveName'
-        },
-        {
-            id: 'saveName',
-            component: <BotFunctions/>,
-            asMessage: true,
-            end: true
-        },
-        {
-            id: "findaGoal",
-            message: "What is the name of the class"
-        },
-        {
-            id: "Motivation",
-            message: "Meme Time Baby"
-        },
-        {
-            id: "Tip",
-            message: "Simple: Start by Turning off your phone"
-        },
-    ],
-
-    makeaGoal: [
-        {
-            id: '1',
-            message: 'What would you like to title your goal?',
-            trigger: 'title',
-        },
-        {
-            id: "title",
-            user: true,
-            trigger: "2"
-        },
-        {
-            id: '2',
-            message: " {previousValue}- I like it!",
-            trigger: 'saveName'
-        },
-        {
-            id: 'saveName',
-            component: <BotFunctions/>,
-            asMessage: true,
-            trigger: '3'
-        },
-        {
-            id: '3',
-            message: 'how would you like to track your progress?',
-            trigger: 'tracking'
-        },
-        {
-            id: 'tracking',
-            options: [
-                {value: 'option1', label: 'Time (ex: 30 minutes)', trigger: "4"},
-                {value: 'option2', label: 'Daily Completion', trigger: "4"},
-            ],
-        },
-        {
-            id: '4',
-            message: "great, your goal is all setup!",
-            end: true,
-        }
-    ],
-
-    makeGoalSimple: [
-        {
-            id: '1',
-            message: 'To Create a goal just fill the form below and hit save',
-            trigger: 'createGoal',
-        },
-        {
-            id: 'createGoal',
-            component: <AddGoal/>
-        }],
-};
 
 
 

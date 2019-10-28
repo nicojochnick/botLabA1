@@ -5,6 +5,7 @@ import {ListItem, SearchBar, Button} from 'react-native-elements';
 import {Text, TextInput, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import UserTag from '../user/userTag';
+import UserTagContainer from '../user/userTagContainer';
 
 class SearchComponent extends Component {
 
@@ -28,7 +29,7 @@ class SearchComponent extends Component {
                 <SearchBar
                     lightTheme={false}
                     inputStyle = {{color:"white"}}
-                    placeholder= {this.props.mess}
+                    placeholder= {'add users to group by email'}
                     onChangeText = {(text)=> this.setState({friendEmail: text.toLowerCase()})}
                     value={this.state.friendEmail}
                     clearIcon={
@@ -51,11 +52,11 @@ class SearchComponent extends Component {
                 </View>
                 <View>
                     {(this.state.friendEmail !== null)
-                        ? <View style={{flexDirection: "column", backgroundColor: "#3E4145", justifyContent: 'center', margin: 5}}>
+                        ? <View style={{flexDirection: "column", justifyContent: 'center', margin: 2}}>
                             {(this.state.friendEmail !== null)
                                 ?
                                 <Button
-                                    containerStyle={{width: 100, justifyContent: "flex-end"}}
+                                    containerStyle={{width: 100, justifyContent: "flex-end", margin: 5}}
                                     buttonStyle={{backgroundColor: '#186aed'}}
                                     title='search'
                                     raised
@@ -72,7 +73,7 @@ class SearchComponent extends Component {
                                 : null
                             }
                             {(this.props.searchData !== null)
-                                ? <View style={{margin: 10, borderRadius: 5, borderColor: "grey"}}>
+                                ? <View style={{margin: 0, borderRadius: 5, borderColor: "grey", marginBottom: 2}}>
                                     {(this.props.searchData[0] !== null && this.props.searchData[0] !== undefined)
                                         ?
                                         <UserTag
@@ -80,8 +81,10 @@ class SearchComponent extends Component {
                                             name={this.props.searchData[0].name}
                                             fbID={this.props.searchData[0].fbID}
                                             route={'feed'}
+                                            isAddToGroup = {true}
                                             isSearch = {true}
                                             clearSearch = {this.props.clearSearch}
+                                            action = {'groupAdd'}
                                         />
                                         : <Text style={{
                                             fontSize: 15,

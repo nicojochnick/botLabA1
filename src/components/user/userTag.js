@@ -4,8 +4,9 @@ import Icon from 'react-native-vector-icons/index';
 import {View, TextInput} from 'react-native'
 import {ListItem, Button} from 'react-native-elements';
 import { withNavigation,} from 'react-navigation';
-import {addFriendIDDB, removeFriendIDDB} from '../../redux/actions';
+import {addFriendIDDB, removeFriendIDDB, sendNotification} from '../../redux/actions';
 import {connect} from 'react-redux';
+import moment from './followOrUnfollow';
 
 class UserTag extends Component {
     constructor(props){
@@ -43,8 +44,19 @@ class UserTag extends Component {
         }
         this.navigate(this.props.userID, this.props.fbID)
     }
+    sendGroupNotification(fromID, toID){
 
+            let groupRequest = {
+                message : "wants you to join the group: " + this.props.groupName,
+                fromUserID : fromID,
+                toUserID: toID,
+                timeStamp: moment().format(),
+                action: "requestToAddToGroup",
+                accepted: false,
+            };
+            this.props.sendNotification(groupRequest)
 
+    }
 
 
     render() {
@@ -68,6 +80,17 @@ class UserTag extends Component {
                     { avatarStyle: { borderRadius: 100, borderWidth: 1, borderColor: "white"}, source: {uri: this.props.avatar}}}
                 rightElement = {
                     <View>
+
+                        {(this.props.action === "requestToAddToGroup")
+                            ? <Button
+                                buttonStyle = {{backgroundColor: color}}
+                                title ={'Accept'}
+                                raised = {true}
+                                onPress = {()=> this.props.addToGroup(this.props.groupID, this.props.toUserID)}
+                            />
+                            : null
+                        }
+
                     {(this.props.action === 'friendRequest')
                         ? <Button
                             buttonStyle = {{backgroundColor: color}}
@@ -77,6 +100,15 @@ class UserTag extends Component {
                         />
                     : null
                     }
+                        {(this.props.action === 'groupAdd')
+                            ? <Button
+                                buttonStyle = {{backgroundColor: color}}
+                                title ={'add user to group'}
+                                raised = {true}
+                                onPress = {()=> this.sendGroupNotification(this.props.fromID, this.props.toID)}
+                            />
+                            : null
+                        }
                     </View>
                 }
 
@@ -93,9 +125,8 @@ export default withNavigation(UserTag);
 const mapDispatchToProps = (dispatch) => {
     return {
         addFriendIDDB: (friendID, myID, fbID) =>dispatch(addFriendIDDB(friendID, myID)),
-        removeFriendIDDB: (friendID, myID, fbID) =>dispatch(removeFriendIDDB(friendID, myID))
+        removeFriendIDDB: (friendID, myID, fbID) =>dispatch(removeFriendIDDB(friendID, myID)),
+        sendGroupNotification: (groupRequest) => dispatch(sendNotification(groupRequest)),
+
     }
 };
-
-// export default connect(null, mapDispatchToProps)(UserTag);
-

@@ -11,6 +11,7 @@ import {Input} from 'react-native-elements'
 import BotA1Component from './botA1Component';
 import {connect} from 'react-redux';
 import firebase from '@react-native-firebase/app';
+import BoxRoot from '../box/boxRoot';
 
 
 class BotA1Top extends Component {
@@ -91,7 +92,7 @@ class BotA1Top extends Component {
     getStep(){
         let tribeData = this.state.tribeData;
         console.log(tribeData.length)
-        return StepsBot.oldMenu
+        return StepsBot.dayPlan
     }
 
 
@@ -99,8 +100,17 @@ class BotA1Top extends Component {
         console.log(this.state.currentStep);
         // this.findCurrentStep();
         return (
-            <View style = {{height: 200}}>
+            <View style = {{height: 300, borderWidth: 3, borderRadius: 10, borderColor: "white", margin: 6, padding: 0}}>
             <BotA1Component steps = {this.getStep()} handleEnd = {this.handleEnd}/>
+                <BoxRoot
+                    toggleDoneDB={this.toggleDoneDB}
+                    tribeID={null}
+                    filter={0}
+                    handleAddBox={this.handleAddBoxDB}
+                    editing={0}
+                    canEdit={true}
+                    sendHeaderMessage={this.sendHeaderMessage}
+                />
             </View>
         );
     }
