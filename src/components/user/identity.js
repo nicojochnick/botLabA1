@@ -60,7 +60,6 @@ class Identity extends Component {
 
                     // You can also display the image using data:
                     // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
                     this.setState({profileURL: source});
                     this.user.updateProfile({
                         photoURL: source
@@ -103,13 +102,15 @@ class Identity extends Component {
         if (this.state.editing){
             name = this.state.name
         }
+        let uri = 'https://api.adorable.io/avatars/161/' + this.props.alwaysMe;
+
         return (
             <View style = {{ flex: 1,  marginTop: 15, flexDirection: "row", justifyContent: "flex-start", alignContent: "center", paddingTop: 5, marginBottom: 10, marginLeft: 10}}>
                 <Avatar
                     rounded = {true}
                     containerStyle = {{ marginRight: 5, marginLeft: 1, borderWidth: 2, borderColor: 'white'}}
                     size= {this.props.size}
-                    source = {{uri: this.props.profilePicture}}
+                    source = {{uri: uri}}
                     onPress = {() => this.openImage(this.options)}
                 />
 

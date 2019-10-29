@@ -63,6 +63,7 @@ class UserTag extends Component {
             button = 'accepted'
             color = '#31E781'
         }
+        let uri = 'https://api.adorable.io/avatars/161/' + this.props.fromUserID;
 
         return (
             <ListItem
@@ -74,7 +75,9 @@ class UserTag extends Component {
                 subtitleStyle = {{color: "lightgrey"}}
                 subtitle={this.props.message}
                 leftAvatar = {
-                    { avatarStyle: { borderRadius: 100, borderWidth: 1, borderColor: "white"}, source: {uri: this.props.avatar}}}
+                    { avatarStyle: { borderRadius: 100, borderWidth: 1, borderColor: "white"},
+                        source: {uri:uri  }
+                }}
                 rightElement = {
                     <View>
 

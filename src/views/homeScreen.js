@@ -256,6 +256,7 @@ class HomeScreen extends Component {
                         <Identity size = 'medium'
                                   forceReload = {this.forceReload}
                                   notMe = {this.state.notMe}
+                                  alwaysMe = {this.state.alwaysMe}
                                   name = {this.state.name}
                                   profilePicture = {this.state.profilePicture}/>
                         { (this.state.notMe && this.state.alwaysMe !== this.state.coreUserID)

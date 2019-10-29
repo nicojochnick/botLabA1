@@ -36,11 +36,14 @@ class CommentComponent extends Component {
     };
 
     render() {
+        let uri = 'https://api.adorable.io/avatars/161/' + this.props.alwaysMe;
+
+
         console.log(this.props.username);
         return (
             <View style = {{flexDirection: "row", flex: 1, borderWidth: 0, borderTopWidth: 0.2, padding: 5}}>
                 <Avatar
-                    source ={{uri: this.props.userPhoto}}
+                    source ={{uri: uri}}
                     size = {'small'}
                     avatarStyle = {{ borderRadius: 100, borderWidth: 1, borderColor: "white"}}
                     rounded/>

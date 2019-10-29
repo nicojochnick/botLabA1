@@ -148,10 +148,12 @@ class CommentContainer extends Component {
                     postComment = {this.postComment}
                     userPhoto = {this.state.userPhoto}
                     username = {this.state.username}
+                    alwaysMe = {this.props.alwaysMe}
                 />
                 :<CommentComponent
                     message = {this.props.message}
                     postComment = {this.postComment}
+                    alwaysMe = {this.props.alwaysMe}
                     userPhoto = {this.state.userPhoto}
                     username = {this.state.username}
                     deleteComment = {this.deleteComment}

@@ -22,11 +22,13 @@ class AddComment extends Component {
 
 
     render() {
+        let uri = 'https://api.adorable.io/avatars/161/' + this.props.alwaysMe;
+
         return (
             <View>
                 <View style = {{flexDirection: "row",paddingTop: 12, borderColor: "#186aed",flex: 1, padding: 0, borderTopWidth: 1}}>
                     <Avatar
-                        source ={{uri: this.props.userPhoto}}
+                        source ={{uri: uri}}
                         avatarStyle = {{ borderRadius: 100, borderWidth: 1, borderColor: "white"}}
 
                         rounded/>
