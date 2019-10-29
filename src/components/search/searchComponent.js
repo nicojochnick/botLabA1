@@ -28,7 +28,7 @@ class SearchComponent extends Component {
                 <View>
                 <SearchBar
                     lightTheme={true}
-                    inputStyle = {{color:"white"}}
+                    inputStyle = {{color:"black"}}
                     placeholder= {'add users to group by email'}
                     onChangeText = {(text)=> this.setState({friendEmail: text.toLowerCase()})}
                     value={this.state.friendEmail}
@@ -37,7 +37,7 @@ class SearchComponent extends Component {
                             name={'ios-close'}
                             size={25}
                             onPress = {()=> this.clear()}
-                            color = {'white'}
+                            color = {'black'}
 
                         />
                     }
@@ -45,7 +45,7 @@ class SearchComponent extends Component {
                         <Ionicons
                             name={'ios-search'}
                             size={25}
-                            color = {'white'}
+                            color = {'black'}
                         />
                     }
                 />

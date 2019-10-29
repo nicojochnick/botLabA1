@@ -249,7 +249,7 @@ class HomeScreen extends Component {
             tribeColor = 'darkgrey'
         }
         return (
-            <KeyboardAwareScrollView style = {{backgroundColor: 'white', marginTop: 0, padding: 3}}>
+            <KeyboardAwareScrollView style = {{backgroundColor: 'white', marginTop: 0, padding: 0}}>
                 <SafeAreaView style = {{flex: 0.1, flexDirection: "column", paddingTop: 0,paddingBottom: 0, backgroundColor: 'white'}}>
 
                     <View style = {{flex: 1,flexDirection: "row", marginBottom: 0, marginRight: 10, justifyContent: "flex-start" }}>

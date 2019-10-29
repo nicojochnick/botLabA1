@@ -207,7 +207,7 @@ class FeedView extends Component {
         return (
 
             <KeyboardAwareScrollView
-                style={{paddingTop: 0, paddingBottom:100, backgroundColor: 'white', flex: 1, marginBottom: 0, padding: 3}}
+                style={{paddingTop: 0, paddingBottom:100, backgroundColor: 'white', flex: 1, marginBottom: 0, padding: 0}}
                 // refreshControl={
                 //     <RefreshControl
                 //         refreshing={this.state.refreshing}
@@ -291,7 +291,7 @@ class FeedView extends Component {
                 <View>
                     {(this.state.isMemberOpen)
                        ?
-                        <View style = {{margin: 6, marginTop: -10, padding: 2, backgroundColor: 'white', borderRadius: 10,shadowColor: "black",
+                        <View style = {{margin: 6, marginTop: 0, padding: 2, backgroundColor: 'white', borderRadius: 10,shadowColor: "black",
                             shadowOffset: {width: 0, height: 2},
                             shadowOpacity: 20,}}>
                             <Text style = {{margin: 6, fontWeight: "bold", textAlign: "left", color: "black", fontSize: 18,}}> members </Text>

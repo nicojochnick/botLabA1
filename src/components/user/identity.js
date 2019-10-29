@@ -143,10 +143,10 @@ class Identity extends Component {
                     ?
                     <Button
                         raised
-                        style={{ alignContent: "center", marginTop: 0, marginRight: 0}}
-                        title = "Save"
-                        titleStyle = {{color: "black", fontWeight: "400"}}
-                        buttonStyle={{backgroundColor: "lightgrey"}}
+                        style={{alignContent: "center", borderRadius: 10, marginTop: -10, marginRight: 0, justifyContent: "center", alignItems: "center"}}
+                        title = "Save Name"
+                        titleStyle = {{color: "white", fontWeight: "700"}}
+                        buttonStyle={{backgroundColor: '#186aed'}}
                         onPress = {()=> this.doneSaving()}
 
                     />

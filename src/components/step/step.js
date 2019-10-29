@@ -93,8 +93,8 @@ export default class Step extends React.Component {
                                         icon = {
                                             <Icon
                                                 name= 'times'
-                                                size = {18}
-                                                color = 'white'
+                                                size = {15}
+                                                color = 'darkgrey'
                                             />
                                         }
                                         title={ ""}
@@ -115,7 +115,7 @@ export default class Step extends React.Component {
                                 ? <Button
                                     style={{ justifyContent: "center", alignContent: "center", marginRight: 5}}
                                     title = "Save"
-                                    titleStyle = {{color: 'white', fontWeight: "bold", margin: -6}}
+                                    titleStyle = {{color: 'black', fontWeight: "bold", margin: -6}}
                                     type = 'clear'
                                     onPress = {()=> this.doneSaving()}
                                 />
