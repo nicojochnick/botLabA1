@@ -40,21 +40,21 @@ class CommentComponent extends Component {
 
         console.log(this.props.username);
         return (
-            <View style = {{flexDirection: "row", flex: 1, borderWidth: 0, borderColor: "white", borderTopWidth: 1, padding: 5}}>
+            <View style = {{flexDirection: "row", flex: 1, borderWidth: 0, borderColor: "#CDCDCD", borderTopWidth: 1, padding: 5}}>
                 <Avatar
                     source ={{uri: this.props.userPhoto}}
                     size = {'small'}
-                    avatarStyle = {{ borderRadius: 100, borderWidth: 1, borderColor: "white"}}
+                    avatarStyle = {{ borderRadius: 100, borderWidth: 1, borderColor: "black"}}
                     rounded/>
 
                     <View
                     style = {{flexDirection: "column"}}>
-                        <Text style = {{fontWeight: "bold", marginLeft: 10, fontSize: 17, color: "white", textAlign: "left"}}>
+                        <Text style = {{fontWeight: "bold", marginLeft: 10, fontSize: 17, color: "black", textAlign: "left"}}>
                             {this.props.username}
                         </Text>
                     <View style = {{ flexDirection: "row", justifyContent: "space-between", marginBottom: 0, borderRadius: 10, padding: 1, marginLeft: 5, width: 300,}}>
                         <Text
-                            style = {{color: "white", marginLeft: 3, marginTop: 0, fontSize: 17, width: 240, fontWeight: '500'}}
+                            style = {{color: "black", marginLeft: 3, marginTop: 0, fontSize: 17, width: 240, fontWeight: '500'}}
                             multiline = {true}>
                             {this.props.message}
                         </Text>
@@ -62,9 +62,10 @@ class CommentComponent extends Component {
                             {this.props.showDelete
                              ? < Ionicons
                                 onPress = {()=> this.openDeleteConfirm(true)}
-                                name="ios-close-circle-outline"
+                                name="ios-close"
+                                style = {{marginRight: 10}}
                                 size={20}
-                                color = 'white'
+                                color = 'black'
                                 />
                                 : null
                             }

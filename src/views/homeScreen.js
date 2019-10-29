@@ -249,16 +249,18 @@ class HomeScreen extends Component {
             tribeColor = 'darkgrey'
         }
         return (
-            <KeyboardAwareScrollView style = {{backgroundColor: '#06090F', padding: 3}}>
-                <SafeAreaView style = {{flex: 0.1, flexDirection: "column", paddingTop: 0,paddingBottom: 0, backgroundColor: '#06090F'}}>
+            <KeyboardAwareScrollView style = {{backgroundColor: 'white', marginTop: 0, padding: 3}}>
+                <SafeAreaView style = {{flex: 0.1, flexDirection: "column", paddingTop: 0,paddingBottom: 0, backgroundColor: 'white'}}>
 
-                    <View style = {{flex: 0.5,flexDirection: "row", marginBottom: -20, marginRight: 15, justifyContent: "flex-end" }}>
-                        <Identity size = 'medium'
+                    <View style = {{flex: 1,flexDirection: "row", marginBottom: 0, marginRight: 10, justifyContent: "flex-start" }}>
+                        <View style = {{flex:1, marginRight: -20}}>
+                        <Identity size = 'large'
                                   forceReload = {this.forceReload}
                                   notMe = {this.state.notMe}
                                   alwaysMe = {this.state.alwaysMe}
                                   name = {this.state.name}
                                   profilePicture = {this.state.profilePicture}/>
+                        </View>
                         { (this.state.notMe && this.state.alwaysMe !== this.state.coreUserID)
                             ? <FollowOrUnfollow
                                 followed = {true}
@@ -268,7 +270,7 @@ class HomeScreen extends Component {
                                 alwaysMe = {this.state.alwaysMe}
                             />
                             :
-                            <View style={ {flexDirection: "row"}} >
+                            <View style={ {flexDirection: "row", flex: 0.25,}} >
                             <NavSettings/>
                             < AddTribe
                                 uid = {this.state.uid}
@@ -288,7 +290,7 @@ class HomeScreen extends Component {
                 </SafeAreaView>
                 {(this.state.isGoalSelect)
                     ?
-                    <View style={{flex: 1, backgroundColor: '#06090F'}}>
+                    <View style={{flex: 1, backgroundColor: 'white', marginTop: 20}}>
                         <TribeRoot
                             friendTribeView={false}
                             filter={this.state.coreUserID}

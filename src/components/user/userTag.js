@@ -66,15 +66,15 @@ class UserTag extends Component {
 
         return (
             <ListItem
-                containerStyle = {{backgroundColor: "#0F121B", borderTopWidth:1,borderColor: 'grey'}}
+                containerStyle = {{backgroundColor: "white", borderBottomWidth:0.5,borderColor: '#959595'}}
                 contentContainerStyle = {{borderWidth: 0}}
                 style = {{ margin: 0, padding: 0,}}
-                titleStyle = {{fontWeight: "500", color: "white"}}
+                titleStyle = {{fontWeight: "600", color: "black",}}
                 title={this.props.name}
-                subtitleStyle = {{color: "lightgrey"}}
+                subtitleStyle = {{color: "black"}}
                 subtitle={this.props.message}
                 leftAvatar = {
-                    { avatarStyle: { borderRadius: 100, borderWidth: 1, borderColor: "white"}, source: {uri: this.props.avatar}}}
+                    { avatarStyle: { borderRadius: 100, borderWidth: 1, borderColor: "black"}, source: {uri: this.props.avatar}}}
                 rightElement = {
                     <View>
 

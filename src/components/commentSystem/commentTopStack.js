@@ -30,15 +30,16 @@ class CommentTopStack extends Component {
     render() {
         console.log(this.props.tribeID)
         console.log(this.props.alwaysMe)
+        let con = ''
 
         let m = 'Comments'
-        if (this.state.length !== 0){
+        if (this.state.length !== 0 && this.state.length!== null){
             m = this.state.length + ' comments'
             con = 'ios-chatbubbles'
 
         }
 
-        let c = 'white'
+        let c = '#242424'
         if (this.state.openComments){
             m = 'Hide'
             c = 'grey'
@@ -47,7 +48,7 @@ class CommentTopStack extends Component {
 
         return (
             <View>
-                <View style = {{flexDirection: "row", justifyContent: "space-between"}}>
+                <View style = {{flexDirection: "row", justifyContent: "flex-start", }}>
                     <View style = {{flexDirection: "row", margin: 0}}>
                         <Button
                             title = {m}
@@ -68,7 +69,10 @@ class CommentTopStack extends Component {
 
                     </View>
                 </View>
-                <View style = {{backgroundColor: "#181E2C"}}>
+                {(this.state.openComments)
+                ?
+                    <View>
+                    <View style = {{backgroundColor: "white"}}>
                     <CommentFeed
                         userIDs = {this.props.userID}
                         tribeID={this.props.tribeID}
@@ -87,6 +91,9 @@ class CommentTopStack extends Component {
 
                         />
                 </View>
+                    </View>
+                    :null
+                    }
 
             </View>
         );

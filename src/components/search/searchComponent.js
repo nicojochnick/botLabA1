@@ -27,7 +27,7 @@ class SearchComponent extends Component {
             <View style = {{flex: 1}}>
                 <View>
                 <SearchBar
-                    lightTheme={false}
+                    lightTheme={true}
                     inputStyle = {{color:"white"}}
                     placeholder= {'add users to group by email'}
                     onChangeText = {(text)=> this.setState({friendEmail: text.toLowerCase()})}

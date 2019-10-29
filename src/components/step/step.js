@@ -71,12 +71,12 @@ export default class Step extends React.Component {
         }
         return (
             <View >
-                <View style = {[styles.steps,{borderWidth: 1, borderColor: '#186aed', backgroundColor: '#1455F9'}]}>
+                <View style = {[styles.steps,{borderWidth: 0, backgroundColor: 'white',}]}>
                     <KeyboardAvoidingView style = {styles.topGoals  }>
                         <View style = {{width: '80%'}}>
                         <TextInput
                             placeholder = 'add title'
-                            style = {{fontSize: 18, fontWeight: "500",  color: "white"}}
+                            style = {{fontSize: 18, fontWeight: "500",  color: "black"}}
                             ref= {(el) => { this.text= el; }}
                             onChangeText= {(name) => this.activeEdit(name) }
                             value = {this.state.name}
@@ -93,7 +93,7 @@ export default class Step extends React.Component {
                                         icon = {
                                             <Icon
                                                 name= 'times'
-                                                size = {20}
+                                                size = {18}
                                                 color = 'white'
                                             />
                                         }

@@ -115,30 +115,35 @@ class Identity extends Component {
         }
 
         return (
-            <View style = {{ flex: 1,  marginTop: 15, flexDirection: "row", justifyContent: "flex-start", alignContent: "center", paddingTop: 5, marginBottom: 10, marginLeft: 10}}>
+            <View style = {{marginLeft: 0, flex: 1}}>
+            <View style = {{ flex: 1,  marginTop: 15, flexDirection: "row", justifyContent: "flex-start", alignContent: "center", paddingTop: 5, marginBottom: 5, marginLeft: 10}}>
                 <Avatar
                     rounded = {true}
-                    containerStyle = {{ marginRight: 5, marginLeft: 1, borderWidth: 2, borderColor: 'white'}}
+                    containerStyle = {{ marginRight: 5, marginLeft: 1, borderWidth: 2, borderColor: 'black',shadowColor: "black",
+                        shadowOffset: {width: 0, height: 2},
+                        shadowOpacity: 5,}}
                     size= {this.props.size}
                     source = {{uri: this.props.profilePicture}}
                     onPress = {() => this.changeAvatar()}
                 />
 
                 <TextInput
-                    style = {[styles.identityText, {marginBottom: 0, marginTop: -10, marginLeft: 0, textAlign: "left", color:"white"}]}
+                    style = {[styles.identityText, {marginBottom: 0, marginTop: 10, marginLeft: 5, marginRight: 0, textAlign: "left", color:"black", fontSize: 35}]}
                     placeholder = {"add name!"}
                     onChangeText={text =>this.activateEdit(text)}
                     value = {name}
-                    selectionColor = "white"
+                    selectionColor = "black"
                     multiline = {false}
                     maxLength = {20}
                     editable = {!(this.props.notMe)}
                 />
-
+            </View>
+                <View style = {{flexDirection: 'row', justifyContent: "center", flex: 0.5}}>
                 { (this.state.editing)
                     ?
                     <Button
-                        style={{ alignContent: "center", marginTop: 20, marginRight: 0}}
+                        raised
+                        style={{ alignContent: "center", marginTop: 0, marginRight: 0}}
                         title = "Save"
                         titleStyle = {{color: "black", fontWeight: "400"}}
                         buttonStyle={{backgroundColor: "lightgrey"}}
@@ -147,7 +152,7 @@ class Identity extends Component {
                     />
                     :null
                 }
-                <View/>
+                </View>
             </View>
 
         );

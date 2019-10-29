@@ -126,11 +126,11 @@ class AddTribe extends Component {
     render() {
         return (
             <Button
-                icon = {<Ionicons style = {{marginRight: 0}}
+                icon = {<Ionicons style = {{marginRight: 0, marginTop: 0}}
                                   name = {'ios-add'}
                                   color = '#3676FF'
                                   disabledStyle = {{color:"grey"}}
-                                  size = {70}
+                                  size = {65}
                                   onPress = {() => this.handleAddTribeDB()}/> }
                 type = "clear"
                 onPress = {() => this.handleAddTribeDB()}

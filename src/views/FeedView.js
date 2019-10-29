@@ -182,7 +182,7 @@ class FeedView extends Component {
 
     render() {
         let groups = null
-        let groupColor = 'white'
+        let groupColor = '#242432'
         if(this.state.isMemberOpen){
             groupColor =  '#3676FF'
         }
@@ -207,7 +207,7 @@ class FeedView extends Component {
         return (
 
             <KeyboardAwareScrollView
-                style={{paddingTop: 0, paddingBottom:100, backgroundColor: '#06090F', flex: 1, marginBottom: 0, padding: 3}}
+                style={{paddingTop: 0, paddingBottom:100, backgroundColor: 'white', flex: 1, marginBottom: 0, padding: 3}}
                 // refreshControl={
                 //     <RefreshControl
                 //         refreshing={this.state.refreshing}
@@ -216,8 +216,8 @@ class FeedView extends Component {
                 // }
             >
 
-                <SafeAreaView style = {{flexDirection: "row", paddingTop: 20 , justifyContent: "flex-start", alignItems: "flex-start", flex: 1}}>
-                    <View style = {{flexDirection: "row", flex: 0.6}}>
+                <SafeAreaView style = {{flexDirection: "row", paddingTop: 30 , justifyContent: "flex-start", alignItems: "flex-start", flex: 1}}>
+                    <View style = {{flexDirection: 'column', justifyContent: "flex-start", alignItems: "flex-start", flex: 1, marginBottom: 10}}>
                     <Button
                         type = 'clear'
                         containerStyle = {{marginRight: 0}}
@@ -225,26 +225,29 @@ class FeedView extends Component {
                         icon = {
                             <Ionicons
                                 name = {'ios-menu'}
-                                size = {40}
-                                style = {{color: 'lightgrey'}}
+                                size = {45}
+                                style = {{color: 'black'}}
                                 onPress={() => this.props.navigation.navigate('Menu')}
 
                             />
 
                         }
                     />
+                    <View style = {{flexDirection: "row", flex: 0.6, padding: 4}}>
                 <TextInput
                     editable = {true}
+                    multiline = {true}
                     value = {this.state.groupName}
                     onChangeText = {text=> this.setState({groupName: text, isEditingName: true})}
-                    style = {{color: 'white', margin: 0, paddingLeft: 0, marginTop: 0,  fontWeight: 'bold', fontSize: 30}}
+                    style = {{color: 'black', margin: 5, paddingLeft: 0, marginTop: -15,  fontWeight: 'bold', fontSize: 38}}
 
                 />
+                    </View>
 
                     </View>
-                    <View style = {{ marginRight: 10, margin: -10, flex: 0.4, flexDirection: "row", alignItem: "center", justifyContent: "flex-end",}}>
+                    <View style = {{ marginRight: 10, margin: 0, flex: 0.4, flexDirection: "row", alignItems: "flex-start", justifyContent: "flex-end",}}>
                         <Button
-                            style={{ alignContent: "center", marginTop: 20, marginRight: 0}}
+                            style={{ alignContent: "center", marginTop: 10, marginRight: 0}}
                             onPress = {() => this.setState({isMemberOpen: !this.state.isMemberOpen})}
                             icon = {
                                 <Ionicons
@@ -258,6 +261,7 @@ class FeedView extends Component {
                             type = 'clear'
 
                         />
+                        <View style = {{marginTop: -5}}>
 
                         <AddTribe
                         uid = {this.state.uid}
@@ -266,6 +270,7 @@ class FeedView extends Component {
                         userID = {userID}
                         alwaysMe ={this.state.alwaysMe}
                         />
+                        </View>
                     </View>
                 </SafeAreaView>
                 <View>
@@ -286,8 +291,10 @@ class FeedView extends Component {
                 <View>
                     {(this.state.isMemberOpen)
                        ?
-                        <View style = {{margin: 6, padding: 2, borderRadius: 10, borderWidth: 1, borderColor: "white"}}>
-                            <Text style = {{margin: 6, fontWeight: "bold", textAlign: "left", color: "white", fontSize: 18,}}> members </Text>
+                        <View style = {{margin: 6, marginTop: -10, padding: 2, backgroundColor: 'white', borderRadius: 10,shadowColor: "black",
+                            shadowOffset: {width: 0, height: 2},
+                            shadowOpacity: 20,}}>
+                            <Text style = {{margin: 6, fontWeight: "bold", textAlign: "left", color: "black", fontSize: 18,}}> members </Text>
                             <SearchContainer
                                 mess = {searchMess}
                                 alwaysMe = {this.state.alwaysMe}
@@ -314,8 +321,8 @@ class FeedView extends Component {
                     />
                     :
                     <ScrollView>
-                    <Text style = {{margin: 20, marginTop: 4, color: "white", alignText: "center", fontWeight: "bold", fontSize: 35 }}>Hi There!</Text>
-                    <Text style = {{margin: 20, marginTop: -5, color: "white", alignText: "center", fontWeight: "500", fontSize: 25 }}>Add a Group using the Left Menu Button to Get Started 😁 </Text>
+                    <Text style = {{margin: 20, marginTop: 4, color: "black", alignText: "center", fontWeight: "bold", fontSize: 35 }}>Hi There!</Text>
+                    <Text style = {{margin: 20, marginTop: -5, color: "black", alignText: "center", fontWeight: "500", fontSize: 25 }}>Add a Group using the Left Menu Button to Get Started 😁 </Text>
                     </ScrollView>
                 }
             </KeyboardAwareScrollView>

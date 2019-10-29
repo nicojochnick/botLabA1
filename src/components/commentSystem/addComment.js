@@ -25,19 +25,19 @@ class AddComment extends Component {
 
         return (
             <View>
-                <View style = {{flexDirection: "row",paddingTop: 12, borderColor: "#1452FF",flex: 1, paddingLeft: 4, borderTopWidth: 1}}>
+                <View style = {{flexDirection: "row",paddingTop: 12, borderColor: "grey",flex: 1, paddingLeft: 4, borderTopWidth: 1}}>
                     <Avatar
 
                         source ={{uri: this.props.userPhoto}}
-                        avatarStyle = {{ borderRadius: 100, borderWidth: 1, borderColor: "white"}}
+                        avatarStyle = {{ borderRadius: 100, borderWidth: 1, borderColor: "black"}}
 
                         rounded/>
                     <View
                         style = {{flexDirection: "column"}}>
-                        <Text style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.props.username}</Text>
-                        <View style = {{ flexDirection: "row", marginBottom: 8, borderRadius: 10, padding: 3, margin: 5, width: 300, borderWidth: 1, borderColor: "white"}}>
+                        <Text style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "black", textAlign: "left"}}> {this.props.username}</Text>
+                        <View style = {{ flexDirection: "row", marginBottom: 8, borderRadius: 10, padding: 2, marginTop: 0, margin: 5, width: 300, borderColor: "grey",}}>
                             <TextInput
-                                style = {{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17, width: 240, fontWeight: "bold"}}
+                                style = {{color: "black", marginLeft: 3, marginTop: 3, fontSize: 17, width: 240, fontWeight: "bold"}}
                                 multiline = {true}
                                 placeholder = 'type something....'
                                 value = {this.state.comment}
@@ -46,7 +46,7 @@ class AddComment extends Component {
                             <Button
                                 type = 'clear'
                                 title = {'post'}
-                                titleStyle = {{color: '#3676FF', fontSize: 15}}
+                                titleStyle = {{color: '#0070FF', fontSize: 16, fontWeight: "bold"}}
                                 onPress = {()=> this.postComment()}
                             />
                         </View>

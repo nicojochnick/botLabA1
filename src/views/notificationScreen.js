@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View, FlatList, Text, ActivityIndicator} from 'react-native'
+import {View, FlatList, Text,SafeAreaView, ActivityIndicator} from 'react-native'
 import NotificationRoot from '../components/notifications/notificationRoot';
 import firebase from '@react-native-firebase/app';
 
@@ -50,7 +50,7 @@ class NotificationScreen extends Component {
 
     render() {
         return (
-            <View style = {{paddingTop: 50, backgroundColor: '#06090F', flex: 1}}>
+            <SafeAreaView style = {{marginTop: 20, backgroundColor: 'white', flex: 1}}>
                 {(this.state.loading)
                     ? <ActivityIndicator/>
                     :
@@ -60,7 +60,7 @@ class NotificationScreen extends Component {
                     />
 
                 }
-            </View>
+            </SafeAreaView>
         );
     }
 }

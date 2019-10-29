@@ -101,12 +101,12 @@ class TribeHeader extends Component {
 
 
         return (
-            <View style = {[{ backgroundColor: '#1452FF',  borderWidth: 1, borderColor:'2852EE', paddingBottom: 15, padding: 10}, styles.tribesHeader]}>
+            <View style = {[{ backgroundColor: '#2E6AE6',  borderWidth: 0, borderColor:'2852EE', paddingBottom: 15, padding: 10, margin: 15}, styles.tribesHeader]}>
                 <View style = {{margin: 10, marginTop: 10, flexDirection: "row", flex: 1, width: '95%'}}>
                     <View style = {{flexDirection: "row", flex: 0.8}}>
                         <Avatar
                             source ={{uri: this.props.tribeAuthorProfilePicture}}
-                            avatarStyle = {{ borderRadius: 100, borderWidth: 1, borderColor: "white"}}
+                            avatarStyle = {{ borderRadius: 100, borderWidth: 0, borderColor: "white"}}
 
                             rounded/>
                         <View style = {{flexDirection: "column", width: '98%'}}>

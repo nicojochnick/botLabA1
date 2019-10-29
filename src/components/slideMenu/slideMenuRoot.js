@@ -58,9 +58,9 @@ class SlideMenuRoot extends Component {
 
 
         return (
-            <ScrollView style  = {{marginTop: 0, backgroundColor: '#06090F'}}>
+            <ScrollView style  = {{marginTop: 0, backgroundColor: 'white'}}>
                 <View style = {{flexDirection: "row", marginTop: 50, justifyContent: "space-between", alignItems: "center", padding: 5}}>
-                    <Text style = {{fontWeight: "bold", fontSize: 30, color: "white"}}> Groups </Text>
+                    <Text style = {{fontWeight: "bold", fontSize: 35, color: "black"}}> Groups </Text>
 
 
                     <Button
@@ -70,11 +70,11 @@ class SlideMenuRoot extends Component {
                         onPress = {() => this.props.navigation.goBack()}
                         title = 'Go Back'
                         iconRight = {true}
-                        titleStyle = {{color: 'white', marginLeft: 5}}
+                        titleStyle = {{color: 'black', marginLeft: 5}}
                         icon = {
                             <Ionicons
                                 name = {'ios-arrow-forward'}
-                                style = {{color: 'white', marginLeft: 5, marginTop: 2}}
+                                style = {{color: 'black', marginLeft: 5, marginTop: 2}}
                                 size = {30}
                                 onPress = {() => this.props.navigation.goBack()}
                             />
@@ -102,13 +102,13 @@ class SlideMenuRoot extends Component {
                         <Input
                             label='New Group Name'
                             value={this.state.groupName}
-                            labelStyle={{color: "white"}}
+                            labelStyle={{color: "black"}}
                             placeholder='add a name'
-                            selectionColor="white"
+                            selectionColor="black"
                             containerStyle={{margin: 10, width: '90%'}}
                             placeholderTextColor='grey'
                             inputContainerStyle={{borderColor: "#186aed", marginBottom: 10}}
-                            inputStyle={{color: "white",}}
+                            inputStyle={{color: "black",}}
                             leftIcon={
                                 <Ionicons
                                     name='ios-at'
@@ -139,7 +139,9 @@ class SlideMenuRoot extends Component {
                         />
                     </View>
                 }
-                <View style = {{margin: 7, padding: 2, borderRadius: 5, borderWidth: 2, borderColor:"white"}}>
+                <View style = {{margin: 7, padding: 2, borderRadius: 5, backgroundColor: "white",borderWidth: 2, borderColor:"white",shadowColor: "#6F6F6F",
+                    shadowOffset: {width: 0, height: 2},
+                    shadowOpacity: 5,}}>
 
                 <GroupTribeRoot
                     groupID = {JSON.stringify(navigation.getParam('groupID'))}

@@ -480,9 +480,11 @@ class TribeComponent extends Component {
         let marginTop = -25;
 
         return (
-            <View style = {{marginTop:10}}>
+            <View style = {{marginTop:3, marginBottom: 3}}>
                 {(this.props.header )
-                    ?<TribeHeader
+                    ?
+                    <View style = {{margin: 1}}>
+                    <TribeHeader
                         didLike = {this.state.didLike}
                         likeColor = {this.state.likeColor}
                         isPosted={this.props.isPosted}
@@ -499,13 +501,14 @@ class TribeComponent extends Component {
                         tribeAuthorName = {this.state.tribeAuthorName}
                         tribeAuthorProfilePicture = {this.state.tribeAuthorProfilePicture}
                     />
+                    </View>
                     :null
                 }
-            <View style = {[styles.tribes, {marginTop: marginTop, padding: 0, backgroundColor: "#121823"}]}>
+            <View style = {[styles.tribes, {marginTop: marginTop, padding: 0, backgroundColor: "white"}]}>
                     <View style = {{flexDirection: "row", justifyContent: "flex-start", margin: 5, width: '100%',}}>
                         <View style = {{flex: 1, padding: 5, flexDirection: "column", width: '100%', alignContent: "flex-start", justifyContent: "flex-start"}}>
                         <TextInput
-                            style = {styles.goalTitleText}
+                            style = {{fontWeight: "bold", fontSize: 30, color: "black"}}
                             ref= {(el) => { this.name= el; }}
                             value = {this.state.name}
                             placeholder = "add a title"
@@ -597,9 +600,15 @@ class TribeComponent extends Component {
                             </View>
 
                     </View>
-                <View style = {{borderTopWidth: 0.2}}>
-                <View style = {{flexDirection: "row", backgroundColor: "#181E2C", width: '100%', justifyContent: "center",
-                    margin:0, alignItems: "center", borderWidth: 1, borderColor: '#1452FF', borderBottomRightRadius: 5,borderBottomLeftRadius: 5}}>
+                </View>
+            </View>
+                <View style = {{ margin:6, marginTop: 2, borderRadius: 10,shadowColor: "grey",
+                    shadowOffset: {width: 0, height: 2},
+                    shadowOpacity: 5,}}>
+
+
+                    <View style = {{flexDirection: "row", backgroundColor: "white", width: '100%', justifyContent: "center",
+                    margin:0, alignItems: "center", borderWidth: 0, borderColor: '#1452FF', borderRadius: 10}}>
                     <CommentTopStack
                         tribeName = {this.state.name}
                         isCommentOpen = {this.state.isCommentOpen}
@@ -612,7 +621,7 @@ class TribeComponent extends Component {
 
                 </View>
                 </View>
-                </View>
+
 
 
                 <ConfirmDialog
@@ -637,7 +646,6 @@ class TribeComponent extends Component {
                             title: "Yes",
                             onPress: this.optionYes,
                         }}/>
-            </View>
             </View>
         );
     }

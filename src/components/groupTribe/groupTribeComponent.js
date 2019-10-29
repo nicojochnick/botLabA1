@@ -8,16 +8,16 @@ class GroupTribeComponent extends Component {
     render() {
         return (
                 <ListItem
-                    containerStyle = {{ backgroundColor: "#2E3134"}}
+                    containerStyle = {{ backgroundColor: "white"}}
                     title={this.props.tribeName}
                     subtitle={this.props.tribeMembers.length + ' member(s)'}
                     bottomDivider
-                    titleStyle = {{color: "white", fontWeight: "bold", }}
-                    subtitleStyle = {{color: 'lightgrey'}}
+                    titleStyle = {{color: "black", fontWeight: "bold", }}
+                    subtitleStyle = {{color: '#414141'}}
                     rightIcon = {
                         <Ionicons
                             name={'ios-close'}
-                            style={{color: 'white'}}
+                            style={{color: 'black'}}
                             size={22}
                             onPress={() => this.props.removeGroup()}
                         />
