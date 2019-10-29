@@ -162,8 +162,12 @@ class TribeComponent extends Component {
     }
 
     sendLikeNotification(){
+        let message = ''
+        if (this.props.header.message){
+            message = this.props.header.message
+        }
         let like = {
-            message : "liked your card " + this.props.header.message,
+            message : "liked your card " + message,
             fromUserID : this.props.alwaysMe,
             toUserID: this.props.userID,
             timeStamp: moment().format(),
@@ -497,7 +501,7 @@ class TribeComponent extends Component {
                     />
                     :null
                 }
-            <View style = {[styles.tribes, {marginTop: marginTop, padding: 3, backgroundColor: "#3E4145"}]}>
+            <View style = {[styles.tribes, {marginTop: marginTop, padding: 0, backgroundColor: "#3E4145"}]}>
                     <View style = {{flexDirection: "row", justifyContent: "flex-start", margin: 5, width: '100%',}}>
                         <View style = {{flex: 1, padding: 5, flexDirection: "column", width: '100%', alignContent: "flex-start", justifyContent: "flex-start"}}>
                         <TextInput
@@ -594,7 +598,7 @@ class TribeComponent extends Component {
 
                     </View>
                 <View style = {{borderTopWidth: 0.2}}>
-                <View style = {{flexDirection: "row", backgroundColor: "#2D3861", width: '100%', justifyContent: "center",}}>
+                <View style = {{flexDirection: "row", backgroundColor: "#2D3861", width: '100%', justifyContent: "center", margin:0, alignItems: "center", borderRadius: 10}}>
                     <CommentTopStack
                         tribeName = {this.state.name}
                         isCommentOpen = {this.state.isCommentOpen}

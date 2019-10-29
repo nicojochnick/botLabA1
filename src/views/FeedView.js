@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View, Text, TextInput, ActivityIndicator, RefreshControl, ScrollView} from 'react-native';
+import {View, Text, TextInput, ActivityIndicator, RefreshControl, ScrollView, SafeAreaView} from 'react-native';
 import {Button, Input, SearchBar} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FeedContainer from '../components/feed/feedContainer';
@@ -10,6 +10,8 @@ import '@react-native-firebase/firestore';
 import TribeRoot from '../components/tribe/tribeRoot';
 import SearchContainer from '../components/search/searchContainer';
 import {addFriendIDDB, changeGroupName, removeFriendIDDB, updateUser} from '../redux/actions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 
 import {connect} from 'react-redux';
 import BotA1Component from '../components/botA1/botA1Component';
@@ -39,7 +41,7 @@ class FeedView extends Component {
             groupName: null,
             tribeColor: 'lightgrey',
             isAllTribe: true,
-            groupID: this.props.currentGroup.tribeGroupID,
+            groupID: null,
             group: null,
             groups: [],
             isMemberOpen: false,
@@ -94,19 +96,24 @@ class FeedView extends Component {
         this.setState({uid: user.uid});
         this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
         this.unsubscribe2 = this.ref2.onSnapshot(this.onCollectionUpdate)
-
-        const { navigation } = this.props;
-        this.focusListener = navigation.addListener('didFocus', () => {
-            console.log("FOCUSED")
-            if (this.props.currentGroup !== undefined) {
+            const {navigation} = this.props;
+            this.focusListener = navigation.addListener('didFocus', () => {
                 console.log("FOCUSED")
-                this.ref.onSnapshot(this.onCollectionUpdate)
-                this.setState({
-                        groupID: this.props.currentGroup.tribeGroupID
+                if (this.props.currentGroup !== undefined) {
+                    console.log("FOCUSED")
+                    this.ref.onSnapshot(this.onCollectionUpdate)
+                    if (this.props.currentGroup) {
+                        this.setState({
+                                groupID: this.props.currentGroup.tribeGroupID
+                            }
+                        )
+                    } else {
+                        this.setState({noGroup:true})
                     }
-                )
-            };
-        });
+                }
+                ;
+            });
+
     }
 
 
@@ -179,6 +186,11 @@ class FeedView extends Component {
         if(this.state.isMemberOpen){
             groupColor =  '#3676FF'
         }
+        let userID = null;
+        if  (this.props.user !== null) {
+            userID = this.props.user.user.userID
+        }
+
 
         console.log(this.props.navigation.isFocused())
         console.log(this.props.currentGroup)
@@ -194,7 +206,7 @@ class FeedView extends Component {
         }
         return (
 
-            <ScrollView
+            <KeyboardAwareScrollView
                 style={{paddingTop: 0, paddingBottom:100, backgroundColor: '#282C33', flex: 1, marginBottom: 0, padding: 3}}
                 // refreshControl={
                 //     <RefreshControl
@@ -204,7 +216,7 @@ class FeedView extends Component {
                 // }
             >
 
-                <View style = {{flexDirection: "row", paddingTop: 50 , justifyContent: "flex-start", alignItems: "flex-start", flex: 1}}>
+                <SafeAreaView style = {{flexDirection: "row", paddingTop: 20 , justifyContent: "flex-start", alignItems: "flex-start", flex: 1}}>
                     <View style = {{flexDirection: "row", flex: 0.6}}>
                     <Button
                         type = 'clear'
@@ -224,26 +236,13 @@ class FeedView extends Component {
                 <TextInput
                     editable = {true}
                     value = {this.state.groupName}
-                    multiline={true}
                     onChangeText = {text=> this.setState({groupName: text, isEditingName: true})}
-                    style = {{color: 'white', margin: 4, paddingLeft: 5, marginTop: 7,  fontWeight: 'bold', fontSize: 30}}
+                    style = {{color: 'white', margin: 0, paddingLeft: 0, marginTop: 0,  fontWeight: 'bold', fontSize: 30}}
 
                 />
 
                     </View>
                     <View style = {{ marginRight: 10, margin: -10, flex: 0.4, flexDirection: "row", alignItem: "center", justifyContent: "flex-end",}}>
-                        {(this.state.isEditingName)
-                            ?
-                            <Button
-                                style={{ alignContent: "center", marginTop: 20, marginRight: 0}}
-                                title = "Save"
-                                titleStyle = {{color: "black", fontWeight: "400"}}
-                                buttonStyle={{backgroundColor: "lightgrey"}}
-                                onPress = {()=> this.doneSaving()}
-
-                            />
-                            :null
-                        }
                         <Button
                             style={{ alignContent: "center", marginTop: 20, marginRight: 0}}
                             onPress = {() => this.setState({isMemberOpen: !this.state.isMemberOpen})}
@@ -264,10 +263,24 @@ class FeedView extends Component {
                         uid = {this.state.uid}
                         friendIDs ={this.state.friendIDs}
                         groupID = {this.state.groupID}
-                        userID = {this.props.user.user.userID}
+                        userID = {userID}
                         alwaysMe ={this.state.alwaysMe}
                         />
                     </View>
+                </SafeAreaView>
+                <View>
+                {(this.state.isEditingName)
+                    ?
+                    <Button
+                        style={{alignContent: "center", borderRadius: 10, marginTop: -10, marginRight: 0, justifyContent: "center", alignItems: "center"}}
+                        title = "Save Name"
+                        titleStyle = {{color: "white", fontWeight: "700"}}
+                        buttonStyle={{backgroundColor: '#186aed'}}
+                        onPress = {()=> this.doneSaving()}
+
+                    />
+                    :null
+                }
                 </View>
 
                 <View>
@@ -291,7 +304,7 @@ class FeedView extends Component {
                         :null
                     }
                 </View>
-                { (this.state.alwaysMe !== null )
+                { (this.state.alwaysMe !== null && this.state.groupID )
                    ?
                     <TribeRoot
                         isFeed = {true}
@@ -299,9 +312,13 @@ class FeedView extends Component {
                         groupID = {this.state.groupID}
                         alwaysMe={this.state.alwaysMe}
                     />
-                    : null
+                    :
+                    <ScrollView>
+                    <Text style = {{margin: 20, marginTop: 4, color: "white", alignText: "center", fontWeight: "bold", fontSize: 35 }}>Hi There!</Text>
+                    <Text style = {{margin: 20, marginTop: -5, color: "white", alignText: "center", fontWeight: "500", fontSize: 25 }}>Add a Group using the Left Menu Button to Get Started 😁 </Text>
+                    </ScrollView>
                 }
-            </ScrollView>
+            </KeyboardAwareScrollView>
             );
         }
 }

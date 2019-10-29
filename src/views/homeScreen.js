@@ -11,6 +11,7 @@ import AddTribe from '../components/tribe/addTribe';
 import TribeComponent from '../components/tribe/tribe';
 import TribeRoot from '../components/tribe/tribeRoot'
 
+
 import Users from '../components/test';
 import NavSettings from '../components/navSettings';
 import TribeGroup from '../components/groups/tribeGroup';
@@ -248,7 +249,7 @@ class HomeScreen extends Component {
             tribeColor = 'darkgrey'
         }
         return (
-            <ScrollView style = {{backgroundColor: '#282C33', padding: 3}}>
+            <KeyboardAwareScrollView style = {{backgroundColor: '#282C33', padding: 3}}>
                 <SafeAreaView style = {{flex: 0.1, flexDirection: "column", paddingTop: 0,paddingBottom: 0, backgroundColor: '#282C33'}}>
 
                     <View style = {{flex: 0.5,flexDirection: "row", marginBottom: -20, marginRight: 15, justifyContent: "flex-end" }}>
@@ -303,7 +304,7 @@ class HomeScreen extends Component {
 
                     </View>
                 }
-            </ScrollView>
+            </KeyboardAwareScrollView>
         );
     }
 }

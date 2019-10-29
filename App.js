@@ -40,7 +40,7 @@ const persists = persistStore(store);
 
 
 //Uncomment to reset
-//(async () => { await persists.purge(); })();
+// (async () => { await persists.purge(); })();
 
 store.subscribe(() => {
   saveState({

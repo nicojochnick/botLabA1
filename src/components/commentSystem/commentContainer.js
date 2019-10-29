@@ -39,8 +39,12 @@ class CommentContainer extends Component {
     //TODO ADD CORRECT TOUSERID
 
     sendCommentNotification(){
+        let message = '';
+        if (this.props.tribeName){
+            message = this.props.tribeName
+        }
         let comment = {
-            message : "commented on your board " + this.props.tribeName,
+            message : "commented on your board " + message,
             fromUserID : this.props.alwaysMe,
             toUserID: this.props.userID,
             timeStamp: moment().format(),
