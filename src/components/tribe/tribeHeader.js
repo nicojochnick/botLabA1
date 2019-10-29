@@ -111,10 +111,10 @@ class TribeHeader extends Component {
                             rounded/>
                         <View style = {{flexDirection: "column", width: '98%'}}>
                             <Text
-                                style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.props.tribeAuthorName}  </Text>
+                                style = {{fontWeight: "bold", marginLeft: 3, fontSize: 19, color: "white", textAlign: "left"}}> {this.props.tribeAuthorName}  </Text>
                             {(this.props.header.message === null)
                                 ? <Text
-                                    style={{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17, width: "100%"}}
+                                    style={{color: "white", marginLeft: 3, marginTop: 3, fontSize: 18, width: "100%", fontWeight:'600'}}
                                     multiline={true}
                                 >
                                     created a new board
@@ -122,7 +122,7 @@ class TribeHeader extends Component {
 
 
                                : <Text
-                                    style={{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17, width: "100%"}}
+                                    style={{color: "white", marginLeft: 3, marginTop: 3, fontSize: 18, width: "100%", fontWeight: '600'}}
                                     multiline={true}
                                 >
                                     completed: {this.props.header.message}

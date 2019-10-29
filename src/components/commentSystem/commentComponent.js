@@ -54,7 +54,7 @@ class CommentComponent extends Component {
                         </Text>
                     <View style = {{ flexDirection: "row", justifyContent: "space-between", marginBottom: 0, borderRadius: 10, padding: 1, marginLeft: 5, width: 300,}}>
                         <Text
-                            style = {{color: "white", marginLeft: 3, marginTop: 0, fontSize: 17, width: 240}}
+                            style = {{color: "white", marginLeft: 3, marginTop: 0, fontSize: 17, width: 240, fontWeight: '500'}}
                             multiline = {true}>
                             {this.props.message}
                         </Text>

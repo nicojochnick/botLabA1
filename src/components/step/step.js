@@ -71,12 +71,12 @@ export default class Step extends React.Component {
         }
         return (
             <View >
-                <View style = {[styles.steps,{borderWidth: 1, borderColor: '#186aed'}]}>
+                <View style = {[styles.steps,{borderWidth: 1, borderColor: '#186aed', backgroundColor: '#1455F9'}]}>
                     <KeyboardAvoidingView style = {styles.topGoals  }>
                         <View style = {{width: '80%'}}>
                         <TextInput
                             placeholder = 'add title'
-                            style = {{fontSize: 18, fontWeight: "500", color: "white"}}
+                            style = {{fontSize: 18, fontWeight: "500",  color: "white"}}
                             ref= {(el) => { this.text= el; }}
                             onChangeText= {(name) => this.activeEdit(name) }
                             value = {this.state.name}
@@ -93,7 +93,8 @@ export default class Step extends React.Component {
                                         icon = {
                                             <Icon
                                                 name= 'times'
-                                                color = 'grey'
+                                                size = {20}
+                                                color = 'white'
                                             />
                                         }
                                         title={ ""}
@@ -107,7 +108,7 @@ export default class Step extends React.Component {
                                 containerStyle = {{margin: -7, marginRight: -10}}
                                 checked={this.props.done}
                                 onPress={() => this.props.toggleDoneDB(this.props.id, this.props.boxID, this.state.name)}
-                                checkedColor='#3676FF'
+                                checkedColor='#38EFA1'
                             />
                         </View>
                             {(this.state.open)

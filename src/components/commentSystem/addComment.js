@@ -37,7 +37,7 @@ class AddComment extends Component {
                         <Text style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.props.username}</Text>
                         <View style = {{ flexDirection: "row", marginBottom: 8, borderRadius: 10, padding: 3, margin: 5, width: 300, borderWidth: 1, borderColor: "white"}}>
                             <TextInput
-                                style = {{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17, width: 240}}
+                                style = {{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17, width: 240, fontWeight: "bold"}}
                                 multiline = {true}
                                 placeholder = 'type something....'
                                 value = {this.state.comment}
