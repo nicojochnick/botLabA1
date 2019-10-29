@@ -501,7 +501,7 @@ class TribeComponent extends Component {
                     />
                     :null
                 }
-            <View style = {[styles.tribes, {marginTop: marginTop, padding: 0, backgroundColor: "#3E4145"}]}>
+            <View style = {[styles.tribes, {marginTop: marginTop, padding: 0, backgroundColor: "#121823"}]}>
                     <View style = {{flexDirection: "row", justifyContent: "flex-start", margin: 5, width: '100%',}}>
                         <View style = {{flex: 1, padding: 5, flexDirection: "column", width: '100%', alignContent: "flex-start", justifyContent: "flex-start"}}>
                         <TextInput
@@ -598,7 +598,8 @@ class TribeComponent extends Component {
 
                     </View>
                 <View style = {{borderTopWidth: 0.2}}>
-                <View style = {{flexDirection: "row", backgroundColor: "#2D3861", width: '100%', justifyContent: "center", margin:0, alignItems: "center", borderRadius: 10}}>
+                <View style = {{flexDirection: "row", backgroundColor: "#181E2C", width: '100%', justifyContent: "center",
+                    margin:0, alignItems: "center", borderWidth: 1, borderColor: '#1452FF', borderBottomRightRadius: 5,borderBottomLeftRadius: 5}}>
                     <CommentTopStack
                         tribeName = {this.state.name}
                         isCommentOpen = {this.state.isCommentOpen}

@@ -49,7 +49,7 @@ class CommentFeed extends Component {
 
         }
         return (
-            <ScrollView style = {{height: height, borderTopWidth: 1, borderColor: "#2852EE", margin: 0, paddingTop: 0}}>
+            <ScrollView style = {{height: height, borderTopWidth: 1, borderColor: "#1452FF", margin: 0, paddingTop: 0}}>
             <FlatList
                 data = {data}
                 renderItem={({item}) => (

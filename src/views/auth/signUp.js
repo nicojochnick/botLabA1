@@ -28,6 +28,7 @@ export default class SignUp extends React.Component {
                      email: email,
                      name: null,
                      messages: null,
+                    photoURL: 'https://api.adorable.io/avatars/' + moment().format()
                 };
 
                 firebase.firestore().collection('users').doc(userID).set(account);

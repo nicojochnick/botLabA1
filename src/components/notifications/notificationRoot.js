@@ -39,9 +39,9 @@ class NotificationRoot extends Component {
              sortedArray = data.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
         }
         return (
-            <ScrollView style = {{backgroundColor: '#282C33'}}>
+            <ScrollView style = {{backgroundColor: '#06090F'}}>
                 <Text style = {{fontSize: 30, color: 'white', fontWeight: "bold", marginBottom: 10}}>  Notifications </Text>
-                <View style = {{borderWidth: 1, borderRadius: 10, margin: 6, padding: 3, borderColor: "white"}}>
+                <View style = {{borderWidth: 1, borderRadius: 10, margin: 6, borderColor: "white", padding: 2}}>
                 <FlatList
                 data = {sortedArray}
                 renderItem = {({item}) => (

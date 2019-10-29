@@ -58,7 +58,7 @@ class SlideMenuRoot extends Component {
 
 
         return (
-            <ScrollView style  = {{marginTop: 0, backgroundColor: '#282C33'}}>
+            <ScrollView style  = {{marginTop: 0, backgroundColor: '#06090F'}}>
                 <View style = {{flexDirection: "row", marginTop: 50, justifyContent: "space-between", alignItems: "center", padding: 5}}>
                     <Text style = {{fontWeight: "bold", fontSize: 30, color: "white"}}> Groups </Text>
 

@@ -207,7 +207,7 @@ class FeedView extends Component {
         return (
 
             <KeyboardAwareScrollView
-                style={{paddingTop: 0, paddingBottom:100, backgroundColor: '#282C33', flex: 1, marginBottom: 0, padding: 3}}
+                style={{paddingTop: 0, paddingBottom:100, backgroundColor: '#06090F', flex: 1, marginBottom: 0, padding: 3}}
                 // refreshControl={
                 //     <RefreshControl
                 //         refreshing={this.state.refreshing}

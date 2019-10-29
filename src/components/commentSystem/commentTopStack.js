@@ -53,7 +53,7 @@ class CommentTopStack extends Component {
                             title = {m}
                             type = 'clear'
                             onPress={() => this.setState({openComments: !this.state.openComments})}
-                            titleStyle = {{color:c, marginLeft: 5}}
+                            titleStyle = {{color:c, marginLeft: 5, fontWeight: "bold", fontSize: 18}}
                             icon ={
                                 <Ionicons
                                      name={con}
@@ -68,7 +68,7 @@ class CommentTopStack extends Component {
 
                     </View>
                 </View>
-                <View style = {{backgroundColor: "#2D3861"}}>
+                <View style = {{backgroundColor: "#181E2C"}}>
                     <CommentFeed
                         userIDs = {this.props.userID}
                         tribeID={this.props.tribeID}

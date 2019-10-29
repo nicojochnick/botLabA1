@@ -22,20 +22,20 @@ class AddComment extends Component {
 
 
     render() {
-        let uri = 'https://api.adorable.io/avatars/161/' + this.props.alwaysMe;
 
         return (
             <View>
-                <View style = {{flexDirection: "row",paddingTop: 12, borderColor: "#186aed",flex: 1, padding: 0, borderTopWidth: 1}}>
+                <View style = {{flexDirection: "row",paddingTop: 12, borderColor: "#1452FF",flex: 1, paddingLeft: 4, borderTopWidth: 1}}>
                     <Avatar
-                        source ={{uri: uri}}
+
+                        source ={{uri: this.props.userPhoto}}
                         avatarStyle = {{ borderRadius: 100, borderWidth: 1, borderColor: "white"}}
 
                         rounded/>
                     <View
                         style = {{flexDirection: "column"}}>
                         <Text style = {{fontWeight: "bold", marginLeft: 3, fontSize: 17, color: "white", textAlign: "left"}}> {this.props.username}</Text>
-                        <View style = {{ flexDirection: "row", marginBottom: 8, borderRadius: 10, padding: 3, margin: 5, width: 300, borderWidth: 0.2, borderColor: "grey"}}>
+                        <View style = {{ flexDirection: "row", marginBottom: 8, borderRadius: 10, padding: 3, margin: 5, width: 300, borderWidth: 1, borderColor: "white"}}>
                             <TextInput
                                 style = {{color: "white", marginLeft: 3, marginTop: 3, fontSize: 17, width: 240}}
                                 multiline = {true}

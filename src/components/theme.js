@@ -69,15 +69,15 @@ export const styles = StyleSheet.create({
 
     tribes: {
         fontFamily: "roboto",
-        borderWidth: 1,
+        borderWidth: 3,
         backgroundColor: "white",
         shadowColor: "black",
         shadowOffset: {width: 0, height: 2},
         shadowOpacity: 5,
-        borderRadius: 6,
+        borderRadius: 10,
         margin: 6,
         padding: 0,
-        borderColor: '#2852EE',
+        borderColor: '#0049FF',
     },
 
     tribesHeader: {

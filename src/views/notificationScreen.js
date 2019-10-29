@@ -50,7 +50,7 @@ class NotificationScreen extends Component {
 
     render() {
         return (
-            <View style = {{paddingTop: 50, backgroundColor: '#282C33', flex: 1}}>
+            <View style = {{paddingTop: 50, backgroundColor: '#06090F', flex: 1}}>
                 {(this.state.loading)
                     ? <ActivityIndicator/>
                     :

@@ -615,8 +615,10 @@ export function toggleTribeOpen(index){
 ///Notifications
 export const sendNotification = (notification) => {
     return (dispatch, getState) => {
-        console.log("SENDING NOTIFICATION")
-        firebase.firestore().collection('notifications').add(notification);
+        if (notification.toUserID !== notification.fromUserID) {
+            console.log("SENDING NOTIFICATION")
+            firebase.firestore().collection('notifications').add(notification);
+        }
     }
 };
 

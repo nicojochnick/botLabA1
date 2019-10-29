@@ -76,7 +76,7 @@ const FeedStack =  createStackNavigator(
     }, {
         initialRouteName: "FeedView",
         headerTransparent: true,
-        drawerBackgroundColor: '#282C33'
+        drawerBackgroundColor: '#191C22'
 
     }
 );
@@ -128,7 +128,7 @@ const AppDrawer = createBottomTabNavigator(
             inactiveTintColor: 'lightgrey',
             showLabel: false,
             style: {
-                backgroundColor: '#333740',
+                backgroundColor: '#191C22',
             },
 
         },

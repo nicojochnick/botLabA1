@@ -249,8 +249,8 @@ class HomeScreen extends Component {
             tribeColor = 'darkgrey'
         }
         return (
-            <KeyboardAwareScrollView style = {{backgroundColor: '#282C33', padding: 3}}>
-                <SafeAreaView style = {{flex: 0.1, flexDirection: "column", paddingTop: 0,paddingBottom: 0, backgroundColor: '#282C33'}}>
+            <KeyboardAwareScrollView style = {{backgroundColor: '#06090F', padding: 3}}>
+                <SafeAreaView style = {{flex: 0.1, flexDirection: "column", paddingTop: 0,paddingBottom: 0, backgroundColor: '#06090F'}}>
 
                     <View style = {{flex: 0.5,flexDirection: "row", marginBottom: -20, marginRight: 15, justifyContent: "flex-end" }}>
                         <Identity size = 'medium'
@@ -288,7 +288,7 @@ class HomeScreen extends Component {
                 </SafeAreaView>
                 {(this.state.isGoalSelect)
                     ?
-                    <View style={{flex: 1, backgroundColor: '#282C33'}}>
+                    <View style={{flex: 1, backgroundColor: '#06090F'}}>
                         <TribeRoot
                             friendTribeView={false}
                             filter={this.state.coreUserID}

@@ -7,6 +7,7 @@ import ImagePicker from 'react-native-image-picker';
 import {addProfileImage, changeName, changeStepName} from '../../redux/actions';
 import {styles} from '../theme';
 import firebase from '@react-native-firebase/app';
+import moment from 'moment';
 
 
 
@@ -96,13 +97,22 @@ class Identity extends Component {
     //     this.setState({name: this.props.name})
     // }
 
+    changeAvatar(){
+        let source = 'https://api.adorable.io/avatars/' + moment().format();
+        let uid = this.user.uid;
+        firebase.firestore().collection('users').where('fbID', '==', uid).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                doc.ref.update({"photoURL": source})
+            });
+        });
+    }
+
     render() {
         console.log(this.props.botID);
         let name = this.props.name
         if (this.state.editing){
             name = this.state.name
         }
-        let uri = 'https://api.adorable.io/avatars/161/' + this.props.alwaysMe;
 
         return (
             <View style = {{ flex: 1,  marginTop: 15, flexDirection: "row", justifyContent: "flex-start", alignContent: "center", paddingTop: 5, marginBottom: 10, marginLeft: 10}}>
@@ -110,8 +120,8 @@ class Identity extends Component {
                     rounded = {true}
                     containerStyle = {{ marginRight: 5, marginLeft: 1, borderWidth: 2, borderColor: 'white'}}
                     size= {this.props.size}
-                    source = {{uri: uri}}
-                    onPress = {() => this.openImage(this.options)}
+                    source = {{uri: this.props.profilePicture}}
+                    onPress = {() => this.changeAvatar()}
                 />
 
                 <TextInput
