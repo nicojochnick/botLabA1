@@ -215,52 +215,65 @@ class FeedView extends Component {
                 //     />
                 // }
             >
-
                 <SafeAreaView style = {{flexDirection: "row", paddingTop: 30 , justifyContent: "flex-start", alignItems: "flex-start", flex: 1}}>
                     <View style = {{flexDirection: 'column', justifyContent: "flex-start", alignItems: "flex-start", flex: 1, marginBottom: 10}}>
-                    <Button
-                        type = 'clear'
-                        containerStyle = {{marginRight: 0}}
-                        onPress={() => this.props.navigation.navigate('Menu')}
-                        icon = {
-                            <Ionicons
-                                name = {'ios-menu'}
-                                size = {45}
-                                style = {{color: 'black'}}
-                                onPress={() => this.props.navigation.navigate('Menu')}
+                        <Button
+                            type = 'clear'
+                            containerStyle = {{marginRight: 0}}
+                            onPress={() => this.props.navigation.navigate('Menu')}
+                            icon = {
+                                <Ionicons
+                                    name = {'ios-menu'}
+                                    size = {45}
+                                    style = {{color: 'black'}}
+                                    onPress={() => this.props.navigation.navigate('Menu')}
 
-                            />
+                                />
 
+                            }
+                        />
+
+                        {(this.state.groupID)
+                            ?<View style={{flexDirection: "row", flex: 1, padding: 4}}>
+                                <TextInput
+                                    editable={true}
+                                    multiline={true}
+                                    placeholder='Group    '
+                                    value={this.state.groupName}
+                                    onChangeText={text => this.setState({groupName: text, isEditingName: true})}
+                                    style={{
+                                        color: 'black',
+                                        margin: 5,
+                                        paddingLeft: 0,
+                                        marginTop: -15,
+                                        fontWeight: 'bold',
+                                        fontSize: 38
+                                    }}
+                                />
+                            </View>
+                            :null
                         }
-                    />
-                    <View style = {{flexDirection: "row", flex: 0.6, padding: 4}}>
-                <TextInput
-                    editable = {true}
-                    multiline = {true}
-                    value = {this.state.groupName}
-                    onChangeText = {text=> this.setState({groupName: text, isEditingName: true})}
-                    style = {{color: 'black', margin: 5, paddingLeft: 0, marginTop: -15,  fontWeight: 'bold', fontSize: 38}}
-
-                />
-                    </View>
 
                     </View>
                     <View style = {{ marginRight: 10, margin: 0, flex: 0.4, flexDirection: "row", alignItems: "flex-start", justifyContent: "flex-end",}}>
-                        <Button
-                            style={{ alignContent: "center", marginTop: 10, marginRight: 0}}
-                            onPress = {() => this.setState({isMemberOpen: !this.state.isMemberOpen})}
-                            icon = {
-                                <Ionicons
-                                    name = {'ios-contacts'}
-                                    color = {groupColor}
-                                    size = {35}
-                                    onPress = {() => this.setState({isMemberOpen: !this.state.isMemberOpen})}
-                                    raised = {true}
-                                />
-                            }
-                            type = 'clear'
+                        {(!this.state.loading)
+                            ? <Button
+                                style={{alignContent: "center", marginTop: 10, marginRight: 0}}
+                                onPress={() => this.setState({isMemberOpen: !this.state.isMemberOpen})}
+                                icon={
+                                    <Ionicons
+                                        name={'ios-contacts'}
+                                        color={groupColor}
+                                        size={35}
+                                        onPress={() => this.setState({isMemberOpen: !this.state.isMemberOpen})}
+                                        raised={true}
+                                    />
+                                }
+                                type='clear'
 
-                        />
+                            />
+                            : null
+                        }
                         <View style = {{marginTop: -5}}>
 
                         <AddTribe
@@ -322,7 +335,7 @@ class FeedView extends Component {
                     :
                     <ScrollView>
                     <Text style = {{margin: 20, marginTop: 4, color: "black", alignText: "center", fontWeight: "bold", fontSize: 35 }}>Hi There!</Text>
-                    <Text style = {{margin: 20, marginTop: -5, color: "black", alignText: "center", fontWeight: "500", fontSize: 25 }}>Add a Group using the Left Menu Button to Get Started 😁 </Text>
+                    <Text style = {{margin: 20, marginTop: -5, color: "black", alignText: "center", fontWeight: "500", fontSize: 25 }}>Add a Group using the Left Menu Button 😁 </Text>
                     </ScrollView>
                 }
             </KeyboardAwareScrollView>

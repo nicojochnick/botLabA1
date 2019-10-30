@@ -39,7 +39,7 @@ class CommentTopStack extends Component {
 
         }
 
-        let c = '#242424'
+        let c = '#2E6AE6'
         if (this.state.openComments){
             m = 'Hide'
             c = 'grey'

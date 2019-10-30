@@ -129,11 +129,14 @@ class TribeRoot extends Component {
     render() {
         let loading = this.state.loading;
         let data = this.state.tribeData
-        let sortedArray  = data.sort((a,b) => new Date(b.posted) - new Date(a.posted));
+        let sortedArray = []
+        if (data) {
+            sortedArray = data.sort((a, b) => new Date(b.posted) - new Date(a.posted));
+        }
         console.log(this.state.tribeData)
         return (
             <View>
-                { !(loading)
+                { !(this.state.loading)
                     ? <View>
                     { (!this.state.tribeData.length < 1)
                     ?
@@ -167,10 +170,10 @@ class TribeRoot extends Component {
                                       />)}
                         />
                         </KeyboardAwareScrollView>
-                    : <Text style = {{margin: 20, textAlign: 'center', fontWeight: 'bold',  color: 'white', fontSize: 16, }}> No Boards Created. Add one by pressing the '+' button </Text>
+                    : <Text style = {{margin: 5, textAlign: 'left', fontWeight: '500',  color: '#2E4053', fontSize: 18, }}> No Boards Created For This Group 😅 {"\n"} Add One by pressing the '+' Button </Text>
                 }
                     </View>
-                    :<ActivityIndicator style = {{margin: 30}} size="large" color="grey" />
+                    :<ActivityIndicator style = {{margin: 30}} size="small" color="darkgrey" />
                 }
             </View>
         );

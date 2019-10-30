@@ -50,7 +50,7 @@ class NotificationScreen extends Component {
 
     render() {
         return (
-            <SafeAreaView style = {{marginTop: 20, backgroundColor: 'white', flex: 1}}>
+            <SafeAreaView style = {{marginTop: 0, backgroundColor: 'white', flex: 1}}>
                 {(this.state.loading)
                     ? <ActivityIndicator/>
                     :

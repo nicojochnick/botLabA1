@@ -129,7 +129,7 @@ class Identity extends Component {
 
                 <TextInput
                     style = {[styles.identityText, {marginBottom: 0, marginTop: 10, marginLeft: 5, marginRight: 0, textAlign: "left", color:"black", fontSize: 35}]}
-                    placeholder = {"add name!"}
+                    placeholder = {"Name     "}
                     onChangeText={text =>this.activateEdit(text)}
                     value = {name}
                     selectionColor = "black"

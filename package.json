@@ -8,9 +8,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/push-notification-ios": "^1.0.2",
     "@react-native-firebase/app": "^6.0.2",
     "@react-native-firebase/auth": "^6.0.2",
     "@react-native-firebase/firestore": "^6.0.2",
+    "@react-navigation/core": "latest",
     "immutability-helper": "^3.0.1",
     "moment": "^2.24.0",
     "normalizr": "^3.4.0",
@@ -29,6 +31,7 @@
     "react-native-popup-menu": "^0.15.6",
     "react-native-progress": "^3.6.0",
     "react-native-pull-to-refresh": "^2.1.3",
+    "react-native-push-notification": "^3.1.9",
     "react-native-reanimated": "^1.3.0",
     "react-native-simple-dialogs": "^1.2.0",
     "react-native-svg": "^9.5.3",
@@ -45,8 +48,7 @@
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
     "styled-components": "^4.3.2",
-    "yarn": "^1.19.1",
-    "@react-navigation/core": "latest"
+    "yarn": "^1.19.1"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",

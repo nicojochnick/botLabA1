@@ -46,6 +46,14 @@ class Box extends Component {
         return (
             <KeyboardAvoidingView>
                 <View style = {{}}>
+                    {(this.props.showProgressBar)
+                        ?<Progress.Bar
+                            progress={this.props.computeBoxProgress(this.props.steps)} width={330}
+                            style={{margin: 10, color: '#1260FF'}}
+                        />
+                        : null
+                    }
+
                 <View style = {{ marginBottom: 5}}>
                 <StepRoot
                     tribeID = {this.props.tribeID}
@@ -111,6 +119,19 @@ export default connect()(Box);
 {/*<Progress.Bar*/}
 {/*    progress={this.props.computeBoxProgress(this.props.steps)} width={330} style={{margin: 10}}*/}
 {/*/>*/}
+{/*{(this.state.editingBox)*/}
+{/*    ?*/}
+{/*< Button*/}
+{/*    style={{width: '30%', justifyCon2tent: "flex-end", alignContent: "center", margin: 10}}*/}
+{/*    title = "Save"*/}
+{/*    buttonStyle={{backgroundColor: "#4978DD"}}*/}
+{/*    onPress = {()=> this.doneSaving()}*/}
+{/*    />*/}
+{/*    :null*/}
+{/*}*/}
+
+
+
 {/*{(this.state.editingBox)*/}
 {/*    ?*/}
 {/*< Button*/}

@@ -9,6 +9,7 @@ import AddStepComponent from '../botA1/addStep/addStepComponent';
 import {connect} from 'react-redux';
 import {StepRoot} from './stepRoot';
 import StepHeader from './stepHeader';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const goalsSelector = (Obj) => {
     return Object.keys(Obj)
@@ -76,7 +77,7 @@ export default class Step extends React.Component {
                         <View style = {{width: '80%'}}>
                         <TextInput
                             placeholder = 'add title'
-                            style = {{fontSize: 18, fontWeight: "500",  color: "black"}}
+                            style = {{fontSize: 18, fontWeight: "600",  color: "black", marginLeft: 5}}
                             ref= {(el) => { this.text= el; }}
                             onChangeText= {(name) => this.activeEdit(name) }
                             value = {this.state.name}
@@ -89,12 +90,13 @@ export default class Step extends React.Component {
                             { (this.props.canEdit)
                                 ? <View style = {{flexDirection: "row"}}>
                                     <Button
-                                        containerStyle = {{marginRight: -10}}
+                                        containerStyle = {{marginRight: -10, marginTop: -6}}
                                         icon = {
-                                            <Icon
-                                                name= 'times'
-                                                size = {15}
-                                                color = 'darkgrey'
+                                            <Ionicons
+                                            name={'ios-close'}
+                                            style={{color: '#3A3A3A'}}
+                                            size={25}
+                                            onPress={() => this.props.handleDeleteStep(this.props.boxID, this.props.id)}
                                             />
                                         }
                                         title={ ""}

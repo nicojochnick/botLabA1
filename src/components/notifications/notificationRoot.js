@@ -39,7 +39,7 @@ class NotificationRoot extends Component {
              sortedArray = data.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
         }
         return (
-            <ScrollView style = {{backgroundColor: 'white'}}>
+            <ScrollView style = {{}}>
                 <Text style = {{fontSize: 30, color: 'black', fontWeight: "bold", marginBottom: 10}}>  Notifications </Text>
                 <View style = {{borderWidth: 3, borderRadius: 10, margin: 6, borderColor: "white", padding: 0,shadowColor: "grey",
                     shadowOffset: {width: 0, height: 2},

@@ -102,6 +102,9 @@ class TribeComponent extends Component {
             headerOpen: false,
 
 
+            showProgressBar: false,
+
+
             shortView: this.props.isFeed,
 
 
@@ -534,9 +537,9 @@ class TribeComponent extends Component {
                                             </MenuTrigger>
                                             <MenuOptions>
                                                 <MenuOption onSelect={() => this.makeEditable(true, canEdit)} text='Edit'/>
-                                                {/*<MenuOption onSelect={() => this.setState({fOpen: !fOpen})}>*/}
-                                                {/*    <Text style={{color: "navy"}}>Make Private </Text>*/}
-                                                {/*</MenuOption>*/}
+                                                <MenuOption onSelect={() => this.setState({showProgressBar: !this.state.showProgressBar})}>
+                                                    <Text style={{color: "#266DFC"}}>Toggle Progress Bar </Text>
+                                                </MenuOption>
                                                 <MenuOption onSelect={() => this.openDeleteConfirm(true)}>
                                                     <Text style={{color: 'red'}}>Delete</Text>
                                                 </MenuOption>
@@ -589,6 +592,7 @@ class TribeComponent extends Component {
                     <View>
                             <View style={{marginTop: -10}}>
                                 <BoxRoot
+                                    showProgressBar = {this.state.showProgressBar}
                                     toggleDoneDB={this.toggleDoneDB}
                                     tribeID={this.props.tribeID}
                                     filter={this.props.id}

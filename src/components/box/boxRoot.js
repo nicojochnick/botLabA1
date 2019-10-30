@@ -156,6 +156,7 @@ class BoxRoot extends Component {
                         renderItem={({item}) => (
                         <Box
                             canEdit = {this.props.canEdit}
+                            showProgressBar = {this.props.showProgressBar}
                             name = {item.name}
                             info = {item.info}
                             id = {item.id}
