@@ -82,8 +82,8 @@ export const styles = StyleSheet.create({
 
     tribesHeader: {
         fontFamily: "roboto",
-        shadowColor: "black",
-        shadowOffset: {width: 0, height: 2},
+        shadowColor: "lightgrey",
+        shadowOffset: {width: 0, height: 1},
         shadowOpacity: 5,
         borderRadius: 6,
         margin: 6,

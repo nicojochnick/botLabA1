@@ -16,7 +16,7 @@ class TribeHeader extends Component {
         this.state = {
             liked: false,
             heartIcon:'ios-heart-empty',
-            heartIconColor: 'white',
+            heartIconColor: 'grey',
             message: '',
             likes: 0,
             username: null,
@@ -95,26 +95,26 @@ class TribeHeader extends Component {
         console.log(this.props.userID)
         let likeColor = this.state.heartIconColor
         if (!this.props.didLike){
-            likeColor = 'white'
+            likeColor = 'lightgrey'
 
         }
 
 
         return (
-            <View style = {[{ backgroundColor: '#2E6AE6',  borderWidth: 0, borderColor:'2852EE', paddingBottom: 15, padding: 10, margin: 15}, styles.tribesHeader]}>
+            <View style = {[{ backgroundColor: 'white', marginTop: 0, marginBottom: 20, borderWidth: 0, borderColor:'2852EE', paddingBottom: 10, padding: 10, margin: 13}, styles.tribesHeader]}>
                 <View style = {{margin: 10, marginTop: 10, flexDirection: "row", flex: 1, width: '95%'}}>
                     <View style = {{flexDirection: "row", flex: 0.8}}>
                         <Avatar
                             source ={{uri: this.props.tribeAuthorProfilePicture}}
-                            avatarStyle = {{ borderRadius: 100, borderWidth: 0, borderColor: "white"}}
+                            avatarStyle = {{ borderRadius: 100, borderWidth: 1, borderColor: "black"}}
 
                             rounded/>
                         <View style = {{flexDirection: "column", width: '98%'}}>
                             <Text
-                                style = {{fontWeight: "bold", marginLeft: 3, fontSize: 19, color: "white", textAlign: "left"}}> {this.props.tribeAuthorName}  </Text>
+                                style = {{fontWeight: "bold", marginLeft: 3, fontSize: 19, color: "black", textAlign: "left"}}> {this.props.tribeAuthorName}  </Text>
                             {(this.props.header.message === null)
                                 ? <Text
-                                    style={{color: "white", marginLeft: 3, marginTop: 3, fontSize: 18, width: "100%", fontWeight:'600'}}
+                                    style={{color: "black", marginLeft: 3, marginTop: 3, fontSize: 18, width: "100%", fontWeight:'600'}}
                                     multiline={true}
                                 >
                                     created a new board
@@ -122,7 +122,7 @@ class TribeHeader extends Component {
 
 
                                : <Text
-                                    style={{color: "white", marginLeft: 3, marginTop: 3, fontSize: 18, width: "100%", fontWeight: '600'}}
+                                    style={{color: "black", marginLeft: 3, marginTop: 3, fontSize: 18, width: "100%", fontWeight: '600'}}
                                     multiline={true}
                                 >
                                     completed: {this.props.header.message}
@@ -130,7 +130,7 @@ class TribeHeader extends Component {
                             }
                         </View>
                     </View>
-                    <View style ={{flexDirection: "row", flex: 0.2, justifyContent: 'flex-end', marginRight: -3}}>
+                    <View style ={{flexDirection: "row", marginTop: -5, flex: 0.2, justifyContent: 'flex-end', marginRight: -3}}>
                         { (this.props.isPublic)
                         ? <View>
                             {/*{!(this.props.canEdit )*/}
@@ -146,7 +146,7 @@ class TribeHeader extends Component {
                                 }
                                 type = 'clear'
                                 title = {this.props.header.likes.length}
-                                titleStyle = {{color:"white", marginLeft: 5}}
+                                titleStyle = {{color:"grey", marginLeft: 5, fontWeight: 'bold'}}
 
                             />
                             {/*: <View>*/}

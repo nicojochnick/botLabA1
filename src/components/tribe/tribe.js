@@ -484,30 +484,8 @@ class TribeComponent extends Component {
 
         return (
             <View style = {{marginTop:3, marginBottom: 3}}>
-                {(this.props.header )
-                    ?
-                    <View style = {{margin: 1}}>
-                    <TribeHeader
-                        didLike = {this.state.didLike}
-                        likeColor = {this.state.likeColor}
-                        isPosted={this.props.isPosted}
-                        posted = {this.props.posted}
-                        isPublic = {this.props.isPublic}
-                        header = {this.props.header}
-                        shareTribe = {this.shareTribe}
-                        unshareTribe = {this.unshareTribe}
-                        tribeID = {this.props.tribeID}
-                        canEdit = {canEdit}
-                        userID = {this.props.userID}
-                        alwaysMe = {this.props.alwaysMe}
-                        updateLikes = {this.updateLikes}
-                        tribeAuthorName = {this.state.tribeAuthorName}
-                        tribeAuthorProfilePicture = {this.state.tribeAuthorProfilePicture}
-                    />
-                    </View>
-                    :null
-                }
-            <View style = {[styles.tribes, {marginTop: marginTop, padding: 0, backgroundColor: "white"}]}>
+
+            <View style = {[styles.tribes, {marginTop: 0, padding: 0, backgroundColor: "white"}]}>
                     <View style = {{flexDirection: "row", justifyContent: "flex-start", margin: 5, width: '100%',}}>
                         <View style = {{flex: 1, padding: 5, flexDirection: "column", width: '100%', alignContent: "flex-start", justifyContent: "flex-start"}}>
                         <TextInput
@@ -521,6 +499,7 @@ class TribeComponent extends Component {
                             onChangeText = {(text) => this.activateEdit(text,'name')}
                         />
                         </View>
+
                         <View style ={{ flexDirection: "row", width: '30%', justifyContent: "flex-end", alignItems: 'flex-start', marginTop: 0, marginRight: 10}}>
                             {(canEdit)
                                     ?
@@ -563,6 +542,33 @@ class TribeComponent extends Component {
                                 }
                         </View>
                     </View>
+
+                {(this.props.header )
+                    ?
+                    <View style = {{margin: 1}}>
+                        <TribeHeader
+                            didLike = {this.state.didLike}
+                            likeColor = {this.state.likeColor}
+                            isPosted={this.props.isPosted}
+                            posted = {this.props.posted}
+                            isPublic = {this.props.isPublic}
+                            header = {this.props.header}
+                            shareTribe = {this.shareTribe}
+                            unshareTribe = {this.unshareTribe}
+                            tribeID = {this.props.tribeID}
+                            canEdit = {canEdit}
+                            userID = {this.props.userID}
+                            alwaysMe = {this.props.alwaysMe}
+                            updateLikes = {this.updateLikes}
+                            tribeAuthorName = {this.state.tribeAuthorName}
+                            tribeAuthorProfilePicture = {this.state.tribeAuthorProfilePicture}
+                        />
+                    </View>
+                    :null
+                }
+
+
+
                 {/*<View style = {{flexDirection: "row"}}>*/}
                 {/*    <Button*/}
                 {/*        title = 'see all cards'*/}

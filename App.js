@@ -20,6 +20,7 @@ import thunk from 'redux-thunk'
 import { MenuProvider } from 'react-native-popup-menu';
 import {reactReduxFirebase, firebaseReducer, getFirebase, firebase} from 'react-redux-firebase';
 import {compose} from 'react-native';
+import SystemNotifications from './src/navigation/SystemNotifications';
 
 
 
@@ -51,12 +52,26 @@ store.subscribe(() => {
 
 
 export default class App extends React.Component {
-  render() {
+    constructor(props){
+        super(props)
+        this.updateNotifications= this.updateNotifications.bind(this)
+        this.state = {
+            Notifications: [0]
+        }
+    }
+
+    updateNotifications (old, curr){
+
+    }
+
+
+    render() {
     return (
         <Provider store={store}>
           <PersistGate loading={null} persistor={persists}>
               <MenuProvider>
-                <TopStack/>
+                  <SystemNotifications updateNotifications = {this.updateNotifications}/>
+                  <TopStack notifications = {this.state.notifications}/>
               </MenuProvider>
           </PersistGate>
         </Provider>
