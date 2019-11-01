@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, TextInput, View} from 'react-native'
+import {Image, StyleSheet, Text, TextInput, View, KeyboardAvoidingView} from 'react-native';
 import {Button, Input} from 'react-native-elements'
 import { firebase } from '@react-native-firebase/auth';
 
@@ -42,8 +42,10 @@ export default class SignUp extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Text style = {{fontSize:20, margin: 10, fontWeight: "bold", color: "white"}}>Welcome</Text>
+            <KeyboardAvoidingView style={styles.container}>
+                <Image style={{width: 150, height: 150, borderRadius: 100, borderColor: "white", borderWidth: 2}}
+                       source={require('./mllogo2-01.png')} />
+                <Text style = {{fontSize:20, margin: 10, fontWeight: "bold", color: "white"}}>Welcome to MonsterList</Text>
                 {this.state.errorMessage &&
                 <Text style={{ color: 'red' }}>
                     {this.state.errorMessage}
@@ -83,7 +85,7 @@ export default class SignUp extends React.Component {
                     title="Already have an account? Login"
                     onPress={() => this.props.navigation.navigate('Login')}
                 />
-            </View>
+            </KeyboardAvoidingView>
         )
     }
 }

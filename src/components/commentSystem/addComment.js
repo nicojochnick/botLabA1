@@ -14,7 +14,7 @@ class AddComment extends Component {
     }
     postComment(){
         let comment = this.state.comment;
-        this.props.postComment(comment)
+        this.props.postComment(comment, this.props.username, this.props.userPhoto)
         this.setState({comment: ''})
 
     }

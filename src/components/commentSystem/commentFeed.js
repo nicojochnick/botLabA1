@@ -56,6 +56,8 @@ class CommentFeed extends Component {
                     <CommentContainer
                         message = {item.message}
                         userID = {item.userID}
+                        userName = {item.userName}
+                        userPhoto = {item.userPhoto}
                         tribeID = {item.tribeID}
                         commentID = {item.commentID}
                         timestamp = {item.timestamp}

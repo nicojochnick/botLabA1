@@ -54,12 +54,14 @@ class CommentContainer extends Component {
         this.props.sendNotification(comment)
     }
 
-    postComment(text) {
+    postComment(text, userName, userPhoto) {
         let user = firebase.auth().currentUser;
 
         let comment = {
             type: null,
             message: text,
+            userName: userName,
+            userPhoto: userPhoto,
             userID: this.props.alwaysMe,
             tribeID: this.props.tribeID,
             commentID: moment().format(),
@@ -124,20 +126,34 @@ class CommentContainer extends Component {
 
     onCollectionUpdate = (snapshot) => {
         let search = this.props.userID
-        if (this.props.isAddComment){
+        if (this.props.isAddComment) {
             search = this.props.alwaysMe
         }
-
-        this.ref.where('userID', '==', search).get().then((snapshot) => {
-            let data = snapshot.docs.map(function (documentSnapshot) {
-                console.log(documentSnapshot.data());
-                return documentSnapshot.data()
-            });
-            console.log(data);
-            let user = data[0];
-            this.setState({username: user.name});
-            this.setState({userPhoto: user.photoURL});}
-        );
+        if (!this.props.isAddComment) {
+            this.ref.where('userID', '==', this.props.userID).get().then((snapshot) => {
+                    let data = snapshot.docs.map(function (documentSnapshot) {
+                        console.log(documentSnapshot.data());
+                        return documentSnapshot.data()
+                    });
+                    console.log(data);
+                    let user = data[0];
+                    this.setState({username: user.name});
+                    this.setState({userPhoto: user.photoURL});
+                }
+            );
+    } else {
+            this.ref.where('userID', '==', this.props.alwaysMe).get().then((snapshot) => {
+                    let data = snapshot.docs.map(function (documentSnapshot) {
+                        console.log(documentSnapshot.data());
+                        return documentSnapshot.data()
+                    });
+                    console.log(data);
+                    let user = data[0];
+                    this.setState({username: user.name});
+                    this.setState({userPhoto: user.photoURL});
+                }
+            );
+        }
     };
 
     render() {
