@@ -108,15 +108,21 @@ const slideMenu = createDrawerNavigator({
 // );
 
 const AppDrawer = createBottomTabNavigator(
-    { FeedView: slideMenu, Home: HomeStack, Notifications: NotificationScreen
-    }, { defaultNavigationOptions: ({ navigation }) => ({
+    { FeedView: slideMenu, Notifications: NotificationScreen
+    },
+    {
+
+        // initialRouteName: "Home",
+
+        defaultNavigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ focused, horizontal, tintColor }) => {
                 const { routeName } = navigation.state;
                 let IconComponent = Ionicons;
                 let iconName;
-                if (routeName === 'Home'){
-                    iconName = `ios-contact`;
-                } else if (routeName === 'FeedView') {
+                // if (routeName === 'Home'){
+                //     iconName = `ios-contact`;
+                // } else
+                if (routeName === 'FeedView') {
                     iconName = 'ios-home'
                 } else if (routeName === 'Notifications') {
                     iconName = 'ios-paper'

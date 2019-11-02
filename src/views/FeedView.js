@@ -21,6 +21,7 @@ import { useFocusEffect } from '@react-navigation/core';
 import AddTribe from '../components/tribe/addTribe';
 import { NavigationEvents } from 'react-navigation';
 import TribeGroup from '../components/groups/tribeGroup';
+import Identity from '../components/user/identity';
 
 
 class FeedView extends Component {
@@ -132,7 +133,17 @@ class FeedView extends Component {
                 return documentSnapshot.data()
             });
             let user = data[0];
+
+            let friendIDs = user.friendIDs;
+            let name = user.name;
+            let username  = user.username;
+            let messages = user.messages;
+            let cycle = user.cycle;
+            let profilePicture = user.photoURL;
             this.setState({alwaysMe: user.userID});
+            this.setState({name: name});
+            this.setState({username: username});
+            this.setState({profilePicture: profilePicture });
             this.setState({friendIDs: user.friendIDs});
             this.setState({loading: false});
             this.saveUser(user)
@@ -216,7 +227,8 @@ class FeedView extends Component {
                 // }
             >
                 <SafeAreaView style = {{flexDirection: "row", paddingTop: 30 , justifyContent: "flex-start", alignItems: "flex-start", flex: 1}}>
-                    <View style = {{flexDirection: 'column', justifyContent: "flex-start", alignItems: "flex-start", flex: 1, marginBottom: 10}}>
+                    <View style = {{flexDirection: 'column', justifyContent: "flex-start", alignItems: "flex-start", flex: 2, marginBottom: 10}}>
+                        <View style = {{ flex: 1, flexDirection: "row", justifyContent: "space-between", }}>
                         <Button
                             type = 'clear'
                             containerStyle = {{marginRight: 0}}
@@ -232,13 +244,24 @@ class FeedView extends Component {
 
                             }
                         />
+                            <Identity
+
+                                size = 'medium'
+                                forceReload = {this.forceReload}
+                                notMe = {false}
+                                alwaysMe = {this.state.alwaysMe}
+                                name = {this.state.name}
+                                profilePicture = {this.state.profilePicture}
+                            />
+
+                        </View>
 
                         {(this.state.groupID)
-                            ?<View style={{flexDirection: "row", flex: 1, padding: 4}}>
+                            ?<View style={{flexDirection: "row", flex: 1, padding: 4, marginTop: 20}}>
                                 <TextInput
                                     editable={true}
                                     multiline={true}
-                                    placeholder='Group    '
+                                    placeholder='Untitled    '
                                     value={this.state.groupName}
                                     onChangeText={text => this.setState({groupName: text, isEditingName: true})}
                                     style={{
@@ -255,7 +278,7 @@ class FeedView extends Component {
                         }
 
                     </View>
-                    <View style = {{ marginRight: 10, margin: 0, flex: 0.4, flexDirection: "row", alignItems: "flex-start", justifyContent: "flex-end",}}>
+                    <View style = {{ marginRight: 10, marginLeft: -5, flex: 0.4, flexDirection: "row", alignItems: "flex-start", justifyContent: "flex-end",}}>
                         {(!this.state.loading)
                             ? <Button
                                 style={{alignContent: "center", marginTop: 10, marginRight: 0}}

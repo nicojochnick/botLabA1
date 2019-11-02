@@ -115,11 +115,11 @@ class Identity extends Component {
         }
 
         return (
-            <View style = {{marginLeft: 0, flex: 1}}>
-            <View style = {{ flex: 1,  marginTop: 15, flexDirection: "row", justifyContent: "flex-start", alignContent: "center", paddingTop: 5, marginBottom: 5, marginLeft: 10}}>
+            <View style = {{marginLeft: 0, flex: 1, width: '100%'}}>
+            <View style = {{ flex: 2,  marginTop: 0, flexDirection: "row", justifyContent: "flex-start", alignContent: "center", paddingTop: 5, marginBottom: 5, marginLeft: 10}}>
                 <Avatar
                     rounded = {true}
-                    containerStyle = {{ marginRight: 5, marginLeft: 1, borderWidth: 2, borderColor: 'black',shadowColor: "black",
+                    containerStyle = {{ marginRight: 2, marginLeft: 1, borderWidth: 2, borderColor: 'black',shadowColor: "black",
                         shadowOffset: {width: 0, height: 2},
                         shadowOpacity: 5,}}
                     size= {this.props.size}
@@ -128,7 +128,7 @@ class Identity extends Component {
                 />
 
                 <TextInput
-                    style = {[styles.identityText, {marginBottom: 0, marginTop: 10, marginLeft: 5, marginRight: 0, textAlign: "left", color:"black", fontSize: 35}]}
+                    style = {[styles.identityText, {marginBottom: 0, marginTop: 0, marginLeft: 5, marginRight: -5, textAlign: "left", color:"black", fontSize: 25}]}
                     placeholder = {"Name     "}
                     onChangeText={text =>this.activateEdit(text)}
                     value = {name}

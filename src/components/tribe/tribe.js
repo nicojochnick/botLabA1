@@ -542,32 +542,29 @@ class TribeComponent extends Component {
                                 }
                         </View>
                     </View>
-
-                {(this.props.header )
-                    ?
-                    <View style = {{margin: 1}}>
-                        <TribeHeader
-                            didLike = {this.state.didLike}
-                            likeColor = {this.state.likeColor}
-                            isPosted={this.props.isPosted}
-                            posted = {this.props.posted}
-                            isPublic = {this.props.isPublic}
-                            header = {this.props.header}
-                            shareTribe = {this.shareTribe}
-                            unshareTribe = {this.unshareTribe}
-                            tribeID = {this.props.tribeID}
-                            canEdit = {canEdit}
-                            userID = {this.props.userID}
-                            alwaysMe = {this.props.alwaysMe}
-                            updateLikes = {this.updateLikes}
-                            tribeAuthorName = {this.state.tribeAuthorName}
-                            tribeAuthorProfilePicture = {this.state.tribeAuthorProfilePicture}
-                        />
-                    </View>
-                    :null
-                }
-
-
+                {/*{(this.props.header )*/}
+                {/*    ?*/}
+                {/*    <View style = {{margin: 1}}>*/}
+                {/*        <TribeHeader*/}
+                {/*            didLike = {this.state.didLike}*/}
+                {/*            likeColor = {this.state.likeColor}*/}
+                {/*            isPosted={this.props.isPosted}*/}
+                {/*            posted = {this.props.posted}*/}
+                {/*            isPublic = {this.props.isPublic}*/}
+                {/*            header = {this.props.header}*/}
+                {/*            shareTribe = {this.shareTribe}*/}
+                {/*            unshareTribe = {this.unshareTribe}*/}
+                {/*            tribeID = {this.props.tribeID}*/}
+                {/*            canEdit = {canEdit}*/}
+                {/*            userID = {this.props.userID}*/}
+                {/*            alwaysMe = {this.props.alwaysMe}*/}
+                {/*            updateLikes = {this.updateLikes}*/}
+                {/*            tribeAuthorName = {this.state.tribeAuthorName}*/}
+                {/*            tribeAuthorProfilePicture = {this.state.tribeAuthorProfilePicture}*/}
+                {/*        />*/}
+                {/*    </View>*/}
+                {/*    :null*/}
+                {/*}*/}
 
                 {/*<View style = {{flexDirection: "row"}}>*/}
                 {/*    <Button*/}

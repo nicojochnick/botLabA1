@@ -254,7 +254,7 @@ class HomeScreen extends Component {
 
                     <View style = {{flex: 1,flexDirection: "row", marginBottom: 0, marginRight: 10, justifyContent: "flex-start" }}>
                         <View style = {{flex:1, marginRight: -20}}>
-                        <Identity size = 'large'
+                        <Identity size = 'medium'
                                   forceReload = {this.forceReload}
                                   notMe = {this.state.notMe}
                                   alwaysMe = {this.state.alwaysMe}

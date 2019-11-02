@@ -141,6 +141,7 @@ class TribeRoot extends Component {
                     { (!this.state.tribeData.length < 1)
                     ?
                         <KeyboardAwareScrollView behavior="padding" >
+                            <ActivityIndicator/>
                         <FlatList style={styles.bottomContainer}
                                   data={sortedArray}
                                   listKey={(item, index) => 'D' + index.toString()}
@@ -170,7 +171,7 @@ class TribeRoot extends Component {
                                       />)}
                         />
                         </KeyboardAwareScrollView>
-                    : <Text style = {{margin: 5, textAlign: 'left', fontWeight: '500',  color: '#2E4053', fontSize: 18, }}> No Boards Created For This Group 😅 {"\n"} Add One by pressing the '+' Button </Text>
+                    : <Text style = {{margin: 5, textAlign: 'left', fontWeight: '500',  color: '#2E4053', fontSize: 18, }}> No Boards Created 😅 {"\n"} Add One by pressing the '+' Button </Text>
                 }
                     </View>
                     :<ActivityIndicator style = {{margin: 30}} size="small" color="darkgrey" />
