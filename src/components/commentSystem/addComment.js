@@ -11,6 +11,8 @@ class AddComment extends Component {
         this.state = {
             comment: ''
         }
+
+
     }
     postComment(){
         let comment = this.state.comment;
