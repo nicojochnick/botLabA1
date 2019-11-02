@@ -51,6 +51,7 @@ class AddComment extends Component {
                                 titleStyle = {{color: '#0070FF', fontSize: 16, fontWeight: "bold"}}
                                 onPress = {()=> this.postComment()}
                             />
+
                         </View>
                     </View>
                 </View>
