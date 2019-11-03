@@ -99,6 +99,7 @@ class Identity extends Component {
 
     changeAvatar(){
         let source = 'https://api.adorable.io/avatars/' + moment().format();
+        source = 'https://i.pravatar.cc/300'
         let uid = this.user.uid;
         firebase.firestore().collection('users').where('fbID', '==', uid).get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
@@ -115,21 +116,19 @@ class Identity extends Component {
         }
 
         return (
-            <View style = {{marginLeft: 0, flex: 1, width: '100%'}}>
-            <View style = {{ flex: 2,  marginTop: 0, flexDirection: "row", justifyContent: "flex-start", alignContent: "center", paddingTop: 5, marginBottom: 5, marginLeft: 10}}>
+            <View style = {{flex: 1, width: '100%', margin: 5}}>
+            <View style = {{ flex: 1, marginTop: 0, flexDirection: "row", justifyContent: "flex-start", alignItem: "center", paddingTop: 0, marginBottom: 5, marginLeft: 5}}>
                 <Avatar
                     rounded = {true}
-                    containerStyle = {{ marginRight: 2, marginLeft: 1, borderWidth: 2, borderColor: 'black',shadowColor: "black",
-                        shadowOffset: {width: 0, height: 2},
-                        shadowOpacity: 5,}}
+                    containerStyle = {[styles.card, { marginRight: 0, margin: 0,borderRadius: 100, marginLeft: 1, borderWidth: 2, borderColor: '#1E85FF',}]}
                     size= {this.props.size}
                     source = {{uri: this.props.profilePicture}}
-                    onPress = {() => this.openImage()}
+                    onPress = {() => this.changeAvatar()}
                 />
-
+                <View style = {{flexDirection: "column"}}>
                 <TextInput
-                    style = {[styles.identityText, {marginBottom: 0, marginTop: 0, marginLeft: 5, marginRight: -5, textAlign: "left", color:"black", fontSize: 25}]}
-                    placeholder = {"Name     "}
+                    style = {{marginBottom: 0, fontWeight: "bold", marginTop: 10, marginLeft: 5, marginRight: -5, textAlign: "left", color:"black", fontSize: 25}}
+                    placeholder = {"username"}
                     onChangeText={text =>this.activateEdit(text)}
                     value = {name}
                     selectionColor = "black"
@@ -137,13 +136,24 @@ class Identity extends Component {
                     maxLength = {20}
                     editable = {!(this.props.notMe)}
                 />
+                <TextInput
+                    style = {{marginBottom: 0, marginTop: 0, marginLeft: 5, marginRight: -5, textAlign: "left", color:"black", fontSize: 20}}
+                    placeholder = {"score    "}
+                    onChangeText={text =>this.activateEdit(text)}
+                    value = {this.props.score}
+                    selectionColor = "black"
+                    multiline = {false}
+                    maxLength = {20}
+                    editable = {!(this.props.notMe)}
+                />
+                </View>
             </View>
-                <View style = {{flexDirection: 'row', justifyContent: "center", flex: 0.5}}>
+                <View style = {{flexDirection: 'row', justifyContent: "flex-start", flex: 1}}>
                 { (this.state.editing)
                     ?
                     <Button
                         raised
-                        style={{alignContent: "center", borderRadius: 10, marginTop: -10, marginRight: 0, justifyContent: "center", alignItems: "center"}}
+                        style={{alignContent: "center", borderRadius: 10, marginTop: 0, marginRight: 0, justifyContent: "center", alignItems: "center"}}
                         title = "Save Name"
                         titleStyle = {{color: "white", fontWeight: "700"}}
                         buttonStyle={{backgroundColor: '#186aed'}}

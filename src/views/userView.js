@@ -33,6 +33,7 @@ import {
     deleteTribeDB, removeFriendIDDB,
 } from '../redux/actions';
 import {connect} from 'react-redux';
+import StatBoard from '../components/user/statBoard';
 
 
 class UserView extends Component {
@@ -253,7 +254,7 @@ class UserView extends Component {
                 <SafeAreaView style = {{flex: 0.1, flexDirection: "column", paddingTop: 0,paddingBottom: 0, backgroundColor: 'white'}}>
 
                     <View style = {{flex: 1,flexDirection: "row", marginBottom: 0, marginRight: 10, justifyContent: "flex-start" }}>
-                        <View style = {{flex:1, marginRight: -20}}>
+                        <View style = {{flex:1, marginRight: 0, alignItems: "flex-start", justifyContent: "flex-start"}}>
                         <Identity size = 'large'
                                   forceReload = {this.forceReload}
                                   notMe = {this.state.notMe}
@@ -270,7 +271,7 @@ class UserView extends Component {
                                 alwaysMe = {this.state.alwaysMe}
                             />
                             :
-                            <View style={ {flexDirection: "row", flex: 0.25,}} >
+                            <View style={ {flexDirection: "row", flex: 0.3, justifyContent: "center"}} >
                             <NavSettings/>
                             < AddTribe
                                 uid = {this.state.uid}
@@ -289,8 +290,9 @@ class UserView extends Component {
                     {/*</View>*/}
                 </SafeAreaView>
                 {(this.state.isGoalSelect)
-                    ?
-                    <View style={{flex: 1, backgroundColor: 'white', marginTop: 20}}>
+                    ? <View style={{flex: 1, backgroundColor: 'white', marginTop: 20}}>
+                       <StatBoard/>
+
                         <TribeRoot
                             friendTribeView={false}
                             filter={this.state.coreUserID}

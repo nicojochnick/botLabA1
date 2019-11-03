@@ -5,6 +5,18 @@ export const styles = StyleSheet.create({
         fontFamily: "roboto"
     },
 
+
+    card: {
+
+        backgroundColor: "white",
+        shadowColor: "#6EACF3",
+        shadowOpacity: 2,
+        shadowOffset: {width: 0, height: 2},
+        borderRadius: 6,
+        margin: 10,
+
+    },
+
     fullContainer: {
         flex: 1,
         fontFamily: "roboto"
