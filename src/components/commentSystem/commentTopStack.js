@@ -49,12 +49,12 @@ class CommentTopStack extends Component {
         return (
             <View>
                 <View style = {{flexDirection: "row", justifyContent: "flex-start", }}>
-                    <View style = {{flexDirection: "row", margin: 0}}>
+                    <View style = {{flexDirection: "row", marginTop: -5,}}>
                         <Button
                             title = {m}
                             type = 'clear'
                             onPress={() => this.setState({openComments: !this.state.openComments})}
-                            titleStyle = {{color:c, marginLeft: 5, fontWeight: "bold", fontSize: 18}}
+                            titleStyle = {{color:c, marginLeft: 5, fontWeight: "bold", fontSize: 18, textAlign: 'left'}}
                             icon ={
                                 <Ionicons
                                      name={con}

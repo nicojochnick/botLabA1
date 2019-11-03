@@ -9,10 +9,11 @@ export const styles = StyleSheet.create({
     card: {
 
         backgroundColor: "white",
-        shadowColor: "#6EACF3",
-        shadowOpacity: 2,
+        shadowColor: "#CBD3E5",
+        shadowOpacity: 80,
+        shadowRadius: 10,
         shadowOffset: {width: 0, height: 2},
-        borderRadius: 6,
+        borderRadius: 10,
         margin: 10,
 
     },

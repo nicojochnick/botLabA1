@@ -484,34 +484,56 @@ class TribeComponent extends Component {
 
         return (
             <View style = {{marginTop:3, marginBottom: 3}}>
-
-            <View style = {[styles.tribes, {marginTop: 0, padding: 0, backgroundColor: "white"}]}>
-                    <View style = {{flexDirection: "row", justifyContent: "flex-start", margin: 5, width: '100%',}}>
-                        <View style = {{flex: 1, padding: 5, flexDirection: "column", width: '100%', alignContent: "flex-start", justifyContent: "flex-start"}}>
-                        <TextInput
-                            style = {{fontWeight: "bold", fontSize: 30, color: "black"}}
-                            ref= {(el) => { this.name= el; }}
-                            value = {this.state.name}
-                            placeholder = "add a title"
-                            placeholderTextColor="grey"
-                            placeholderStyle = {{fontWeight: '300'}}
-                            editable = {canEdit}
-                            onChangeText = {(text) => this.activateEdit(text,'name')}
+            <View style = {[styles.card, {marginTop: 0, shadowRadius: 5, shadowOpacity: 0.4, shadowColor: "#3371FF", padding: 0,}]}>
+                {(this.props.header )
+                    ?
+                    <View style = {{margin: 1}}>
+                        <TribeHeader
+                            didLike = {this.state.didLike}
+                            likeColor = {this.state.likeColor}
+                            isPosted={this.props.isPosted}
+                            posted = {this.props.posted}
+                            isPublic = {this.props.isPublic}
+                            header = {this.props.header}
+                            shareTribe = {this.shareTribe}
+                            unshareTribe = {this.unshareTribe}
+                            tribeID = {this.props.tribeID}
+                            canEdit = {canEdit}
+                            userID = {this.props.userID}
+                            alwaysMe = {this.props.alwaysMe}
+                            updateLikes = {this.updateLikes}
+                            tribeAuthorName = {this.state.tribeAuthorName}
+                            tribeAuthorProfilePicture = {this.state.tribeAuthorProfilePicture}
                         />
-                        </View>
+                    </View>
+                    :null
+                }
+                <View style = {{flexDirection: "row", justifyContent: "flex-start", margin: 0, flex: 1}}>
+                        {/*<View style = {{flex: 1, padding: 5, flexDirection: "column", width: '100%', alignContent: "flex-start", justifyContent: "flex-start"}}>*/}
+                        {/*<TextInput*/}
+                        {/*    style = {{fontWeight: "bold", fontSize: 30, color: "black"}}*/}
+                        {/*    ref= {(el) => { this.name= el; }}*/}
+                        {/*    value = {this.state.name}*/}
+                        {/*    placeholder = "add a title"*/}
+                        {/*    placeholderTextColor="grey"*/}
+                        {/*    placeholderStyle = {{fontWeight: '300'}}*/}
+                        {/*    editable = {canEdit}*/}
+                        {/*    onChangeText = {(text) => this.activateEdit(text,'name')}*/}
+                        {/*/>*/}
+                        {/*</View>*/}
 
-                        <View style ={{ flexDirection: "row", width: '30%', justifyContent: "flex-end", alignItems: 'flex-start', marginTop: 0, marginRight: 10}}>
+                        <View style ={{ flexDirection: "row", justifyContent: "flex-end", alignItems: 'flex-end', flex: 1, marginTop: 0, marginRight: 5}}>
                             {(canEdit)
                                     ?
-                                    <View style = {{flexDirection:"row", justifyContent: "center"}}>
+                                    <View style = {{flexDirection:"row", justifyContent: "flex-end"}}>
                                         <Menu>
                                             <MenuTrigger>
                                                 <Ionicons
-                                                    style={{margin: 7}}
+                                                    style={{marginRight: 10}}
                                                     name={'ios-settings'}
                                                     color={this.state.tribeColor}
                                                     disabledStyle={{color: "grey"}}
-                                                    size={30}
+                                                    size={22}
                                                 />
                                             </MenuTrigger>
                                             <MenuOptions>
@@ -542,29 +564,21 @@ class TribeComponent extends Component {
                                 }
                         </View>
                     </View>
-                {/*{(this.props.header )*/}
-                {/*    ?*/}
-                {/*    <View style = {{margin: 1}}>*/}
-                {/*        <TribeHeader*/}
-                {/*            didLike = {this.state.didLike}*/}
-                {/*            likeColor = {this.state.likeColor}*/}
-                {/*            isPosted={this.props.isPosted}*/}
-                {/*            posted = {this.props.posted}*/}
-                {/*            isPublic = {this.props.isPublic}*/}
-                {/*            header = {this.props.header}*/}
-                {/*            shareTribe = {this.shareTribe}*/}
-                {/*            unshareTribe = {this.unshareTribe}*/}
-                {/*            tribeID = {this.props.tribeID}*/}
-                {/*            canEdit = {canEdit}*/}
-                {/*            userID = {this.props.userID}*/}
-                {/*            alwaysMe = {this.props.alwaysMe}*/}
-                {/*            updateLikes = {this.updateLikes}*/}
-                {/*            tribeAuthorName = {this.state.tribeAuthorName}*/}
-                {/*            tribeAuthorProfilePicture = {this.state.tribeAuthorProfilePicture}*/}
-                {/*        />*/}
-                {/*    </View>*/}
-                {/*    :null*/}
-                {/*}*/}
+                    <View style = {{flexDirection: "row", backgroundColor: "white", width: '90%', justifyContent: "flex-start",
+                        marginLeft:3, alignItems: "center", borderWidth: 0, borderColor: '#1452FF', borderRadius: 10, marginTop: -5}}>
+                        <CommentTopStack
+                            tribeName = {this.state.name}
+                            isCommentOpen = {this.state.isCommentOpen}
+                            tribeID={this.props.tribeID}
+                            tribeAuthorName={this.state.tribeAuthorName}
+                            tribeAuthorProfilePicture={this.state.tribeAuthorProfilePicture}
+                            userID={this.props.userID}
+                            alwaysMe={this.props.alwaysMe}
+                        />
+
+                    </View>
+
+
                 {/*<View style = {{flexDirection: "row"}}>*/}
                 {/*    <Button*/}
                 {/*        title = 'see all cards'*/}
@@ -590,43 +604,24 @@ class TribeComponent extends Component {
                 {/*        }*/}
                 {/*    />*/}
                 {/*</View>*/}
-                <View>
-                    <View>
-                            <View style={{marginTop: -10}}>
-                                <BoxRoot
-                                    showProgressBar = {this.state.showProgressBar}
-                                    toggleDoneDB={this.toggleDoneDB}
-                                    tribeID={this.props.tribeID}
-                                    filter={this.props.id}
-                                    handleAddBox={this.handleAddBoxDB}
-                                    editing={this.state.editing}
-                                    canEdit={canEdit}
-                                    sendHeaderMessage={this.sendHeaderMessage}
-                                />
-                            </View>
+                {/*<View>*/}
 
-                    </View>
-                </View>
-            </View>
-                <View style = {{ margin:6, marginTop: 2, borderRadius: 10,shadowColor: "grey",
-                    shadowOffset: {width: 0, height: 2},
-                    shadowOpacity: 5,}}>
+                {/*    <View>*/}
+                {/*            <View style={{marginTop: -10}}>*/}
+                {/*                <BoxRoot*/}
+                {/*                    showProgressBar = {this.state.showProgressBar}*/}
+                {/*                    toggleDoneDB={this.toggleDoneDB}*/}
+                {/*                    tribeID={this.props.tribeID}*/}
+                {/*                    filter={this.props.id}*/}
+                {/*                    handleAddBox={this.handleAddBoxDB}*/}
+                {/*                    editing={this.state.editing}*/}
+                {/*                    canEdit={canEdit}*/}
+                {/*                    sendHeaderMessage={this.sendHeaderMessage}*/}
+                {/*                />*/}
+                {/*            </View>*/}
 
-
-                    <View style = {{flexDirection: "row", backgroundColor: "white", width: '100%', justifyContent: "center",
-                    margin:0, alignItems: "center", borderWidth: 0, borderColor: '#1452FF', borderRadius: 10}}>
-                    <CommentTopStack
-                        tribeName = {this.state.name}
-                        isCommentOpen = {this.state.isCommentOpen}
-                        tribeID={this.props.tribeID}
-                        tribeAuthorName={this.state.tribeAuthorName}
-                        tribeAuthorProfilePicture={this.state.tribeAuthorProfilePicture}
-                        userID={this.props.userID}
-                        alwaysMe={this.props.alwaysMe}
-                    />
-
-                </View>
-                </View>
+                {/*    </View>*/}
+                {/*</View>*/}
 
 
 
@@ -652,6 +647,7 @@ class TribeComponent extends Component {
                             title: "Yes",
                             onPress: this.optionYes,
                         }}/>
+            </View>
             </View>
         );
     }
