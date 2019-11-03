@@ -25,6 +25,8 @@ import {
 } from '../../redux/actions';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { withNavigationFocus } from 'react-navigation';
+import ActivityContainer from '../activityBoard/activityContainer';
+import AllyFrontEnd from '../ally/allyFrontEnd';
 
 
 const tribesSelector = (Obj) => {
@@ -141,8 +143,9 @@ class TribeRoot extends Component {
                     { (!this.state.tribeData.length < 1)
                     ?
                         <KeyboardAwareScrollView behavior="padding" >
-                            <ActivityIndicator/>
-                        <FlatList style={styles.bottomContainer}
+                            {/*<AllyFrontEnd/>*/}
+                            {/*<ActivityContainer/>*/}
+                            <FlatList style={styles.bottomContainer}
                                   data={sortedArray}
                                   listKey={(item, index) => 'D' + index.toString()}
                                   renderItem={({item}) => (

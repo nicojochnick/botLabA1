@@ -35,7 +35,7 @@ import {
 import {connect} from 'react-redux';
 
 
-class HomeScreen extends Component {
+class UserView extends Component {
 
     constructor(props) {
         super(props);
@@ -254,7 +254,7 @@ class HomeScreen extends Component {
 
                     <View style = {{flex: 1,flexDirection: "row", marginBottom: 0, marginRight: 10, justifyContent: "flex-start" }}>
                         <View style = {{flex:1, marginRight: -20}}>
-                        <Identity size = 'medium'
+                        <Identity size = 'large'
                                   forceReload = {this.forceReload}
                                   notMe = {this.state.notMe}
                                   alwaysMe = {this.state.alwaysMe}
@@ -324,7 +324,7 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-HomeScreen.propTypes = {};
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
-HomeScreen.propTypes = {};
+UserView.propTypes = {};
+export default connect(mapStateToProps, mapDispatchToProps)(UserView);
+UserView.propTypes = {};
 

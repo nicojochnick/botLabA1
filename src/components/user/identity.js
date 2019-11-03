@@ -124,7 +124,7 @@ class Identity extends Component {
                         shadowOpacity: 5,}}
                     size= {this.props.size}
                     source = {{uri: this.props.profilePicture}}
-                    onPress = {() => this.changeAvatar()}
+                    onPress = {() => this.openImage()}
                 />
 
                 <TextInput

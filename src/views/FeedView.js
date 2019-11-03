@@ -22,6 +22,7 @@ import AddTribe from '../components/tribe/addTribe';
 import { NavigationEvents } from 'react-navigation';
 import TribeGroup from '../components/groups/tribeGroup';
 import Identity from '../components/user/identity';
+import AllyFrontEnd from '../components/ally/allyFrontEnd';
 
 
 class FeedView extends Component {
@@ -202,7 +203,6 @@ class FeedView extends Component {
             userID = this.props.user.user.userID
         }
 
-
         console.log(this.props.navigation.isFocused())
         console.log(this.props.currentGroup)
         console.log(this.props.state.user)
@@ -229,59 +229,60 @@ class FeedView extends Component {
                 <SafeAreaView style = {{flexDirection: "row", paddingTop: 30 , justifyContent: "flex-start", alignItems: "flex-start", flex: 1}}>
                     <View style = {{flexDirection: 'column', justifyContent: "flex-start", alignItems: "flex-start", flex: 2, marginBottom: 10}}>
                         <View style = {{ flex: 1, flexDirection: "row", justifyContent: "space-between", }}>
-                        <Button
-                            type = 'clear'
-                            containerStyle = {{marginRight: 0}}
-                            onPress={() => this.props.navigation.navigate('Menu')}
-                            icon = {
-                                <Ionicons
-                                    name = {'ios-menu'}
-                                    size = {45}
-                                    style = {{color: 'black'}}
-                                    onPress={() => this.props.navigation.navigate('Menu')}
+                        {/*<Button*/}
+                        {/*    type = 'clear'*/}
+                        {/*    containerStyle = {{marginRight: 0}}*/}
+                        {/*    onPress={() => this.props.navigation.navigate('Menu')}*/}
+                        {/*    icon = {*/}
+                        {/*        <Ionicons*/}
+                        {/*            name = {'ios-menu'}*/}
+                        {/*            size = {45}*/}
+                        {/*            style = {{color: 'black'}}*/}
+                        {/*            onPress={() => this.props.navigation.navigate('Menu')}*/}
 
-                                />
+                        {/*        />*/}
 
+                        {/*    }*/}
+                        {/*/>*/}
+
+
+                            {(this.state.groupID)
+                                ?<View style={{flexDirection: "row", flex: 1, padding: 4, marginTop: 10}}>
+                                    <TextInput
+                                        editable={true}
+                                        multiline={false}
+                                        placeholder='Untitled    '
+                                        value={this.state.groupName}
+                                        onChangeText={text => this.setState({groupName: text, isEditingName: true})}
+                                        style={{
+                                            color: 'black',
+                                            margin: 5,
+                                            paddingLeft: 0,
+                                            marginTop: -15,
+                                            fontWeight: 'bold',
+                                            fontSize: 38
+                                        }}
+                                    />
+                                </View>
+                                :null
                             }
-                        />
-                            <Identity
 
-                                size = 'medium'
-                                forceReload = {this.forceReload}
-                                notMe = {false}
-                                alwaysMe = {this.state.alwaysMe}
-                                name = {this.state.name}
-                                profilePicture = {this.state.profilePicture}
-                            />
+                            {/*<Identity*/}
+
+                            {/*    size = 'medium'*/}
+                            {/*    forceReload = {this.forceReload}*/}
+                            {/*    notMe = {false}*/}
+                            {/*    alwaysMe = {this.state.alwaysMe}*/}
+                            {/*    name = {this.state.name}*/}
+                            {/*    profilePicture = {this.state.profilePicture}*/}
+                            {/*/>*/}
 
                         </View>
-
-                        {(this.state.groupID)
-                            ?<View style={{flexDirection: "row", flex: 1, padding: 4, marginTop: 20}}>
-                                <TextInput
-                                    editable={true}
-                                    multiline={true}
-                                    placeholder='Untitled    '
-                                    value={this.state.groupName}
-                                    onChangeText={text => this.setState({groupName: text, isEditingName: true})}
-                                    style={{
-                                        color: 'black',
-                                        margin: 5,
-                                        paddingLeft: 0,
-                                        marginTop: -15,
-                                        fontWeight: 'bold',
-                                        fontSize: 38
-                                    }}
-                                />
-                            </View>
-                            :null
-                        }
-
                     </View>
                     <View style = {{ marginRight: 10, marginLeft: -5, flex: 0.4, flexDirection: "row", alignItems: "flex-start", justifyContent: "flex-end",}}>
                         {(!this.state.loading)
                             ? <Button
-                                style={{alignContent: "center", marginTop: 10, marginRight: 0}}
+                                style={{alignContent: "center", marginTop: 5, marginRight: 0}}
                                 onPress={() => this.setState({isMemberOpen: !this.state.isMemberOpen})}
                                 icon={
                                     <Ionicons
@@ -297,7 +298,7 @@ class FeedView extends Component {
                             />
                             : null
                         }
-                        <View style = {{marginTop: -5}}>
+                        <View style = {{marginTop: -10}}>
 
                         <AddTribe
                         uid = {this.state.uid}

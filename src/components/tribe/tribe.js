@@ -565,7 +565,6 @@ class TribeComponent extends Component {
                 {/*    </View>*/}
                 {/*    :null*/}
                 {/*}*/}
-
                 {/*<View style = {{flexDirection: "row"}}>*/}
                 {/*    <Button*/}
                 {/*        title = 'see all cards'*/}

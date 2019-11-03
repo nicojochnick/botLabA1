@@ -157,7 +157,7 @@ export class StepRoot extends React.Component {
         // console.log(filteredSteps);
         return (
             <View>
-                <View style={{flexDirection: "row"}}>
+                <View style={{flexDirection: "row", marginLeft: 5, marginTop: -2}}>
                     <Button
                         titleStyle = {{color:todoColor , fontWeight: "bold"}}
                         type = 'clear'
@@ -177,6 +177,10 @@ export class StepRoot extends React.Component {
                         onPress = {()=> this.setState({todoSwitch:false, doneSwitch: false, allSwitch: true,})}
                     />
                 </View>
+                <View style = {{borerRadius: 5,shadowColor: "#6F6F6F",
+                    shadowOffset: {width: 0, height: 2},
+                    shadowOpacity: 5, margin: 5, borderRadius: 10, borderWidth: 0, padding: 5}}>
+
 
             < FlatList
                 style = {styles.bottomContainer}
@@ -214,6 +218,7 @@ export class StepRoot extends React.Component {
                     />
                 )}
             />
+                </View>
             </View>
 
         );

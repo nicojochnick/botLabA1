@@ -49,7 +49,7 @@ class Box extends Component {
                     {(this.props.showProgressBar)
                         ?<Progress.Bar
                             progress={this.props.computeBoxProgress(this.props.steps)} width={330}
-                            style={{margin: 10, color: '#1260FF'}}
+                            style={{margin: 10, marginTop: 0, color: '#1260FF'}}
                         />
                         : null
                     }

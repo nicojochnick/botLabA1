@@ -48,11 +48,8 @@ export const styles = StyleSheet.create({
         fontFamily: "roboto",
         borderWidth: 0,
         backgroundColor: "#4C5462",
-        shadowColor: "#6F6F6F",
-        shadowOffset: {width: 0, height: 2},
-        shadowOpacity: 5,
-        borderRadius: 6,
-        margin: 5,
+        borderRadius: 0,
+        margin: 0,
         padding: 8,
     },
 

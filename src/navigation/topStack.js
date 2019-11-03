@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import HomeScreen from '../views/homeScreen';
+import UserView from '../views/userView';
 import AddStepScreen from '../views/addStepScreen'
 import Login from '../views/auth/login';
 import SignUp from '../views/auth/signUp';
@@ -16,7 +16,7 @@ import FeedView from '../views/FeedView';
 import UserTag from '../components/user/userTag';
 import NotificationScreen from '../views/notificationScreen';
 import TribeSingleScreen from '../views/tribeSingleScreen';
-import SlideMenuRoot from '../components/slideMenu/slideMenuRoot';
+import HomeView from '../views/homeView';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import {View, Text} from 'react-native'
 
@@ -44,7 +44,7 @@ const AuthStack = createStackNavigator({
 
 const HomeStack =  createStackNavigator(
     {
-        Home: HomeScreen, OtherHome: HomeScreen
+        Home: UserView, OtherHome: UserView
     }, {
         initialRouteName: "Home",
         headerTransparent: true,
@@ -73,7 +73,7 @@ const HomeStack =  createStackNavigator(
 const FeedStack =  createStackNavigator(
     {
         FeedView: FeedView,
-        FriendHome: HomeScreen
+        FriendHome: UserView
     }, {
         initialRouteName: "FeedView",
         headerTransparent: true,
@@ -87,7 +87,7 @@ const slideMenu = createDrawerNavigator({
             screen: FeedStack,
         },
         Menu: {
-            screen: SlideMenuRoot,
+            screen: HomeView,
         },
     }, {
 
@@ -108,7 +108,7 @@ const slideMenu = createDrawerNavigator({
 // );
 
 const AppDrawer = createBottomTabNavigator(
-    { FeedView: slideMenu, Notifications: NotificationScreen
+    { FeedView: slideMenu, User: UserView, Notifications: NotificationScreen
     },
     {
 
@@ -119,10 +119,9 @@ const AppDrawer = createBottomTabNavigator(
                 const { routeName } = navigation.state;
                 let IconComponent = Ionicons;
                 let iconName;
-                // if (routeName === 'Home'){
-                //     iconName = `ios-contact`;
-                // } else
-                if (routeName === 'FeedView') {
+                if (routeName === 'User'){
+                    iconName = `ios-contact`;
+                } else if (routeName === 'FeedView') {
                     iconName = 'ios-home'
                 } else if (routeName === 'Notifications') {
                     iconName = 'ios-paper'
