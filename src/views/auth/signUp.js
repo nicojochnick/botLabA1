@@ -27,6 +27,8 @@ export default class SignUp extends React.Component {
                     groupIDs: [],
                      email: email,
                      name: null,
+                    points: {overall: 20, },
+
                      messages: null,
                     photoURL: 'https://api.adorable.io/avatars/' + moment().format()
                 };

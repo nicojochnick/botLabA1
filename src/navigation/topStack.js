@@ -82,18 +82,16 @@ const FeedStack =  createStackNavigator(
     }
 );
 
-const slideMenu = createDrawerNavigator({
-        Feed: {
-            screen: FeedStack,
-        },
-        Menu: {
-            screen: HomeView,
-        },
+const slideMenu = createStackNavigator({
+        Feed: FeedStack,
+        Menu: HomeView,
     }, {
+    headerTransparent: true,
 
     // contentComponent: SlideMenuRoot,
-    initialRouteName: 'Feed',
-        drawerType: 'slide',
+
+    initialRouteName: 'Menu',
+
     }
 );
 

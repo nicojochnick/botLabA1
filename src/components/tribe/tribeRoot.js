@@ -87,15 +87,12 @@ class TribeRoot extends Component {
         const { navigation } = this.props;
         this.focusListener = navigation.addListener('didFocus', () => {
             console.log("FOCUSED")
-
-
                 this.ref.onSnapshot(this.onCollectionUpdate)
-
         });
     }
     componentWillUnmount(): void {
         this.unsubscribe();
-        this.focusListener();
+        this.focusListener.remove();
     }
     onCollectionUpdate = (snapshot) => {
         console.log("TAKING UPDATE");

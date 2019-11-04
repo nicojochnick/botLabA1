@@ -290,9 +290,10 @@ class UserView extends Component {
                     {/*</View>*/}
                 </SafeAreaView>
                 {(this.state.isGoalSelect)
-                    ? <View style={{flex: 1, backgroundColor: 'white', marginTop: 20}}>
+                    ? <View style={{flex: 1, marginTop: 20}}>
                        <StatBoard/>
 
+                        <Text style = {{color: "#44474D", fontSize: 20, padding: 10, fontWeight: "bold"}}> Activity</Text>
                         <TribeRoot
                             friendTribeView={false}
                             filter={this.state.coreUserID}

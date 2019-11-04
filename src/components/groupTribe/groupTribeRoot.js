@@ -23,7 +23,7 @@ class GroupTribeRoot extends Component {
     navigate(id){
         this.props.updateCurrentTribe(id)
         if (this.props.isSideMenu) {
-            this.props.toggle()
+            this.props.goToChallenge()
         }
     }
 

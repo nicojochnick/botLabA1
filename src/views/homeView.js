@@ -14,6 +14,7 @@ class HomeView extends Component {
     constructor(props){
         super(props)
         this.addTribeGroup = this.addTribeGroup.bind(this)
+        this.goToChallenge = this.goToChallenge.bind(this)
         this.toggle = this.toggle.bind(this)
         this.state ={
             groupName: null,
@@ -21,11 +22,17 @@ class HomeView extends Component {
         }
     }
 
-    // static navigationOptions = ({navigation}) => {
-    //     return {
-    //         header: null
-    //     }
-    // };
+    static navigationOptions = ({navigation}) => {
+        return {
+            header: null
+        }
+    };
+
+
+    goToChallenge(){
+        this.props.navigation.navigate('Feed')
+    }
+
 
     toggle(){
         this.props.navigation.goBack()
@@ -58,83 +65,10 @@ class HomeView extends Component {
         return (
             <ScrollView style  = {{marginTop: 0, backgroundColor: 'white'}}>
                 <View style = {{flexDirection: "row", marginTop: 50, justifyContent: "space-between", alignItems: "center", padding: 5}}>
-                    <Text style = {{fontWeight: "bold", fontSize: 35, color: "black"}}> Rewards </Text>
-                    <Button
-                        containerStyle = {{borderRadius: 6,}}
-                        raised
-                        type = 'clear'
-                        onPress = {() => this.props.navigation.goBack()}
-                        title = 'Most Recent'
-                        iconRight = {true}
-                        titleStyle = {{color: 'black', marginLeft: 5}}
-                        icon = {
-                            <Ionicons
-                                name = {'ios-arrow-forward'}
-                                style = {{color: 'black', marginLeft: 5, marginTop: 2}}
-                                size = {30}
-                                onPress = {() => this.props.navigation.goBack()}
-                            />
-                        }
-                    />
+                    <Text style = {{fontWeight: "bold", fontSize: 29, color: "#326FFF"}}> bestlife </Text>
+
                 </View>
-                {/*{!(this.state.isAddOpen)*/}
-                {/*    ?  <Button*/}
-                {/*        containerStyle={{margin: 10, marginTop: 15, borderRadius: 6,}}*/}
-                {/*        raised*/}
-                {/*        onPress={() => this.setState({isAddOpen: true})}*/}
-                {/*        title='Add Group'*/}
-                {/*        titleStyle={{color: 'white', marginLeft: 5, fontWeight: "bold"}}*/}
-                {/*        buttonStyle={{backgroundColor: '#186aed'}}*/}
-                {/*        icon={*/}
-                {/*            <Ionicons*/}
-                {/*                name={'md-add'}*/}
-                {/*                style={{color: 'white'}}*/}
-                {/*                size={30}*/}
-                {/*                onPress={() => this.setState({isAddOpen: true})}*/}
-                {/*            />*/}
-                {/*        }*/}
-                {/*    />*/}
-                {/*    : <View style={{margin: 7, padding: 2, borderRadius: 5, borderWidth: 2, borderColor: "#186aed"}}>*/}
-                {/*        <Input*/}
-                {/*            label='New Group Name'*/}
-                {/*            value={this.state.groupName}*/}
-                {/*            labelStyle={{color: "black"}}*/}
-                {/*            placeholder='add a name'*/}
-                {/*            selectionColor="black"*/}
-                {/*            containerStyle={{margin: 10, width: '90%'}}*/}
-                {/*            placeholderTextColor='grey'*/}
-                {/*            inputContainerStyle={{borderColor: "#186aed", marginBottom: 10}}*/}
-                {/*            inputStyle={{color: "black",}}*/}
-                {/*            leftIcon={*/}
-                {/*                <Ionicons*/}
-                {/*                    name='ios-at'*/}
-                {/*                    size={24}*/}
-                {/*                    color="#186aed"*/}
-                {/*                    style={{paddingRight: 10, marginLeft: -15}}*/}
-                {/*                />*/}
-                {/*            }*/}
-                {/*            onChangeText={(text) => this.setState({groupName: text})}*/}
-                {/*        />*/}
 
-
-                {/*        <Button*/}
-                {/*            containerStyle={{margin: 10, marginTop: -10, borderRadius: 6,}}*/}
-                {/*            raised*/}
-                {/*            onPress={() => this.addTribeGroup()}*/}
-                {/*            title='Add Group'*/}
-                {/*            titleStyle={{color: 'white', marginLeft: 5, fontWeight: "bold"}}*/}
-                {/*            buttonStyle={{backgroundColor: '#186aed'}}*/}
-                {/*            icon={*/}
-                {/*                <Ionicons*/}
-                {/*                    name={'md-add'}*/}
-                {/*                    style={{color: 'white'}}*/}
-                {/*                    size={30}*/}
-                {/*                    onPress={() => this.addTribeGroup()}*/}
-                {/*                />*/}
-                {/*            }*/}
-                {/*        />*/}
-                {/*    </View>*/}
-                {/*}*/}
                 <View style = {{margin: 7, padding: 2, borderRadius: 5, backgroundColor: "white",borderWidth: 2, borderColor:"white",shadowColor: "#6F6F6F",
                     shadowOffset: {width: 0, height: 2},
                     shadowOpacity: 5,}}>
@@ -143,6 +77,7 @@ class HomeView extends Component {
                     groupID = {JSON.stringify(navigation.getParam('groupID'))}
                     toggle = {this.toggle}
                     isSideMenu = {true}
+                    goToChallenge = {this.goToChallenge}
                 />
                 </View>
             </ScrollView>
@@ -164,3 +99,85 @@ const mapStateToProps = (state /*, ownProps*/) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeView);
+
+
+
+{/*<Button*/}
+{/*    containerStyle = {{borderRadius: 6,}}*/}
+{/*    raised*/}
+{/*    type = 'clear'*/}
+{/*    onPress = {() => this.props.navigation.goBack()}*/}
+{/*    title = 'Most Recent'*/}
+{/*    iconRight = {true}*/}
+{/*    titleStyle = {{color: 'black', marginLeft: 5}}*/}
+{/*    icon = {*/}
+{/*        <Ionicons*/}
+{/*            name = {'ios-arrow-forward'}*/}
+{/*            style = {{color: 'black', marginLeft: 5, marginTop: 2}}*/}
+{/*            size = {30}*/}
+{/*            onPress = {() => this.props.navigation.goBack()}*/}
+{/*        />*/}
+{/*    }*/}
+{/*/>*/}
+
+
+
+
+{/*{!(this.state.isAddOpen)*/}
+{/*    ?  <Button*/}
+{/*        containerStyle={{margin: 10, marginTop: 15, borderRadius: 6,}}*/}
+{/*        raised*/}
+{/*        onPress={() => this.setState({isAddOpen: true})}*/}
+{/*        title='Add Group'*/}
+{/*        titleStyle={{color: 'white', marginLeft: 5, fontWeight: "bold"}}*/}
+{/*        buttonStyle={{backgroundColor: '#186aed'}}*/}
+{/*        icon={*/}
+{/*            <Ionicons*/}
+{/*                name={'md-add'}*/}
+{/*                style={{color: 'white'}}*/}
+{/*                size={30}*/}
+{/*                onPress={() => this.setState({isAddOpen: true})}*/}
+{/*            />*/}
+{/*        }*/}
+{/*    />*/}
+{/*    : <View style={{margin: 7, padding: 2, borderRadius: 5, borderWidth: 2, borderColor: "#186aed"}}>*/}
+{/*        <Input*/}
+{/*            label='New Group Name'*/}
+{/*            value={this.state.groupName}*/}
+{/*            labelStyle={{color: "black"}}*/}
+{/*            placeholder='add a name'*/}
+{/*            selectionColor="black"*/}
+{/*            containerStyle={{margin: 10, width: '90%'}}*/}
+{/*            placeholderTextColor='grey'*/}
+{/*            inputContainerStyle={{borderColor: "#186aed", marginBottom: 10}}*/}
+{/*            inputStyle={{color: "black",}}*/}
+{/*            leftIcon={*/}
+{/*                <Ionicons*/}
+{/*                    name='ios-at'*/}
+{/*                    size={24}*/}
+{/*                    color="#186aed"*/}
+{/*                    style={{paddingRight: 10, marginLeft: -15}}*/}
+{/*                />*/}
+{/*            }*/}
+{/*            onChangeText={(text) => this.setState({groupName: text})}*/}
+{/*        />*/}
+
+
+{/*        <Button*/}
+{/*            containerStyle={{margin: 10, marginTop: -10, borderRadius: 6,}}*/}
+{/*            raised*/}
+{/*            onPress={() => this.addTribeGroup()}*/}
+{/*            title='Add Group'*/}
+{/*            titleStyle={{color: 'white', marginLeft: 5, fontWeight: "bold"}}*/}
+{/*            buttonStyle={{backgroundColor: '#186aed'}}*/}
+{/*            icon={*/}
+{/*                <Ionicons*/}
+{/*                    name={'md-add'}*/}
+{/*                    style={{color: 'white'}}*/}
+{/*                    size={30}*/}
+{/*                    onPress={() => this.addTribeGroup()}*/}
+{/*                />*/}
+{/*            }*/}
+{/*        />*/}
+{/*    </View>*/}
+{/*}*/}

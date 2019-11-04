@@ -23,6 +23,7 @@ import { NavigationEvents } from 'react-navigation';
 import TribeGroup from '../components/groups/tribeGroup';
 import Identity from '../components/user/identity';
 import AllyFrontEnd from '../components/ally/allyFrontEnd';
+import GroupTribeRoot from '../components/groupTribe/groupTribeRoot';
 
 
 class FeedView extends Component {
@@ -215,6 +216,8 @@ class FeedView extends Component {
         if (this.state.isAllTribe){
             searchMess = 'search users by email'
         }
+        const { navigation } = this.props;
+
         return (
 
             <KeyboardAwareScrollView
@@ -228,6 +231,7 @@ class FeedView extends Component {
             >
                 <SafeAreaView style = {{flexDirection: "row", paddingTop: 30 , justifyContent: "flex-start", alignItems: "flex-start", flex: 1}}>
                     <View style = {{flexDirection: 'column', justifyContent: "flex-start", alignItems: "flex-start", flex: 2, marginBottom: 10}}>
+
                         <View style = {{ flex: 1, flexDirection: "row", justifyContent: "space-between", }}>
                         {/*<Button*/}
                         {/*    type = 'clear'*/}
@@ -244,8 +248,6 @@ class FeedView extends Component {
 
                         {/*    }*/}
                         {/*/>*/}
-
-
                             {(this.state.groupID)
                                 ?<View style={{flexDirection: "row", flex: 1, padding: 4, marginTop: 10}}>
                                     <TextInput

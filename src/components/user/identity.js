@@ -99,7 +99,7 @@ class Identity extends Component {
 
     changeAvatar(){
         let source = 'https://api.adorable.io/avatars/' + moment().format();
-        source = 'https://i.pravatar.cc/300'
+        // source = 'https://i.pravatar.cc/300'
         let uid = this.user.uid;
         firebase.firestore().collection('users').where('fbID', '==', uid).get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
