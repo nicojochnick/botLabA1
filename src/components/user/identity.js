@@ -116,8 +116,8 @@ class Identity extends Component {
         }
 
         return (
-            <View style = {{flex: 1, width: '100%', margin: 5}}>
-            <View style = {{ flex: 1, marginTop: 0, flexDirection: "row", justifyContent: "flex-start", alignItem: "center", paddingTop: 0, marginBottom: 5, marginLeft: 5}}>
+            <View style = {{flex: 1, justifyContent: "center", alignItems: 'center', margin: 5}}>
+            <View style = {{ flex: 1, marginTop: 0, flexDirection: "column", justifyContent: "center", alignItem: "center", paddingTop: 0, marginBottom: 5, marginLeft: 5}}>
                 <Avatar
                     rounded = {true}
                     containerStyle = {[styles.card, { marginRight: 0, margin: 0,borderRadius: 100, marginLeft: 1, borderWidth: 2, borderColor: '#1E85FF',}]}
@@ -127,7 +127,7 @@ class Identity extends Component {
                 />
                 <View style = {{flexDirection: "column"}}>
                 <TextInput
-                    style = {{marginBottom: 0, fontWeight: "bold", marginTop: 10, marginLeft: 5, marginRight: -5, textAlign: "left", color:"black", fontSize: 25}}
+                    style = {{marginBottom: 0, fontWeight: "bold", marginTop: 10, marginLeft: 5, marginRight: -5, textAlign: "center", color:"black", fontSize: 25}}
                     placeholder = {"username"}
                     onChangeText={text =>this.activateEdit(text)}
                     value = {name}
@@ -137,7 +137,7 @@ class Identity extends Component {
                     editable = {!(this.props.notMe)}
                 />
                 <TextInput
-                    style = {{marginBottom: 0, marginTop: 0, marginLeft: 5, marginRight: -5, textAlign: "left", color:"black", fontSize: 20}}
+                    style = {{marginBottom: 0, marginTop: 0, marginLeft: 5, marginRight: -5, textAlign: "center", color:"black", fontSize: 20}}
                     placeholder = {"score    "}
                     onChangeText={text =>this.activateEdit(text)}
                     value = {this.props.score}

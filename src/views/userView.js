@@ -252,9 +252,8 @@ class UserView extends Component {
         return (
             <KeyboardAwareScrollView style = {{backgroundColor: 'white', marginTop: 0, padding: 0}}>
                 <SafeAreaView style = {{flex: 0.1, flexDirection: "column", paddingTop: 0,paddingBottom: 0, backgroundColor: 'white'}}>
-
                     <View style = {{flex: 1,flexDirection: "row", marginBottom: 0, marginRight: 10, justifyContent: "flex-start" }}>
-                        <View style = {{flex:1, marginRight: 0, alignItems: "flex-start", justifyContent: "flex-start"}}>
+                        <View style = {{flex:1, marginRight: 0, alignItems: "center", justifyContent: "flex-start"}}>
                         <Identity size = 'large'
                                   forceReload = {this.forceReload}
                                   notMe = {this.state.notMe}
@@ -292,7 +291,6 @@ class UserView extends Component {
                 {(this.state.isGoalSelect)
                     ? <View style={{flex: 1, marginTop: 20}}>
                        <StatBoard/>
-
                         <Text style = {{color: "#44474D", fontSize: 20, padding: 10, fontWeight: "bold"}}> Activity</Text>
                         <TribeRoot
                             friendTribeView={false}
