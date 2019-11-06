@@ -112,7 +112,8 @@ class TribeRoot extends Component {
                 this.setState({tribeData: data, loading: false})
             });
         } else {
-            this.ref.where('groupID', '==', this.props.groupID).where('isPosted', '==', true).get().then( (snapshot) => {
+            // this.ref.where('groupID', '==', this.props.groupID).where('isPosted', '==', true).get().then( (snapshot) => {
+            this.ref.where('isPosted', '==', true).get().then( (snapshot) => {
                 let data = snapshot.docs.map(function (documentSnapshot) {
                     console.log(data);
                     return documentSnapshot.data()

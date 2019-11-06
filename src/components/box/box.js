@@ -54,7 +54,7 @@ class Box extends Component {
                         : null
                     }
 
-                <View style = {{ marginBottom: 5}}>
+                <View style = {{}}>
                 <StepRoot
                     tribeID = {this.props.tribeID}
                     boxID = {this.props.id}

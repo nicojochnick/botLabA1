@@ -269,16 +269,6 @@ class FeedView extends Component {
                                 :null
                             }
 
-                            {/*<Identity*/}
-
-                            {/*    size = 'medium'*/}
-                            {/*    forceReload = {this.forceReload}*/}
-                            {/*    notMe = {false}*/}
-                            {/*    alwaysMe = {this.state.alwaysMe}*/}
-                            {/*    name = {this.state.name}*/}
-                            {/*    profilePicture = {this.state.profilePicture}*/}
-                            {/*/>*/}
-
                         </View>
                     </View>
                     <View style = {{ marginRight: 10, marginLeft: -5, flex: 0.4, flexDirection: "row", alignItems: "flex-start", justifyContent: "flex-end",}}>

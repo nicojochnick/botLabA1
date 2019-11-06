@@ -68,8 +68,6 @@ const HomeStack =  createStackNavigator(
 //     }
 // );
 
-
-
 const FeedStack =  createStackNavigator(
     {
         FeedView: FeedView,
@@ -83,14 +81,14 @@ const FeedStack =  createStackNavigator(
 );
 
 const slideMenu = createStackNavigator({
-        Feed: FeedStack,
+        Feed: FeedView,
         Menu: HomeView,
     }, {
     headerTransparent: true,
 
     // contentComponent: SlideMenuRoot,
 
-    initialRouteName: 'Menu',
+    initialRouteName: 'Feed',
 
     }
 );

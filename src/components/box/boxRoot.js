@@ -150,7 +150,7 @@ class BoxRoot extends Component {
                 {!(loading)
                     ?
                     <View>
-                        < FlatList style = {styles.bottomContainer}
+                        < FlatList style = {{borderRadius: 10}}
                         data = {this.state.boxData}
                         listKey={(item, index) => 'D' + index.toString()}
                         renderItem={({item}) => (

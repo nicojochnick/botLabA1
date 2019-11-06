@@ -72,7 +72,7 @@ export default class Step extends React.Component {
         }
         return (
 
-                <View style = {[styles.steps,{borderTopWidth: 0.5, borderColor: "grey", backgroundColor: 'white',}]}>
+                <View style = {{backgroundColor: 'white', borderRadius: 10, padding: 5, margin: 5}}>
                     <KeyboardAvoidingView style = {styles.topGoals  }>
                         <View style = {{width: '80%'}}>
                         <TextInput
