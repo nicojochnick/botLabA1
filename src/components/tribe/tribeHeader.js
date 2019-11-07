@@ -105,23 +105,25 @@ class TribeHeader extends Component {
                     <View style = {{flexDirection: "row", flex:1}}>
                         <Avatar
                             source ={{uri: this.props.tribeAuthorProfilePicture}}
-                            avatarStyle = {{ borderRadius: 100, borderWidth: 1, borderColor: "black"}}
-
-                            rounded/>
+                            avatarStyle = {{ borderRadius: 100, borderWidth: 1, borderColor: "white"}}
+                            rounded
+                        />
                         <View style = {{flexDirection: "column", width: '98%'}}>
                             <Text
-                                style = {{fontWeight: "bold", marginLeft: 3, fontSize: 19, color: "black", textAlign: "left"}}> {this.props.tribeAuthorName}  </Text>
+                                style = {{fontWeight: "bold", marginLeft: 3, fontSize: 19, color: "white", textAlign: "left"}}> {this.props.tribeAuthorName}  </Text>
                             {(this.props.header.message === null)
-                                ? <Text
-                                    style={{color: "black", marginLeft: 3, marginTop: 3, fontSize: 18, width: "100%", fontWeight:'600'}}
+                                ?
+                                <Text
+                                    style={{color: "white", marginLeft: 3, marginTop: 3, fontSize: 18, width: "100%", fontWeight:'600'}}
                                     multiline={true}
                                 >
-                                    created a new board
+                                    started a challenge
                                 </Text>
 
 
-                               : <Text
-                                    style={{color: "black", marginLeft: 3, marginTop: 3, fontSize: 18, width: "100%", fontWeight: '600'}}
+                               :
+                                <Text
+                                    style={{color: "white", marginLeft: 3, marginTop: 3, fontSize: 18, width: "100%", fontWeight: '600'}}
                                     multiline={true}
                                 >
                                     completed: {this.props.header.message}
@@ -145,7 +147,7 @@ class TribeHeader extends Component {
                                 }
                                 type = 'clear'
                                 title = {this.props.header.likes.length}
-                                titleStyle = {{color:"grey", marginLeft: 5, fontWeight: 'bold'}}
+                                titleStyle = {{color:"white", marginLeft: 5, fontWeight: 'bold'}}
 
                             />
                             {/*: <View>*/}

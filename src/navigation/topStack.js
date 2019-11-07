@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
-
+import AddPostView from '../views/addPostView'
+import ExploreView from '../views/exploreView'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import UserView from '../views/userView';
 import AddStepScreen from '../views/addStepScreen'
@@ -104,7 +105,7 @@ const slideMenu = createStackNavigator({
 // );
 
 const AppDrawer = createBottomTabNavigator(
-    { FeedView: slideMenu, User: UserView, Notifications: NotificationScreen
+    { FeedView: slideMenu, ExploreView:ExploreView ,AddPostView: AddPostView, Notifications: NotificationScreen, User: UserView,
     },
     {
 
@@ -119,6 +120,10 @@ const AppDrawer = createBottomTabNavigator(
                     iconName = `ios-contact`;
                 } else if (routeName === 'FeedView') {
                     iconName = 'ios-home'
+                } else if (routeName === 'ExploreView') {
+                    iconName = 'ios-planet'
+                } else if (routeName === 'AddPostView') {
+                    iconName = 'md-add'
                 } else if (routeName === 'Notifications') {
                     iconName = 'ios-paper'
                     // IconComponent = IconWithBadge;

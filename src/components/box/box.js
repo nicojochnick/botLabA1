@@ -69,7 +69,7 @@ class Box extends Component {
                 />
                     { (!this.props.canEdit)
                         ? null
-                        : <View style = {{flexDirection: "row", margin: 5, flex: 1, justifyContent: "center"}} >
+                        : <View style = {{flexDirection: "row", marginTop: -20, margin: 8, flex: 1, justifyContent: "center"}} >
                             < Button
                                 icon = {<Icon style = {{marginRight: 5}}
                                               name = 'plus'
@@ -81,7 +81,7 @@ class Box extends Component {
                                 raised
                                 titleStyle = {{margin: 0, color: "white"}}
                                 onPress = {() => this.props.handleAddStep(this.props.id)}
-                                buttonStyle = {{backgroundColor:'#186aed'}}
+                                buttonStyle = {{backgroundColor:'#0D7FFF'}}
                                 containerStyle={{ justifyContent: "flex-end", marginRight: 3}}
                             />
 

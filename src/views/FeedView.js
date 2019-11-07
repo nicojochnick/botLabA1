@@ -7,6 +7,9 @@ import FeedContainer from '../components/feed/feedContainer';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/firestore';
 
+import {styles} from '../components/theme';
+
+
 import TribeRoot from '../components/tribe/tribeRoot';
 import SearchContainer from '../components/search/searchContainer';
 import {addFriendIDDB, changeGroupName, removeFriendIDDB, updateUser} from '../redux/actions';
@@ -340,20 +343,26 @@ class FeedView extends Component {
                         :null
                     }
                 </View>
-                { (this.state.alwaysMe !== null && this.state.groupID )
-                   ?
-                    <TribeRoot
-                        isFeed = {true}
-                        notMe={false}
-                        groupID = {this.state.groupID}
-                        alwaysMe={this.state.alwaysMe}
-                    />
-                    :
-                    <ScrollView>
-                    <Text style = {{margin: 20, marginTop: 4, color: "black", alignText: "center", fontWeight: "bold", fontSize: 35 }}>Hi There!</Text>
-                    <Text style = {{margin: 20, marginTop: -5, color: "black", alignText: "center", fontWeight: "500", fontSize: 25 }}>Add a Group using the Left Menu Button 😁 </Text>
-                    </ScrollView>
-                }
+
+                <View style = {[styles.card, {}]}>
+                </View>
+
+
+
+                {/*{ (this.state.alwaysMe !== null && this.state.groupID )*/}
+                {/*   ?*/}
+                {/*    <TribeRoot*/}
+                {/*        isFeed = {true}*/}
+                {/*        notMe={false}*/}
+                {/*        groupID = {this.state.groupID}*/}
+                {/*        alwaysMe={this.state.alwaysMe}*/}
+                {/*    />*/}
+                {/*    :*/}
+                {/*    <ScrollView>*/}
+                {/*    <Text style = {{margin: 20, marginTop: 4, color: "black", alignText: "center", fontWeight: "bold", fontSize: 35 }}>Hi There!</Text>*/}
+                {/*    <Text style = {{margin: 20, marginTop: -5, color: "black", alignText: "center", fontWeight: "500", fontSize: 25 }}>Add a Group using the Left Menu Button 😁 </Text>*/}
+                {/*    </ScrollView>*/}
+                {/*}*/}
             </KeyboardAwareScrollView>
             );
         }

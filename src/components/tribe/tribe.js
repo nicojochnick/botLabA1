@@ -484,30 +484,30 @@ class TribeComponent extends Component {
 
         return (
             <View style = {{marginTop:3, marginBottom: 3}}>
+                {(this.props.header )
+                    ?
+                    <View style = {[styles.card, {shadowColor: "grey", shadowOpacity: 0.3, backgroundColor:"#0D7FFF",height: 80}]}>
+                        <TribeHeader
+                            didLike = {this.state.didLike}
+                            likeColor = {this.state.likeColor}
+                            isPosted={this.props.isPosted}
+                            posted = {this.props.posted}
+                            isPublic = {this.props.isPublic}
+                            header = {this.props.header}
+                            shareTribe = {this.shareTribe}
+                            unshareTribe = {this.unshareTribe}
+                            tribeID = {this.props.tribeID}
+                            canEdit = {canEdit}
+                            userID = {this.props.userID}
+                            alwaysMe = {this.props.alwaysMe}
+                            updateLikes = {this.updateLikes}
+                            tribeAuthorName = {this.state.tribeAuthorName}
+                            tribeAuthorProfilePicture = {this.state.tribeAuthorProfilePicture}
+                        />
+                    </View>
+                    :null
+                }
             <View style = {[styles.card, {marginTop: 0, shadowRadius: 5, shadowOpacity: 0.4, shadowColor: "#3371FF", padding: 0,}]}>
-                {/*{(this.props.header )*/}
-                {/*    ?*/}
-                {/*    <View style = {{margin: 1}}>*/}
-                {/*        <TribeHeader*/}
-                {/*            didLike = {this.state.didLike}*/}
-                {/*            likeColor = {this.state.likeColor}*/}
-                {/*            isPosted={this.props.isPosted}*/}
-                {/*            posted = {this.props.posted}*/}
-                {/*            isPublic = {this.props.isPublic}*/}
-                {/*            header = {this.props.header}*/}
-                {/*            shareTribe = {this.shareTribe}*/}
-                {/*            unshareTribe = {this.unshareTribe}*/}
-                {/*            tribeID = {this.props.tribeID}*/}
-                {/*            canEdit = {canEdit}*/}
-                {/*            userID = {this.props.userID}*/}
-                {/*            alwaysMe = {this.props.alwaysMe}*/}
-                {/*            updateLikes = {this.updateLikes}*/}
-                {/*            tribeAuthorName = {this.state.tribeAuthorName}*/}
-                {/*            tribeAuthorProfilePicture = {this.state.tribeAuthorProfilePicture}*/}
-                {/*        />*/}
-                {/*    </View>*/}
-                {/*    :null*/}
-                {/*}*/}
                 <View style = {{flexDirection: "row", justifyContent: "flex-start", margin: 0, flex: 1}}>
                         <View style = {{flex: 1, padding: 5, flexDirection: "column", width: '100%', alignContent: "flex-start", justifyContent: "flex-start"}}>
                         <TextInput
